@@ -2,6 +2,18 @@
   "default": "project-20260620-231058",
   "featured": [
     {
+      "slug": "ninth-seat",
+      "title": "第九席",
+      "tagline": "零点直播前，AI开始替人说出从未同意公开的话。作为总导演许澄，你要决定证据、关系与职业代价由谁承担。",
+      "cover": "/panoramas/s10-secret-archive.png",
+      "chapters": "第一章 · 第九席亮起",
+      "tags": [
+        "职场悬疑",
+        "关系叙事",
+        "20–30分钟"
+      ]
+    },
+    {
       "slug": "project-20260620-002835",
       "title": "云巅仙阁·命运抉择",
       "tagline": "盛会开幕之夜，你以散修身份踏入云巅仙阁，十位传人依次向你投来目光。",

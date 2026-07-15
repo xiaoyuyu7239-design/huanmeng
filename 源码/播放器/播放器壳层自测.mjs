@@ -1,5 +1,5 @@
-// 用服务端渲染把五部本地故事的每个节点逐一送进初始壳层，检查空字段、渲染崩溃与 React 告警。
-import { readFile } from 'node:fs/promises';
+// 用服务端渲染把 games 目录自动发现的全部本地故事逐节点送进壳层，检查空字段、渲染崩溃与 React 告警。
+import { readdir, readFile } from 'node:fs/promises';
 import { basename, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import React from 'react';
@@ -32,6 +32,7 @@ globalThis.window = {
 
 let 通过 = 0;
 let 节点通过 = 0;
+let 作品总数 = 0;
 
 function 无告警渲染(名字, 元素) {
   const 原consoleError = console.error;
@@ -50,13 +51,15 @@ try {
   const 剧情模块 = await 服务.ssrLoadModule('/源码/播放器/剧情引擎/剧情加载.js');
   const 状态模块 = await 服务.ssrLoadModule('/源码/播放器/剧情引擎/状态与结算.js');
   const { default: 播放器应用, 关系手账 } = await 服务.ssrLoadModule('/源码/播放器/播放器应用.jsx');
-  const 剧情路径们 = [
-    'excuse',
-    'project-20260620-002835',
-    'project-20260620-185116',
-    'project-20260620-201739',
-    'project-20260620-231058',
-  ].map((slug) => resolve(项目根, '公共资源/games', slug, 'story.json'));
+  const 游戏根 = resolve(项目根, '公共资源/games');
+  const 剧情路径们 = (await readdir(游戏根, { withFileTypes: true }))
+    .filter((条目) => 条目.isDirectory())
+    .map((条目) => resolve(游戏根, 条目.name, 'story.json'))
+    .sort((甲, 乙) => 甲.localeCompare(乙, 'zh-CN'));
+  作品总数 = 剧情路径们.length;
+  if (作品总数 < 6 || !剧情路径们.some((路径) => basename(dirname(路径)) === 'ninth-seat')) {
+    throw new Error(`games 自动发现未覆盖《第九席》在内的第六部作品，实际发现 ${作品总数} 部`);
+  }
 
   for (const 路径 of 剧情路径们) {
     const slug = basename(dirname(路径));
@@ -103,6 +106,31 @@ try {
         throw new Error('关系手账未正确渲染角色、三维关系、痕迹或异常值兜底');
       }
       console.log('  ✓ 关系手账：三角色、三维刻度、决策痕迹与异常值兜底');
+    }
+    if (slug === 'ninth-seat') {
+      const 手账状态 = 状态模块.创建初始状态();
+      手账状态.relationships.lu_chenzhou.trust = '异常旧值';
+      手账状态.decisionLog = [
+        {
+          id: 'trace-lu',
+          loop: 1,
+          nodeTitle: '信号机房',
+          label: '共同保全原始流',
+          consequence: '他把主控密钥放回了两人都看得见的位置。',
+          effect: { relationships: { lu_chenzhou: { trust: 8, boundary: 7 } } },
+          createdAt: 1,
+        },
+      ];
+      const 手账html = 无告警渲染('第九席关系手账', React.createElement(关系手账, { state: 手账状态 }));
+      if (
+        !['陆沉舟', '周衍', '贺清野', '沈确', '他把主控密钥放回了两人都看得见的位置。'].every((文本) => 手账html.includes(文本)) ||
+        ['林渺', '乔雯'].some((文本) => 手账html.includes(文本)) ||
+        (手账html.match(/role="progressbar"/g) ?? []).length !== 3 ||
+        手账html.includes('NaN')
+      ) {
+        throw new Error('第九席关系手账未正确区分四名可发展角色与两名女性同盟角色');
+      }
+      console.log('  ✓ 第九席关系手账：四名可发展角色、三维刻度、女性同盟不数值化');
     }
     通过 += 1;
     console.log(`  ✓ ${slug}：${剧情.title}（${Object.keys(剧情.nodes).length} 节点）`);
@@ -160,4 +188,4 @@ try {
   await 服务.close();
 }
 
-console.log(`页面壳层自测：播放器 ${通过} / 5 部、${节点通过} 个发布节点及 1 个本机空画面项目，加落地页与创作台全部通过`);
+console.log(`页面壳层自测：播放器 ${通过} / ${作品总数} 部、${节点通过} 个发布节点及 1 个本机空画面项目，加落地页与创作台全部通过`);

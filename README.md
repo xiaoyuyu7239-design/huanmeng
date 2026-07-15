@@ -15,6 +15,7 @@ npm run dev
 
 - `/`：产品落地页
 - `/play` 或 `/game`：播放器；可用 `?game=<slug>` 指定作品
+- `/play?game=ninth-seat`：《第九席》Level 2 第一章直达入口
 - `/creator`：创作台
 
 ## 检查与构建
@@ -25,7 +26,7 @@ npm run build
 npm run preview
 ```
 
-`npm test` 会运行剧情引擎、创作台、资源引用和页面壳层回归；生产文件输出到 `dist/`。
+`npm test` 会运行剧情引擎、创作台、《第九席》内容路线、资源引用和页面壳层回归；生产文件输出到 `dist/`。
 
 ## 数据与浏览器存储
 

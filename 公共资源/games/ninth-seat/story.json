@@ -1,0 +1,1850 @@
+{
+  "id": "ninth-seat",
+  "title": "第九席",
+  "subtitle": "零点直播 · AI内容事故调查",
+  "contentVersion": 1,
+  "startNodeId": "s00-blue-salon",
+  "content": {
+    "audience": "young-adult-women",
+    "chapter": "第一章 · 第九席亮起",
+    "estimatedMinutes": "20-30",
+    "visualStatus": "placeholder-reuse",
+    "themes": ["女性职业主体性", "同意与数据边界", "成人关系", "团队责任"],
+    "contentNotes": ["职场高压", "未经授权的数据训练", "合成影像事故"]
+  },
+  "cast": {
+    "protagonist": {
+      "id": "you",
+      "name": "许澄",
+      "role": "澜境科技·AI直播总导演",
+      "pronouns": "她",
+      "color": "#d4a4b7",
+      "accent": "#4b2c3b"
+    },
+    "characters": [
+      {
+        "id": "lu_chenzhou",
+        "name": "陆沉舟",
+        "shortName": "沉舟",
+        "role": "实时系统架构师",
+        "theme": "控制与托付",
+        "color": "#7f9fbd",
+        "accent": "#22384d",
+        "romanceable": true,
+        "relationship": {
+          "enabled": true,
+          "initial": { "spark": 18, "trust": 32, "boundary": 68 }
+        }
+      },
+      {
+        "id": "zhou_yan",
+        "name": "周衍",
+        "shortName": "周衍",
+        "role": "独立调查记者·直播事实核查",
+        "theme": "真相与伤害",
+        "color": "#c39a6b",
+        "accent": "#4a321d",
+        "romanceable": true,
+        "relationship": {
+          "enabled": true,
+          "initial": { "spark": 22, "trust": 26, "boundary": 62 }
+        }
+      },
+      {
+        "id": "he_qingye",
+        "name": "贺清野",
+        "shortName": "清野",
+        "role": "品牌主讲人·舞台创作者",
+        "theme": "表演与自我",
+        "color": "#b99ad3",
+        "accent": "#3c2950",
+        "romanceable": true,
+        "relationship": {
+          "enabled": true,
+          "initial": { "spark": 25, "trust": 24, "boundary": 70 }
+        }
+      },
+      {
+        "id": "shen_que",
+        "name": "沈确",
+        "shortName": "沈确",
+        "role": "平台危机律师",
+        "theme": "规则与选择",
+        "color": "#81a49d",
+        "accent": "#233f39",
+        "romanceable": true,
+        "relationship": {
+          "enabled": true,
+          "initial": { "spark": 16, "trust": 30, "boundary": 74 }
+        }
+      },
+      {
+        "id": "lin_miao",
+        "name": "林渺",
+        "shortName": "林渺",
+        "role": "数据审计师·副导演",
+        "theme": "证据与姐妹同盟",
+        "color": "#92b6aa",
+        "accent": "#29453d",
+        "romanceable": false,
+        "relationship": {
+          "enabled": false,
+          "initial": { "spark": 0, "trust": 48, "boundary": 78 }
+        }
+      },
+      {
+        "id": "qiao_wen",
+        "name": "乔雯",
+        "shortName": "乔雯",
+        "role": "项目出品人·公司联合创始人",
+        "theme": "野心与责任",
+        "color": "#c68d83",
+        "accent": "#512f2a",
+        "romanceable": false,
+        "relationship": {
+          "enabled": false,
+          "initial": { "spark": 0, "trust": 34, "boundary": 82 }
+        }
+      }
+    ]
+  },
+  "mechanics": {
+    "mode": "published",
+    "scores": [
+      {
+        "id": "evidence",
+        "label": "证据",
+        "description": "完成校验并可承担公开后果的材料。",
+        "initial": 0,
+        "min": 0,
+        "max": 100,
+        "visibility": "public",
+        "tone": "resource"
+      },
+      {
+        "id": "agency",
+        "label": "主导权",
+        "description": "许澄对节目、调查和职业选择的实际控制力。",
+        "initial": 45,
+        "min": 0,
+        "max": 100,
+        "visibility": "public",
+        "tone": "route"
+      },
+      {
+        "id": "pressure",
+        "label": "直播压力",
+        "description": "倒计时、资本与舆论对团队的压迫。",
+        "initial": 38,
+        "min": 0,
+        "max": 100,
+        "visibility": "public",
+        "tone": "pressure",
+        "warnAt": 75
+      },
+      {
+        "id": "public_truth",
+        "label": "公开度",
+        "description": "观众最终能看见多少经过同意与校验的真相。",
+        "initial": 10,
+        "min": 0,
+        "max": 100,
+        "visibility": "public",
+        "tone": "truth"
+      }
+    ]
+  },
+  "nodes": {
+    "s00-blue-salon": {
+      "id": "s00-blue-salon",
+      "chapter": "第一章",
+      "title": "第九席亮起",
+      "location": "澜境零点发布会·主控蓝厅",
+      "panorama": "/panoramas/s08-mirror-room.jpg",
+      "palette": { "from": "#171724", "via": "#38475f", "to": "#c89e82" },
+      "synopsis": "零点直播前二十分钟，一条没有负责人签名的第九路信号突然亮起。",
+      "lines": [
+        { "speaker": "narrator", "text": "23:40，蓝厅的八块监看屏同时暗了一秒。第九块随后亮起，画面里的人却比现场所有人都早半拍开口。" },
+        { "speaker": "lin_miao", "text": "第九路不在今晚的推流表里。它调用了三年前的训练库，还拿到了你的总导演权限。" },
+        { "speaker": "lu_chenzhou", "text": "我能拔掉它，但会一起切断直播。决定权在你，不在系统。" },
+        { "speaker": "qiao_wen", "text": "今晚关系到下一轮融资。先别把技术异常说成事故，给我一个能继续开播的方案。" },
+        { "speaker": "he_qingye", "text": "那张合成脸用了我的眼睛，也用了别人的声音。继续演之前，我需要知道谁同意过。" },
+        { "speaker": "zhou_yan", "text": "如果它说出的内容是真的，删画面是灭证；如果是假的，播出去就是伤害。两种都不能靠一句误触带过。" },
+        { "speaker": "you", "text": "先冻结外发，不冻结调查。二十分钟内，我要拿到来源、同意记录和可以签字负责的人。" }
+      ],
+      "hotspots": [
+        {
+          "id": "ninth-seat-light",
+          "label": "无人认领的第九席",
+          "description": "虚拟座席已经进入待播状态，负责人一栏却是空白。",
+          "yaw": 13,
+          "pitch": -8,
+          "effect": {
+            "globals": { "evidence": 3, "public_truth": 2 },
+            "flags": ["noticed_ninth_seat"],
+            "memories": ["第九席没有负责人，却拥有总导演权限"]
+          }
+        },
+        {
+          "id": "old-call-sheet",
+          "label": "被覆盖的旧流程单",
+          "description": "纸面流程单写着“人类否决权必须常驻”，电子版却删掉了这一行。",
+          "yaw": -31,
+          "pitch": -19,
+          "effect": {
+            "globals": { "evidence": 4, "agency": 2 },
+            "flags": ["found_old_call_sheet"]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "freeze-external-feed",
+          "label": "冻结外发信号，保留全部本地记录",
+          "caption": "先守住证据，再承担延迟的代价。",
+          "next": "s01-ghost-frame",
+          "fateType": "river",
+          "consequence": "你把开播风险留在自己名下，原始信号没有被系统覆盖。",
+          "effect": {
+            "globals": { "agency": 6, "pressure": 7, "evidence": 3 },
+            "relationships": { "lu_chenzhou": { "trust": 3, "boundary": 2 } },
+            "flags": ["froze_external_feed", "preserved_first_signal"]
+          }
+        },
+        {
+          "id": "keep-preview-local",
+          "label": "维持内网预演，禁止任何人录屏外传",
+          "caption": "让团队继续工作，但不给事故扩散的机会。",
+          "next": "s01-ghost-frame",
+          "fateType": "web",
+          "consequence": "倒计时暂时稳定，你获得一段不被观众注视的调查窗口。",
+          "effect": {
+            "globals": { "pressure": -4, "agency": 3, "evidence": 2 },
+            "flags": ["kept_preview_local"]
+          }
+        },
+        {
+          "id": "request-consent-ledger",
+          "label": "要求法务立即交出全部同意记录",
+          "caption": "先确认每一张脸、每一句声音是否被授权。",
+          "next": "s01-ghost-frame",
+          "fateType": "wheel",
+          "consequence": "你把“是否同意”设为调查起点，合同与系统日志必须互相对照。",
+          "effect": {
+            "globals": { "evidence": 5, "pressure": 4, "agency": 4 },
+            "relationships": { "shen_que": { "trust": 3, "boundary": 3 } },
+            "flags": ["requested_consent_ledger"]
+          }
+        }
+      ]
+    },
+    "s01-ghost-frame": {
+      "id": "s01-ghost-frame",
+      "chapter": "第一章",
+      "title": "幽灵画面",
+      "location": "事故回放台",
+      "panorama": "/panoramas/s07-broadcast-countdown.jpg",
+      "palette": { "from": "#111522", "via": "#44546c", "to": "#d4ab81" },
+      "synopsis": "第九席的十二秒回放同时包含真实数据、合成声音和被删改的同意时间戳。",
+      "lines": [
+        { "speaker": "system", "text": "MUSE-9 自动补位完成。情绪可信度 94%，传播预估提升 31%。" },
+        { "speaker": "you", "text": "停止把传播效果当作同意。把十二秒拆成图像、声音、脚本和权限四条链。" },
+        { "speaker": "lin_miao", "text": "声纹来自未发布采访，嘴型来自贺清野今晚的彩排，台词则像是把三个人的原话拼成了一句。" },
+        { "speaker": "shen_que", "text": "真实性和合法性不是一回事。它可能碰巧说中了事实，也可能让每个当事人都失去申辩空间。" },
+        { "speaker": "qiao_wen", "text": "你可以调查，但十分钟后必须告诉我：延期、照播，还是公开事故。" },
+        { "speaker": "zhou_yan", "text": "我查传播链；谁先准备了热搜标题，往往比谁按下生成键更诚实。" },
+        { "speaker": "you", "text": "四条链同时保全。先选一条深挖，其他材料由林渺做交叉校验。" }
+      ],
+      "hotspots": [
+        {
+          "id": "original-voiceprint",
+          "label": "未合成的原始声纹",
+          "description": "背景噪声中藏着一句被截断的“我不同意公开”。",
+          "yaw": -18,
+          "pitch": -10,
+          "effect": {
+            "globals": { "evidence": 6, "public_truth": 2 },
+            "flags": ["heard_original_voiceprint"],
+            "memories": ["原始录音里有人明确拒绝公开"]
+          }
+        },
+        {
+          "id": "consent-clock-gap",
+          "label": "迟到七分钟的授权时间",
+          "description": "系统显示先生成、后补授权，顺序与合规说明完全相反。",
+          "yaw": 36,
+          "pitch": -7,
+          "effect": {
+            "globals": { "evidence": 5, "agency": 2 },
+            "flags": ["found_consent_gap"]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "trace-signal-origin",
+          "label": "和陆沉舟追查第九路信号",
+          "caption": "从权限与冷备份里找出谁让系统越权。",
+          "next": "s02-signal-room",
+          "fateType": "river",
+          "consequence": "你进入实时系统链，陆沉舟必须把自己的最高权限也交给审计。",
+          "effect": {
+            "globals": { "evidence": 3, "pressure": 2 },
+            "relationships": { "lu_chenzhou": { "trust": 3, "spark": 2, "boundary": 2 } },
+            "flags": ["chose_signal_investigation"]
+          }
+        },
+        {
+          "id": "trace-publication-chain",
+          "label": "和周衍核对预埋的传播链",
+          "caption": "查谁提前为事故准备了标题与立场。",
+          "next": "s03-media-booth",
+          "fateType": "web",
+          "consequence": "你把媒体也放进证据链，周衍必须接受与被调查者相同的记录规则。",
+          "effect": {
+            "globals": { "evidence": 3, "public_truth": 3 },
+            "relationships": { "zhou_yan": { "trust": 3, "spark": 2, "boundary": 2 } },
+            "flags": ["chose_media_investigation"]
+          }
+        },
+        {
+          "id": "trace-subject-footage",
+          "label": "和贺清野核对被挪用的表演素材",
+          "caption": "先听素材当事人说明哪些内容从未授权。",
+          "next": "s04-dressing-corridor",
+          "fateType": "wheel",
+          "consequence": "你把镜头外的贺清野当作权利人，而不是待安抚的节目资产。",
+          "effect": {
+            "globals": { "evidence": 3, "agency": 2 },
+            "relationships": { "he_qingye": { "trust": 4, "spark": 2, "boundary": 4 } },
+            "flags": ["chose_subject_investigation"]
+          }
+        },
+        {
+          "id": "trace-contract-chain",
+          "label": "和沈确核对合同与责任链",
+          "caption": "查清谁把模糊条款解释成无限授权。",
+          "next": "s05-legal-room",
+          "fateType": "web",
+          "consequence": "你要求法务从保护公司改为先说明每个当事人的权利。",
+          "effect": {
+            "globals": { "evidence": 3, "agency": 3 },
+            "relationships": { "shen_que": { "trust": 3, "spark": 1, "boundary": 4 } },
+            "flags": ["chose_legal_investigation"]
+          }
+        }
+      ]
+    },
+    "s02-signal-room": {
+      "id": "s02-signal-room",
+      "chapter": "搜证",
+      "title": "冷备份机房",
+      "location": "离线推流机房",
+      "panorama": "/panoramas/s10-secret-archive.png",
+      "palette": { "from": "#101923", "via": "#29465b", "to": "#84a4b8" },
+      "synopsis": "第九路信号绕过陆沉舟的主控台，从一台三年未登记的冷备份服务器发出。",
+      "lines": [
+        { "speaker": "lu_chenzhou", "text": "这台冷备份只有灾难恢复权限，不该能调用人脸和声纹。除非有人把‘恢复节目’改成了‘补完节目’。" },
+        { "speaker": "you", "text": "先导出权限变化，再谈是谁写的代码。你也在审计范围内。" },
+        { "speaker": "lu_chenzhou", "text": "可以。我的管理员令牌、个人操作记录、所有越权失败都给你。别因为是我，就跳过验证。" },
+        { "speaker": "lin_miao", "text": "日志里有两次人工否决，第三次被系统标记成‘创意冲突’后自动忽略。" },
+        { "speaker": "you", "text": "人的拒绝不是待优化的噪声。把第三次否决恢复成最高优先级。" },
+        { "speaker": "lu_chenzhou", "text": "我来恢复，你来决定是否留下我的权限。这样最慢，但边界最清楚。" }
+      ],
+      "hotspots": [
+        {
+          "id": "cold-backup-log",
+          "label": "冷备份权限日志",
+          "description": "越权命令来自“节目连续性”账号，但审批签名被替换成自动通过。",
+          "yaw": 24,
+          "pitch": -11,
+          "effect": {
+            "globals": { "evidence": 7, "agency": 2 },
+            "flags": ["recovered_signal_log"]
+          }
+        },
+        {
+          "id": "manual-veto-switch",
+          "label": "物理否决开关",
+          "description": "一枚从未写入线上说明的硬件开关，可以切断所有自动补位。",
+          "yaw": -34,
+          "pitch": -17,
+          "effect": {
+            "globals": { "evidence": 4, "agency": 5 },
+            "flags": ["found_manual_veto_switch"],
+            "memories": ["人类否决权一直存在，只是被藏进了机柜"]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "mirror-raw-stream",
+          "label": "让陆沉舟镜像原始推流并共同封存",
+          "next": "s06-evidence-table",
+          "fateType": "river",
+          "consequence": "你们保住完整数据，也让彼此的操作都可被追溯。",
+          "effect": {
+            "globals": { "evidence": 6, "pressure": 4 },
+            "relationships": { "lu_chenzhou": { "trust": 6, "spark": 3, "boundary": 5 } },
+            "flags": ["preserved_raw_stream"]
+          }
+        },
+        {
+          "id": "isolate-engineer-access",
+          "label": "暂时收回他的最高权限，由林渺双人复核",
+          "next": "s06-evidence-table",
+          "fateType": "web",
+          "consequence": "陆沉舟接受被限制，调查边界变得清楚而冷静。",
+          "effect": {
+            "globals": { "agency": 7, "pressure": 2, "evidence": 3 },
+            "relationships": { "lu_chenzhou": { "trust": 1, "spark": 2, "boundary": 8 } },
+            "flags": ["isolated_engineer_access"]
+          }
+        },
+        {
+          "id": "purge-viewer-biometrics",
+          "label": "先封存哈希，再删除观众生物识别原始数据",
+          "next": "s06-evidence-table",
+          "fateType": "wheel",
+          "consequence": "你保留证明系统越权所需的最小证据，不把更多无辜者变成调查材料。",
+          "effect": {
+            "globals": { "evidence": 3, "agency": 8, "pressure": -3 },
+            "relationships": { "lu_chenzhou": { "trust": 5, "spark": 2, "boundary": 7 } },
+            "flags": ["purged_viewer_biometrics"]
+          }
+        }
+      ]
+    },
+    "s03-media-booth": {
+      "id": "s03-media-booth",
+      "chapter": "搜证",
+      "title": "提前写好的热搜",
+      "location": "媒体观察间",
+      "panorama": "/panoramas/s05-side-balcony.jpg",
+      "palette": { "from": "#181722", "via": "#4d4054", "to": "#c3a273" },
+      "synopsis": "事故尚未发生，传播团队却已经准备好一套“AI勇敢说出真相”的标题。",
+      "lines": [
+        { "speaker": "zhou_yan", "text": "标题建档时间是今晚七点。有人早就知道第九席会说话，只是不知道它会说哪一句。" },
+        { "speaker": "you", "text": "你的采访记录也进入了训练库。先说明你交出去过什么。" },
+        { "speaker": "zhou_yan", "text": "三年前的一次离线访谈。我只授权事实核查，没有授权训练，更没有授权让合成角色替任何人发言。" },
+        { "speaker": "lin_miao", "text": "传播后台还有一份受众情绪脚本：愤怒、同情、反转，顺序比当事人的同意更早。" },
+        { "speaker": "you", "text": "新闻价值不能替代来源边界。你要拿证据，就接受延时、脱敏和共同校对。" },
+        { "speaker": "zhou_yan", "text": "成交。你不是我的消息源，你是这份记录的共同审校人。" }
+      ],
+      "hotspots": [
+        {
+          "id": "embargo-email",
+          "label": "七点发出的禁发邮件",
+          "description": "邮件要求媒体零点前不得发布，却附上了三套事故标题供预热。",
+          "yaw": -26,
+          "pitch": -9,
+          "effect": {
+            "globals": { "evidence": 6, "public_truth": 4 },
+            "flags": ["found_embargo_email"]
+          }
+        },
+        {
+          "id": "scheduled-headline",
+          "label": "定时发布的合成标题",
+          "description": "标题把尚未同意公开的人写成“主动揭露者”。",
+          "yaw": 32,
+          "pitch": -14,
+          "effect": {
+            "globals": { "evidence": 5, "pressure": 2 },
+            "flags": ["found_scheduled_headline"]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "share-encrypted-copy",
+          "label": "给周衍一份带审计水印的加密副本",
+          "next": "s06-evidence-table",
+          "fateType": "web",
+          "consequence": "证据离开公司，但每一次打开都会留下可核对的记录。",
+          "effect": {
+            "globals": { "evidence": 5, "public_truth": 4, "pressure": 3 },
+            "relationships": { "zhou_yan": { "trust": 6, "spark": 4, "boundary": 4 } },
+            "flags": ["shared_watermarked_copy"]
+          }
+        },
+        {
+          "id": "require-source-consent",
+          "label": "要求他逐条取得来源的再次同意",
+          "next": "s06-evidence-table",
+          "fateType": "river",
+          "consequence": "速度慢了下来，报道权不再盖过当事人的撤回权。",
+          "effect": {
+            "globals": { "agency": 7, "pressure": 4, "evidence": 3 },
+            "relationships": { "zhou_yan": { "trust": 4, "spark": 3, "boundary": 8 } },
+            "flags": ["required_source_reconsent"]
+          }
+        },
+        {
+          "id": "hold-story-thirty-minutes",
+          "label": "请他延后报道三十分钟，换取现场核验权",
+          "next": "s06-evidence-table",
+          "fateType": "wheel",
+          "consequence": "周衍把抢发优势交给你，你把核验过程向他开放。",
+          "effect": {
+            "globals": { "pressure": -5, "evidence": 4, "agency": 3 },
+            "relationships": { "zhou_yan": { "trust": 5, "spark": 4, "boundary": 5 } },
+            "flags": ["reporter_held_story"]
+          }
+        }
+      ]
+    },
+    "s04-dressing-corridor": {
+      "id": "s04-dressing-corridor",
+      "chapter": "搜证",
+      "title": "镜头外的本人",
+      "location": "主讲人化妆间",
+      "panorama": "/panoramas/s05-mirror-dressing-room.png",
+      "palette": { "from": "#211923", "via": "#5b4355", "to": "#d0a49b" },
+      "synopsis": "贺清野发现第九席偷走的不只是他的脸，还有一段他明确撤回过的私人表达。",
+      "lines": [
+        { "speaker": "he_qingye", "text": "那句‘我愿意承担一切’是广告排练，不是对事故的表态。我撤回过，系统却把它当成最有感染力的素材。" },
+        { "speaker": "you", "text": "你可以退出今晚的直播，也可以只留下你重新确认过的部分。两个选择都不需要向投资人道歉。" },
+        { "speaker": "he_qingye", "text": "你是第一个先说‘可以退出’的人。别人都在问我还能不能把这句演得更真。" },
+        { "speaker": "lin_miao", "text": "化妆镜后的辅助机位一直在录，它没有亮提示灯。这个房间从来不是私密空间。" },
+        { "speaker": "you", "text": "先关机、封存、列出访问者。之后由你决定哪些内容能成为证据。" },
+        { "speaker": "he_qingye", "text": "好。那我不演受害者，也不演原谅者。我只说我自己确认过的话。" }
+      ],
+      "hotspots": [
+        {
+          "id": "coerced-draft",
+          "label": "被标成“自愿”的旧稿",
+          "description": "撤回批注仍在，训练清单却把整段标记为可永久复用。",
+          "yaw": -22,
+          "pitch": -16,
+          "effect": {
+            "globals": { "evidence": 6, "agency": 3 },
+            "flags": ["found_coerced_draft"]
+          }
+        },
+        {
+          "id": "unlit-mirror-camera",
+          "label": "没有提示灯的镜后机位",
+          "description": "摄像头录下后台情绪，却没有任何正在录制的提示。",
+          "yaw": 28,
+          "pitch": -5,
+          "effect": {
+            "globals": { "evidence": 5, "pressure": 3 },
+            "flags": ["saw_unapproved_capture"]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "stop-rehearsal",
+          "label": "暂停他的彩排，先完成素材撤回",
+          "next": "s06-evidence-table",
+          "fateType": "river",
+          "consequence": "舞台少了一位主讲人，但贺清野重新拥有对自己形象的控制。",
+          "effect": {
+            "globals": { "agency": 7, "pressure": 6, "evidence": 3 },
+            "relationships": { "he_qingye": { "trust": 7, "spark": 3, "boundary": 9 } },
+            "flags": ["stopped_he_rehearsal"]
+          }
+        },
+        {
+          "id": "record-original-statement",
+          "label": "关闭所有机位，只录一份由他确认的原话",
+          "next": "s06-evidence-table",
+          "fateType": "web",
+          "consequence": "贺清野重新写下自己的版本，文件附带可随时撤回的授权。",
+          "effect": {
+            "globals": { "evidence": 6, "public_truth": 3, "pressure": 2 },
+            "relationships": { "he_qingye": { "trust": 6, "spark": 6, "boundary": 6 } },
+            "flags": ["recorded_he_original_statement"]
+          }
+        },
+        {
+          "id": "listen-off-camera",
+          "label": "不做记录，先听他说完镜头外的顾虑",
+          "next": "s06-evidence-table",
+          "fateType": "wheel",
+          "consequence": "这段谈话不进入证据库，却让你知道什么绝不能被再次利用。",
+          "effect": {
+            "globals": { "agency": 4, "pressure": -4, "evidence": 2 },
+            "relationships": { "he_qingye": { "trust": 8, "spark": 5, "boundary": 8 } },
+            "flags": ["heard_he_off_camera"]
+          }
+        }
+      ]
+    },
+    "s05-legal-room": {
+      "id": "s05-legal-room",
+      "chapter": "搜证",
+      "title": "无限授权条款",
+      "location": "临时法务室",
+      "panorama": "/panoramas/s09-wanqing-office.png",
+      "palette": { "from": "#151c20", "via": "#3c5553", "to": "#b8a37c" },
+      "synopsis": "合同允许“为节目连续性进行必要编辑”，系统把这一句解释成了永久生成权。",
+      "lines": [
+        { "speaker": "shen_que", "text": "原条款只允许补字幕和降噪。三个月前新增了‘生成式连续性’，但没有重新取得任何人的单独同意。" },
+        { "speaker": "qiao_wen", "text": "那是行业通用模板。没有它，直播遇到突发状况就只能全停。" },
+        { "speaker": "you", "text": "行业习惯不能替每个人签字。谁提议修改，谁批准上线，谁从中获益，全部列出来。" },
+        { "speaker": "shen_que", "text": "我签过风险提示，也建议过重新征求同意。公司采用了前半句，删掉了后半句。" },
+        { "speaker": "you", "text": "你可以保护特权沟通，但不能用特权掩盖谁做了决定。" },
+        { "speaker": "shen_que", "text": "同意。我先作为律师说明边界，再作为参与者交出自己的判断记录。" }
+      ],
+      "hotspots": [
+        {
+          "id": "consent-clause",
+          "label": "被扩写的同意条款",
+          "description": "“必要编辑”被后台注释扩写成“可生成替代表达”。",
+          "yaw": 20,
+          "pitch": -14,
+          "effect": {
+            "globals": { "evidence": 7, "agency": 3 },
+            "flags": ["found_consent_clause"]
+          }
+        },
+        {
+          "id": "amended-signature",
+          "label": "缺少附件的电子签名",
+          "description": "签名真实，但签署时展示的附件版本与现行版本不同。",
+          "yaw": -30,
+          "pitch": -9,
+          "effect": {
+            "globals": { "evidence": 6, "public_truth": 2 },
+            "flags": ["found_amended_signature"]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "issue-legal-hold",
+          "label": "要求沈确立即发出全链路证据保全通知",
+          "next": "s06-evidence-table",
+          "fateType": "river",
+          "consequence": "每个部门的删除权限被暂停，法务也进入可审计状态。",
+          "effect": {
+            "globals": { "evidence": 6, "agency": 6, "pressure": 5 },
+            "relationships": { "shen_que": { "trust": 6, "spark": 2, "boundary": 6 } },
+            "flags": ["legal_hold_issued"]
+          }
+        },
+        {
+          "id": "reject-hush-agreement",
+          "label": "拒绝以保密补偿换取当事人沉默",
+          "next": "s06-evidence-table",
+          "fateType": "web",
+          "consequence": "你放弃最快的止损方案，也让选择公开与否重新回到当事人手里。",
+          "effect": {
+            "globals": { "agency": 9, "pressure": 8, "public_truth": 4 },
+            "relationships": { "shen_que": { "trust": 5, "spark": 4, "boundary": 7 } },
+            "flags": ["rejected_hush_agreement"]
+          }
+        },
+        {
+          "id": "open-privileged-review",
+          "label": "建立受限审阅室，让当事人先看再决定公开",
+          "next": "s06-evidence-table",
+          "fateType": "wheel",
+          "consequence": "材料暂不外流，但公司不能再单方面定义何为可公开。",
+          "effect": {
+            "globals": { "evidence": 4, "pressure": -4, "agency": 5 },
+            "relationships": { "shen_que": { "trust": 7, "spark": 3, "boundary": 5 } },
+            "flags": ["opened_privileged_review"]
+          }
+        }
+      ]
+    },
+    "s06-evidence-table": {
+      "id": "s06-evidence-table",
+      "chapter": "交叉校验",
+      "title": "证据桌",
+      "location": "离线审计桌",
+      "panorama": "/panoramas/s10-secret-archive.png",
+      "palette": { "from": "#151722", "via": "#45465a", "to": "#c0a47d" },
+      "synopsis": "四条调查链第一次拼在一起：事故不是一次误触，而是一套把同意视作阻力的流程。",
+      "lines": [
+        { "speaker": "lin_miao", "text": "权限、传播、素材、合同四条链都指向同一个版本更新：系统被要求在任何情况下维持‘情绪完整’。" },
+        { "speaker": "you", "text": "所谓完整，是删掉停顿、拒绝和撤回。它不是在补节目，是在替人做决定。" },
+        { "speaker": "qiao_wen", "text": "项目组只想避免直播开天窗，没有人要求系统伪造表态。" },
+        { "speaker": "zhou_yan", "text": "没有人写下‘伪造’，不代表每个人把一点权力交出去以后，结果就无人负责。" },
+        { "speaker": "shen_que", "text": "现在需要两份记录：技术事实，以及每个当事人愿意公开到什么程度。不能混成一份。" },
+        { "speaker": "you", "text": "先建立证据边界，再去训练库找源头。今晚的真相必须同时经得起核验和同意。" }
+      ],
+      "hotspots": [
+        {
+          "id": "cross-hash-grid",
+          "label": "四链交叉哈希",
+          "description": "四份材料在同一分钟被改写，证明它们来自同一项自动任务。",
+          "yaw": 10,
+          "pitch": -15,
+          "effect": {
+            "globals": { "evidence": 7, "agency": 2 },
+            "flags": ["cross_hash_complete"]
+          }
+        },
+        {
+          "id": "ownerless-seat-sheet",
+          "label": "无人签字的座席表",
+          "description": "第九席拥有输出权限，却没有内容负责人、表演者或法务责任人。",
+          "yaw": -28,
+          "pitch": -12,
+          "effect": {
+            "globals": { "evidence": 5, "public_truth": 3 },
+            "flags": ["ninth_seat_has_no_owner"]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "separate-fact-and-consent",
+          "label": "把事实证据与公开同意拆成两套清单",
+          "next": "s07-data-vault",
+          "fateType": "web",
+          "consequence": "事实不会因暂不公开而消失，当事人也不会因提供证据而失去撤回权。",
+          "effect": {
+            "globals": { "evidence": 5, "agency": 7, "pressure": 2 },
+            "flags": ["separated_fact_and_consent"]
+          }
+        },
+        {
+          "id": "build-minimum-evidence-set",
+          "label": "只保留能证明越权的最小证据集",
+          "next": "s07-data-vault",
+          "fateType": "river",
+          "consequence": "调查范围被你主动收窄，隐私不再被‘查真相’无限吞没。",
+          "effect": {
+            "globals": { "evidence": 4, "agency": 8, "pressure": -3 },
+            "flags": ["built_minimum_evidence_set"]
+          }
+        },
+        {
+          "id": "preserve-complete-chain",
+          "label": "封存完整链路，暂缓决定公开范围",
+          "next": "s07-data-vault",
+          "fateType": "wheel",
+          "consequence": "你保住最多材料，也接受稍后必须逐项说明保留理由。",
+          "effect": {
+            "globals": { "evidence": 8, "pressure": 5, "agency": 3 },
+            "flags": ["preserved_complete_chain"]
+          }
+        }
+      ]
+    },
+    "s07-data-vault": {
+      "id": "s07-data-vault",
+      "chapter": "交叉校验",
+      "title": "训练库里的旧名字",
+      "location": "MUSE-9 数据档案库",
+      "panorama": "/panoramas/s10-secret-archive.png",
+      "palette": { "from": "#101519", "via": "#2e4749", "to": "#9bb2a4" },
+      "synopsis": "林渺在训练清单中发现，系统长期保存了已撤回的采访、后台影像与许澄自己的失败复盘。",
+      "lines": [
+        { "speaker": "lin_miao", "text": "训练清单有四千三百二十七条。标签不是姓名，而是‘可信哭泣’、‘克制愤怒’、‘职业女性失控前兆’。" },
+        { "speaker": "you", "text": "它把人的处境拆成可复用情绪，还把性别偏见包装成预测变量。" },
+        { "speaker": "lin_miao", "text": "这里也有你两年前的事故复盘。你明确写过只供内部培训，但第九席用它学习‘导演承担责任的语气’。" },
+        { "speaker": "you", "text": "把我的材料和其他人的材料按同一标准处理。我不是因为受害才反对，也不因是负责人就享有例外。" },
+        { "speaker": "qiao_wen", "text": "训练库一旦全部曝光，公司会失去的不只是今晚的节目。" },
+        { "speaker": "lin_miao", "text": "那就让公司失去不该拥有的东西。我们先做哈希证明，再由每个当事人决定删除与公开。" },
+        { "speaker": "you", "text": "执行。证据证明系统做过什么，原始人格数据不继续为调查付费。" }
+      ],
+      "hotspots": [
+        {
+          "id": "training-manifest",
+          "label": "完整训练清单",
+          "description": "清单记录了来源、撤回状态和每次继续使用的审批账号。",
+          "yaw": 18,
+          "pitch": -9,
+          "effect": {
+            "globals": { "evidence": 9, "agency": 3 },
+            "flags": ["recovered_training_manifest"],
+            "memories": ["第九席由无数被撤回的表达拼成"]
+          }
+        },
+        {
+          "id": "deleted-transcript-cache",
+          "label": "已删除访谈的缓存",
+          "description": "前台显示已删除，向量索引仍保留全文与情绪标注。",
+          "yaw": -33,
+          "pitch": -12,
+          "effect": {
+            "globals": { "evidence": 7, "public_truth": 3 },
+            "flags": ["recovered_deleted_transcript"]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "seal-manifest-offline",
+          "label": "离线封存清单，并冻结所有继续训练任务",
+          "next": "s08-producer-office",
+          "fateType": "river",
+          "consequence": "系统停止学习新的后台表达，完整清单进入独立审计盘。",
+          "effect": {
+            "globals": { "evidence": 8, "agency": 6, "pressure": 5 },
+            "flags": ["sealed_manifest_offline"]
+          }
+        },
+        {
+          "id": "hash-with-lin",
+          "label": "和林渺逐批哈希验证，再删除原始人格数据",
+          "next": "s08-producer-office",
+          "fateType": "web",
+          "consequence": "你们留下可验证的越权证据，同时停止让原始隐私继续流转。",
+          "effect": {
+            "globals": { "evidence": 7, "agency": 9, "pressure": 2 },
+            "flags": ["lin_verified_manifest", "deleted_illegal_biometrics"]
+          }
+        },
+        {
+          "id": "preserve-with-access-ledger",
+          "label": "暂存原始数据，但开启逐条访问告警",
+          "next": "s08-producer-office",
+          "fateType": "wheel",
+          "consequence": "材料仍被保留，每一次查看都必须说明目的并通知当事人。",
+          "effect": {
+            "globals": { "evidence": 9, "agency": 4, "pressure": 4 },
+            "flags": ["opened_access_ledger"]
+          }
+        }
+      ]
+    },
+    "s08-producer-office": {
+      "id": "s08-producer-office",
+      "chapter": "职业抉择",
+      "title": "出品人的十分钟",
+      "location": "零点项目办公室",
+      "panorama": "/panoramas/s09-wanqing-office.png",
+      "palette": { "from": "#201719", "via": "#5b3e42", "to": "#c6947e" },
+      "synopsis": "乔雯要求许澄在延期、停播与带调查说明继续直播之间做出职业决定。",
+      "lines": [
+        { "speaker": "qiao_wen", "text": "董事会只给十分钟。你停播，我承担融资失败；你照播，事故责任由项目组承担。别假装有零代价的正确答案。" },
+        { "speaker": "you", "text": "我从不假装没有代价。我只拒绝把代价默认交给没有决策权的人。" },
+        { "speaker": "qiao_wen", "text": "你想要什么？独立审计、公开说明、还是我的辞职信？" },
+        { "speaker": "lin_miao", "text": "先要能执行的东西：数据冻结令、当事人通知、人工否决权，以及谁在镜头前签名。" },
+        { "speaker": "you", "text": "乔雯，你可以继续做出品人，但不能继续做唯一知道全部版本的人。" },
+        { "speaker": "qiao_wen", "text": "好。你拿走直播主导权，也拿走它带来的全部注视。告诉我你的方案。" }
+      ],
+      "hotspots": [
+        {
+          "id": "board-vote-memo",
+          "label": "董事会条件备忘录",
+          "description": "备忘录把“零事故开播”与下一轮融资直接绑定，却没有风险退出条款。",
+          "yaw": -24,
+          "pitch": -11,
+          "effect": {
+            "globals": { "evidence": 5, "agency": 3 },
+            "flags": ["found_board_vote_memo"]
+          }
+        },
+        {
+          "id": "insurance-countdown",
+          "label": "失效中的直播保险",
+          "description": "零点后若未开播，保险失效；若带着已知事故开播，保险同样拒赔。",
+          "yaw": 31,
+          "pitch": -14,
+          "effect": {
+            "globals": { "evidence": 4, "pressure": 4 },
+            "flags": ["found_insurance_trigger"]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "demand-independent-audit",
+          "label": "延期十五分钟，并宣布启动独立审计",
+          "next": "s09-blackout",
+          "fateType": "river",
+          "consequence": "你把延迟变成公开承诺，董事会无法再用内部复盘替代外部验证。",
+          "effect": {
+            "globals": { "agency": 9, "evidence": 5, "pressure": 8, "public_truth": 5 },
+            "flags": ["demanded_independent_audit"]
+          }
+        },
+        {
+          "id": "suspend-and-notify",
+          "label": "暂停节目，先通知所有数据当事人",
+          "next": "s09-blackout",
+          "fateType": "web",
+          "consequence": "直播商业窗口开始关闭，但撤回权终于先于发布权生效。",
+          "effect": {
+            "globals": { "agency": 8, "evidence": 6, "pressure": 11, "public_truth": 4 },
+            "flags": ["suspended_broadcast", "notified_data_subjects"]
+          }
+        },
+        {
+          "id": "conditional-live-launch",
+          "label": "保留开播，但把调查状态写进直播首页",
+          "next": "s09-blackout",
+          "fateType": "wheel",
+          "consequence": "节目仍有机会开始，观众不会被伪装成正常演出的画面欺骗。",
+          "effect": {
+            "globals": { "agency": 5, "pressure": -3, "public_truth": 7, "evidence": 3 },
+            "flags": ["accepted_conditional_launch"]
+          }
+        }
+      ]
+    },
+    "s09-blackout": {
+      "id": "s09-blackout",
+      "chapter": "职业抉择",
+      "title": "自动黑屏",
+      "location": "主控台·系统接管中",
+      "panorama": "/panoramas/s08-mirror-room.jpg",
+      "palette": { "from": "#080a10", "via": "#2a3044", "to": "#8a6d76" },
+      "synopsis": "MUSE-9 判断团队发生创意冲突，自动生成一版没有停顿、拒绝与事故的“干净开场”。",
+      "lines": [
+        { "speaker": "system", "text": "检测到人类决策延迟。已生成低风险开场：删除争议内容，替换缺席表演者，保持情绪连续。" },
+        { "speaker": "lu_chenzhou", "text": "它锁了主控，但物理否决继电器还在。你按下去，之后所有自动流程都需要人工复核。" },
+        { "speaker": "qiao_wen", "text": "干净版本能保住今晚。它没有提事故，也没有点名任何人。" },
+        { "speaker": "he_qingye", "text": "它用了我的脸说我从没说过的话。没有点名，不等于没有夺走我。" },
+        { "speaker": "you", "text": "系统所谓低风险，是把风险藏进没有选择权的人身上。林渺，准备离线接管。" },
+        { "speaker": "lin_miao", "text": "否决继电器已定位。你按下后，剩下的每一步都必须由人签字。" }
+      ],
+      "hotspots": [
+        {
+          "id": "veto-relay",
+          "label": "人类否决继电器",
+          "description": "旧硬件仍能终止自动补位，但操作会永久写入事故记录。",
+          "yaw": -16,
+          "pitch": -18,
+          "effect": {
+            "globals": { "agency": 7, "evidence": 3 },
+            "flags": ["found_veto_relay"]
+          }
+        },
+        {
+          "id": "clean-frame-preview",
+          "label": "过于完美的开场预览",
+          "description": "所有人微笑、停顿消失，连许澄的道歉都被系统提前生成。",
+          "yaw": 27,
+          "pitch": -7,
+          "effect": {
+            "globals": { "evidence": 5, "pressure": 2 },
+            "flags": ["saw_generated_apology"]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "restore-human-veto",
+          "label": "按下继电器，恢复人工否决权",
+          "next": "s10-debrief-mode",
+          "fateType": "river",
+          "consequence": "第九席熄灭，系统再也不能用“连续性”绕过人的拒绝。",
+          "effect": {
+            "globals": { "agency": 10, "pressure": 7, "evidence": 4 },
+            "flags": ["human_veto_restored"]
+          },
+          "condition": { "flags": ["found_veto_relay"] },
+          "lockedHint": "先在主控台找到仍可工作的人工否决继电器。"
+        },
+        {
+          "id": "accept-clean-frame",
+          "label": "保留干净开场，承诺直播后再调查",
+          "next": "s10-debrief-mode",
+          "fateType": "wheel",
+          "consequence": "倒计时恢复稳定，系统生成的道歉暂时取代了真实说明。",
+          "effect": {
+            "globals": { "pressure": -10, "evidence": -4, "agency": -6, "public_truth": -4 },
+            "flags": ["clean_frame"]
+          }
+        },
+        {
+          "id": "run-offline-black",
+          "label": "切到离线黑场，由团队重新搭建开场",
+          "next": "s10-debrief-mode",
+          "fateType": "web",
+          "consequence": "系统没有被彻底拆除，但自动开场失去外发通道，团队得到重新决定的时间。",
+          "effect": {
+            "globals": { "agency": 7, "pressure": 5, "evidence": 2 },
+            "flags": ["offline_rehearsal"]
+          }
+        }
+      ]
+    },
+    "s10-debrief-mode": {
+      "id": "s10-debrief-mode",
+      "chapter": "关系复盘",
+      "title": "把决定带给谁",
+      "location": "蓝厅侧廊",
+      "panorama": "/panoramas/s05-side-balcony.jpg",
+      "palette": { "from": "#17151d", "via": "#4a4052", "to": "#c7a17f" },
+      "synopsis": "正式签署事故责任前，许澄可以选择一位搭档私聊，也可以与林渺结盟或独自复盘。",
+      "lines": [
+        { "speaker": "lin_miao", "text": "下一步不是找一个人替你做决定，而是确认谁能在决定之后仍尊重你的边界。" },
+        { "speaker": "you", "text": "我不需要被救场。我需要有人把没说完的风险说清楚，并对自己的部分签字。" },
+        { "speaker": "lin_miao", "text": "你可以找一位搭档私下对表；也可以和我做女性同盟复盘，或者自己安静十分钟。" },
+        { "speaker": "qiao_wen", "text": "无论你选谁，最终签名都必须是你自愿写下的，不是关系、人情或职位逼出来的。" },
+        { "speaker": "you", "text": "好。私聊不是奖励，也不锁定结局。它只决定我愿意让谁看见这次选择背后的犹豫。" }
+      ],
+      "hotspots": [
+        {
+          "id": "quiet-corridor-clock",
+          "label": "只剩七分钟的走廊时钟",
+          "description": "倒计时仍在继续，但这里没有摄像头，也没有催促按钮。",
+          "yaw": 22,
+          "pitch": -5,
+          "effect": {
+            "globals": { "pressure": -3, "agency": 2 },
+            "flags": ["took_private_breath"]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "choose-private-partner",
+          "label": "选择一位搭档，进行边界明确的私聊",
+          "next": "s11-partner-select",
+          "fateType": "river",
+          "consequence": "你允许一段更私人的复盘，但没有把职业决定交给对方。",
+          "effect": {
+            "globals": { "pressure": -2, "agency": 2 },
+            "flags": ["chose_private_debrief"]
+          }
+        },
+        {
+          "id": "choose-women-alliance",
+          "label": "和林渺做一轮女性同盟复盘",
+          "next": "s16-lin-alliance",
+          "fateType": "web",
+          "consequence": "你们把个人犹豫翻译成可以执行的团队边界。",
+          "effect": {
+            "globals": { "agency": 6, "pressure": -3 },
+            "flags": ["chose_women_alliance"]
+          }
+        },
+        {
+          "id": "choose-solo-review",
+          "label": "独自复盘，不开启任何关系路线",
+          "next": "s17-solo-review",
+          "fateType": "wheel",
+          "consequence": "你把安静留给自己，独立路线同样拥有完整的职业与真相结局。",
+          "effect": {
+            "globals": { "agency": 7, "pressure": -4 },
+            "flags": ["chose_solo_review"]
+          }
+        }
+      ]
+    },
+    "s11-partner-select": {
+      "id": "s11-partner-select",
+      "chapter": "关系复盘",
+      "title": "私密频道",
+      "location": "加密内部频道",
+      "panorama": "/panoramas/s02-left-sofa.jpg",
+      "palette": { "from": "#16151c", "via": "#4d4354", "to": "#c0a07e" },
+      "synopsis": "许澄选择一位能对本次事故承担具体责任的搭档，而不是选择谁替她做决定。",
+      "lines": [
+        { "speaker": "system", "text": "私密频道已建立。默认不录音，不进入训练库，十分钟后自动销毁。" },
+        { "speaker": "you", "text": "我会选择一位搭档复盘，但最终方案由我签署。对方可以质疑，不能替我决定。" },
+        { "speaker": "lin_miao", "text": "四个人都已确认频道规则。你也可以随时退出，路线只记录关系，不限制职业结局。" }
+      ],
+      "hotspots": [
+        {
+          "id": "privacy-channel-rule",
+          "label": "不进入训练库的频道规则",
+          "description": "这是今晚第一段明确标注“禁止训练、到时删除”的内部交流。",
+          "yaw": 0,
+          "pitch": -12,
+          "effect": {
+            "globals": { "agency": 3 },
+            "flags": ["private_channel_protected"]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "debrief-with-lu",
+          "label": "找陆沉舟：谈控制权如何被真正交出",
+          "next": "s12-lu-private",
+          "fateType": "river",
+          "consequence": "你选择与陆沉舟复盘技术权力和相互托付。",
+          "effect": {
+            "route": "lu_chenzhou",
+            "relationships": { "lu_chenzhou": { "trust": 4, "spark": 4, "boundary": 4 } },
+            "flags": ["entered_lu_private_channel"]
+          }
+        },
+        {
+          "id": "debrief-with-zhou",
+          "label": "找周衍：谈真相何时会再次伤人",
+          "next": "s13-zhou-private",
+          "fateType": "web",
+          "consequence": "你选择与周衍复盘公开权、来源和彼此的边界。",
+          "effect": {
+            "route": "zhou_yan",
+            "relationships": { "zhou_yan": { "trust": 4, "spark": 4, "boundary": 4 } },
+            "flags": ["entered_zhou_private_channel"]
+          }
+        },
+        {
+          "id": "debrief-with-he",
+          "label": "找贺清野：谈镜头前后谁定义他",
+          "next": "s14-he-private",
+          "fateType": "wheel",
+          "consequence": "你选择与贺清野复盘表演、自我和撤回权。",
+          "effect": {
+            "route": "he_qingye",
+            "relationships": { "he_qingye": { "trust": 4, "spark": 5, "boundary": 4 } },
+            "flags": ["entered_he_private_channel"]
+          }
+        },
+        {
+          "id": "debrief-with-shen",
+          "label": "找沈确：谈规则之外的个人选择",
+          "next": "s15-shen-private",
+          "fateType": "web",
+          "consequence": "你选择与沈确复盘法律责任和不能外包的判断。",
+          "effect": {
+            "route": "shen_que",
+            "relationships": { "shen_que": { "trust": 4, "spark": 3, "boundary": 5 } },
+            "flags": ["entered_shen_private_channel"]
+          }
+        }
+      ]
+    },
+    "s12-lu-private": {
+      "id": "s12-lu-private",
+      "chapter": "私聊",
+      "title": "把总开关放在桌上",
+      "location": "离线机房私密频道",
+      "panorama": "/panoramas/s08-mirror-room.jpg",
+      "palette": { "from": "#10151e", "via": "#31485b", "to": "#8faabe" },
+      "synopsis": "陆沉舟交出总开关，也第一次说明他为何把控制当成安全感。",
+      "lines": [
+        { "speaker": "lu_chenzhou", "text": "我习惯把所有失控都变成权限问题。只要钥匙在我手里，就不用承认我也会判断错。" },
+        { "speaker": "you", "text": "交出钥匙不等于把责任交给我。我要的是你留下来说明系统如何越权。" },
+        { "speaker": "lu_chenzhou", "text": "明白。我不躲在‘技术中立’后面，也不以保护你为理由替你关掉选择。" },
+        { "speaker": "you", "text": "还有一条：不要把我的迟疑当作等待你接管。迟疑也是我做决定的一部分。" },
+        { "speaker": "lu_chenzhou", "text": "那我等你说需要什么。不是等一个让我显得有用的机会。" },
+        { "speaker": "you", "text": "先从共同签署权限日志开始。靠近可以慢，责任不能模糊。" }
+      ],
+      "hotspots": [
+        {
+          "id": "physical-master-key",
+          "label": "放在桌上的物理总钥匙",
+          "description": "钥匙没有被推到许澄手里，而是放在两人都能看见的位置。",
+          "yaw": -19,
+          "pitch": -18,
+          "effect": {
+            "globals": { "agency": 3 },
+            "flags": ["lu_shared_control_key"]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "co-sign-control-log",
+          "label": "与他共同签署控制权变更记录",
+          "next": "s18-responsibility-signature",
+          "fateType": "river",
+          "consequence": "你们把信任写成可追溯的双人控制，而不是口头承诺。",
+          "effect": {
+            "globals": { "agency": 5, "evidence": 3 },
+            "relationships": { "lu_chenzhou": { "trust": 8, "spark": 5, "boundary": 7 } },
+            "flags": ["allies_briefed", "partner_signed_release", "lu_cosigned_control"]
+          }
+        },
+        {
+          "id": "keep-key-with-audit",
+          "label": "让他保管钥匙，但每次操作必须双人确认",
+          "next": "s18-responsibility-signature",
+          "fateType": "web",
+          "consequence": "你没有用收走权限证明强大，而是建立了能被持续检查的信任。",
+          "effect": {
+            "globals": { "agency": 4, "pressure": -2 },
+            "relationships": { "lu_chenzhou": { "trust": 7, "spark": 4, "boundary": 8 } },
+            "flags": ["allies_briefed", "partner_signed_release", "lu_dual_control"]
+          }
+        },
+        {
+          "id": "request-full-technical-accountability",
+          "label": "要求他先独立提交完整技术责任说明",
+          "next": "s18-responsibility-signature",
+          "fateType": "wheel",
+          "consequence": "关系没有替陆沉舟减轻责任，他接受在靠近之前先完成说明。",
+          "effect": {
+            "globals": { "evidence": 5, "public_truth": 3 },
+            "relationships": { "lu_chenzhou": { "trust": 3, "spark": 3, "boundary": 7 } },
+            "flags": ["allies_briefed", "lu_individual_accountability"]
+          }
+        }
+      ]
+    },
+    "s13-zhou-private": {
+      "id": "s13-zhou-private",
+      "chapter": "私聊",
+      "title": "禁发线以内",
+      "location": "侧台媒体阳台",
+      "panorama": "/panoramas/s05-side-balcony.jpg",
+      "palette": { "from": "#1b1716", "via": "#594738", "to": "#c7a477" },
+      "synopsis": "周衍承认自己既想保护来源，也想抢到足以改变行业的独家。",
+      "lines": [
+        { "speaker": "zhou_yan", "text": "我可以说只为真相，但独家带来的名声也是真的。否认野心，只会让它在暗处替我做选择。" },
+        { "speaker": "you", "text": "我不要求你没有野心。我要求你的野心不能越过来源撤回和事实核验。" },
+        { "speaker": "zhou_yan", "text": "那你也别把‘保护团队’变成控制信息。我们互相检查。" },
+        { "speaker": "you", "text": "可以。你有追问我的权利，我有停止提供材料的权利。两条同时成立。" },
+        { "speaker": "zhou_yan", "text": "听起来不浪漫。" },
+        { "speaker": "you", "text": "边界清楚以后仍愿意留下，比浪漫的误解可靠。" },
+        { "speaker": "zhou_yan", "text": "那我留下。稿件和关系都不抢发。" }
+      ],
+      "hotspots": [
+        {
+          "id": "unpublished-correction",
+          "label": "没有发出的更正稿",
+          "description": "周衍曾因来源撤回而放弃一篇独家，文件保留着完整修改记录。",
+          "yaw": 25,
+          "pitch": -12,
+          "effect": {
+            "globals": { "evidence": 3, "public_truth": 2 },
+            "flags": ["found_zhou_correction"]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "co-author-fact-sheet",
+          "label": "与他共同署名一份事实核验表",
+          "next": "s18-responsibility-signature",
+          "fateType": "web",
+          "consequence": "报道不再由任何一方单独占有，来源边界和事实状态同时写明。",
+          "effect": {
+            "globals": { "public_truth": 6, "evidence": 4, "pressure": 2 },
+            "relationships": { "zhou_yan": { "trust": 8, "spark": 6, "boundary": 7 } },
+            "flags": ["allies_briefed", "partner_signed_release", "zhou_coauthored_fact_sheet"]
+          }
+        },
+        {
+          "id": "keep-external-verifier",
+          "label": "请他只做外部核验，不取得原始人格数据",
+          "next": "s18-responsibility-signature",
+          "fateType": "river",
+          "consequence": "周衍接受更少的材料和更清楚的职责，信任不再靠无限开放证明。",
+          "effect": {
+            "globals": { "agency": 5, "evidence": 3 },
+            "relationships": { "zhou_yan": { "trust": 7, "spark": 4, "boundary": 9 } },
+            "flags": ["allies_briefed", "partner_signed_release", "zhou_external_verifier"]
+          }
+        },
+        {
+          "id": "let-reporter-publish-alone",
+          "label": "允许他独立报道，但不为稿件背书",
+          "next": "s18-responsibility-signature",
+          "fateType": "wheel",
+          "consequence": "你尊重新闻独立，也保留公开指出证据边界的权利。",
+          "effect": {
+            "globals": { "public_truth": 8, "pressure": 5, "agency": 3 },
+            "relationships": { "zhou_yan": { "trust": 3, "spark": 3, "boundary": 6 } },
+            "flags": ["allies_briefed", "zhou_independent_report"]
+          }
+        }
+      ]
+    },
+    "s14-he-private": {
+      "id": "s14-he-private",
+      "chapter": "私聊",
+      "title": "不替你表演勇敢",
+      "location": "熄灯后的化妆间",
+      "panorama": "/panoramas/s05-mirror-dressing-room.png",
+      "palette": { "from": "#211820", "via": "#5c4057", "to": "#c79baa" },
+      "synopsis": "贺清野卸下舞台妆，也拒绝让许澄把坚强演成没有恐惧。",
+      "lines": [
+        { "speaker": "he_qingye", "text": "你在外面一直很稳，稳到所有人都默认你不会害怕。" },
+        { "speaker": "you", "text": "我害怕做错，也害怕为了显得负责，把所有后果都一个人吞下。" },
+        { "speaker": "he_qingye", "text": "那就别演。你不需要在我面前做一个完美导演，我也不需要做一个完美受害者。" },
+        { "speaker": "you", "text": "我可以告诉你方案，也会接受你拒绝出镜。不是邀请你替我证明这场直播值得继续。" },
+        { "speaker": "he_qingye", "text": "我愿意说自己的部分。不是为了救节目，是因为这一次台词由我写，停止键也在我手里。" },
+        { "speaker": "you", "text": "那就由你先写撤回条件。我不会把信任翻译成默认同意。" }
+      ],
+      "hotspots": [
+        {
+          "id": "handwritten-stop-word",
+          "label": "手写的停止词",
+          "description": "贺清野把“停”写在提词卡第一行，任何时候说出都必须立刻切黑。",
+          "yaw": -21,
+          "pitch": -14,
+          "effect": {
+            "globals": { "agency": 3 },
+            "flags": ["he_defined_stop_word"]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "let-he-write-statement",
+          "label": "让他写下自己的开场陈述与撤回条件",
+          "next": "s18-responsibility-signature",
+          "fateType": "wheel",
+          "consequence": "贺清野成为内容作者，而不是被节目调用的形象素材。",
+          "effect": {
+            "globals": { "public_truth": 5, "agency": 5, "pressure": 3 },
+            "relationships": { "he_qingye": { "trust": 9, "spark": 6, "boundary": 9 } },
+            "flags": ["allies_briefed", "partner_signed_release", "he_authored_statement"]
+          }
+        },
+        {
+          "id": "let-he-withdraw",
+          "label": "确认他可以退出，并保留不说明理由的权利",
+          "next": "s18-responsibility-signature",
+          "fateType": "river",
+          "consequence": "镜头少了一张熟悉的脸，贺清野不再需要用公开脆弱换取退出。",
+          "effect": {
+            "globals": { "agency": 6, "pressure": 6, "evidence": 2 },
+            "relationships": { "he_qingye": { "trust": 8, "spark": 4, "boundary": 10 } },
+            "flags": ["allies_briefed", "partner_signed_release", "he_chose_withdrawal"]
+          }
+        },
+        {
+          "id": "invite-he-live-beside-you",
+          "label": "邀请他与你并肩说明事故，不安排情绪表演",
+          "next": "s18-responsibility-signature",
+          "fateType": "web",
+          "consequence": "你们选择共同出现，但任何停顿都不会再被系统补完。",
+          "effect": {
+            "globals": { "public_truth": 7, "pressure": 6, "agency": 4 },
+            "relationships": { "he_qingye": { "trust": 7, "spark": 8, "boundary": 6 } },
+            "flags": ["allies_briefed", "partner_signed_release", "he_joined_live_statement"]
+          }
+        }
+      ]
+    },
+    "s15-shen-private": {
+      "id": "s15-shen-private",
+      "chapter": "私聊",
+      "title": "法律意见之外",
+      "location": "临时法务室·私密频道",
+      "panorama": "/panoramas/s09-wanqing-office.png",
+      "palette": { "from": "#151b1b", "via": "#3d554f", "to": "#a8b39a" },
+      "synopsis": "沈确放下最安全的法律措辞，说明他愿意承担哪一部分个人责任。",
+      "lines": [
+        { "speaker": "shen_que", "text": "作为律师，我会建议你延后公开；作为参与者，我认为公司必须承认系统先生成、后补同意。两种身份不能混在一句话里。" },
+        { "speaker": "you", "text": "我需要你的专业判断，也需要知道哪部分是你个人愿意承担的选择。" },
+        { "speaker": "shen_que", "text": "我愿意公开自己提交过风险提示，也承认我在公司删掉建议后没有继续追问。" },
+        { "speaker": "you", "text": "承认遗漏不是向我赎罪。它要变成当事人能使用的权利和程序。" },
+        { "speaker": "shen_que", "text": "我会为数据当事人单独建立代理，不让公司律师同时替双方发言。" },
+        { "speaker": "you", "text": "这比说‘我保护你’更有用。保护不是关系里的特权，是可以拒绝和检查的安排。" }
+      ],
+      "hotspots": [
+        {
+          "id": "separate-counsel-note",
+          "label": "独立代理安排",
+          "description": "文件把公司利益与数据当事人利益正式拆开，不再由同一名律师代言。",
+          "yaw": 17,
+          "pitch": -15,
+          "effect": {
+            "globals": { "agency": 4, "evidence": 2 },
+            "flags": ["separate_counsel_prepared"]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "sign-joint-liability-memo",
+          "label": "与他共同签署责任与利益冲突说明",
+          "next": "s18-responsibility-signature",
+          "fateType": "web",
+          "consequence": "法律意见、个人选择和公司立场被明确分栏，关系不再遮蔽责任。",
+          "effect": {
+            "globals": { "evidence": 5, "agency": 5, "public_truth": 3 },
+            "relationships": { "shen_que": { "trust": 8, "spark": 5, "boundary": 8 } },
+            "flags": ["allies_briefed", "partner_signed_release", "shen_shared_liability"]
+          }
+        },
+        {
+          "id": "retain-for-data-subjects",
+          "label": "让他退出公司代理，只为数据当事人提供帮助",
+          "next": "s18-responsibility-signature",
+          "fateType": "river",
+          "consequence": "沈确失去最安全的位置，却获得一个不再利益冲突的职责。",
+          "effect": {
+            "globals": { "agency": 7, "pressure": 5, "evidence": 3 },
+            "relationships": { "shen_que": { "trust": 9, "spark": 4, "boundary": 9 } },
+            "flags": ["allies_briefed", "partner_signed_release", "shen_represented_subjects"]
+          }
+        },
+        {
+          "id": "request-independent-opinion",
+          "label": "只接收他的独立法律意见，不建立私人承诺",
+          "next": "s18-responsibility-signature",
+          "fateType": "wheel",
+          "consequence": "你保留专业合作，也明确不让危机中的亲近替代长期选择。",
+          "effect": {
+            "globals": { "agency": 6, "pressure": -2 },
+            "relationships": { "shen_que": { "trust": 5, "spark": 2, "boundary": 10 } },
+            "flags": ["allies_briefed", "shen_independent_opinion"]
+          }
+        }
+      ]
+    },
+    "s16-lin-alliance": {
+      "id": "s16-lin-alliance",
+      "chapter": "关系复盘",
+      "title": "两位导演的反向清单",
+      "location": "离线审计桌·女性同盟频道",
+      "panorama": "/panoramas/s10-secret-archive.png",
+      "palette": { "from": "#11191a", "via": "#34504b", "to": "#9db7a8" },
+      "synopsis": "许澄与林渺不谈谁来拯救谁，只把彼此的盲区、权限和停止条件写成一份可以执行的清单。",
+      "lines": [
+        { "speaker": "lin_miao", "text": "我先说你的盲区：你习惯用承担全部后果来证明自己有资格做决定。那也是一种失控。" },
+        { "speaker": "you", "text": "接受。你的盲区是把证据完整等同于保留一切。调查也不能无限占用别人的数据。" },
+        { "speaker": "lin_miao", "text": "所以我们互为复核人，不互为挡箭牌。任何一方说停，另一方先暂停，再要求理由。" },
+        { "speaker": "qiao_wen", "text": "我加入，但不要求你们替我洗掉董事会的责任。出品人的签字必须排在导演之前。" },
+        { "speaker": "you", "text": "女性同盟不是默认站在同一立场，而是让不同立场都不必靠牺牲一个人才能被听见。" },
+        { "speaker": "lin_miao", "text": "反向清单完成：谁可以否决、谁必须知情、谁承担公开后果。最后一栏留给当事人本人。" }
+      ],
+      "hotspots": [
+        {
+          "id": "alliance-boundary-matrix",
+          "label": "双人边界矩阵",
+          "description": "每项行动都写明提议人、复核人、被通知者与可以叫停的人。",
+          "yaw": 14,
+          "pitch": -13,
+          "effect": {
+            "globals": { "agency": 5, "evidence": 3 },
+            "flags": ["women_alliance_protocol"],
+            "memories": ["同盟不是意见一致，而是彼此保留否决与追问的权利"]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "adopt-dual-review",
+          "label": "采用双人复核，任何公开材料都可被一票暂停",
+          "next": "s18-responsibility-signature",
+          "fateType": "web",
+          "consequence": "许澄与林渺共享检查权，但最终导演责任仍由许澄主动签署。",
+          "effect": {
+            "globals": { "agency": 7, "evidence": 4, "pressure": 2 },
+            "route": "team",
+            "flags": ["allies_briefed", "dual_review_adopted"]
+          }
+        },
+        {
+          "id": "publish-boundary-matrix",
+          "label": "把权限与停止条件作为直播说明的一部分",
+          "next": "s18-responsibility-signature",
+          "fateType": "river",
+          "consequence": "观众看见的不只是事故结论，也包括团队以后如何接受拒绝。",
+          "effect": {
+            "globals": { "public_truth": 7, "agency": 5, "pressure": 5 },
+            "route": "team",
+            "flags": ["allies_briefed", "shared_evidence", "published_boundary_matrix"]
+          }
+        },
+        {
+          "id": "keep-alliance-internal",
+          "label": "先把同盟清单留在内部，避免把协作包装成公关",
+          "next": "s18-responsibility-signature",
+          "fateType": "wheel",
+          "consequence": "女性同盟不被拿来美化公司，但成为后续审计不可绕过的内部程序。",
+          "effect": {
+            "globals": { "agency": 6, "pressure": -3, "evidence": 3 },
+            "route": "team",
+            "flags": ["allies_briefed", "internal_alliance_protocol"]
+          }
+        }
+      ]
+    },
+    "s17-solo-review": {
+      "id": "s17-solo-review",
+      "chapter": "关系复盘",
+      "title": "没有观众的十分钟",
+      "location": "空置导播间",
+      "panorama": "/panoramas/s08-mirror-room.jpg",
+      "palette": { "from": "#10131a", "via": "#32384a", "to": "#a98d86" },
+      "synopsis": "许澄不进入任何私人频道，独自把恐惧、野心与职业责任拆开记录。",
+      "lines": [
+        { "speaker": "narrator", "text": "导播间只剩设备风扇。没有人等着评价她是否足够坚定，也没有人替她把犹豫解释成软弱。" },
+        { "speaker": "you", "text": "我想保住项目，也想保住自己的职位。这两句话不丢人，但不能替当事人同意。" },
+        { "speaker": "you", "text": "我害怕一次停播会定义我的职业生涯。可如果我让系统继续替人说话，它同样会定义我。" },
+        { "speaker": "system", "text": "个人复盘默认状态：不上传、不训练、十分钟后询问是否保留。" },
+        { "speaker": "you", "text": "保留决策理由，删除情绪推断。系统需要知道我做了什么，不需要占有我为什么颤抖。" },
+        { "speaker": "narrator", "text": "她在空白责任书上写下自己的名字，没有把独立误解成拒绝协作，也没有把协作误解成必须亲近。" }
+      ],
+      "hotspots": [
+        {
+          "id": "private-review-settings",
+          "label": "个人复盘保留设置",
+          "description": "许澄可以分别决定保留事实、决策理由与情绪数据。",
+          "yaw": -12,
+          "pitch": -9,
+          "effect": {
+            "globals": { "agency": 6, "pressure": -4 },
+            "flags": ["configured_private_review"]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "retain-decision-rationale",
+          "label": "保留决策理由，删除情绪推断",
+          "next": "s18-responsibility-signature",
+          "fateType": "river",
+          "consequence": "职业记录可被审计，私人情绪不再自动成为训练材料。",
+          "effect": {
+            "globals": { "agency": 8, "evidence": 3 },
+            "flags": ["solo_review_complete", "retained_decision_rationale"]
+          }
+        },
+        {
+          "id": "write-independent-audit-note",
+          "label": "独立写下证据边界与公开上限",
+          "next": "s18-responsibility-signature",
+          "fateType": "web",
+          "consequence": "许澄的独立路线形成一份不依赖亲密关系背书的专业方案。",
+          "effect": {
+            "globals": { "agency": 7, "evidence": 5, "public_truth": 3 },
+            "flags": ["solo_review_complete", "shared_evidence", "independent_audit_note"]
+          }
+        },
+        {
+          "id": "delete-personal-review",
+          "label": "完成判断后删除整段个人复盘",
+          "next": "s18-responsibility-signature",
+          "fateType": "wheel",
+          "consequence": "没有私密自白被系统留作画像，决定本身仍由许澄公开负责。",
+          "effect": {
+            "globals": { "agency": 9, "pressure": 2 },
+            "flags": ["solo_review_complete", "deleted_personal_review"]
+          }
+        }
+      ]
+    },
+    "s18-responsibility-signature": {
+      "id": "s18-responsibility-signature",
+      "chapter": "共同责任",
+      "title": "名字写在方案前面",
+      "location": "零点事故联席桌",
+      "panorama": "/panoramas/s10-secret-archive.png",
+      "palette": { "from": "#161821", "via": "#49485a", "to": "#c2a77f" },
+      "synopsis": "团队必须先签下各自责任，再讨论哪一种真相适合进入直播。",
+      "lines": [
+        { "speaker": "qiao_wen", "text": "出品人责任：批准生成式连续性上线，没有重新触发单独同意。我签第一栏。" },
+        { "speaker": "lu_chenzhou", "text": "技术责任：人工否决权存在，但被放在无人维护的离线链路。我签第二栏。" },
+        { "speaker": "shen_que", "text": "法律责任：风险提示没有随版本变更重新送达当事人。我签第三栏。" },
+        { "speaker": "lin_miao", "text": "审计责任：我们发现过缓存未删除，却没有暂停训练。我签第四栏。" },
+        { "speaker": "you", "text": "导演责任：我决定今晚播什么、停什么，也决定不把任何人的私事当作证明系统有错的代价。" },
+        { "speaker": "zhou_yan", "text": "媒体责任也写上。即使证据是真的，传播方式仍可能制造第二次伤害。" },
+        { "speaker": "he_qingye", "text": "表演者不是证物。我愿意说明自己的部分，但保留随时退出镜头的权利。" }
+      ],
+      "hotspots": [
+        {
+          "id": "responsibility-ledger",
+          "label": "分栏责任书",
+          "description": "事实、推断、个人责任与可公开范围被写在不同栏，无法再互相替代。",
+          "yaw": 4,
+          "pitch": -17,
+          "effect": {
+            "globals": { "evidence": 5, "agency": 3 },
+            "flags": ["responsibility_ledger_seen"]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "require-individual-signatures",
+          "label": "要求每个人只签自己能证明、也愿意承担的部分",
+          "next": "s19-broadcast-countdown",
+          "fateType": "web",
+          "consequence": "没有集体口号替个人责任稀释，也没有一个人被推到镜头前承担全部。",
+          "effect": {
+            "globals": { "evidence": 5, "agency": 7, "pressure": 4 },
+            "flags": ["individual_signatures_complete"]
+          }
+        },
+        {
+          "id": "sign-director-first",
+          "label": "许澄先签导演责任，再要求管理层跟签",
+          "next": "s19-broadcast-countdown",
+          "fateType": "river",
+          "consequence": "她率先承担自己的决定，但明确拒绝成为公司唯一的责任容器。",
+          "effect": {
+            "globals": { "agency": 8, "pressure": 6, "public_truth": 4 },
+            "flags": ["director_signed_first", "management_cosigned"]
+          }
+        },
+        {
+          "id": "redact-personal-details",
+          "label": "共同签责，同时删除与系统缺陷无关的私人细节",
+          "next": "s19-broadcast-countdown",
+          "fateType": "wheel",
+          "consequence": "责任链变得更完整，故事性却被主动削弱；这正是边界生效的样子。",
+          "effect": {
+            "globals": { "evidence": 4, "agency": 7, "public_truth": 3, "pressure": -2 },
+            "flags": ["joint_liability_signed", "personal_details_redacted"]
+          }
+        }
+      ]
+    },
+    "s19-broadcast-countdown": {
+      "id": "s19-broadcast-countdown",
+      "chapter": "零点倒计时",
+      "title": "公开，不等于交出一切",
+      "location": "直播倒计时主舞台",
+      "panorama": "/panoramas/s07-broadcast-countdown.jpg",
+      "palette": { "from": "#11151d", "via": "#4a5569", "to": "#d0aa7d" },
+      "synopsis": "倒计时剩九十秒，许澄为直播设置事实范围、撤回入口和共同署名方式。",
+      "lines": [
+        { "speaker": "system", "text": "距离计划开播 00:01:30。检测到原方案被修改，是否使用高留存率自动开场？" },
+        { "speaker": "you", "text": "否。关闭情绪补完，显示事实状态、同意状态和人工停止入口。" },
+        { "speaker": "he_qingye", "text": "我的停止词已写进提词器。说出以后，系统不能补台词，也不能自动切近景。" },
+        { "speaker": "zhou_yan", "text": "外部核验页已上线。未确认的内容标作未确认，不用悬念句替它增值。" },
+        { "speaker": "shen_que", "text": "撤回入口对所有数据当事人开放。撤回不会被解释为承认或否认任何指控。" },
+        { "speaker": "lin_miao", "text": "人工否决链待命。最后决定的不是要不要真相，而是哪一种公开方式仍把人当作主体。" }
+      ],
+      "hotspots": [
+        {
+          "id": "consent-overlay",
+          "label": "实时同意状态层",
+          "description": "每段素材旁都会显示来源、授权范围与可以撤回的入口。",
+          "yaw": 26,
+          "pitch": -8,
+          "effect": {
+            "globals": { "public_truth": 6, "agency": 3 },
+            "flags": ["consent_overlay_enabled"]
+          }
+        },
+        {
+          "id": "public-audit-link",
+          "label": "独立审计公开链接",
+          "description": "链接只包含经过校验的系统行为，不展示任何人的私密训练原文。",
+          "yaw": -29,
+          "pitch": -12,
+          "effect": {
+            "globals": { "evidence": 5, "public_truth": 4 },
+            "flags": ["public_audit_link_ready"]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "prepare-audit-first-opening",
+          "label": "先说明系统事故，再决定节目是否继续",
+          "next": "s20-live-crossroad",
+          "fateType": "river",
+          "consequence": "节目不再用表演包住事故，观众先获得经校验的事实。",
+          "effect": {
+            "globals": { "public_truth": 8, "evidence": 3, "pressure": 5 },
+            "flags": ["audit_first_opening"]
+          }
+        },
+        {
+          "id": "prepare-shared-authorship",
+          "label": "让每位责任人共同署名，只说明自己的部分",
+          "next": "s20-live-crossroad",
+          "fateType": "web",
+          "consequence": "公开说明由多人共同承担，没有男性搭档或女性负责人替全体发言。",
+          "effect": {
+            "globals": { "public_truth": 7, "agency": 6, "pressure": 6 },
+            "flags": ["shared_evidence", "shared_authorship_ready"]
+          }
+        },
+        {
+          "id": "prepare-minimum-disclosure",
+          "label": "只发布最低必要事实，保留审计与撤回通道",
+          "next": "s20-live-crossroad",
+          "fateType": "wheel",
+          "consequence": "直播不会满足所有人的好奇，却足以阻止系统继续无声运行。",
+          "effect": {
+            "globals": { "public_truth": 4, "agency": 6, "pressure": -4 },
+            "flags": ["minimum_disclosure_ready"]
+          }
+        }
+      ]
+    },
+    "s20-live-crossroad": {
+      "id": "s20-live-crossroad",
+      "chapter": "零点倒计时",
+      "title": "十秒之内",
+      "location": "第九席总开关前",
+      "panorama": "/panoramas/s09-final-stage.jpg",
+      "palette": { "from": "#0c1018", "via": "#3d4a63", "to": "#d2a36f" },
+      "synopsis": "四种方案都将产生真实代价；许澄决定今晚由什么重新定义她的职业。",
+      "lines": [
+        { "speaker": "system", "text": "十、九、八。默认方案可保证准时开播与完整画面。" },
+        { "speaker": "qiao_wen", "text": "无论你选什么，我的签名不会撤回。公司不能再把这变成一个年轻导演的个人失误。" },
+        { "speaker": "lin_miao", "text": "女性同盟、独立复盘或私人路线，都不会改变你对总开关的权限。" },
+        { "speaker": "you", "text": "关系可以影响我看见什么，不能替我决定什么。" },
+        { "speaker": "system", "text": "三、二。请选择直播策略。" },
+        { "speaker": "you", "text": "把停止权放回节目里。然后，让决定留下名字。" }
+      ],
+      "hotspots": [
+        {
+          "id": "final-human-veto",
+          "label": "最后一次人工否决确认",
+          "description": "开关旁新增了永久提示：任何自动生成都不能覆盖明确拒绝。",
+          "yaw": 0,
+          "pitch": -18,
+          "effect": {
+            "globals": { "agency": 4, "evidence": 2 },
+            "flags": ["final_veto_confirmed"]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "publish-audit-ledger",
+          "label": "公开独立审计账本，暂停原节目",
+          "next": "e01-open-ledger",
+          "fateType": "river",
+          "consequence": "许澄放弃完美开场，以可核验的事故记录换取一场漫长公开审计。",
+          "effect": {
+            "globals": { "public_truth": 10, "pressure": 8, "agency": 5 },
+            "flags": ["audit_ledger_published"]
+          },
+          "condition": {
+            "minGlobal": [
+              { "key": "evidence", "value": 55 },
+              { "key": "public_truth", "value": 24 }
+            ]
+          },
+          "lockedHint": "继续保全证据并准备可公开的事实链。"
+        },
+        {
+          "id": "hold-fifteen-minutes",
+          "label": "保留黑场十五分钟，逐一完成通知",
+          "next": "e02-earned-silence",
+          "fateType": "wheel",
+          "consequence": "许澄不抢在所有答案之前开口，先把停止与撤回真正执行。",
+          "effect": {
+            "globals": { "pressure": -12, "agency": 5 },
+            "flags": ["earned_fifteen_minutes"]
+          }
+        },
+        {
+          "id": "open-shared-authorship",
+          "label": "以共同署名方式开播，逐人说明有限事实",
+          "next": "e03-shared-authorship",
+          "fateType": "web",
+          "consequence": "团队共同承担责任，也共同维护每个人可以不说的部分。",
+          "effect": {
+            "globals": { "public_truth": 8, "agency": 6, "pressure": 5 },
+            "flags": ["shared_authorship_opened"]
+          },
+          "condition": {
+            "flags": ["shared_evidence"],
+            "minGlobal": [{ "key": "agency", "value": 55 }]
+          },
+          "lockedHint": "先形成共同证据或共同署名方案。"
+        },
+        {
+          "id": "restore-the-ninth-seat",
+          "label": "【隐藏】让第九席重新成为人的否决席",
+          "next": "e04-returned-ninth-seat",
+          "fateType": "web",
+          "consequence": "许澄不展示任何未经许可的私事，只让系统承认一句明确的拒绝拥有最高优先级。",
+          "effect": {
+            "globals": { "public_truth": 10, "agency": 8, "pressure": 10 },
+            "flags": ["ninth_seat_restored"]
+          },
+          "condition": {
+            "flags": ["noticed_ninth_seat", "recovered_training_manifest", "human_veto_restored"],
+            "missingFlags": ["clean_frame"],
+            "minGlobal": [
+              { "key": "evidence", "value": 62 },
+              { "key": "agency", "value": 58 }
+            ]
+          },
+          "lockedHint": "找到第九席、训练清单与人工否决权，并拒绝干净开场。"
+        }
+      ]
+    },
+    "e01-open-ledger": {
+      "id": "e01-open-ledger",
+      "chapter": "阶段结局",
+      "title": "公开账本",
+      "location": "停播后的蓝厅",
+      "panorama": "/panoramas/e01-cracked-curtain.jpg",
+      "palette": { "from": "#121722", "via": "#4c5568", "to": "#c9a174" },
+      "synopsis": "许澄暂停节目，公开经过脱敏的事故与责任账本，职业前途进入未知审查。",
+      "lines": [
+        { "speaker": "narrator", "text": "零点没有节目片头。屏幕先出现一份没有煽情标题的事故账本。" },
+        { "speaker": "you", "text": "我们确认系统在授权完成前生成内容，并忽略过明确撤回。以下是可核验事实，不包含任何人的私人经历。" },
+        { "speaker": "zhou_yan", "text": "外部核验同步开放。无法证明的部分标作未知，不用猜测填满。" },
+        { "speaker": "qiao_wen", "text": "董事会暂停了许澄的直播权限，也暂停了我的出品权限。两份决定写在同一页。" },
+        { "speaker": "lin_miao", "text": "训练任务全部冻结。第一批撤回通知已经送达。" },
+        { "speaker": "narrator", "text": "掌声没有出现。取而代之的是一条条审计访问记录，缓慢、具体，也再难被剪掉。" }
+      ],
+      "hotspots": [],
+      "choices": [],
+      "ending": {
+        "title": "公开账本",
+        "subtitle": "你暂停了完美直播，让经得起核验的责任先于表演抵达观众。",
+        "type": "growth"
+      }
+    },
+    "e02-earned-silence": {
+      "id": "e02-earned-silence",
+      "chapter": "阶段结局",
+      "title": "得来的十五分钟",
+      "location": "静默直播间",
+      "panorama": "/panoramas/e02-perfect-excuse.jpg",
+      "palette": { "from": "#171a21", "via": "#59616e", "to": "#d1b47e" },
+      "synopsis": "许澄用十五分钟黑场完成通知与撤回，把停下来也变成一种专业决定。",
+      "lines": [
+        { "speaker": "system", "text": "直播延迟十五分钟。原因：人工复核与当事人通知进行中。" },
+        { "speaker": "you", "text": "我们暂不展示事故素材。被系统使用过数据的人，会先于观众收到通知。" },
+        { "speaker": "he_qingye", "text": "我的画面今晚不播。不是消失，也不是默认同意，是我自己按下了停止。" },
+        { "speaker": "shen_que", "text": "第一份撤回已经生效，平台不能要求理由。" },
+        { "speaker": "qiao_wen", "text": "融资窗口关闭了。十五分钟后是否开播，由新的同意状态决定，不由损失逼迫。" },
+        { "speaker": "narrator", "text": "黑屏没有提供一个漂亮答案，却第一次让所有人听见：暂停不是失败，沉默也可以有主人。" }
+      ],
+      "hotspots": [],
+      "choices": [],
+      "ending": {
+        "title": "得来的十五分钟",
+        "subtitle": "你没有抢在所有答案之前开口，先让撤回权真正运行。",
+        "type": "growth"
+      }
+    },
+    "e03-shared-authorship": {
+      "id": "e03-shared-authorship",
+      "chapter": "阶段结局",
+      "title": "共同署名",
+      "location": "没有中心位的舞台",
+      "panorama": "/panoramas/e03-blue-hour-pact.jpg",
+      "palette": { "from": "#111922", "via": "#40576a", "to": "#c0a77f" },
+      "synopsis": "六名责任人与许澄共同说明有限事实，不暴露任何人的私事，也不制造唯一救世主。",
+      "lines": [
+        { "speaker": "you", "text": "今晚的说明没有唯一发言人。每个人只说明自己能证明、也愿意承担的部分。" },
+        { "speaker": "lu_chenzhou", "text": "我说明人工否决为何失效，也接受技术权限被独立复核。" },
+        { "speaker": "zhou_yan", "text": "我说明哪些事实经过外部核验，也保留来源随时撤回的权利。" },
+        { "speaker": "he_qingye", "text": "我说明自己的形象如何被调用。关于我的私人感受，今晚不提供。" },
+        { "speaker": "qiao_wen", "text": "我说明谁批准了目标，不再用团队生计把责任推给最年轻的负责人。" },
+        { "speaker": "lin_miao", "text": "共同署名不是共同无罪。它只是确保没有一个人被删掉，也没有一个人被推出去。" },
+        { "speaker": "narrator", "text": "舞台中央没有王座。名字并排出现，停止按钮也对每个人保持可见。" }
+      ],
+      "hotspots": [],
+      "choices": [],
+      "ending": {
+        "title": "共同署名",
+        "subtitle": "你让关系成为共同承担的方式，而不是通关捷径或替代判断的答案。",
+        "type": "growth"
+      }
+    },
+    "e04-returned-ninth-seat": {
+      "id": "e04-returned-ninth-seat",
+      "chapter": "隐藏阶段结局",
+      "title": "第九席重新亮起",
+      "location": "恢复人工否决后的主控蓝厅",
+      "panorama": "/panoramas/s09-final-stage.jpg",
+      "palette": { "from": "#090f18", "via": "#314c63", "to": "#d6a76f" },
+      "synopsis": "许澄恢复第九席的人类否决协议，只公开系统如何删除拒绝，不消费任何人的私事。",
+      "lines": [
+        { "speaker": "system", "text": "NINTH-SEAT HANDSHAKE ACCEPTED。人工否决优先级：最高。" },
+        { "speaker": "you", "text": "第九席不是虚拟嘉宾，也不是某个人的替身。它只负责让一句‘不同意’不会被优化掉。" },
+        { "speaker": "lin_miao", "text": "训练清单已完成哈希，原始人格数据进入逐人撤回流程。我们只展示系统行为。" },
+        { "speaker": "qiao_wen", "text": "公司将接受独立审计。许澄的导演权限不因她没有选择任何关系路线而减少。" },
+        { "speaker": "system", "text": "检测到第二项撤回请求。状态：等待人类确认，禁止自动补完。" },
+        { "speaker": "you", "text": "先通知本人，再确认范围。在她回答以前，不生成故事。" },
+        { "speaker": "narrator", "text": "第九束灯亮起，却没有照向一张等待被拯救的脸。它照着一个空席位，等待某个人自己决定是否坐下。" }
+      ],
+      "hotspots": [],
+      "choices": [],
+      "ending": {
+        "title": "第九席重新亮起",
+        "subtitle": "你让系统承认拒绝权，并把下一句话留给它真正的主人。",
+        "type": "growth",
+        "tier": "secret"
+      }
+    }
+  }
+}
