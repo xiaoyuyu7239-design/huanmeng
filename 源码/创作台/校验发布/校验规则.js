@@ -11,6 +11,137 @@ function 是普通对象(值) {
   return !!值 && typeof 值 === 'object' && !Array.isArray(值);
 }
 
+const 安全角色id = /^[a-z][a-z0-9_-]*$/;
+const 保留角色id = new Set(['narrator', 'system', 'you', 'protagonist', '__proto__', 'constructor', 'prototype']);
+const 关系维度 = new Set(['spark', 'trust', 'boundary']);
+const 系统说话人 = new Set(['narrator', 'system', 'you', 'protagonist']);
+
+// cast 缺失时保持旧作品兼容；作者一旦声明 cast，就按新角色契约严格校验，
+// 避免播放器在运行时静默丢角色、改颜色或钳制关系初值。
+export function 校验角色阵容(值) {
+  if (值 === undefined) {
+    return { enabled: false, errors: [], characterIds: new Set(), relationshipEnabled: new Map() };
+  }
+  const 结果 = { enabled: true, errors: [], characterIds: new Set(), relationshipEnabled: new Map() };
+  if (!是普通对象(值)) {
+    结果.errors.push('story.cast must be a JSON object.');
+    return 结果;
+  }
+  if (!是普通对象(值.protagonist)) {
+    结果.errors.push('story.cast.protagonist must be a JSON object.');
+  } else {
+    if (值.protagonist.id !== 'you') 结果.errors.push('story.cast.protagonist.id must be "you".');
+    if (typeof 值.protagonist.name !== 'string' || !值.protagonist.name.trim()) {
+      结果.errors.push('story.cast.protagonist.name must be a non-empty string.');
+    }
+    校验可选字符串字段(值.protagonist, ['role', 'pronouns', 'portrait'], 'story.cast.protagonist', 结果.errors);
+    校验可选颜色字段(值.protagonist, ['color', 'accent'], 'story.cast.protagonist', 结果.errors);
+  }
+  if (!Array.isArray(值.characters)) {
+    结果.errors.push('story.cast.characters must be an array.');
+    return 结果;
+  }
+  值.characters.forEach((角色, 索引) => {
+    const 位置 = `story.cast character ${索引 + 1}`;
+    if (!是普通对象(角色)) {
+      结果.errors.push(`${位置} must be a JSON object.`);
+      return;
+    }
+    const id = typeof 角色.id === 'string' ? 角色.id.trim() : '';
+    if (!安全角色id.test(id) || 保留角色id.has(id)) {
+      结果.errors.push(`${位置} has invalid id: ${id || 'missing'}`);
+      return;
+    }
+    if (结果.characterIds.has(id)) {
+      结果.errors.push(`story.cast has duplicate character id: ${id}`);
+      return;
+    }
+    结果.characterIds.add(id);
+    if (typeof 角色.name !== 'string' || !角色.name.trim()) {
+      结果.errors.push(`story.cast character ${id} is missing name.`);
+    }
+    校验可选字符串字段(角色, ['shortName', 'role', 'theme', 'portrait', 'voiceId'], `story.cast character ${id}`, 结果.errors);
+    校验可选颜色字段(角色, ['color', 'accent'], `story.cast character ${id}`, 结果.errors);
+    if ('romanceable' in 角色 && typeof 角色.romanceable !== 'boolean') {
+      结果.errors.push(`story.cast character ${id}.romanceable must be a boolean.`);
+    }
+    if ('relationship' in 角色 && !是普通对象(角色.relationship)) {
+      结果.errors.push(`story.cast character ${id}.relationship must be a JSON object.`);
+      return;
+    }
+    const 关系 = 是普通对象(角色.relationship) ? 角色.relationship : {};
+    if ('enabled' in 关系 && typeof 关系.enabled !== 'boolean') {
+      结果.errors.push(`story.cast character ${id}.relationship.enabled must be a boolean.`);
+    }
+    结果.relationshipEnabled.set(id, 关系.enabled !== false);
+    if ('initial' in 关系 && !是普通对象(关系.initial)) {
+      结果.errors.push(`story.cast character ${id}.relationship.initial must be a JSON object.`);
+      return;
+    }
+    if (是普通对象(关系.initial)) {
+      for (const 维度 of Object.keys(关系.initial)) {
+        if (!关系维度.has(维度)) {
+          结果.errors.push(`story.cast character ${id}.relationship.initial contains unsupported metric: ${维度}`);
+        }
+      }
+      for (const 维度 of 关系维度) {
+        if (!(维度 in 关系.initial)) continue;
+        const 数值 = 关系.initial[维度];
+        if (typeof 数值 !== 'number' || !Number.isFinite(数值) || 数值 < 0 || 数值 > 100) {
+          结果.errors.push(`story.cast character ${id}.relationship.initial.${维度} must be a number from 0 to 100.`);
+        }
+      }
+    }
+  });
+  return 结果;
+}
+
+function 校验可选字符串字段(对象, 字段们, 前缀, 错误们) {
+  for (const 字段 of 字段们) {
+    if (字段 in 对象 && typeof 对象[字段] !== 'string') 错误们.push(`${前缀}.${字段} must be a string.`);
+  }
+}
+
+function 校验可选颜色字段(对象, 字段们, 前缀, 错误们) {
+  for (const 字段 of 字段们) {
+    if (字段 in 对象 && (typeof 对象[字段] !== 'string' || !/^#[0-9a-f]{6}$/i.test(对象[字段]))) {
+      错误们.push(`${前缀}.${字段} must be a #RRGGBB color.`);
+    }
+  }
+}
+
+function 校验机制引用(值, 类型, 阵容) {
+  if (!阵容.enabled || !是普通对象(值)) return [];
+  const 错误们 = [];
+  if (类型 === 'effect' && 是普通对象(值.relationships)) {
+    for (const [角色, 增量组] of Object.entries(值.relationships)) {
+      if (!阵容.characterIds.has(角色)) {
+        错误们.push(`effect.relationships references undeclared cast character: ${角色}`);
+      }
+      if (typeof 增量组 === 'number') {
+        错误们.push(`effect.relationships.${角色} must use spark, trust, or boundary instead of a scalar value.`);
+      }
+      if (阵容.relationshipEnabled.get(角色) === false) {
+        错误们.push(`effect.relationships references relationship-disabled cast character: ${角色}`);
+      }
+    }
+  }
+  if (类型 === 'condition' && Array.isArray(值.minRelationship)) {
+    for (const 条目 of 值.minRelationship) {
+      if (typeof 条目?.character === 'string' && !阵容.characterIds.has(条目.character)) {
+        错误们.push(`condition.minRelationship references undeclared cast character: ${条目.character}`);
+      }
+      if (阵容.relationshipEnabled.get(条目?.character) === false) {
+        错误们.push(`condition.minRelationship references relationship-disabled cast character: ${条目.character}`);
+      }
+    }
+  }
+  if ('route' in 值 && typeof 值.route === 'string' && !['team', 'solo'].includes(值.route) && !阵容.characterIds.has(值.route)) {
+    错误们.push(`${类型}.route references undeclared cast route: ${值.route}`);
+  }
+  return 错误们;
+}
+
 // Effect/Condition 虽然由 JSON 文本编辑，但“能解析”不等于播放器能安全消费。
 // 这里把嵌套字段的形状也列入 QA；同一个检查也供编辑弹窗即时拦截。
 export function 校验选择机制结构(值, 类型) {
@@ -26,6 +157,14 @@ export function 校验选择机制结构(值, 类型) {
     } else if (值[字段].some((条目) => typeof 条目 !== 'string' || !条目.trim())) {
       错误们.push(`${类型}.${字段} must contain only non-empty strings.`);
     }
+  }
+  if (
+    'route' in 值 &&
+    值.route !== undefined &&
+    值.route !== null &&
+    (typeof 值.route !== 'string' || !值.route.trim())
+  ) {
+    错误们.push(`${类型}.route must be null or a non-empty string.`);
   }
 
   if (类型 === 'effect') {
@@ -47,6 +186,16 @@ export function 校验选择机制结构(值, 类型) {
     ) {
       错误们.push('effect.relationships values must be finite numbers or objects of finite numbers.');
     }
+    if (是普通对象(值.relationships)) {
+      for (const [角色, 增量组] of Object.entries(值.relationships)) {
+        if (!是普通对象(增量组)) continue;
+        for (const 维度 of Object.keys(增量组)) {
+          if (!关系维度.has(维度)) {
+            错误们.push(`effect.relationships.${角色} contains unsupported metric: ${维度}`);
+          }
+        }
+      }
+    }
     return 错误们;
   }
 
@@ -60,7 +209,7 @@ export function 校验选择机制结构(值, 类型) {
     const 条目无效 = 值[字段].some((条目) => {
       if (!是普通对象(条目) || !Number.isFinite(条目.value)) return true;
       if (字段 === 'minRelationship') {
-        return !条目.character?.trim?.() || !条目.metric?.trim?.();
+        return !条目.character?.trim?.() || !关系维度.has(条目.metric);
       }
       return !条目.key?.trim?.();
     });
@@ -119,6 +268,8 @@ export function 运行校验(项目) {
     结果.errors.push('story.json must contain nodes and a non-empty startNodeId.');
     return 结果;
   }
+  const 阵容 = 校验角色阵容(剧情.cast);
+  结果.errors.push(...阵容.errors);
   // 规则2：起点指向不存在的节点
   if (!节点表[剧情.startNodeId]) {
     结果.errors.push(`startNodeId points to missing node: ${剧情.startNodeId}`);
@@ -157,6 +308,14 @@ export function 运行校验(项目) {
     for (const [序, 句] of (节点.lines ?? []).entries()) {
       const 台词 = 句.text?.trim() ?? '';
       if (!句.speaker?.trim()) 结果.errors.push(`${前缀} line ${序 + 1} is missing speaker.`);
+      if (
+        阵容.enabled &&
+        句.speaker?.trim() &&
+        !系统说话人.has(句.speaker.trim()) &&
+        !阵容.characterIds.has(句.speaker.trim())
+      ) {
+        结果.errors.push(`${前缀} line ${序 + 1} references undeclared cast speaker: ${句.speaker.trim()}`);
+      }
       if (!台词) {
         结果.errors.push(`${前缀} line ${序 + 1} is missing text.`);
       } else {
@@ -187,9 +346,14 @@ export function 运行校验(项目) {
       if (!节点.ending && 选择.effect === undefined) 结果.errors.push(`${选择前缀} is missing effect.`);
       for (const 错误 of 校验选择机制结构(选择.effect, 'effect')) 结果.errors.push(`${选择前缀} ${错误}`);
       for (const 错误 of 校验选择机制结构(选择.condition, 'condition')) 结果.errors.push(`${选择前缀} ${错误}`);
+      for (const 错误 of 校验机制引用(选择.effect, 'effect', 阵容)) 结果.errors.push(`${选择前缀} ${错误}`);
+      for (const 错误 of 校验机制引用(选择.condition, 'condition', 阵容)) 结果.errors.push(`${选择前缀} ${错误}`);
     }
     for (const [序, 热点] of (节点.hotspots ?? []).entries()) {
       for (const 错误 of 校验选择机制结构(热点.effect, 'effect')) {
+        结果.errors.push(`${前缀} hotspot ${热点.id || 序 + 1} ${错误}`);
+      }
+      for (const 错误 of 校验机制引用(热点.effect, 'effect', 阵容)) {
         结果.errors.push(`${前缀} hotspot ${热点.id || 序 + 1} ${错误}`);
       }
     }

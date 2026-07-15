@@ -7,8 +7,10 @@
 //
 // 【导出清单（与线上模块完全等价 + 一个入口契约别名）】
 //   STORY_TITLE                 string   当前剧情标题（live binding，换片后自动更新）
+//   STORY_ID                    string   当前剧情稳定作品 id（用于存档码归属）
 //   START_NODE_ID               string   起始节点 id
 //   storyMechanics              object?  当前剧情 mechanics（可能为 undefined）
+//   storyCast                   object   当前剧情角色阵容（主角 + 角色列表）
 //   storyNodes                  object   节点字典 { [nodeId]: node }
 //   storyNodeList               array    节点数组（换片时同步重算）
 //   ACTIVE_GAME_ID              string   当前剧情 slug（清洗后），初始 "bundled"
@@ -105,8 +107,11 @@ const 已规范化兜底剧情 = 规范化剧情(兜底剧情, 'bundled');
 
 // ---- 模块级单例状态（ES module live binding：这里重新赋值，所有 import 方同步看到）----
 export let STORY_TITLE = 已规范化兜底剧情.title;
+export let STORY_ID = 已规范化兜底剧情.id;
+export const BUNDLED_STORY_ID = 已规范化兜底剧情.id;
 export let START_NODE_ID = 已规范化兜底剧情.startNodeId;
 export let storyMechanics = 已规范化兜底剧情.mechanics;
+export let storyCast = 已规范化兜底剧情.cast;
 export let storyNodes = 已规范化兜底剧情.nodes;
 export let storyNodeList = Object.values(storyNodes);
 export let ACTIVE_GAME_ID = 'bundled';
@@ -118,8 +123,10 @@ export function setActiveStory(story, slug = 'bundled') {
   const 安全slug = 清洗slug(slug);
   const 安全剧情 = 规范化剧情(story, 安全slug);
   STORY_TITLE = 安全剧情.title;
+  STORY_ID = 安全剧情.id;
   START_NODE_ID = 安全剧情.startNodeId;
   storyMechanics = 安全剧情.mechanics;
+  storyCast = 安全剧情.cast;
   storyNodes = 安全剧情.nodes;
   storyNodeList = Object.values(安全剧情.nodes);
   ACTIVE_GAME_ID = 安全slug;
@@ -128,7 +135,9 @@ export function setActiveStory(story, slug = 'bundled') {
 // () → 当前剧情里使用现代嵌套 relationships 的角色 id 列表。
 // 状态工厂和存档消毒据此扩展关系表，不再把作者自定义角色静默丢掉。
 export function getRelationshipCharacterIds() {
-  const 角色们 = new Set();
+  const 角色们 = new Set(
+    storyCast.characters.filter((角色) => 角色.relationship.enabled).map((角色) => 角色.id),
+  );
   for (const 节点 of storyNodeList) {
     for (const 条目 of [...节点.hotspots, ...节点.choices]) {
       for (const [角色, 增量组] of Object.entries(条目.effect?.relationships ?? {}))
@@ -138,6 +147,23 @@ export function getRelationshipCharacterIds() {
     }
   }
   return [...角色们];
+}
+
+// 角色档案全部属于 story，而非玩家存档；换片后这些 getter 会立即读取新阵容。
+export function getStoryProtagonist() {
+  return storyCast.protagonist;
+}
+
+export function getStoryCharacter(id) {
+  return storyCast.characters.find((角色) => 角色.id === id) ?? null;
+}
+
+export function getStoryCharacterList() {
+  return [...storyCast.characters];
+}
+
+export function getStoryCharacterIds() {
+  return storyCast.characters.map((角色) => 角色.id);
 }
 
 // 输入 slug → 先翻浏览器里的创作草稿，再去线上拉 /games/<slug>/story.json → 吐出 true/false。
@@ -210,11 +236,60 @@ function 规范化剧情(story, slug = 'bundled') {
   );
   return {
     ...story,
+    id: 非空字符串(story.id) || slug,
     title: 非空字符串(story.title) || '互动影游',
     startNodeId,
     mechanics: 是普通对象(story.mechanics) ? story.mechanics : undefined,
+    cast: 规范化角色阵容(story.cast),
     nodes,
   };
+}
+
+function 规范化角色阵容(原始值) {
+  const 原始 = 是普通对象(原始值) ? 原始值 : {};
+  const 原主角 = 是普通对象(原始.protagonist) ? 原始.protagonist : {};
+  const protagonist = {
+    ...原主角,
+    id: 'you',
+    name: 非空字符串(原主角.name) || '你',
+    role: 非空字符串(原主角.role),
+    pronouns: 非空字符串(原主角.pronouns),
+    color: 规范化颜色(原主角.color, '#d7b6c9'),
+    accent: 规范化颜色(原主角.accent, '#4b3045'),
+    portrait: 非空字符串(原主角.portrait),
+  };
+  const 已用id = new Set();
+  const characters = (Array.isArray(原始.characters) ? 原始.characters : []).flatMap((原角色) => {
+    if (!是普通对象(原角色) || !是合法角色档案id(原角色.id)) return [];
+    const id = 原角色.id.trim();
+    if (已用id.has(id)) return [];
+    已用id.add(id);
+    const name = 非空字符串(原角色.name) || 人性化角色id(id);
+    const 原关系 = 是普通对象(原角色.relationship) ? 原角色.relationship : {};
+    const 原初值 = 是普通对象(原关系.initial) ? 原关系.initial : {};
+    return [{
+      ...原角色,
+      id,
+      name,
+      shortName: 非空字符串(原角色.shortName) || name,
+      role: 非空字符串(原角色.role),
+      theme: 非空字符串(原角色.theme),
+      color: 规范化颜色(原角色.color, '#9aa9bd'),
+      accent: 规范化颜色(原角色.accent, '#293341'),
+      portrait: 非空字符串(原角色.portrait),
+      voiceId: 非空字符串(原角色.voiceId),
+      romanceable: 原角色.romanceable === true,
+      relationship: {
+        enabled: typeof 原关系.enabled === 'boolean' ? 原关系.enabled : true,
+        initial: {
+          spark: 钳制关系初值(原初值.spark, 30),
+          trust: 钳制关系初值(原初值.trust, 30),
+          boundary: 钳制关系初值(原初值.boundary, 50),
+        },
+      },
+    }];
+  });
+  return { protagonist, characters };
 }
 
 function 规范化节点(原始值, id, startNodeId, id映射, slug) {
@@ -420,10 +495,35 @@ function 是合法关系角色(值) {
   return (
     typeof 值 === 'string' &&
     /^[a-z][a-z0-9_-]*$/.test(值) &&
+    !['narrator', 'system', 'you', 'protagonist'].includes(值) &&
     值 !== '__proto__' &&
     值 !== 'constructor' &&
     值 !== 'prototype'
   );
+}
+
+function 是合法角色档案id(值) {
+  return 是合法关系角色(值) && !['narrator', 'system', 'you', 'protagonist'].includes(值);
+}
+
+function 人性化角色id(值) {
+  if (typeof 值 !== 'string' || !值) return '未知角色';
+  if (!/^[a-z0-9_-]+$/i.test(值)) return 值;
+  return 值
+    .split(/[_-]+/)
+    .filter(Boolean)
+    .map((段) => 段.charAt(0).toUpperCase() + 段.slice(1))
+    .join(' ');
+}
+
+function 规范化颜色(值, 兜底) {
+  const 文本 = 非空字符串(值);
+  return /^#[0-9a-f]{6}$/i.test(文本) ? 文本 : 兜底;
+}
+
+function 钳制关系初值(值, 兜底) {
+  const 数 = typeof 值 === 'number' && Number.isFinite(值) ? 值 : 兜底;
+  return Math.max(0, Math.min(100, Math.round(数)));
 }
 
 // ---- 分数（scores）定义规范化：三个读取函数 ----

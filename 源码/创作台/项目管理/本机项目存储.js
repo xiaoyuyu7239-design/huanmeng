@@ -293,6 +293,17 @@ export function 新建本机项目(标题, slug) {
     story: {
       title: 干净标题,
       startNodeId: 起始id,
+      cast: {
+        protagonist: {
+          id: 'you',
+          name: '你',
+          role: '故事主角',
+          pronouns: '她',
+          color: '#d7b6c9',
+          accent: '#4b3045',
+        },
+        characters: [],
+      },
       nodes: {
         [起始id]: {
           id: 起始id,

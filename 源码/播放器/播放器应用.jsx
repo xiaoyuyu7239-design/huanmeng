@@ -38,6 +38,9 @@ import {
   命运类型显示名,
   条件满足,
   更新设置,
+  当前关系角色顺序,
+  取角色档案,
+  说话人显示名,
 } from './剧情引擎/状态与结算.js';
 import {
   保存存档,
@@ -555,8 +558,9 @@ function 回忆面板({ currentNode, state }) {
         <strong>{state.unlockedEndings.length} 个结局已解锁</strong>
       </div>
       <div className="memory-tabs">
-        <button className={标签 === 'gallery' ? 'is-active' : ''} onClick={() => set标签('gallery')} type="button">回忆</button>
-        <button className={标签 === 'fate-map' ? 'is-active' : ''} onClick={() => set标签('fate-map')} type="button">命运地图</button>
+        <button aria-pressed={标签 === 'gallery'} className={标签 === 'gallery' ? 'is-active' : ''} onClick={() => set标签('gallery')} type="button">回忆</button>
+        <button aria-pressed={标签 === 'relationships'} className={标签 === 'relationships' ? 'is-active' : ''} onClick={() => set标签('relationships')} type="button">关系手账</button>
+        <button aria-pressed={标签 === 'fate-map'} className={标签 === 'fate-map' ? 'is-active' : ''} onClick={() => set标签('fate-map')} type="button">命运地图</button>
       </div>
       {标签 === 'gallery' ? (
         <div className="memory-columns">
@@ -565,7 +569,59 @@ function 回忆面板({ currentNode, state }) {
           <记忆栏目 title="已发现回忆" entries={state.memories.map((条) => ({ tag: '记忆', text: 条 }))} empty="还没有发现隐藏回忆" />
           <记忆栏目 title="跨周目记忆" entries={state.persistentMemories.map((条) => ({ tag: '轮回', text: 条 }))} empty="下一轮后会保留关键记忆" />
         </div>
+      ) : 标签 === 'relationships' ? (
+        <关系手账 state={state} />
       ) : <命运地图 state={state} visitedNodes={已到达} />}
+    </div>
+  );
+}
+
+const 关系维度文案 = {
+  spark: { label: '心动', stages: ['疏离', '留意', '靠近', '牵挂'] },
+  trust: { label: '信任', stages: ['戒备', '试探', '信赖', '托付'] },
+  boundary: { label: '边界', stages: ['失衡', '摸索', '尊重', '安稳'] },
+};
+
+export function 关系手账({ state }) {
+  const 角色们 = 当前关系角色顺序().filter((id) => !!state.relationships?.[id]);
+  const [选中角色, set选中角色] = useState(() => 角色们[0] ?? '');
+  const 当前角色id = 角色们.includes(选中角色) ? 选中角色 : (角色们[0] ?? '');
+  if (!当前角色id) {
+    return <div className="relationship-empty"><strong>关系手账</strong><p>这段故事还没有可记录的关系变化。</p></div>;
+  }
+  const 档案 = 取角色档案(当前角色id);
+  const 姓名 = 档案?.name ?? 说话人显示名(当前角色id);
+  const 关系 = state.relationships[当前角色id];
+  const 痕迹 = (Array.isArray(state.decisionLog) ? state.decisionLog : [])
+    .filter((记录) => 记录.loop === state.loopCount && 记录.effect?.relationships?.[当前角色id])
+    .sort((甲, 乙) => Number(乙.createdAt ?? 0) - Number(甲.createdAt ?? 0))
+    .slice(0, 5);
+  return (
+    <div className="relationship-journal">
+      <div className="relationship-intro"><strong>关系手账</strong><p>记录这一周目里，你与这些角色之间发生的变化。</p></div>
+      <div aria-label="选择关系角色" className="relationship-switcher" role="group">
+        {角色们.map((id) => {
+          const 角色档案 = 取角色档案(id);
+          const 角色名 = 角色档案?.name ?? 说话人显示名(id);
+          return <button aria-pressed={id === 当前角色id} className={id === 当前角色id ? 'is-active' : ''} key={id} onClick={() => set选中角色(id)} style={{ '--relationship-color': 角色档案?.color }} type="button"><i />{角色名}</button>;
+        })}
+      </div>
+      <section className="relationship-card">
+        <header><span style={{ '--relationship-color': 档案?.color }}>{姓名.slice(0, 1)}</span><div><strong>{姓名}</strong><small>{档案?.role || '故事中的重要关系'}</small></div></header>
+        {档案?.theme && <p className="relationship-theme">{档案.theme}</p>}
+        <div className="relationship-meters">
+          {Object.entries(关系维度文案).map(([维度, 文案]) => {
+            const 原值 = Number(关系?.[维度]);
+            const 值 = Number.isFinite(原值) ? Math.max(0, Math.min(100, 原值)) : 0;
+            const 阶段 = 文案.stages[Math.min(3, Math.floor(值 / 25))];
+            return <div className="relationship-meter" key={维度}><div><span>{文案.label}</span><em>{阶段}</em></div><div aria-label={`${姓名} ${文案.label}`} aria-valuemax="100" aria-valuemin="0" aria-valuenow={值} aria-valuetext={`${阶段}，${值}/100`} className="relationship-meter-track" role="progressbar"><i style={{ width: `${值}%`, background: 档案?.color }} /></div></div>;
+          })}
+        </div>
+      </section>
+      <section className="relationship-traces">
+        <h3>最近留下的痕迹</h3>
+        {痕迹.length ? <ol>{痕迹.map((记录) => <li key={记录.id}><span>{记录.nodeTitle}</span><strong>{记录.label}</strong><p>{记录.consequence || '这次选择已记入关系手账。'}</p></li>)}</ol> : <p className="relationship-traces-empty">还没有共同记录。带有关系变化的选择会出现在这里。</p>}
+      </section>
     </div>
   );
 }

@@ -10,12 +10,12 @@
 // ============================================================================
 
 import { VolumeX, Volume2, ChevronRight } from 'lucide-react';
-import { 角色表, 说话人显示名 } from '../剧情引擎/状态与结算.js';
+import { 取角色档案, 说话人显示名 } from '../剧情引擎/状态与结算.js';
 
 // ({speaker}) → 说话人徽章（线上 In）：角色表里有就用角色名+专属色，
 // 否则用旁白/沈砚/系统等兜底名 → JSX
 function 说话人徽章({ speaker }) {
-  const 角色 = Object.hasOwn(角色表, speaker) ? 角色表[speaker] : null;
+  const 角色 = 取角色档案(speaker);
   const 名字 = 角色?.name ?? 说话人显示名(speaker);
   return (
     <div className="speaker-badge" style={角色 ? { '--speaker-color': 角色.color } : undefined}>

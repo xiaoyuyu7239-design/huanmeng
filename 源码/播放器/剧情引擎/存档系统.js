@@ -19,7 +19,15 @@
 //                             并把本周目记忆与结局标题并入跨周目记忆
 // ============================================================================
 
-import { ACTIVE_GAME_ID, START_NODE_ID, storyNodes, getScoreDefinition } from './剧情加载.js';
+import {
+  ACTIVE_GAME_ID,
+  STORY_ID,
+  BUNDLED_STORY_ID,
+  START_NODE_ID,
+  storyNodes,
+  getScoreDefinition,
+  getStoryCharacterIds,
+} from './剧情加载.js';
 import {
   创建初始状态,
   创建默认设置,
@@ -28,10 +36,9 @@ import {
   取节点,
   取当前节点,
   初始全局数值表,
-  角色顺序,
   当前关系角色顺序,
+  角色关系初始值,
   是合法关系角色,
-  关系初始值,
   钳制关系值,
   按定义钳制数值,
   钳制行索引,
@@ -51,7 +58,10 @@ export function 存档键() {
 // 写入前强制盖当前 gameId 并刷新时间戳（与线上一致，设置项也随整本账一起存）。
 export function 保存存档(state) {
   try {
-    localStorage.setItem(存档键(), JSON.stringify(刷新存档时间({ ...state, gameId: ACTIVE_GAME_ID })));
+    localStorage.setItem(
+      存档键(),
+      JSON.stringify(刷新存档时间({ ...state, gameId: ACTIVE_GAME_ID, storyId: STORY_ID })),
+    );
     return true;
   } catch {
     return false;
@@ -86,7 +96,8 @@ export function 删除存档() {
 // 单字节串）→ btoa（base64）。为什么这么绕：btoa 只吃 Latin-1，中文直接喂会炸，
 // 先过 URI 转义把每个 UTF-8 字节拆成 btoa 咽得下的单字节。
 export function 导出存档码(state) {
-  return btoa(unescape(encodeURIComponent(JSON.stringify(刷新存档时间(state)))));
+  const 安全归属状态 = 刷新存档时间({ ...state, gameId: ACTIVE_GAME_ID, storyId: STORY_ID });
+  return btoa(unescape(encodeURIComponent(JSON.stringify(安全归属状态))));
 }
 
 // (存档码) → 按导出的逆序拆包（atob → escape → decodeURIComponent → JSON.parse），
@@ -94,19 +105,21 @@ export function 导出存档码(state) {
 export function 导入存档码(存档码) {
   try {
     const 文本 = decodeURIComponent(escape(atob(存档码.trim())));
-    return 消毒存档(JSON.parse(文本));
+    const 原始 = JSON.parse(文本);
+    if (!存档归属当前作品(原始)) return null;
+    return 消毒存档(原始);
   } catch {
     return null;
   }
 }
 
-// (来路不明的对象) → 逐字段消毒后的 GameState。规则（与线上 xt 一字不差）：
+// (来路不明的对象) → 逐字段消毒后的 GameState。规则在原线上 xt 基础上扩展了 cast/storyId：
 //   currentNodeId 必须真实存在，否则回起始节点；lineIndex 钳到该节点台词范围内；
-//   relationships 内置及剧情角色三维度逐项回填并钳 0-100；globals 先生成默认表再用合法数字覆盖；
+//   relationships 当前剧情及合法扩展角色三维度逐项回填并钳 0-100；globals 先生成默认表再用合法数字覆盖；
 //   flags/memories/seenHotspots/persistentMemories 只留字符串并去重；
-//   visitedNodes 还要求节点真实存在；route 只认 null/team/solo/六角色；
+//   visitedNodes 还要求节点真实存在；route 只认 null/team/solo/当前剧情角色；
 //   loopCount 非法回 1；unlockedEndings 过滤不存在的节点；decisionLog 逐条修补且
-//   最多留 120 条；settings 深合并回默认形状；gameId 强制改成当前作品。
+//   最多留 120 条；settings 深合并回默认形状；gameId/storyId 强制改成当前作品。
 // 为什么先铺 ...初始 再铺 ...原始：未知的多余字段随存档保留（线上就是这么做的）。
 export function 消毒存档(原始) {
   if (!原始 || typeof 原始 !== 'object' || Array.isArray(原始)) 原始 = {};
@@ -137,8 +150,22 @@ export function 消毒存档(原始) {
     decisionLog: 消毒决策日志(原始.decisionLog),
     settings: 规范化设置(原始.settings),
     gameId: ACTIVE_GAME_ID,
+    storyId: STORY_ID,
     lastSavedAt: Number(原始.lastSavedAt ?? Date.now()),
   };
+}
+
+// 新存档码使用稳定 storyId；旧码只有 gameId 时，仍兼容同一内置故事的
+// bundled ↔ 正式 slug 两种身份，同时拒绝真正的跨作品导入。
+function 存档归属当前作品(原始) {
+  if (!原始 || typeof 原始 !== 'object') return true;
+  if (typeof 原始.storyId === 'string') return 原始.storyId === STORY_ID;
+  if (typeof 原始.gameId !== 'string') return true;
+  return (
+    原始.gameId === ACTIVE_GAME_ID ||
+    原始.gameId === STORY_ID ||
+    (原始.gameId === 'bundled' && STORY_ID === BUNDLED_STORY_ID)
+  );
 }
 
 // (旧settings或undefined) → 全新一局：只带设置，其余全部归零 → 新 GameState
@@ -215,10 +242,11 @@ function 消毒关系表(原始) {
       ? Object.keys(原始).filter(是合法关系角色)
       : [];
   return 去重([...当前关系角色顺序(), ...存档角色]).reduce((表, 角色) => {
+    const 初值 = 角色关系初始值(角色);
     表[角色] = {
-      spark: 钳制关系值(Number(原始?.[角色]?.spark ?? 关系初始值.spark)),
-      trust: 钳制关系值(Number(原始?.[角色]?.trust ?? 关系初始值.trust)),
-      boundary: 钳制关系值(Number(原始?.[角色]?.boundary ?? 关系初始值.boundary)),
+      spark: 钳制关系值(Number(原始?.[角色]?.spark ?? 初值.spark)),
+      trust: 钳制关系值(Number(原始?.[角色]?.trust ?? 初值.trust)),
+      boundary: 钳制关系值(Number(原始?.[角色]?.boundary ?? 初值.boundary)),
     };
     return 表;
   }, {});
@@ -234,9 +262,10 @@ function 消毒全局表(原始) {
   return 表;
 }
 
-// 路线：只认 null / "team" / "solo" / 六角色 id，其余一律归 null
+// 路线：只认 null / team / solo / 当前 story 声明或实际使用的关系角色 id。
 function 消毒路线(原始) {
-  return 原始 === null || 原始 === 'team' || 原始 === 'solo' || 角色顺序.includes(原始)
+  const 当前路线角色 = new Set([...getStoryCharacterIds(), ...当前关系角色顺序()]);
+  return 原始 === null || 原始 === 'team' || 原始 === 'solo' || 当前路线角色.has(原始)
     ? 原始
     : null;
 }

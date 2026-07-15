@@ -37,10 +37,13 @@
 import {
   START_NODE_ID,
   ACTIVE_GAME_ID,
+  STORY_ID,
   storyNodes,
   getScoreDefinitions,
   getScoreDefinition,
   getRelationshipCharacterIds,
+  getStoryProtagonist,
+  getStoryCharacter,
 } from './剧情加载.js';
 
 // ---- 常量（原样照抄线上，一个字都不能差）----
@@ -109,9 +112,18 @@ export const 角色顺序 = ['lin', 'qi', 'su', 'xia', 'cheng', 'ruan'];
 export const 关系维度 = ['spark', 'trust', 'boundary'];
 export const 关系初始值 = { spark: 30, trust: 30, boundary: 50 };
 
-// 当前故事关系角色 = 内置人物 + 剧情数据里实际出现的合法角色，顺序稳定且去重。
+// 当前故事关系角色只来自当前 story 的 cast 和剧情实际引用；旧六人不再污染每部作品的新存档。
 export function 当前关系角色顺序() {
-  return 去重([...角色顺序, ...getRelationshipCharacterIds()]);
+  return getRelationshipCharacterIds();
+}
+
+export function 角色关系初始值(角色id) {
+  const 初值 = getStoryCharacter(角色id)?.relationship?.initial ?? 关系初始值;
+  return {
+    spark: 钳制关系值(Number(初值.spark ?? 关系初始值.spark)),
+    trust: 钳制关系值(Number(初值.trust ?? 关系初始值.trust)),
+    boundary: 钳制关系值(Number(初值.boundary ?? 关系初始值.boundary)),
+  };
 }
 
 // 只接纳无原型污染风险的拉丁角色 id；连字符兼容旧项目，下划线用于现代项目。
@@ -119,6 +131,7 @@ export function 是合法关系角色(值) {
   return (
     typeof 值 === 'string' &&
     /^[a-z][a-z0-9_-]*$/.test(值) &&
+    !['narrator', 'system', 'you', 'protagonist'].includes(值) &&
     值 !== '__proto__' &&
     值 !== 'constructor' &&
     值 !== 'prototype'
@@ -152,15 +165,16 @@ export function 初始全局数值表() {
   return getScoreDefinitions().reduce((表, 定义) => ((表[定义.id] = 按定义钳制数值(定义.initial, 定义)), 表), {});
 }
 
-// () → 造一本崭新的账本（第一周目、站在起始节点、六段关系都是初始值）→ GameState
+// () → 造一本崭新的账本（第一周目、站在起始节点、当前故事关系按角色初值建立）→ GameState
 // 注意 ACTIVE_GAME_ID / START_NODE_ID 是 live binding：换片后再调用会拿到新片的值。
 export function 创建初始状态() {
   return {
     gameId: ACTIVE_GAME_ID,
+    storyId: STORY_ID,
     currentNodeId: START_NODE_ID,
     lineIndex: 0,
     relationships: 当前关系角色顺序().reduce(
-      (表, 角色) => ((表[角色] = { ...关系初始值 }), 表),
+      (表, 角色) => ((表[角色] = 角色关系初始值(角色)), 表),
       {},
     ),
     globals: 初始全局数值表(),
@@ -456,6 +470,9 @@ export function 更新设置(state, 设置增量) {
 
 // 路线 id → 中文显示名；没锁定路线显示"未锁定"
 export function 路线显示名(route) {
+  if (!route) return '未锁定';
+  const 剧情角色 = getStoryCharacter(route);
+  if (剧情角色) return 剧情角色.shortName || 剧情角色.name;
   switch (route) {
     case 'lin':
       return '罗峥';
@@ -481,11 +498,12 @@ export function 路线显示名(route) {
 // 说话人 id → 显示名兜底。已发布作品里的自定义主角显式映射；普通拉丁 id
 // 则把 snake_case / kebab-case 转成标题格式，避免直接把机器 id 展示给玩家。
 export function 说话人显示名(speaker) {
+  if (speaker === 'you' || speaker === 'protagonist') return getStoryProtagonist().name;
+  const 剧情角色 = getStoryCharacter(speaker);
+  if (剧情角色) return 剧情角色.name;
   switch (speaker) {
     case 'narrator':
       return '旁白';
-    case 'you':
-      return '沈砚';
     case 'system':
       return '系统';
     case 'wen_tianmo':
@@ -497,6 +515,12 @@ export function 说话人显示名(speaker) {
     default:
       return 人性化角色id(speaker);
   }
+}
+
+// 对白徽章和关系手账共用的档案查询：当前 story 优先，旧角色表只做兼容兜底。
+export function 取角色档案(角色id) {
+  if (角色id === 'you' || 角色id === 'protagonist') return getStoryProtagonist();
+  return getStoryCharacter(角色id) ?? 角色表[角色id] ?? null;
 }
 
 // fateType → 中文徽标文案，缺省按"因果之网"处理
@@ -565,7 +589,7 @@ function 维度显示名(维度) {
 
 // 角色 id → 短名（角色表里查不到就走自定义角色/拉丁 id 人性化显示）
 function 角色短名(角色) {
-  return Object.hasOwn(角色表, 角色) ? 角色表[角色].shortName : 说话人显示名(角色);
+  return 取角色档案(角色)?.shortName ?? 说话人显示名(角色);
 }
 
 function 人性化角色id(值) {

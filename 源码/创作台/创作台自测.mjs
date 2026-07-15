@@ -57,6 +57,9 @@ for (const 状态 of ['stale', 'failed', 'pending']) {
 const 空项目 = 新建本机项目('空项目', 'empty-project');
 assert.equal(空项目.summary.visualSceneCount, 1);
 assert.equal(空项目.summary.visualReadyCount, 0);
+assert.equal(空项目.story.cast.protagonist.id, 'you');
+assert.equal(空项目.story.cast.protagonist.pronouns, '她');
+assert.deepEqual(空项目.story.cast.characters, []);
 const 视觉摘要 = 重算摘要({
   story: {
     nodes: {
@@ -130,8 +133,8 @@ const 畸形机制报告 = 运行校验({
             next: 'end',
             fateType: 'river',
             consequence: '继续',
-            effect: { flags: {} },
-            condition: { minGlobal: {} },
+            effect: { flags: {}, route: 42 },
+            condition: { minGlobal: {}, route: [] },
           },
         ],
       },
@@ -150,6 +153,8 @@ const 畸形机制报告 = 运行校验({
 });
 assert.ok(畸形机制报告.errors.some((条) => 条.includes('effect.flags must be an array')));
 assert.ok(畸形机制报告.errors.some((条) => 条.includes('condition.minGlobal must be an array')));
+assert.ok(畸形机制报告.errors.some((条) => 条.includes('effect.route must be null or a non-empty string')));
+assert.ok(畸形机制报告.errors.some((条) => 条.includes('condition.route must be null or a non-empty string')));
 
 // 删除：精选清理失败时项目表必须补偿回滚；成功时两个键一起移除目标 slug。
 存储.clear();
@@ -180,14 +185,145 @@ assert.deepEqual(删除后精选.featured, ['project-b']);
 assert.deepEqual(删除后精选.entries.map((项) => 项.slug), ['project-b']);
 assert.equal(删除后精选.default, 'project-b');
 
-function 校验故事(nodes, startNodeId = 'start') {
+function 校验故事(nodes, startNodeId = 'start', storyExtra = {}) {
   return 运行校验({
     slug: 'validation-test',
-    story: { startNodeId, nodes },
+    story: { ...storyExtra, startNodeId, nodes },
     prompts: { prompts: [] },
     manifest: { assets: [] },
   });
 }
+
+// 角色阵容：旧项目不声明 cast 时继续兼容；一旦声明，就严格检查角色与机制引用。
+const 最小可结束节点 = {
+  start: {
+    id: 'start',
+    title: '起点',
+    panorama: '/panoramas/start.webp',
+    lines: [
+      { speaker: 'you', text: '我会自己查清真相。' },
+      { speaker: 'hua_rongli', text: '那就一起走。' },
+    ],
+    choices: [
+      {
+        id: 'finish',
+        label: '并肩前行',
+        next: 'end',
+        fateType: 'river',
+        consequence: '你们建立了新的信任。',
+        effect: { relationships: { hua_rongli: { trust: 8 } }, route: 'hua_rongli' },
+        condition: {
+          route: 'hua_rongli',
+          minRelationship: [{ character: 'hua_rongli', metric: 'trust', value: 30 }],
+        },
+      },
+    ],
+  },
+  end: {
+    id: 'end',
+    title: '结局',
+    panorama: '/panoramas/end.webp',
+    lines: [],
+    choices: [],
+    ending: { title: '完成' },
+  },
+};
+const 合法阵容 = {
+  protagonist: { id: 'you', name: '沈知意', color: '#d7b6c9' },
+  characters: [
+    {
+      id: 'hua_rongli',
+      name: '花容离',
+      romanceable: true,
+      relationship: { enabled: true, initial: { spark: 25, trust: 30, boundary: 55 } },
+    },
+  ],
+};
+const 合法阵容报告 = 校验故事(最小可结束节点, 'start', { cast: 合法阵容 });
+assert.equal(
+  合法阵容报告.errors.some((条) => /story\.cast|undeclared cast|unsupported metric|relationship-disabled/.test(条)),
+  false,
+);
+
+const 旧故事报告 = 校验故事(
+  {
+    ...最小可结束节点,
+    start: {
+      ...最小可结束节点.start,
+      lines: [{ speaker: '旧作品自定义说话人', text: '旧项目不应被 cast 门禁拦住。' }],
+      choices: [{ ...最小可结束节点.start.choices[0], effect: { route: 'legacy-route' }, condition: undefined }],
+    },
+  },
+);
+assert.equal(旧故事报告.errors.some((条) => 条.includes('undeclared cast')), false);
+
+const 坏阵容报告 = 校验故事(最小可结束节点, 'start', {
+  cast: {
+    protagonist: { id: 'wrong', name: '' },
+    characters: [
+      { id: 'Bad ID', name: '非法' },
+      { id: 'system', name: '保留角色' },
+      {
+        id: 'hua_rongli',
+        name: '',
+        color: 'lavender',
+        romanceable: 'true',
+        relationship: { initial: { spark: 101, affection: 20 } },
+      },
+      { id: 'hua_rongli', name: '重复角色' },
+    ],
+  },
+});
+for (const 片段 of [
+  'protagonist.id must be "you"',
+  'protagonist.name must be a non-empty string',
+  'has invalid id: Bad ID',
+  'has invalid id: system',
+  'character hua_rongli is missing name',
+  'character hua_rongli.color must be a #RRGGBB color',
+  'character hua_rongli.romanceable must be a boolean',
+  'relationship.initial.spark must be a number from 0 to 100',
+  'relationship.initial contains unsupported metric: affection',
+  'duplicate character id: hua_rongli',
+]) {
+  assert.ok(坏阵容报告.errors.some((条) => 条.includes(片段)), `缺少 cast 错误：${片段}`);
+}
+
+const 跨引用节点 = structuredClone(最小可结束节点);
+跨引用节点.start.lines.push({ speaker: 'unknown_role', text: '未声明角色。' });
+跨引用节点.start.choices[0].effect = {
+  relationships: {
+    unknown_role: { trust: 1 },
+    hua_rongli: { affection: 1 },
+  },
+  route: 'unknown_route',
+};
+跨引用节点.start.choices[0].condition = {
+  route: 'unknown_route',
+  minRelationship: [{ character: 'unknown_role', metric: 'trust', value: 1 }],
+};
+跨引用节点.start.hotspots = [
+  {
+    id: 'bad-hotspot',
+    effect: { relationships: { unknown_role: { trust: 1 } }, route: 'unknown_route' },
+  },
+];
+const 跨引用报告 = 校验故事(跨引用节点, 'start', { cast: 合法阵容 });
+for (const 片段 of [
+  'references undeclared cast speaker: unknown_role',
+  'effect.relationships references undeclared cast character: unknown_role',
+  'effect.relationships.hua_rongli contains unsupported metric: affection',
+  'condition.minRelationship references undeclared cast character: unknown_role',
+  'effect.route references undeclared cast route: unknown_route',
+  'condition.route references undeclared cast route: unknown_route',
+]) {
+  assert.ok(跨引用报告.errors.some((条) => 条.includes(片段)), `缺少 cast 引用错误：${片段}`);
+}
+
+const 禁用阵容 = structuredClone(合法阵容);
+禁用阵容.characters[0].relationship.enabled = false;
+const 禁用关系报告 = 校验故事(最小可结束节点, 'start', { cast: 禁用阵容 });
+assert.ok(禁用关系报告.errors.some((条) => 条.includes('relationship-disabled cast character: hua_rongli')));
 
 // 结局：零结局自循环必须同时报缺结局和陷阱环；带出口的循环可以到达结局。
 const 零结局 = 校验故事({

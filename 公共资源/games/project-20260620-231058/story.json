@@ -2,6 +2,60 @@
   "id": "project-20260620-231058",
   "title": "第十五封愿望",
   "subtitle": "校园悬疑互动影游",
+  "cast": {
+    "protagonist": {
+      "id": "you",
+      "name": "沈知意",
+      "role": "校刊特约调查员",
+      "pronouns": "她",
+      "color": "#d7b6c9",
+      "accent": "#4b3045"
+    },
+    "characters": [
+      {
+        "id": "wen_tianmo",
+        "name": "温甜茉",
+        "shortName": "甜茉",
+        "role": "甜品社成员",
+        "theme": "柔软与勇气",
+        "color": "#e6a8bb",
+        "accent": "#55303d",
+        "romanceable": false,
+        "relationship": {
+          "enabled": true,
+          "initial": { "spark": 20, "trust": 30, "boundary": 60 }
+        }
+      },
+      {
+        "id": "lin_wanqing",
+        "name": "林晚晴",
+        "shortName": "晚晴",
+        "role": "学生会流程负责人",
+        "theme": "真实与责任",
+        "color": "#91a9c7",
+        "accent": "#293b54",
+        "romanceable": false,
+        "relationship": {
+          "enabled": true,
+          "initial": { "spark": 20, "trust": 30, "boundary": 60 }
+        }
+      },
+      {
+        "id": "hua_rongli",
+        "name": "花容离",
+        "shortName": "容离",
+        "role": "校刊纪录片剪辑者",
+        "theme": "秘密与边界",
+        "color": "#b8a7dc",
+        "accent": "#3c315c",
+        "romanceable": true,
+        "relationship": {
+          "enabled": true,
+          "initial": { "spark": 25, "trust": 30, "boundary": 55 }
+        }
+      }
+    ]
+  },
   "startNodeId": "s00-character-select",
   "mechanics": {
     "mode": "published",

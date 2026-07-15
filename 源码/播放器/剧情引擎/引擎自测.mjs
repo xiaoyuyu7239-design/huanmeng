@@ -73,6 +73,9 @@ function 相等(实际, 期望, 说明 = '') {
 function 为真(值, 说明 = '') {
   if (!值) throw new Error(`${说明} 期望真值，实际 ${JSON.stringify(值)}`);
 }
+function 编码原始存档(原始) {
+  return btoa(unescape(encodeURIComponent(JSON.stringify(原始))));
+}
 
 // ============================ 一、剧情加载 ============================
 console.log('【一】剧情加载（单例 / 兜底 / loadStoryBySlug / 规范化）');
@@ -266,6 +269,57 @@ globalThis.fetch = async () => {
   为真(引擎.条件满足(开局, 选择.condition));
 });
 
+检查('cast 加载边界：无 cast 安全回退，畸形类型与系统关系不会泄漏进状态', () => {
+  加载.setActiveStory(空白剧情, 'legacy-without-cast');
+  相等(加载.getStoryProtagonist().name, '你');
+  相等(加载.getStoryCharacterList(), []);
+
+  加载.setActiveStory(
+    {
+      title: '畸形角色阵容',
+      startNodeId: 'only',
+      cast: {
+        protagonist: { id: 'wrong', name: 7, color: 'red' },
+        characters: [
+          {
+            id: 'su',
+            name: '',
+            romanceable: 'false',
+            relationship: {
+              enabled: 'false',
+              initial: { spark: null, trust: '', boundary: false },
+            },
+          },
+          { id: 'system', name: '不应进入关系表' },
+          { id: 'su', name: '重复角色' },
+        ],
+      },
+      nodes: {
+        only: {
+          id: 'only',
+          title: '唯一',
+          lines: [{ speaker: 'you', text: '测试。' }],
+          hotspots: [],
+          choices: [
+            {
+              id: 'bad-system-relation',
+              label: '继续',
+              next: 'only',
+              effect: { relationships: { system: { trust: 10 }, you: { spark: 10 } } },
+            },
+          ],
+        },
+      },
+    },
+    'malformed-cast',
+  );
+  const [角色] = 加载.getStoryCharacterList();
+  相等([角色.id, 角色.name, 角色.romanceable, 角色.relationship.enabled], ['su', 'Su', false, true]);
+  相等(角色.relationship.initial, { spark: 30, trust: 30, boundary: 50 });
+  相等(加载.getRelationshipCharacterIds(), ['su']);
+  相等(Object.keys(引擎.创建初始状态().relationships), ['su']);
+});
+
 // 两部已发布作品的真实兼容回归：防止以后只让合成测试通过、却再次破坏线上数据。
 const 第十五封愿望 = JSON.parse(
   readFileSync(new URL('../../../公共资源/games/project-20260620-231058/story.json', import.meta.url), 'utf8'),
@@ -277,8 +331,12 @@ const 七仙女下凡 = JSON.parse(
 检查('真实回归·第十五封愿望：三位动态角色进入状态、结算并可经存档消毒', () => {
   加载.setActiveStory(第十五封愿望, 'project-20260620-231058');
   const 开局 = 引擎.创建初始状态();
-  for (const 角色 of ['wen_tianmo', 'lin_wanqing', 'hua_rongli'])
-    相等(开局.relationships[角色], { spark: 30, trust: 30, boundary: 50 }, `${角色} 应初始化`);
+  相等(加载.getStoryProtagonist().name, '沈知意');
+  相等(引擎.说话人显示名('you'), '沈知意');
+  相等(加载.getStoryCharacterList().map((角色) => 角色.id), ['wen_tianmo', 'lin_wanqing', 'hua_rongli']);
+  相等(开局.relationships.wen_tianmo, { spark: 20, trust: 30, boundary: 60 });
+  相等(开局.relationships.lin_wanqing, { spark: 20, trust: 30, boundary: 60 });
+  相等(开局.relationships.hua_rongli, { spark: 25, trust: 30, boundary: 55 });
   const 选择 = 加载.storyNodes['s00-character-select'].choices.find((条) => 条.id === 'choice-tianmo');
   const 结算后 = 引擎.应用效果(开局, 选择.effect);
   相等(结算后.relationships.wen_tianmo.trust, 38);
@@ -334,6 +392,28 @@ console.log('【二】状态与结算（初始形状 / effect 结算 / 八类条
 const 测试剧情 = {
   title: '引擎自测剧情',
   startNodeId: 'n1',
+  cast: {
+    protagonist: {
+      name: '许澄',
+      role: 'AI 直播总导演',
+      pronouns: '她',
+      color: '#b85c70',
+      accent: '#4b2431',
+    },
+    characters: [
+      {
+        id: 'su',
+        name: '许知微',
+        shortName: '知微',
+        role: '前调查记者',
+        theme: '信任与牺牲',
+        color: '#83c99a',
+        accent: '#1e4830',
+        romanceable: true,
+        relationship: { enabled: true, initial: { spark: 25, trust: 35, boundary: 60 } },
+      },
+    ],
+  },
   mechanics: {
     scores: [
       { id: 'truth', label: '真相', initial: 0, min: 0, max: 100, visibility: 'public', tone: 'truth' },
@@ -440,12 +520,13 @@ const 测试剧情 = {
 const 初始 = 引擎.创建初始状态();
 检查('创建初始状态：形状与钳制（overflow 初始 150 → 100）', () => {
   相等(初始.gameId, 'engine-test');
+  相等(初始.storyId, 'engine-test');
   相等(初始.currentNodeId, 'n1');
   相等(初始.visitedNodes, ['n1']);
   相等(初始.loopCount, 1);
   相等(初始.route, null);
-  相等(初始.relationships.su, { spark: 30, trust: 30, boundary: 50 });
-  相等(Object.keys(初始.relationships).length, 6);
+  相等(初始.relationships.su, { spark: 25, trust: 35, boundary: 60 });
+  相等(Object.keys(初始.relationships), ['su'], '只初始化当前故事声明或引用的角色');
   相等(初始.globals.overflow, 100, '初始值也按min/max钳');
   相等(初始.globals.insight, 5);
   相等(初始.settings.audio.sceneAudioDefault, 'voice');
@@ -457,7 +538,7 @@ const 初始 = 引擎.创建初始状态();
   相等(后.globals.truth, 8);
   相等(后.globals.pressure, -20, '压力钳到min=-20');
   相等(后.globals.mystery, 3);
-  相等(后.relationships.su.trust, 40);
+  相等(后.relationships.su.trust, 45);
   相等(后.relationships.su.spark, 100, '关系钳到100');
   为真(!('假角色' in 后.relationships), '未知角色被忽略');
   相等(后.flags, ['f_go', 'f_clue']);
@@ -485,8 +566,8 @@ const 初始 = 引擎.创建初始状态();
   为真(引擎.条件满足(基准, { memories: ['看过信'] }) && !引擎.条件满足(基准, { memories: ['别的'] }), 'memories');
   为真(引擎.条件满足(基准, { missingMemories: ['别的'] }) && !引擎.条件满足(基准, { missingMemories: ['看过信'] }), 'missingMemories');
   为真(
-    引擎.条件满足(基准, { minRelationship: [{ character: 'su', metric: 'trust', value: 40 }] }) &&
-      !引擎.条件满足(基准, { minRelationship: [{ character: 'su', metric: 'trust', value: 41 }] }),
+    引擎.条件满足(基准, { minRelationship: [{ character: 'su', metric: 'trust', value: 45 }] }) &&
+      !引擎.条件满足(基准, { minRelationship: [{ character: 'su', metric: 'trust', value: 46 }] }),
     'minRelationship',
   );
   为真(引擎.条件满足(基准, { minGlobal: [{ key: 'truth', value: 10 }] }) && !引擎.条件满足(基准, { minGlobal: [{ key: 'truth', value: 11 }] }), 'minGlobal');
@@ -549,7 +630,7 @@ const 初始 = 引擎.创建初始状态();
 
 检查('选择反馈与展示名（文案逐字对照）', () => {
   const 反馈 = 引擎.生成选择反馈(测试剧情.nodes.n1.choices[0]);
-  相等(反馈.changes, ['真相 +8', '压力 -100', 'Mystery +3', '知微 信任 +10', '知微 牵连 +1000', '假角色 信任 +5', '路线锁定：许知微']);
+  相等(反馈.changes, ['真相 +8', '压力 -100', 'Mystery +3', '知微 信任 +10', '知微 牵连 +1000', '假角色 信任 +5', '路线锁定：知微']);
   相等(反馈.unlocks, ['记忆：出发', '因果标记：f_go', '因果标记：f_clue']);
   相等(引擎.生成选择反馈({ label: 'x', caption: '备注' }).consequence, '备注', 'consequence缺省用caption');
   相等([引擎.路线显示名(null), 引擎.路线显示名('team'), 引擎.路线显示名('solo')], ['未锁定', '群像', '独立']);
@@ -564,8 +645,9 @@ const 初始 = 引擎.创建初始状态();
       引擎.说话人显示名('guest_reviewer'),
       引擎.说话人显示名('路人甲'),
     ],
-    ['旁白', '沈砚', '系统', '温甜茉', '林晚晴', '花容离', 'Guest Reviewer', '路人甲'],
+    ['旁白', '许澄', '系统', '温甜茉', '林晚晴', '花容离', 'Guest Reviewer', '路人甲'],
   );
+  相等(引擎.路线显示名('su'), '知微', '当前故事路线使用 cast 展示名');
   相等([引擎.命运类型显示名('river'), 引擎.命运类型显示名('wheel'), 引擎.命运类型显示名(undefined)], ['命运长河', '循环之轮', '因果之网']);
   相等(引擎.格式化数值(7, 加载.getScoreDefinition('insight')), '7%');
   为真(引擎.是否警示(70, 加载.getScoreDefinition('pressure')) && !引擎.是否警示(69, 加载.getScoreDefinition('pressure')), 'pressure基调>=70告警');
@@ -597,10 +679,12 @@ console.log('【三】存档系统（键名 / 自动存档 / 消毒 / 存档码 
   为真(假存储仓.has('interactive-cinema-save:engine-test:v2'));
   const 读回 = 存档.读取存档();
   相等(读回.gameId, 'engine-test');
+  相等(读回.storyId, 'engine-test');
   相等(读回.currentNodeId, 'e1');
   相等(读回.globals.truth, 10);
   相等(读回.flags, s5.flags);
   相等(读回.decisionLog.length, 2);
+  相等(读回.route, 'su', '当前故事角色路线跨刷新保留');
 });
 
 检查('读档兜底：无存档 / 坏JSON → null', () => {
@@ -633,8 +717,8 @@ console.log('【三】存档系统（键名 / 自动存档 / 消毒 / 存档码 
   相等(净.lineIndex, 2, '行索引钳到n1的3行内');
   相等(净.relationships.su.trust, 100);
   相等(净.relationships.su.spark, 0, '非数字字符串→Number()=NaN→钳成0(线上同款)');
-  相等(净.relationships.su.boundary, 50, '缺失维度才回初始值');
-  相等(净.relationships.lin, { spark: 30, trust: 30, boundary: 50 }, '整个角色缺失→全套初始值');
+  相等(净.relationships.su.boundary, 60, '缺失维度回当前角色配置的初始值');
+  为真(!('lin' in 净.relationships), '不再向当前故事注入旧作品角色');
   为真(!('假角色' in 净.relationships));
   相等(净.globals.insight, 50, '按定义max=50钳');
   相等(净.globals.没定义的, 7, '未声明但是有限数→按0-100收留');
@@ -644,6 +728,7 @@ console.log('【三】存档系统（键名 / 自动存档 / 消毒 / 存档码 
   相等(净.visitedNodes, ['n2']);
   相等(净.seenHotspots, ['n1:h1']);
   相等(净.route, null);
+  相等(存档.消毒存档({ route: 'su' }).route, 'su', '当前 cast 角色是合法路线');
   相等(净.loopCount, 1);
   相等(净.unlockedEndings, ['e1']);
   相等(净.decisionLog.length, 1);
@@ -664,8 +749,26 @@ console.log('【三】存档系统（键名 / 自动存档 / 消毒 / 存档码 
   相等(回.currentNodeId, 'e1');
   相等(回.memories, s5.memories, '中文记忆无损往返');
   相等(回.globals.pressure, s5.globals.pressure);
+  为真(存档.导入存档码(存档.导出存档码({ ...s5, gameId: 'other-game', storyId: 'other-game' })), '导出时强制写入当前作品归属');
+  相等(
+    存档.导入存档码(编码原始存档({ ...s5, gameId: 'other-game', storyId: 'other-game' })),
+    null,
+    '拒绝跨作品导入',
+  );
   相等(存档.导入存档码('!!!不是码!!!'), null);
   相等(存档.导入存档码(btoa('{"currentNodeId":')), null, '半截JSON也返回null');
+});
+
+检查('存档码：内置 bundled 与正式 slug 使用稳定 storyId 互认', () => {
+  加载.setActiveStory(第十五封愿望, 'bundled');
+  const 内置状态 = 引擎.创建初始状态();
+  const 新码 = 存档.导出存档码(内置状态);
+  const { storyId: _忽略, ...旧码状态 } = 内置状态;
+  const 旧码 = 编码原始存档({ ...旧码状态, gameId: 'bundled' });
+  加载.setActiveStory(第十五封愿望, 'project-20260620-231058');
+  相等(存档.导入存档码(新码).storyId, 'project-20260620-231058');
+  相等(存档.导入存档码(旧码).storyId, 'project-20260620-231058');
+  加载.setActiveStory(测试剧情, 'engine-test');
 });
 
 检查('清空重开：只留设置，其余归零', () => {

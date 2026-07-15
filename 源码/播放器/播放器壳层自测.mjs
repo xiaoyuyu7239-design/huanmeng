@@ -49,7 +49,7 @@ function 无告警渲染(名字, 元素) {
 try {
   const 剧情模块 = await 服务.ssrLoadModule('/源码/播放器/剧情引擎/剧情加载.js');
   const 状态模块 = await 服务.ssrLoadModule('/源码/播放器/剧情引擎/状态与结算.js');
-  const { default: 播放器应用 } = await 服务.ssrLoadModule('/源码/播放器/播放器应用.jsx');
+  const { default: 播放器应用, 关系手账 } = await 服务.ssrLoadModule('/源码/播放器/播放器应用.jsx');
   const 剧情路径们 = [
     'excuse',
     'project-20260620-002835',
@@ -79,6 +79,30 @@ try {
         throw new Error(`${slug}/${节点.id} 未渲染出播放器壳层或故事标题`);
       }
       节点通过 += 1;
+    }
+    if (slug === 'project-20260620-231058') {
+      const 手账状态 = 状态模块.创建初始状态();
+      手账状态.relationships.wen_tianmo.trust = '异常旧值';
+      手账状态.decisionLog = [
+        {
+          id: 'trace-wen',
+          loop: 1,
+          nodeTitle: '雨夜校园入口',
+          label: '回应温甜茉的招呼',
+          consequence: '她记住了你的认真回应。',
+          effect: { relationships: { wen_tianmo: { trust: 8 } } },
+          createdAt: 1,
+        },
+      ];
+      const 手账html = 无告警渲染('关系手账', React.createElement(关系手账, { state: 手账状态 }));
+      if (
+        !['温甜茉', '林晚晴', '花容离', '她记住了你的认真回应。'].every((文本) => 手账html.includes(文本)) ||
+        (手账html.match(/role="progressbar"/g) ?? []).length !== 3 ||
+        手账html.includes('NaN')
+      ) {
+        throw new Error('关系手账未正确渲染角色、三维关系、痕迹或异常值兜底');
+      }
+      console.log('  ✓ 关系手账：三角色、三维刻度、决策痕迹与异常值兜底');
     }
     通过 += 1;
     console.log(`  ✓ ${slug}：${剧情.title}（${Object.keys(剧情.nodes).length} 节点）`);
@@ -115,6 +139,11 @@ try {
   const 本机html = 无告警渲染('本机空画面项目', React.createElement(播放器应用));
   if (!本机html.includes('game-shell') || !本机html.includes('本机空画面项目'))
     throw new Error('本机空画面项目未渲染出播放器壳层');
+  const 空手账html = 无告警渲染(
+    '空关系手账',
+    React.createElement(关系手账, { state: 状态模块.创建初始状态() }),
+  );
+  if (!空手账html.includes('这段故事还没有可记录的关系变化')) throw new Error('空关系手账未渲染空状态');
   console.log('  ✓ 本机新项目：空 panorama 使用安全占位字段并完成壳层渲染');
   存储.clear();
 
