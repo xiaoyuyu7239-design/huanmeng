@@ -155,32 +155,44 @@ export function 试听已禁用(音频设置) {
 
 // ---- 对白语音 ----
 
+const 已绑定对白语音 = new WeakSet();
+
+function 绑定对白语音状态(音频, 设状态) {
+  if (已绑定对白语音.has(音频)) return;
+  已绑定对白语音.add(音频);
+  音频.addEventListener('playing', () => 设状态('playing'));
+  音频.addEventListener('ended', () => 设状态('ended'));
+  音频.addEventListener('pause', () => 设状态('paused'));
+  音频.addEventListener('error', () => 设状态('blocked'));
+}
+
 // (voiceSrc, 音量, 设状态回调) → 建一个 Audio 自动开播 → 返回 Audio 元素（调用方存进 ref，
-// 换行/卸载时用 销毁音频 收掉）。状态回调会收到 "playing" / "idle" / "blocked"。
-// 调用方约定：src 为空该置 "missing"、语音未启用该置 "idle"，都轮不到本函数出场。
+// 换行/卸载时用 销毁音频 收掉）。状态回调会收到
+// "loading" / "playing" / "ended" / "paused" / "blocked"。
+// 调用方约定：src 为空该置 "missing"、语音未启用该置 "paused"，都轮不到本函数出场。
 export function 创建对白语音(voiceSrc, 音量, 设状态) {
+  设状态('loading');
   const 音频 = new Audio(voiceSrc);
   音频.volume = 音量;
-  音频.addEventListener('playing', () => 设状态('playing'));
-  音频.addEventListener('ended', () => 设状态('idle'));
-  音频.addEventListener('pause', () => 设状态('idle'));
-  音频.addEventListener('error', () => 设状态('blocked'));
+  绑定对白语音状态(音频, 设状态);
   音频.play().catch(() => 设状态('blocked'));
   return 音频;
 }
 
-// ({现有音频, src, 音量, 设状态}) → 语音按钮的手动切换：正在播就暂停（状态回 idle），
+// ({现有音频, src, 音量, 设状态}) → 语音按钮的手动切换：正在播就暂停（状态回 paused），
 // 停着就播 → 返回实际使用的 Audio 元素（调用方写回 ref）。
 // 复用规则与线上一致：现有 Audio 还挂着 src 就继续用它，否则新建。
 // 调用方约定：muted/masterMuted/voiceMuted 任一开着或没有 src 时不要调用（线上在处理器里先 return）。
 export function 切换对白语音({ 现有音频, src, 音量, 设状态 }) {
   const 音频 = 现有音频 && 现有音频.src ? 现有音频 : new Audio(src);
   音频.volume = 音量;
+  绑定对白语音状态(音频, 设状态);
   if (!音频.paused) {
     音频.pause();
-    设状态('idle');
+    设状态('paused');
     return 音频;
   }
+  设状态('loading');
   音频
     .play()
     .then(() => 设状态('playing'))

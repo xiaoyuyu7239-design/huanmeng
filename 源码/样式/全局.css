@@ -18,6 +18,16 @@
 .relationship-card header small,.relationship-theme{margin:0;color:#fff7ec8a;font-size:11px}
 .relationship-theme{padding-top:10px;border-top:1px solid #ffffff14;letter-spacing:.08em}
 .relationship-meters{display:grid;gap:11px}
+.relationship-details{padding-top:2px;border-top:1px solid #ffffff14;color:#fff7ecad;font-size:12px}
+.relationship-details summary{display:flex;min-height:44px;align-items:center;justify-content:space-between;cursor:pointer;color:#fff7ecbf;list-style:none}
+.relationship-details summary::-webkit-details-marker{display:none}
+.relationship-details summary::after{content:"展开";color:#fff7ec75;font-size:11px}
+.relationship-details[open] summary::after{content:"收起"}
+.relationship-details summary:focus-visible{border-radius:5px;outline:2px solid #d7b6c975;outline-offset:2px}
+.relationship-details dl{display:grid;gap:7px;margin:0 0 4px}
+.relationship-details dl>div{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.relationship-details dt{color:#fff7ec91}
+.relationship-details dd{margin:0;color:#fff7ecde;font-variant-numeric:tabular-nums}
 .relationship-meter{display:grid;gap:6px}
 .relationship-meter>div:first-child{display:flex;justify-content:space-between;gap:12px;font-size:12px}
 .relationship-meter span{color:#fff7ecbf}

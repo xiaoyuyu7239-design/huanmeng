@@ -9,7 +9,7 @@
 //   default 对白区({行, 语音状态, 语音禁用, 点语音, 已到最后一行, 点继续})
 // ============================================================================
 
-import { VolumeX, Volume2, ChevronRight } from 'lucide-react';
+import { VolumeX, Volume2, ChevronRight, Pause, Play } from 'lucide-react';
 import { 取角色档案, 说话人显示名 } from '../剧情引擎/状态与结算.js';
 
 // ({speaker}) → 说话人徽章（线上 In）：角色表里有就用角色名+专属色，
@@ -28,14 +28,13 @@ function 说话人徽章({ speaker }) {
 // ({disabled, onClick, status}) → 语音小喇叭（线上 Ln）：title 跟着状态换文案，
 // 无语音/静音时禁用并换成"哑喇叭"图标 → JSX
 function 语音按钮({ 禁用, 点击, 状态 }) {
-  const 提示 =
-    状态 === 'playing'
-      ? '暂停语音'
-      : 状态 === 'blocked'
-        ? '播放语音'
-        : 状态 === 'missing'
-          ? '无语音'
-          : '播放语音';
+  const 提示 = {
+    playing: '暂停语音',
+    loading: '语音加载中',
+    paused: '继续播放语音',
+    blocked: '播放语音',
+    missing: '无语音',
+  }[状态] ?? '播放语音';
   return (
     <button
       className={状态 === 'playing' ? 'voice-button is-playing' : 'voice-button'}
@@ -49,12 +48,34 @@ function 语音按钮({ 禁用, 点击, 状态 }) {
   );
 }
 
-export default function 对白区({ 行, 语音状态, 语音禁用, 点语音, 已到最后一行, 点继续 }) {
+export default function 对白区({
+  行,
+  语音状态,
+  语音禁用,
+  点语音,
+  已到最后一行,
+  点继续,
+  自动推进,
+  切换自动推进,
+}) {
   return (
-    <div className="dialogue-main">
+    <div aria-atomic="true" aria-live="polite" className="dialogue-main">
       <说话人徽章 speaker={行?.speaker} />
       <p>{行?.text}</p>
       <语音按钮 禁用={语音禁用} 点击={点语音} 状态={语音状态} />
+      {typeof 切换自动推进 === 'function' && (
+        <button
+          aria-label={自动推进 ? '暂停对白自动播放' : '开启对白自动播放'}
+          aria-pressed={Boolean(自动推进)}
+          className={自动推进 ? 'auto-advance-button is-active' : 'auto-advance-button'}
+          onClick={切换自动推进}
+          title={自动推进 ? '暂停自动播放' : '自动播放'}
+          type="button"
+        >
+          {自动推进 ? <Pause aria-hidden="true" size={15} /> : <Play aria-hidden="true" size={15} />}
+          <span>{自动推进 ? '自动播放中' : '自动播放'}</span>
+        </button>
+      )}
       {!已到最后一行 && (
         <button className="next-button" onClick={点继续} title="继续" type="button">
           <ChevronRight size={20} />

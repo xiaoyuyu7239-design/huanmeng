@@ -1,0 +1,931 @@
+/*
+ * 女性向播放器 Level 3：暮色书页 + 角色轻电影。
+ * 所有规则都要求同一根节点同时拥有 layout-portrait-cinema / theme-twilight，
+ * 旧五部全景作品不会被这份样式改变。
+ */
+
+.layout-portrait-cinema.theme-twilight {
+  --twilight-night: #14101a;
+  --twilight-plum: #261b2c;
+  --twilight-page: #eee6da;
+  --twilight-page-deep: #d8c8bc;
+  --twilight-ink: #2b202c;
+  --twilight-muted: #776572;
+  --twilight-rose: #c696a9;
+  --twilight-lavender: #a69ac4;
+  --twilight-celadon: #93afa7;
+  --twilight-gold: #cdb68f;
+  --twilight-focus: #f1c5d7;
+  --dock-width: min(980px, calc(100vw - 40px));
+  color: #f8f1f4;
+  background:
+    radial-gradient(circle at 72% 18%, rgba(166, 154, 196, .18), transparent 32%),
+    radial-gradient(circle at 20% 82%, rgba(198, 150, 169, .12), transparent 36%),
+    var(--twilight-night);
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--twilight-night);
+  isolation: isolate;
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-backdrop-layer,
+.layout-portrait-cinema.theme-twilight .cinema-stage-wash,
+.layout-portrait-cinema.theme-twilight .cinema-stage-grain {
+  position: absolute;
+  inset: 0;
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-backdrop-layer {
+  z-index: 0;
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-backdrop,
+.layout-portrait-cinema.theme-twilight .cinema-backdrop-placeholder {
+  width: 100%;
+  height: 100%;
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-backdrop {
+  display: block;
+  object-fit: cover;
+  object-position: center 42%;
+  filter: saturate(.78) contrast(.96) brightness(.7);
+  transform: scale(1.015);
+  animation: heartscape-cinema-backdrop-reveal .8s ease-out both;
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-backdrop-placeholder {
+  background:
+    linear-gradient(118deg, rgba(20, 16, 26, .16), rgba(20, 16, 26, .78)),
+    radial-gradient(circle at 70% 30%, rgba(166, 154, 196, .38), transparent 28%),
+    radial-gradient(circle at 30% 76%, rgba(147, 175, 167, .2), transparent 32%),
+    linear-gradient(145deg, #3b3041, #18151f 56%, #2b1d2c);
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-stage-wash {
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(15, 12, 20, .76), transparent 19%, transparent 58%, rgba(15, 11, 19, .92)),
+    linear-gradient(90deg, rgba(20, 15, 24, .78), transparent 34%, rgba(22, 16, 26, .14) 68%, rgba(20, 14, 23, .46)),
+    radial-gradient(ellipse at 68% 43%, transparent 22%, rgba(24, 17, 29, .26) 74%);
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-stage-grain {
+  z-index: 5;
+  opacity: .18;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.14'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-character {
+  --portrait-side: max(2vw, 20px);
+  position: absolute;
+  z-index: 3;
+  right: var(--portrait-side);
+  bottom: clamp(116px, 13svh, 150px);
+  width: min(42vw, 570px);
+  height: min(78svh, 820px);
+  margin: 0;
+  pointer-events: none;
+  animation: heartscape-cinema-character-reveal .55s cubic-bezier(.2, .72, .25, 1) both;
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-stage.is-left .cinema-character {
+  right: auto;
+  left: var(--portrait-side);
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-stage.is-center .cinema-character {
+  right: auto;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-character::before {
+  content: "";
+  position: absolute;
+  inset: 7% 5% 1%;
+  z-index: -1;
+  border-radius: 48% 48% 16% 16%;
+  background: radial-gradient(ellipse, color-mix(in srgb, var(--character-color) 22%, transparent), transparent 66%);
+  filter: blur(28px);
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-character-portrait,
+.layout-portrait-cinema.theme-twilight .cinema-character-fallback {
+  width: 100%;
+  height: 100%;
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-character-portrait {
+  display: block;
+  object-fit: cover;
+  object-position: center 24%;
+  border: 1px solid rgba(238, 230, 218, .16);
+  border-radius: 46% 46% 10% 10% / 21% 21% 8% 8%;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, .06),
+    0 38px 90px rgba(4, 2, 8, .48);
+  -webkit-mask-image: linear-gradient(180deg, #000 0 84%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0 84%, transparent 100%);
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-character-fallback {
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--character-color) 42%, transparent);
+  border-radius: 48% 48% 12% 12% / 22% 22% 8% 8%;
+  color: color-mix(in srgb, var(--character-color) 70%, #fff);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--character-color) 16%, transparent), transparent 52%),
+    linear-gradient(145deg, rgba(44, 32, 49, .76), rgba(17, 13, 22, .92));
+  box-shadow: 0 38px 90px rgba(4, 2, 8, .38);
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-character-fallback span {
+  display: grid;
+  width: 116px;
+  height: 116px;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--character-color) 54%, transparent);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--character-color) 12%, transparent);
+  font-family: "Noto Serif SC", "Songti SC", serif;
+  font-size: 46px;
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-character-caption {
+  position: absolute;
+  right: 6%;
+  bottom: 4%;
+  display: grid;
+  min-width: 168px;
+  gap: 3px;
+  padding: 13px 16px 12px 23px;
+  border: 1px solid rgba(238, 230, 218, .24);
+  border-radius: 2px 10px 10px 2px;
+  color: #f7f0f3;
+  background: linear-gradient(105deg, rgba(28, 20, 31, .88), rgba(44, 31, 47, .72));
+  box-shadow: 0 18px 46px rgba(4, 2, 8, .38);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-character-caption::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 11px;
+  bottom: 11px;
+  width: 2px;
+  background: var(--character-color, var(--twilight-rose));
+  box-shadow: 0 0 18px var(--character-color, var(--twilight-rose));
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-character-caption span {
+  color: var(--character-color, var(--twilight-rose));
+  font-size: 11px;
+  letter-spacing: .18em;
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-character-caption strong {
+  font-family: "Noto Serif SC", "Songti SC", serif;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: .06em;
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-character-caption small {
+  color: rgba(247, 240, 243, .62);
+  font-size: 11px;
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-scene-label {
+  position: absolute;
+  top: 88px;
+  left: 126px;
+  z-index: 7;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(247, 240, 243, .64);
+  font-size: 11px;
+  letter-spacing: .08em;
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-scene-label span {
+  padding: 4px 8px;
+  border: 1px solid rgba(238, 230, 218, .16);
+  border-radius: 999px;
+  color: var(--twilight-gold);
+  background: rgba(20, 15, 24, .42);
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-scene-label strong {
+  font-weight: 500;
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-investigate-button {
+  position: absolute;
+  left: max(24px, 2vw);
+  bottom: clamp(174px, 23svh, 248px);
+  z-index: 9;
+  display: inline-grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  align-items: center;
+  min-width: 184px;
+  min-height: 54px;
+  gap: 10px;
+  padding: 7px 14px 7px 9px;
+  border: 1px solid rgba(238, 230, 218, .22);
+  border-radius: 999px;
+  color: #f7f0f3;
+  background: linear-gradient(110deg, rgba(33, 24, 37, .9), rgba(49, 35, 52, .72));
+  box-shadow: 0 16px 48px rgba(4, 2, 8, .34);
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  transition: border-color .18s ease, background .18s ease, transform .18s ease;
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-investigate-button > svg {
+  width: 36px;
+  height: 36px;
+  padding: 9px;
+  border-radius: 50%;
+  color: #261b2c;
+  background: var(--twilight-page);
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-investigate-button > span {
+  display: grid;
+  gap: 2px;
+  text-align: left;
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-investigate-button strong {
+  font-size: 13px;
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-investigate-button small {
+  color: rgba(247, 240, 243, .58);
+  font-size: 10px;
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-investigate-button:hover,
+.layout-portrait-cinema.theme-twilight .cinema-investigate-button[aria-expanded="true"] {
+  border-color: rgba(198, 150, 169, .72);
+  background: linear-gradient(110deg, rgba(56, 39, 58, .94), rgba(68, 44, 64, .78));
+  transform: translateY(-2px);
+}
+
+/* 既有顶栏与对白只在新主题根下换肤；DOM 契约保持不变。 */
+.layout-portrait-cinema.theme-twilight .brand-button,
+.layout-portrait-cinema.theme-twilight .scene-meta {
+  border-color: rgba(238, 230, 218, .17);
+  background: linear-gradient(110deg, rgba(25, 18, 30, .88), rgba(45, 31, 48, .62));
+  color: #f7f0f3;
+}
+
+.layout-portrait-cinema.theme-twilight .top-actions {
+  border-color: rgba(62, 43, 58, .18);
+  color: var(--twilight-ink);
+  background:
+    linear-gradient(180deg, rgba(245, 238, 228, .94), rgba(219, 202, 193, .9)),
+    var(--twilight-page);
+}
+
+.layout-portrait-cinema.theme-twilight .icon-button {
+  color: var(--twilight-ink);
+}
+
+.layout-portrait-cinema.theme-twilight .icon-button:hover,
+.layout-portrait-cinema.theme-twilight .icon-button.is-active {
+  background: rgba(115, 78, 103, .12);
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-main {
+  min-height: clamp(114px, 16svh, 146px);
+  border-color: rgba(77, 56, 69, .34);
+  border-radius: 12px 12px 5px 12px;
+  color: var(--twilight-ink);
+  background:
+    radial-gradient(circle at 84% 44%, rgba(198, 150, 169, .12), transparent 22%),
+    linear-gradient(180deg, rgba(246, 240, 231, .95), rgba(222, 209, 200, .94)),
+    repeating-linear-gradient(0deg, transparent 0 20px, rgba(76, 54, 67, .035) 20px 21px);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .7), 0 24px 70px rgba(4, 2, 8, .52);
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-main::before {
+  border-color: rgba(91, 66, 82, .34);
+  border-left-color: transparent;
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-main::after {
+  border-color: rgba(96, 66, 85, .16);
+}
+
+.layout-portrait-cinema.theme-twilight .speaker-badge {
+  border-color: rgba(255, 255, 255, .12);
+  color: #f7f0f3;
+  background: linear-gradient(110deg, #2b202d, #1c161f);
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-main p {
+  color: var(--twilight-ink);
+  font-family: "Noto Serif SC", "Songti SC", serif;
+  font-size: clamp(16px, 1.35vw, 19px);
+  line-height: 1.7;
+}
+
+.layout-portrait-cinema.theme-twilight .voice-button {
+  color: #6f5867;
+  background: rgba(91, 63, 81, .08);
+}
+
+.layout-portrait-cinema.theme-twilight .auto-advance-button {
+  position: absolute;
+  right: 58px;
+  bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  gap: 6px;
+  padding: 0 10px;
+  border: 1px solid rgba(91, 63, 81, .16);
+  border-radius: 999px;
+  color: #6f5867;
+  background: rgba(91, 63, 81, .07);
+  cursor: pointer;
+}
+
+.layout-portrait-cinema.theme-twilight .auto-advance-button.is-active {
+  border-color: rgba(134, 88, 109, .42);
+  color: #f8e8ef;
+  background: #6f435a;
+}
+
+.layout-portrait-cinema.theme-twilight .auto-advance-button span {
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.layout-portrait-cinema.theme-twilight .next-button {
+  border-color: rgba(238, 205, 219, .5);
+  color: #f8e8ef;
+  background: radial-gradient(circle at 34% 26%, #c696a9 0 18%, #86586d 52%, #42263a 100%);
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, .24), inset 0 -5px 10px rgba(45, 22, 37, .5), 0 0 0 3px rgba(62, 35, 53, .36), 0 12px 26px rgba(31, 13, 25, .34);
+}
+
+.layout-portrait-cinema.theme-twilight .choice-grid {
+  scrollbar-color: rgba(198, 150, 169, .52) rgba(255, 255, 255, .06);
+  scrollbar-width: thin;
+}
+
+.layout-portrait-cinema.theme-twilight .choice-card {
+  border-color: rgba(238, 230, 218, .16);
+  border-radius: 10px;
+  color: #f8f1f4;
+  background: linear-gradient(135deg, rgba(38, 27, 43, .94), rgba(24, 18, 29, .9));
+  box-shadow: 0 16px 48px rgba(4, 2, 8, .42);
+}
+
+.layout-portrait-cinema.theme-twilight .choice-card:hover {
+  border-color: rgba(198, 150, 169, .64);
+  background: linear-gradient(135deg, rgba(60, 41, 59, .96), rgba(35, 25, 40, .92));
+}
+
+.layout-portrait-cinema.theme-twilight .fate-river {
+  border-color: rgba(147, 175, 167, .42);
+  background: rgba(147, 175, 167, .13);
+}
+
+.layout-portrait-cinema.theme-twilight .fate-web {
+  border-color: rgba(198, 150, 169, .44);
+  background: rgba(198, 150, 169, .14);
+}
+
+.layout-portrait-cinema.theme-twilight .fate-wheel {
+  border-color: rgba(166, 154, 196, .44);
+  background: rgba(166, 154, 196, .14);
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-investigation-region {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.layout-portrait-cinema.theme-twilight .cinema-investigation-exit {
+  position: absolute;
+  left: max(20px, 2vw);
+  top: max(76px, calc(env(safe-area-inset-top) + 68px));
+  z-index: 18;
+  display: inline-flex;
+  align-items: center;
+  min-height: 46px;
+  gap: 8px;
+  padding: 0 15px;
+  border: 1px solid rgba(238, 230, 218, .3);
+  border-radius: 999px;
+  color: #f8f1f4;
+  background: rgba(31, 22, 36, .86);
+  box-shadow: 0 16px 40px rgba(4, 2, 8, .35);
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-side {
+  padding: 0;
+  overflow: hidden;
+}
+
+.layout-portrait-cinema.theme-twilight .relationship-card > header > span.has-portrait {
+  overflow: hidden;
+  padding: 0;
+}
+
+.layout-portrait-cinema.theme-twilight .relationship-card > header > span.has-portrait img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center 18%;
+}
+
+.layout-portrait-cinema.theme-twilight .relationship-summary {
+  margin: 0;
+  padding: 11px 13px;
+  border-left: 3px solid var(--twilight-rose);
+  color: #4b3947;
+  background: rgba(198, 150, 169, .1);
+  font-family: "Noto Serif SC", "Songti SC", serif;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* 对白历史：可直接作为侧栏主体，也可由外层 side-panel 包裹。 */
+.layout-portrait-cinema.theme-twilight .dialogue-history-panel {
+  min-height: 0;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  color: var(--twilight-ink);
+  background:
+    linear-gradient(180deg, rgba(247, 241, 232, .98), rgba(224, 212, 203, .98)),
+    var(--twilight-page);
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-head {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 17px 16px 14px;
+  border-bottom: 1px solid rgba(80, 58, 72, .15);
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-mark {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid rgba(108, 76, 99, .2);
+  border-radius: 50%;
+  color: #75536a;
+  background: rgba(198, 150, 169, .13);
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-head > div {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-head h2,
+.layout-portrait-cinema.theme-twilight .dialogue-history-head p {
+  margin: 0;
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-head h2 {
+  font-family: "Noto Serif SC", "Songti SC", serif;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-head p {
+  color: var(--twilight-muted);
+  font-size: 11px;
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-head > button {
+  display: grid;
+  width: 40px;
+  min-height: 40px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(91, 63, 81, .18);
+  border-radius: 50%;
+  color: #604759;
+  background: rgba(255, 255, 255, .32);
+  cursor: pointer;
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-list {
+  min-height: 0;
+  display: grid;
+  align-content: start;
+  gap: 0;
+  margin: 0;
+  padding: 5px 16px 20px;
+  overflow-y: auto;
+  list-style: none;
+  scrollbar-color: rgba(111, 79, 100, .28) transparent;
+  scrollbar-width: thin;
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-list > li {
+  position: relative;
+  padding: 13px 0;
+  border-bottom: 1px solid rgba(80, 58, 72, .11);
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-list > li.is-current::before {
+  content: "";
+  position: absolute;
+  left: -16px;
+  top: 17px;
+  bottom: 17px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--twilight-rose);
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-list article {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  align-items: start;
+  gap: 11px;
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-avatar {
+  width: 46px;
+  height: 54px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--character-color) 44%, transparent);
+  border-radius: 48% 48% 9px 9px;
+  color: #fff;
+  background: color-mix(in srgb, var(--character-color) 44%, #392b38);
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-avatar.is-narration {
+  border-radius: 50%;
+  color: #705366;
+  background: rgba(198, 150, 169, .13);
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-avatar img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center 20%;
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-avatar span {
+  font-family: "Noto Serif SC", "Songti SC", serif;
+  font-size: 19px;
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-avatar.is-narration span {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-copy {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-copy header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-copy strong {
+  font-size: 13px;
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-copy em {
+  padding: 2px 6px;
+  border-radius: 999px;
+  color: #75536a;
+  background: rgba(198, 150, 169, .14);
+  font-size: 10px;
+  font-style: normal;
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-copy small {
+  overflow: hidden;
+  color: var(--twilight-muted);
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-copy p {
+  margin: 2px 0 0;
+  color: #3e303b;
+  font-family: "Noto Serif SC", "Songti SC", serif;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-empty {
+  align-self: center;
+  justify-self: center;
+  display: grid;
+  width: min(300px, calc(100% - 32px));
+  justify-items: center;
+  gap: 7px;
+  padding: 28px 18px;
+  border: 1px dashed rgba(91, 63, 81, .22);
+  border-radius: 14px;
+  text-align: center;
+  background: rgba(255, 255, 255, .2);
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-empty > span {
+  color: rgba(117, 83, 106, .44);
+  font-family: serif;
+  font-size: 46px;
+  line-height: .72;
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-empty strong {
+  font-size: 14px;
+}
+
+.layout-portrait-cinema.theme-twilight .dialogue-history-empty p {
+  margin: 0;
+  color: var(--twilight-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* 键盘焦点不依赖颜色变化，覆盖主题内新旧全部交互控件。 */
+.layout-portrait-cinema.theme-twilight :where(button, a, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--twilight-focus);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px rgba(198, 150, 169, .2);
+}
+
+/* 390×844：对白保持可读，选择独立滚动，不把页面整体推离视口。 */
+@media (max-width: 430px) {
+  .layout-portrait-cinema.theme-twilight {
+    --dock-width: calc(100vw - 14px);
+  }
+
+  .layout-portrait-cinema.theme-twilight .cinema-backdrop {
+    object-position: center 38%;
+  }
+
+  .layout-portrait-cinema.theme-twilight .cinema-character {
+    right: -12vw;
+    bottom: 142px;
+    width: min(84vw, 430px);
+    height: min(70svh, 590px);
+  }
+
+  .layout-portrait-cinema.theme-twilight .cinema-stage.is-left .cinema-character {
+    left: -12vw;
+  }
+
+  .layout-portrait-cinema.theme-twilight .cinema-character-caption {
+    right: 12%;
+    bottom: 7%;
+    min-width: 144px;
+    padding: 10px 12px 9px 20px;
+  }
+
+  .layout-portrait-cinema.theme-twilight .cinema-character-caption strong {
+    font-size: 17px;
+  }
+
+  .layout-portrait-cinema.theme-twilight .cinema-scene-label {
+    display: none;
+  }
+
+  .layout-portrait-cinema.theme-twilight .cinema-investigate-button {
+    left: 9px;
+    bottom: auto;
+    top: max(70px, calc(env(safe-area-inset-top) + 62px));
+    min-width: 0;
+    min-height: 44px;
+    grid-template-columns: 32px auto;
+    padding: 5px 11px 5px 6px;
+  }
+
+  .layout-portrait-cinema.theme-twilight .cinema-investigate-button > svg {
+    width: 32px;
+    height: 32px;
+    padding: 8px;
+  }
+
+  .layout-portrait-cinema.theme-twilight .cinema-investigate-button small {
+    display: none;
+  }
+
+  .layout-portrait-cinema.theme-twilight .dialogue-dock {
+    bottom: max(7px, env(safe-area-inset-bottom));
+    gap: 6px;
+    max-height: calc(100dvh - 78px - env(safe-area-inset-top));
+  }
+
+  .layout-portrait-cinema.theme-twilight .dialogue-main {
+    flex: 0 0 auto;
+    min-height: 116px;
+    padding: 12px 54px 12px 45px;
+    border-radius: 10px 10px 4px 10px;
+  }
+
+  .layout-portrait-cinema.theme-twilight .dialogue-main::before {
+    left: 12px;
+    top: 38px;
+    width: 17px;
+    height: 42px;
+  }
+
+  .layout-portrait-cinema.theme-twilight .dialogue-main p {
+    margin-top: 7px;
+    display: block;
+    max-height: min(24dvh, 168px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    font-size: 15px;
+    line-height: 1.62;
+    scrollbar-width: thin;
+  }
+
+  .layout-portrait-cinema.theme-twilight .speaker-badge {
+    min-height: 25px;
+    padding: 0 10px;
+  }
+
+  .layout-portrait-cinema.theme-twilight .voice-button,
+  .layout-portrait-cinema.theme-twilight .auto-advance-button,
+  .layout-portrait-cinema.theme-twilight .next-button,
+  .layout-portrait-cinema.theme-twilight .topbar button,
+  .layout-portrait-cinema.theme-twilight .dialogue-history-head > button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .layout-portrait-cinema.theme-twilight .voice-button {
+    right: 6px;
+    top: 6px;
+  }
+
+  .layout-portrait-cinema.theme-twilight .auto-advance-button {
+    right: 57px;
+    bottom: 8px;
+    min-width: 44px;
+    padding: 0 11px;
+  }
+
+  .layout-portrait-cinema.theme-twilight .auto-advance-button span {
+    display: none;
+  }
+
+  .layout-portrait-cinema.theme-twilight .cinema-investigation-exit {
+    left: 9px;
+    top: max(70px, calc(env(safe-area-inset-top) + 62px));
+    min-height: 44px;
+  }
+
+  .layout-portrait-cinema.theme-twilight .next-button {
+    right: 7px;
+    bottom: 7px;
+    width: 46px;
+    height: 46px;
+  }
+
+  .layout-portrait-cinema.theme-twilight .choice-grid {
+    grid-template-columns: 1fr;
+    max-height: min(28dvh, 236px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 2px 3px 5px;
+    scroll-padding-block: 4px;
+  }
+
+  .layout-portrait-cinema.theme-twilight .choice-card {
+    min-height: 64px;
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
+  .layout-portrait-cinema.theme-twilight .dialogue-history-list {
+    padding-inline: 12px;
+  }
+
+  .layout-portrait-cinema.theme-twilight .dialogue-history-list article {
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 9px;
+  }
+
+  .layout-portrait-cinema.theme-twilight .dialogue-history-avatar {
+    width: 42px;
+    height: 50px;
+  }
+}
+
+/* 320×568：进一步压缩舞台装饰，保留完整 44px 操作与选择滚动区。 */
+@media (max-width: 350px) and (max-height: 640px) {
+  .layout-portrait-cinema.theme-twilight .cinema-character {
+    right: -16vw;
+    bottom: 118px;
+    width: 82vw;
+    height: 66svh;
+  }
+
+  .layout-portrait-cinema.theme-twilight .cinema-stage.is-left .cinema-character {
+    left: -16vw;
+  }
+
+  .layout-portrait-cinema.theme-twilight .cinema-character-caption {
+    display: none;
+  }
+
+  .layout-portrait-cinema.theme-twilight .cinema-investigate-button {
+    top: max(60px, calc(env(safe-area-inset-top) + 54px));
+  }
+
+  .layout-portrait-cinema.theme-twilight .dialogue-dock {
+    max-height: calc(100dvh - 62px - env(safe-area-inset-top));
+  }
+
+  .layout-portrait-cinema.theme-twilight .dialogue-main {
+    min-height: 102px;
+    padding-top: 9px;
+    padding-bottom: 9px;
+  }
+
+  .layout-portrait-cinema.theme-twilight .dialogue-main p {
+    max-height: min(25dvh, 116px);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .layout-portrait-cinema.theme-twilight .choice-grid {
+    max-height: min(27dvh, 154px);
+  }
+
+  .layout-portrait-cinema.theme-twilight .choice-card {
+    min-height: 58px;
+    padding-block: 8px;
+  }
+}
+
+.layout-portrait-cinema.theme-twilight.is-reduced-motion *,
+.layout-portrait-cinema.theme-twilight.is-reduced-motion *::before,
+.layout-portrait-cinema.theme-twilight.is-reduced-motion *::after {
+  scroll-behavior: auto !important;
+  animation-duration: .01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: .01ms !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layout-portrait-cinema.theme-twilight *,
+  .layout-portrait-cinema.theme-twilight *::before,
+  .layout-portrait-cinema.theme-twilight *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+@keyframes heartscape-cinema-backdrop-reveal {
+  from { opacity: .3; transform: scale(1.035); }
+  to { opacity: 1; transform: scale(1.015); }
+}
+
+@keyframes heartscape-cinema-character-reveal {
+  from { opacity: 0; translate: 24px 8px; }
+  to { opacity: 1; translate: 0 0; }
+}

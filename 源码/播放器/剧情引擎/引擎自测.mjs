@@ -530,6 +530,52 @@ const 初始 = 引擎.创建初始状态();
   相等(初始.globals.overflow, 100, '初始值也按min/max钳');
   相等(初始.globals.insight, 5);
   相等(初始.settings.audio.sceneAudioDefault, 'voice');
+  相等(初始.settings.autoAdvance, false, '自动推进默认关闭，不能替玩家做选择');
+  相等(初始.dialogueLog, [], '新周目从空对白历史开始');
+});
+
+检查('对白历史：当前行白名单快照 / 连续幂等 / 上限 240 / 阅读时长封顶', () => {
+  const 记第一行 = 引擎.记录当前对白(初始, 100);
+  相等(记第一行.dialogueLog.length, 1);
+  相等(
+    记第一行.dialogueLog[0],
+    {
+      id: '1-n1-0-100',
+      loop: 1,
+      nodeId: 'n1',
+      nodeTitle: '第一幕',
+      lineIndex: 0,
+      speaker: 'narrator',
+      text: '雨夜。',
+      emotion: undefined,
+      createdAt: 100,
+    },
+  );
+  相等(引擎.记录当前对白(记第一行, 101).dialogueLog.length, 1, '同一行连续记录不重复追加');
+
+  const 白名单 = 引擎.规范化对白日志([
+    { id: '伪造', nodeId: 'n1', lineIndex: 1, speaker: 'hacker', text: '<script>坏内容</script>' },
+    { id: '越界', nodeId: 'n1', lineIndex: 99, text: '不能钳到最后一句' },
+    { nodeId: '幽灵节点', lineIndex: 0, text: '不存在' },
+    { nodeId: 'constructor', lineIndex: 0, text: '原型链也不能混入' },
+    null,
+  ]);
+  相等(白名单.length, 1);
+  相等([白名单[0].speaker, 白名单[0].text], ['you', '谁在那里？'], '展示字段从真实剧情还原');
+
+  const 塞满 = Array.from({ length: 242 }, (_, i) => ({
+    id: `对白-${i}`,
+    loop: 1,
+    nodeId: 'n1',
+    lineIndex: i % 3,
+    createdAt: i,
+  }));
+  const 封顶 = 引擎.规范化对白日志(塞满);
+  相等(封顶.length, 240);
+  相等(封顶[0].id, '1-n1-2-2-2', '对白历史只保留最新 240 条并重建受控唯一 id');
+  相等(引擎.计算对白阅读时长(''), 1800);
+  为真(引擎.计算对白阅读时长('这是一段需要稍微停留的对白。') > 1800);
+  相等(引擎.计算对白阅读时长('很长。'.repeat(100)), 5200);
 });
 
 检查('应用效果：累加 / 钳制 / 并集 / 路线覆盖', () => {
@@ -590,6 +636,12 @@ const 初始 = 引擎.创建初始状态();
 检查('推进对白 / 点击热点幂等 / 做出选择全流程', () => {
   const s2 = 引擎.推进对白(初始);
   相等(s2.lineIndex, 1);
+  const 安全前进 = 引擎.安全推进对白(初始, 'n1', 0);
+  相等([安全前进.lineIndex, 安全前进.dialogueLog.length], [1, 1], '安全推进同时记录当前对白');
+  为真(
+    引擎.安全推进对白(安全前进, 'n1', 0) === 安全前进,
+    '点击与自动计时器同刻触发时，旧行操作不能再推进第二次',
+  );
   相等(引擎.推进对白(引擎.推进对白(s2)).lineIndex, 2, '最后一行不再前进');
   为真(引擎.已到最后一行(引擎.推进对白(s2)));
 
@@ -653,6 +705,37 @@ const 初始 = 引擎.创建初始状态();
   为真(引擎.是否警示(70, 加载.getScoreDefinition('pressure')) && !引擎.是否警示(69, 加载.getScoreDefinition('pressure')), 'pressure基调>=70告警');
 });
 
+检查('叙事反馈：自然语言关系变化 / 界限风险 / 不泄漏工程字段', () => {
+  const effect = {
+    relationships: {
+      su: { spark: 8, trust: 4, boundary: -6 },
+      hacker_id: { trust: 5 },
+    },
+    globals: { truth: 8, pressure: 9, mystery: 3 },
+    memories: ['artifact_found', '你保留了可复核的副本', 'trust +8'],
+    flags: ['secret_flag'],
+    route: 'su',
+  };
+  const 关系反馈 = 引擎.生成关系变化叙述(effect);
+  为真(关系反馈[0].includes('知微') && 关系反馈[0].includes('界限') && 关系反馈[0].includes('选择空间'), '靠近但界限下降必须提示风险');
+  为真(关系反馈[1].includes('某位同伴'), '未知角色不能展示 id');
+  const 叙事反馈 = 引擎.生成叙事选择反馈({ label: '保留证据', consequence: '可继续复核', effect });
+  为真(叙事反馈.changes.some((条) => 条.includes('真相有了新的进展')));
+  为真(!叙事反馈.changes.some((条) => 条.includes('压力') || 条.includes('Mystery')), '非公开工程分不展示');
+  为真(叙事反馈.unlocks.some((条) => 条.includes('可复核的副本')));
+  const 玩家文案 = JSON.stringify([...叙事反馈.changes, ...叙事反馈.unlocks]);
+  为真(
+    !/\b(?:su|hacker_id|trust|boundary|spark|secret_flag|artifact_found)\b|[+-]\s*\d/i.test(玩家文案),
+    `玩家文案不得泄漏 id、英文维度、内部 flag 或增量：${玩家文案}`,
+  );
+
+  const 稳健关系 = 引擎.关系组合摘要({ spark: 82, trust: 78, boundary: 84 });
+  const 风险关系 = 引擎.关系组合摘要({ spark: 82, trust: 78, boundary: 12 });
+  为真(稳健关系.includes('在意') && 稳健关系.includes('共同确认') && 稳健关系.includes('清晰的选择空间'));
+  为真(风险关系.includes('界限') && 风险关系.includes('同意与拒绝'), '组合摘要必须识别高亲近低界限风险');
+  为真(!/\b(?:trust|boundary|spark)\b|\d|[+-]/i.test(`${稳健关系}${风险关系}`), '组合摘要只输出关系含义');
+});
+
 检查('设置规范化：钳音量 / 兼容旧字段 / 布尔归一', () => {
   const 设 = 引擎.规范化设置({ audio: { masterVolume: 5, uiVolume: '坏', sceneAudioDefault: 'mix', muted: 1 } });
   相等(设.audio.masterVolume, 1);
@@ -663,6 +746,13 @@ const 初始 = 引擎.创建初始状态();
   //（默认设置里 sceneAudioDefault 恒有值 'voice'，与线上行为一字不差）
   相等(引擎.规范化设置({ audio: { sceneAudioDefault: null, sceneAudioPriority: 'mix' } }).audio.sceneAudioDefault, 'mix', '旧字段在default为null时兼容');
   相等(引擎.规范化设置({ audio: { sceneAudioPriority: 'mix' } }).audio.sceneAudioDefault, 'voice', '默认值在场时旧字段被遮蔽(线上同款)');
+  相等(引擎.规范化设置().autoAdvance, false, '旧存档缺字段时补 false');
+  相等(引擎.规范化设置({ autoAdvance: true }).autoAdvance, true);
+  相等(引擎.规范化设置({ autoAdvance: 'false' }).autoAdvance, false, '字符串不能意外开启');
+  相等(引擎.规范化设置({ autoAdvance: 1 }).autoAdvance, false, '数字不能意外开启');
+  相等(引擎.规范化设置({ autoDrift: 'false' }).autoDrift, false, '坏存档字符串不能开启自动环视');
+  相等(引擎.规范化设置({ reducedMotion: 'true' }).reducedMotion, false, '减少动效只接受真布尔');
+  相等(引擎.规范化设置({ uiScale: '巨大' }).uiScale, 'comfortable', '界面缩放非法值回退');
   相等(引擎.更新设置(初始, { uiScale: 'compact' }).settings.uiScale, 'compact');
 });
 
@@ -709,7 +799,11 @@ console.log('【三】存档系统（键名 / 自动存档 / 消毒 / 存档码 
     loopCount: 0,
     unlockedEndings: ['e1', '幽灵节点'],
     decisionLog: [{ nodeId: 'n1' }, '垃圾', null],
-    settings: { audio: { bgmVolume: 3 } },
+    dialogueLog: [
+      { id: '可信索引', nodeId: 'n1', lineIndex: 2, speaker: '伪造者', text: '伪造台词' },
+      { nodeId: '幽灵节点', lineIndex: 0, text: '不应保留' },
+    ],
+    settings: { autoAdvance: 'true', audio: { bgmVolume: 3 } },
     lastSavedAt: 123,
     私货字段: '应保留',
   });
@@ -735,10 +829,28 @@ console.log('【三】存档系统（键名 / 自动存档 / 消毒 / 存档码 
   相等(净.decisionLog[0].id, 'n1-choice', '缺id拼 nodeId-choiceId');
   相等(净.decisionLog[0].nodeTitle, 'Unknown Scene');
   相等(净.decisionLog[0].label, 'Unknown choice');
+  相等(净.dialogueLog.length, 1);
+  相等([净.dialogueLog[0].speaker, 净.dialogueLog[0].text], ['su', '是我。'], '存档对白按剧情白名单重建');
+  相等(净.settings.autoAdvance, false, '坏存档不能意外打开自动推进');
   相等(净.settings.audio.bgmVolume, 1, '音量钳到1');
   相等(净.lastSavedAt, 123);
   相等(净.私货字段, '应保留', '未知字段随存档保留');
   相等(存档.消毒存档({ decisionLog: '不是数组' }).decisionLog, []);
+  相等(存档.消毒存档({ dialogueLog: '不是数组' }).dialogueLog, []);
+});
+
+检查('消毒存档：对白历史封顶 240 且自动推进显式布尔保留', () => {
+  const dialogueLog = Array.from({ length: 245 }, (_, i) => ({
+    id: `存档对白-${i}`,
+    nodeId: 'n1',
+    lineIndex: i % 3,
+    loop: 1,
+    createdAt: i,
+  }));
+  const 净 = 存档.消毒存档({ dialogueLog, settings: { autoAdvance: true } });
+  相等(净.dialogueLog.length, 240);
+  相等(净.dialogueLog[0].id, '1-n1-2-5-5');
+  相等(净.settings.autoAdvance, true);
 });
 
 检查('存档码：UTF-8 base64 往返 / 坏码 null / 首尾空白容忍', () => {
@@ -772,22 +884,34 @@ console.log('【三】存档系统（键名 / 自动存档 / 消毒 / 存档码 
 });
 
 检查('清空重开：只留设置，其余归零', () => {
-  const 带设置 = 引擎.更新设置(globalThis.__s5, { audio: { bgmVolume: 0.9 } });
+  const 带设置 = 引擎.更新设置(globalThis.__s5, {
+    autoAdvance: true,
+    audio: { bgmVolume: 0.9 },
+  });
   const 新局 = 存档.清空重开(带设置.settings);
   相等(新局.settings.audio.bgmVolume, 0.9);
+  相等(新局.settings.autoAdvance, true);
+  相等(新局.dialogueLog, [], '重开清空上一局对白历史');
   相等([新局.currentNodeId, 新局.loopCount, 新局.flags, 新局.unlockedEndings, 新局.route], ['n1', 1, [], [], null]);
   相等(存档.清空重开(undefined).settings.audio.bgmVolume, 0.5, '无旧设置用出厂默认');
 });
 
 检查('进入下一轮：周目+1，保留结局/跨周目记忆/设置', () => {
   const s5 = globalThis.__s5;
-  const 下轮 = 存档.进入下一轮({ ...s5, persistentMemories: ['祖传记忆'] });
+  const 下轮 = 存档.进入下一轮({
+    ...s5,
+    persistentMemories: ['祖传记忆'],
+    dialogueLog: 引擎.记录当前对白(s5, 300).dialogueLog,
+    settings: 引擎.规范化设置(s5.settings, { autoAdvance: true }),
+  });
   相等(下轮.loopCount, 2);
   相等(下轮.currentNodeId, 'n1');
   相等(下轮.memories, ['祖传记忆', '看过信', '出发', '测试结局'], '结局标题并入记忆');
   相等(下轮.persistentMemories, 下轮.memories);
   相等(下轮.unlockedEndings, ['e1']);
   相等([下轮.flags, 下轮.route, 下轮.decisionLog], [[], null, []]);
+  相等(下轮.dialogueLog, [], '新周目重新记录对白历史');
+  相等(下轮.settings.autoAdvance, true, '自动推进偏好跨周目保留');
 });
 
 // ============================ 四、音频系统（纯逻辑部分）============================

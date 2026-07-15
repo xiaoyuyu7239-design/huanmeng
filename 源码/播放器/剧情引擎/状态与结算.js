@@ -24,9 +24,12 @@
 //   本周目因果回放(state)（结局面板 ae，末尾4条）
 //  设置：
 //   创建默认设置()($e)  规范化设置(旧,增量)(we)  更新设置(state,增量)(an)
+//  对白历史与自动推进：
+//   记录当前对白(state)  规范化对白日志(原始)  计算对白阅读时长(text)
 //  展示名与选择反馈（纯数据，不含 DOM）：
 //   路线显示名(gt)  说话人显示名(On)  命运类型显示名(se)
 //   生成选择反馈(choice)(qn)  效果状态变化(effect)(Gn)  效果因果记录(effect)(Un)
+//   生成叙事选择反馈(choice)  生成关系变化叙述(effect)  关系组合摘要(relationship)
 //   格式化数值(值,定义)(En)  是否警示(值,定义)(Vn)
 //  小工具（存档系统也要用）：
 //   读全局值(globals,key)(nt)  刷新存档时间(state)(T)  去重(数组)(k)
@@ -111,6 +114,7 @@ export const 角色顺序 = ['lin', 'qi', 'su', 'xia', 'cheng', 'ruan'];
 // 每段关系的三个刻度：牵连(spark)/信任(trust)/边界(boundary)，都在 0-100 之间
 export const 关系维度 = ['spark', 'trust', 'boundary'];
 export const 关系初始值 = { spark: 30, trust: 30, boundary: 50 };
+export const 对白日志上限 = 240;
 
 // 当前故事关系角色只来自当前 story 的 cast 和剧情实际引用；旧六人不再污染每部作品的新存档。
 export function 当前关系角色顺序() {
@@ -141,6 +145,7 @@ export function 是合法关系角色(值) {
 // 出厂设置：新玩家/清档后的默认体验
 export const 默认设置 = {
   autoDrift: true, // 自动环视
+  autoAdvance: false, // 自动推进对白（只推进台词，不代替玩家做选择）
   reducedMotion: false, // 减少动效
   uiScale: 'comfortable', // 界面缩放："comfortable" | "compact"
   gyroscope: false, // 陀螺仪（线上定义了但 UI 未用，保留以保证存档兼容）
@@ -187,6 +192,7 @@ export function 创建初始状态() {
     unlockedEndings: [],
     persistentMemories: [],
     decisionLog: [],
+    dialogueLog: [],
     settings: 创建默认设置(),
     lastSavedAt: Date.now(),
   };
@@ -216,6 +222,13 @@ export function 推进对白(state) {
   return state.lineIndex >= 节点.lines.length - 1
     ? state
     : 刷新存档时间({ ...state, lineIndex: state.lineIndex + 1 });
+}
+
+// 计时器与点击可能在同一帧抵达；只有状态仍停在触发操作时看到的那一句才推进。
+// 同时先把当前句写入历史，保证手动/自动两条路径遵守同一契约。
+export function 安全推进对白(state, 预期节点id, 预期行索引) {
+  if (state.currentNodeId !== 预期节点id || state.lineIndex !== 预期行索引) return state;
+  return 推进对白(记录当前对白(state));
 }
 
 // (state, 目标id) → 搬到目标节点（不存在则回起始节点）、行号归零、
@@ -437,6 +450,12 @@ export function 规范化设置(旧设置, 增量) {
   };
   return {
     ...合并,
+    autoDrift: 合并.autoDrift === true,
+    // 只接受显式 true，避免被手改成 "false" / 1 的坏存档意外开启自动推进。
+    autoAdvance: 合并.autoAdvance === true,
+    reducedMotion: 合并.reducedMotion === true,
+    gyroscope: 合并.gyroscope === true,
+    uiScale: 合并.uiScale === 'compact' ? 'compact' : 'comfortable',
     audio: {
       masterVolume: 规范化音量(音频.masterVolume, 默认.audio.masterVolume),
       uiVolume: 规范化音量(音频.uiVolume, 默认.audio.uiVolume),
@@ -464,6 +483,99 @@ function 规范化场景声音默认(值, 兜底) {
 // (state, 设置增量) → 合并规范化后写回账本 → 新 state
 export function 更新设置(state, 设置增量) {
   return 刷新存档时间({ ...state, settings: 规范化设置(state.settings, 设置增量) });
+}
+
+// ---- 对白历史与自动推进 ----
+
+// (state, 可选时间戳) → 把当前真实剧情行加入历史，连续重复调用保持幂等 → 新 state。
+// 日志只保存当前 story 中真实存在的节点和台词，最多 240 条；这既限制 localStorage
+// 体积，也避免导入存档里的任意 speaker/text 被界面直接当历史展示。
+export function 记录当前对白(state, 记录时间 = Date.now()) {
+  const 节点 = 取当前节点(state);
+  const 行索引 = 钳制行索引(Number(state?.lineIndex ?? 0), 节点.lines.length);
+  const 已有 = 规范化对白日志(state?.dialogueLog);
+  const 周目 = 规范化周目数(state?.loopCount, 1);
+  const 最后一条 = 已有.at(-1);
+  if (
+    最后一条?.loop === 周目 &&
+    最后一条?.nodeId === 节点.id &&
+    最后一条?.lineIndex === 行索引
+  ) {
+    return { ...state, dialogueLog: 已有 };
+  }
+  const 时刻 = Number(记录时间);
+  const createdAt = Number.isFinite(时刻) && 时刻 >= 0 ? 时刻 : Date.now();
+  const 新记录 = 规范化单条对白记录({
+    id: `${周目}-${节点.id}-${行索引}-${createdAt}`,
+    loop: 周目,
+    nodeId: 节点.id,
+    lineIndex: 行索引,
+    createdAt,
+  });
+  if (!新记录) return state;
+  return {
+    ...刷新存档时间(state),
+    dialogueLog: [...已有, 新记录].slice(-对白日志上限),
+  };
+}
+
+// (未知输入) → 仅保留可由当前 story 还原的对白快照，过滤畸形项并截取末尾 240 条。
+// speaker/text/emotion 均从剧情源重新读取，不信任外部存档携带的展示文本。
+export function 规范化对白日志(原始) {
+  return Array.isArray(原始)
+    ? 原始
+        .map((条目, 索引) => 规范化单条对白记录(条目, 索引))
+        .filter(Boolean)
+        .slice(-对白日志上限)
+    : [];
+}
+
+// (对白文本) → 自动推进等待毫秒数；空文本也保留 1.8 秒，长对白封顶 5.2 秒。
+// 标点额外留出呼吸时间，让自动推进保持可读，同时仍是纯函数，便于 UI 计时器复用。
+export function 计算对白阅读时长(文本) {
+  const 内容 = typeof 文本 === 'string' ? 文本.trim() : '';
+  const 字符数 = [...内容].filter((字) => !/\s/u.test(字)).length;
+  const 标点数 = [...内容].filter((字) => /[，。！？；：、,.!?;:]/u.test(字)).length;
+  return Math.max(1800, Math.min(5200, 900 + 字符数 * 90 + 标点数 * 160));
+}
+
+function 规范化单条对白记录(原始, 序号) {
+  if (!原始 || typeof 原始 !== 'object' || Array.isArray(原始)) return null;
+  if (
+    typeof 原始.nodeId !== 'string' ||
+    !Object.prototype.hasOwnProperty.call(storyNodes, 原始.nodeId)
+  )
+    return null;
+  const 节点 = storyNodes[原始.nodeId];
+  if (!节点 || !Array.isArray(节点.lines)) return null;
+  const 原索引 = Number(原始.lineIndex);
+  if (
+    !Number.isInteger(原索引) ||
+    原索引 < 0 ||
+    原索引 >= 节点.lines.length
+  )
+    return null;
+  const lineIndex = 原索引;
+  const 行 = 节点.lines[lineIndex];
+  if (!行 || typeof 行.text !== 'string') return null;
+  const loop = 规范化周目数(原始.loop, 1);
+  const 原时间 = Number(原始.createdAt);
+  const createdAt = Number.isFinite(原时间) && 原时间 >= 0 ? 原时间 : 0;
+  const id = `${loop}-${节点.id}-${lineIndex}-${createdAt}${Number.isInteger(序号) ? `-${序号}` : ''}`;
+  return {
+    id,
+    loop,
+    nodeId: 节点.id,
+    nodeTitle: 节点.title,
+    lineIndex,
+    speaker: typeof 行.speaker === 'string' ? 行.speaker : 'narrator',
+    text: 行.text,
+    emotion:
+      typeof (行.expression ?? 行.emotion) === 'string' && (行.expression ?? 行.emotion).trim()
+        ? (行.expression ?? 行.emotion).trim()
+        : undefined,
+    createdAt,
+  };
 }
 
 // ---- 展示名与选择反馈（纯数据加工，给界面层直接用）----
@@ -546,6 +658,141 @@ export function 生成选择反馈(choice) {
     changes: 效果状态变化(choice.effect), // "状态变化"列，空数组时界面显示"没有直接数值变化"
     unlocks: 效果因果记录(choice.effect), // "因果记录"列，空数组时界面显示"没有新增记忆或标记"
   };
+}
+
+// (choice) → 与旧反馈同形状的玩家可读版本。changes 不展示 +/- 数值或英文维度键，
+// unlocks 不展示内部 flag；因此 UI 可以低成本替换 生成选择反馈 而无需了解 effect 结构。
+export function 生成叙事选择反馈(choice = {}) {
+  const effect = choice.effect && typeof choice.effect === 'object' ? choice.effect : {};
+  return {
+    label: choice.label,
+    fateType: choice.fateType,
+    consequence: choice.consequence ?? choice.caption,
+    changes: [
+      ...生成关系变化叙述(effect),
+      ...生成局势变化叙述(effect),
+      ...生成路线变化叙述(effect),
+    ],
+    unlocks: 生成叙事因果记录(effect),
+  };
+}
+
+// (effect) → 每个受影响角色一条自然语言反馈；未知角色统一称“某位同伴”，
+// 不把角色 id 或三个工程维度名泄漏到玩家文案中。靠近同时损失界限时优先提示风险。
+export function 生成关系变化叙述(effect) {
+  if (!effect?.relationships || typeof effect.relationships !== 'object') return [];
+  const 反馈 = [];
+  for (const [角色id, 原增量] of Object.entries(effect.relationships)) {
+    if (!原增量 || typeof 原增量 !== 'object' || Array.isArray(原增量)) continue;
+    const spark = 有限关系增量(原增量.spark);
+    const trust = 有限关系增量(原增量.trust);
+    const boundary = 有限关系增量(原增量.boundary);
+    if (spark === 0 && trust === 0 && boundary === 0) continue;
+    const 档案 = 取角色档案(角色id);
+    const 称谓 = 档案?.shortName || 档案?.name || '某位同伴';
+
+    if (boundary < 0) {
+      反馈.push(
+        spark > 0 || trust > 0
+          ? `${称谓}与你更靠近了，但彼此的界限也变得模糊；这份靠近需要重新确认同意、拒绝和选择空间。`
+          : `${称谓}与你之间的界限变得模糊，接下来需要先确认双方都保有说“不”的空间。`,
+      );
+      continue;
+    }
+
+    if (boundary > 0) {
+      if (trust < 0)
+        反馈.push(`${称谓}与你把彼此可以接受的范围说得更清楚，但对共同判断仍有保留。`);
+      else if (spark > 0 || trust > 0)
+        反馈.push(`${称谓}与你在靠近的同时，也把彼此可以接受的范围说得更清楚。`);
+      else 反馈.push(`${称谓}与你把彼此可以接受的范围说得更清楚。`);
+      continue;
+    }
+
+    if (spark > 0 && trust > 0) 反馈.push(`${称谓}更愿意与你共同判断，也回应了这份靠近。`);
+    else if (spark > 0 && trust < 0)
+      反馈.push(`${称谓}感受到你在靠近，但对把重要判断交给彼此仍有保留。`);
+    else if (trust > 0) 反馈.push(`${称谓}更愿意与你共同确认重要判断。`);
+    else if (spark > 0) 反馈.push(`${称谓}开始更在意你们之间的联结。`);
+    else if (trust < 0) 反馈.push(`${称谓}对共同判断多了一分保留。`);
+    else if (spark < 0) 反馈.push(`${称谓}暂时停下了彼此靠近的脚步。`);
+  }
+  return 反馈;
+}
+
+// (单个角色的三维关系值) → 一句组合判断。三项都参与分层，但只输出关系含义，
+// 不输出数值和工程字段；界限过低时无论亲近程度如何都会给出明确风险提示。
+export function 关系组合摘要(关系) {
+  const spark = 关系层级(关系?.spark, 关系初始值.spark);
+  const trust = 关系层级(关系?.trust, 关系初始值.trust);
+  const boundary = 关系层级(关系?.boundary, 关系初始值.boundary);
+  const 靠近描述 =
+    spark === 'high' ? '彼此的在意已经很明显' : spark === 'middle' ? '你们正在试着靠近' : '你们仍保持着距离';
+  const 托付描述 =
+    trust === 'high'
+      ? '能够把重要判断交给彼此共同确认'
+      : trust === 'middle'
+        ? '还在积累共同判断的默契'
+        : '对彼此托付仍有明显保留';
+  const 界限描述 =
+    boundary === 'high'
+      ? '双方也保有清晰的选择空间'
+      : boundary === 'middle'
+        ? '彼此可以接受的范围仍在协商'
+        : '彼此的界限已经变得模糊，需要先确认同意与拒绝是否仍被尊重';
+  return `${靠近描述}；${托付描述}；${界限描述}。`;
+}
+
+function 有限关系增量(值) {
+  return typeof 值 === 'number' && Number.isFinite(值) ? 值 : 0;
+}
+
+function 关系层级(值, 兜底) {
+  const 数 = Number(值);
+  const 安全值 = 钳制关系值(Number.isFinite(数) ? 数 : 兜底);
+  return 安全值 >= 66 ? 'high' : 安全值 <= 34 ? 'low' : 'middle';
+}
+
+function 生成局势变化叙述(effect) {
+  const 反馈 = [];
+  for (const [键, 增量] of Object.entries(effect?.globals ?? {})) {
+    if (typeof 增量 !== 'number' || !Number.isFinite(增量) || 增量 === 0) continue;
+    const 定义 = getScoreDefinition(键);
+    if (!定义?.label || 定义.visibility !== 'public') continue;
+    if (定义.tone === 'pressure')
+      反馈.push(增量 > 0 ? `${定义.label}正在累积。` : `${定义.label}有所缓解。`);
+    else 反馈.push(增量 > 0 ? `${定义.label}有了新的进展。` : `${定义.label}暂时有所回落。`);
+  }
+  return 反馈;
+}
+
+function 生成路线变化叙述(effect) {
+  if (!effect || effect.route === undefined) return [];
+  if (effect.route === 'team') return ['你选择把之后的决定放回共同协作中。'];
+  if (effect.route === 'solo') return ['你选择保留独立判断与行动的空间。'];
+  if (effect.route === null) return ['你没有让当下的选择替你锁定之后的同行方式。'];
+  const 档案 = 取角色档案(effect.route);
+  return 档案
+    ? [`你选择继续与${档案.shortName || 档案.name}同行。`]
+    : ['你为接下来的同行方式作出了选择。'];
+}
+
+function 生成叙事因果记录(effect) {
+  const 记录 = [];
+  for (const 原文 of Array.isArray(effect?.memories) ? effect.memories : []) {
+    if (typeof 原文 !== 'string' || !原文.trim()) continue;
+    const 文本 = 原文.trim();
+    记录.push(
+      /^[a-z][a-z0-9_-]*$/i.test(文本) ||
+        /\b(?:trust|boundary|spark)\b/i.test(文本) ||
+        /[+-]\s*\d/u.test(文本)
+        ? '你记住了一个之后仍会影响判断的细节。'
+        : `你记住了：${文本}`,
+    );
+  }
+  if (Array.isArray(effect?.flags) && effect.flags.length > 0)
+    记录.push('这个选择留下了一条会在之后被回应的因果。');
+  return 去重(记录);
 }
 
 // (effect) → ["真相 +8", "知微 信任 +10", "路线锁定：许知微"] 这样的文案列表

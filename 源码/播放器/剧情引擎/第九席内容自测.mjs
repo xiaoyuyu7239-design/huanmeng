@@ -44,6 +44,23 @@ const { 运行校验 } = await import('../../创作台/校验发布/校验规则
 const 标准关系维度 = new Set(['spark', 'trust', 'boundary']);
 const 可发展男性id = ['lu_chenzhou', 'zhou_yan', 'he_qingye', 'shen_que'];
 const 女性同盟id = ['lin_miao', 'qiao_wen'];
+const 表情枚举 = ['neutral', 'focused', 'concerned', 'guarded', 'vulnerable', 'resolute', 'warm', 'warning'];
+const 表情集合 = new Set(表情枚举);
+const 头像路径 = {
+  you: '/portraits/ninth-seat/xu-cheng.png',
+  lu_chenzhou: '/portraits/ninth-seat/lu-chenzhou.png',
+  zhou_yan: '/portraits/ninth-seat/zhou-yan.png',
+  he_qingye: '/portraits/ninth-seat/he-qingye.png',
+  shen_que: '/portraits/ninth-seat/shen-que.png',
+  lin_miao: '/portraits/ninth-seat/lin-miao.png',
+  qiao_wen: '/portraits/ninth-seat/qiao-wen.png',
+};
+function 是同角色头像(路径, 角色id) {
+  const 基础 = 头像路径[角色id];
+  if (typeof 路径 !== 'string' || !基础) return false;
+  const 前缀 = 基础.replace(/\.png$/, '');
+  return 路径 === 基础 || (路径.startsWith(`${前缀}-`) && 路径.endsWith('.png'));
+}
 const 预期结局id = [
   'e01-open-ledger',
   'e02-earned-silence',
@@ -55,10 +72,20 @@ const 预期结局id = [
 assert.equal(剧情.id, 'ninth-seat');
 assert.equal(剧情.title, '第九席');
 assert.equal(剧情.content?.estimatedMinutes, '20-30', '第一章时长声明必须稳定为 20–30 分钟');
+assert.equal(剧情.content?.playerLayout, 'portrait-cinema', 'Level 3 必须默认使用竖屏轻电影布局');
+assert.equal(剧情.content?.theme, 'twilight', 'Level 3 必须使用暮色书页主题');
+assert.deepEqual(
+  剧情.content?.investigation,
+  { mode: 'on-demand', label: '调查现场' },
+  '360 调查必须是有明确入口文案的按需模式',
+);
+assert.equal(剧情.content?.visualStatus, 'level-3-cinematic-assets-investigation-beta', '视觉状态必须明确指向 Level 3 正式资产与调查测试阶段');
+assert.deepEqual(剧情.content?.expressionSet, 表情枚举, '对白表情枚举必须稳定，供立绘映射与回归测试使用');
 assert.equal(剧情.cast?.protagonist?.id, 'you');
 assert.equal(剧情.cast?.protagonist?.name, '许澄');
 assert.equal(剧情.cast?.protagonist?.pronouns, '她');
 assert.match(剧情.cast?.protagonist?.role ?? '', /AI.*总导演|总导演.*AI/, '许澄必须保有明确的 AI 内容职业身份');
+assert.equal(剧情.cast?.protagonist?.portrait, 头像路径.you, '许澄必须使用《第九席》正式头像');
 
 const 配角们 = 剧情.cast?.characters ?? [];
 assert.equal(配角们.length, 6, 'Level 2 应有六名配角');
@@ -77,6 +104,16 @@ for (const 角色 of 配角们) {
   const 初值维度 = Object.keys(角色.relationship?.initial ?? {});
   assert.ok(初值维度.length > 0, `${角色.id} 缺少关系初值`);
   assert.ok(初值维度.every((维度) => 标准关系维度.has(维度)), `${角色.id} 使用了非标准关系维度`);
+  assert.equal(角色.portrait, 头像路径[角色.id], `${角色.id} 必须使用《第九席》正式头像`);
+  assert.ok(Object.keys(角色.portraits ?? {}).length > 0, `${角色.id} 缺少表情头像映射`);
+  for (const [表情, 路径] of Object.entries(角色.portraits ?? {})) {
+    assert.ok(表情集合.has(表情), `${角色.id} 使用了非法头像表情 ${表情}`);
+    assert.ok(是同角色头像(路径, 角色.id), `${角色.id}/${表情} 不得引用其他角色或外链头像`);
+  }
+}
+for (const [表情, 路径] of Object.entries(剧情.cast?.protagonist?.portraits ?? {})) {
+  assert.ok(表情集合.has(表情), `许澄使用了非法头像表情 ${表情}`);
+  assert.ok(是同角色头像(路径, 'you'), `许澄/${表情} 不得引用其他角色或外链头像`);
 }
 
 // ---- 二、图结构、创作台校验与机制引用 ----
@@ -89,11 +126,36 @@ for (const id of ['s16-lin-alliance', 's17-solo-review', 's18-responsibility-sig
 }
 
 const 可写关系id = new Set(可发展男性id);
+const 场景分组 = {
+  'control-room': ['s00-blue-salon', 's09-blackout', 's11-partner-select', 's17-solo-review'],
+  'stage-replay': ['s01-ghost-frame', 's19-broadcast-countdown', 's20-live-crossroad', ...预期结局id],
+  'audit-vault': ['s02-signal-room', 's06-evidence-table', 's07-data-vault', 's12-lu-private', 's16-lin-alliance', 's18-responsibility-signature'],
+  'media-gallery': ['s03-media-booth', 's10-debrief-mode', 's13-zhou-private'],
+  'dressing-room': ['s04-dressing-corridor', 's14-he-private'],
+  'legal-office': ['s05-legal-room', 's08-producer-office', 's15-shen-private'],
+};
+const 预期场景 = new Map(
+  Object.entries(场景分组).flatMap(([场景, 节点们]) =>
+    节点们.map((节点id) => [节点id, `/scenes/ninth-seat/${场景}.png`]),
+  ),
+);
 for (const [节点id, 节点] of 节点条目) {
+  assert.equal(节点.backdrop, 预期场景.get(节点id), `${节点id} 的轻电影背景映射不正确`);
+  assert.match(节点.backdrop, /^\/scenes\/ninth-seat\/[a-z-]+\.png$/, `${节点id} 的背景必须是本地《第九席》场景资源`);
+  for (const [行号, 台词] of (节点.lines ?? []).entries()) {
+    if (台词.speaker === 'narrator') continue;
+    assert.ok(表情集合.has(台词.expression), `${节点id} line ${行号 + 1} 缺少合法 expression`);
+  }
   for (const [类型, 条目] of [
     ...(节点.hotspots ?? []).map((热点) => ['hotspot', 热点]),
     ...(节点.choices ?? []).map((选择) => ['choice', 选择]),
   ]) {
+    if (类型 === 'choice') {
+      assert.equal(typeof 条目.intent, 'string', `${节点id}/${条目.id} 缺少玩家意图文案`);
+      assert.ok(条目.intent.trim(), `${节点id}/${条目.id} 的玩家意图文案不能为空`);
+      assert.ok(条目.intent.length <= 24, `${节点id}/${条目.id} 的玩家意图文案过长`);
+      assert.ok(!/^(?:https?:)?\/\//i.test(条目.intent), `${节点id}/${条目.id} 的玩家意图不得是外链`);
+    }
     for (const [角色id, 增量组] of Object.entries(条目.effect?.relationships ?? {})) {
       assert.ok(可写关系id.has(角色id), `${节点id}/${类型}/${条目.id} 不得改写禁用关系角色 ${角色id}`);
       assert.equal(typeof 增量组, 'object', `${节点id}/${条目.id} 必须使用三维关系对象，不能使用标量`);
@@ -121,7 +183,7 @@ assert.deepEqual(创作台报告.errors, [], `真实创作台校验失败：\n- 
 const 本地媒体 = new Set();
 function 收集本地媒体(值) {
   if (typeof 值 === 'string') {
-    if (/^\/(?:landing|audio|panoramas|videos|music|voices)\//.test(值)) {
+    if (/^\/(?:landing|audio|panoramas|portraits|scenes|videos|music|voices)\//.test(值)) {
       本地媒体.add(值.split(/[?#]/, 1)[0]);
     }
     return;
@@ -141,6 +203,16 @@ for (const 资源路径 of 本地媒体) {
 
 // ---- 四、用真实引擎跑四条结局路径 ----
 加载.setActiveStory(剧情, 'ninth-seat');
+assert.equal(加载.storyContent?.playerLayout, 'portrait-cinema', '加载边界丢失了轻电影布局');
+assert.deepEqual(
+  加载.storyContent?.investigation,
+  { mode: 'on-demand', label: '调查现场' },
+  '加载边界丢失或改坏了按需调查契约',
+);
+assert.equal(加载.storyNodes['s00-blue-salon'].backdrop, '/scenes/ninth-seat/control-room.png');
+assert.equal(加载.storyNodes['s00-blue-salon'].choices[0].intent, '冻结外发信号，保留全部本地记录');
+assert.ok(表情集合.has(加载.storyNodes['s00-blue-salon'].lines[1].expression));
+assert.equal(加载.getStoryProtagonist().portraits.resolute, 头像路径.you);
 
 function 当前节点(state) {
   return 加载.storyNodes[state.currentNodeId];

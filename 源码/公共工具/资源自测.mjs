@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 const 当前目录 = dirname(fileURLToPath(import.meta.url));
 const 项目根 = resolve(当前目录, '../..');
 const 资源根 = join(项目根, '公共资源');
-const 本地资源前缀 = /^\/(?:landing|audio|panoramas|videos|music|voices)\//;
+const 本地资源前缀 = /^\/(?:landing|audio|panoramas|portraits|scenes|videos|music|voices)\//;
 const 资源路径们 = new Set(['/showcase.json']);
 
 // 输入目录 → 递归吐出其中所有文件路径。
@@ -71,7 +71,7 @@ for (const 路径 of await 列文件(join(项目根, '源码'))) {
   // mjs 是自测/爬取脚本，里面会故意放不存在的假路径做夹具，不能当成产品资源。
   if (!/\.(?:js|jsx|css)$/.test(路径)) continue;
   const 文本 = await readFile(路径, 'utf8');
-  for (const 匹配 of 文本.matchAll(/["'`](\/(?:landing|audio|panoramas|videos|music|voices)\/[^"'`()\s]+)["'`)]/g)) {
+  for (const 匹配 of 文本.matchAll(/["'`](\/(?:landing|audio|panoramas|portraits|scenes|videos|music|voices)\/[^"'`()\s]+)["'`)]/g)) {
     const 资源路径 = 匹配[1].split(/[?#]/, 1)[0];
     if (!/[${}]/.test(资源路径)) 资源路径们.add(资源路径);
   }

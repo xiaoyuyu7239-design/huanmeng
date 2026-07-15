@@ -9,6 +9,7 @@
 //   STORY_TITLE                 string   当前剧情标题（live binding，换片后自动更新）
 //   STORY_ID                    string   当前剧情稳定作品 id（用于存档码归属）
 //   START_NODE_ID               string   起始节点 id
+//   storyContent                object?  当前剧情内容呈现契约（布局、主题、调查模式）
 //   storyMechanics              object?  当前剧情 mechanics（可能为 undefined）
 //   storyCast                   object   当前剧情角色阵容（主角 + 角色列表）
 //   storyNodes                  object   节点字典 { [nodeId]: node }
@@ -29,6 +30,16 @@ import 兜底剧情 from '../../../公共资源/games/project-20260620-231058/st
 
 // 创作端"浏览器草稿仓库"的 localStorage 键名——创作台没发布的草稿也能直接试玩
 const 浏览器草稿仓库键 = 'creator:browser-projects:v1';
+const 支持的表情 = new Set([
+  'neutral',
+  'focused',
+  'concerned',
+  'guarded',
+  'vulnerable',
+  'resolute',
+  'warm',
+  'warning',
+]);
 
 // scores 缺失/全非法时的兜底分数定义（原样照抄线上）
 const 兜底分数定义 = [
@@ -110,6 +121,7 @@ export let STORY_TITLE = 已规范化兜底剧情.title;
 export let STORY_ID = 已规范化兜底剧情.id;
 export const BUNDLED_STORY_ID = 已规范化兜底剧情.id;
 export let START_NODE_ID = 已规范化兜底剧情.startNodeId;
+export let storyContent = 已规范化兜底剧情.content;
 export let storyMechanics = 已规范化兜底剧情.mechanics;
 export let storyCast = 已规范化兜底剧情.cast;
 export let storyNodes = 已规范化兜底剧情.nodes;
@@ -125,6 +137,7 @@ export function setActiveStory(story, slug = 'bundled') {
   STORY_TITLE = 安全剧情.title;
   STORY_ID = 安全剧情.id;
   START_NODE_ID = 安全剧情.startNodeId;
+  storyContent = 安全剧情.content;
   storyMechanics = 安全剧情.mechanics;
   storyCast = 安全剧情.cast;
   storyNodes = 安全剧情.nodes;
@@ -239,6 +252,7 @@ function 规范化剧情(story, slug = 'bundled') {
     id: 非空字符串(story.id) || slug,
     title: 非空字符串(story.title) || '互动影游',
     startNodeId,
+    content: 规范化内容(story.content),
     mechanics: 是普通对象(story.mechanics) ? story.mechanics : undefined,
     cast: 规范化角色阵容(story.cast),
     nodes,
@@ -248,6 +262,7 @@ function 规范化剧情(story, slug = 'bundled') {
 function 规范化角色阵容(原始值) {
   const 原始 = 是普通对象(原始值) ? 原始值 : {};
   const 原主角 = 是普通对象(原始.protagonist) ? 原始.protagonist : {};
+  const 主角头像 = 非空字符串(原主角.portrait);
   const protagonist = {
     ...原主角,
     id: 'you',
@@ -256,7 +271,8 @@ function 规范化角色阵容(原始值) {
     pronouns: 非空字符串(原主角.pronouns),
     color: 规范化颜色(原主角.color, '#d7b6c9'),
     accent: 规范化颜色(原主角.accent, '#4b3045'),
-    portrait: 非空字符串(原主角.portrait),
+    portrait: 主角头像,
+    portraits: 规范化表情头像映射(原主角.portraits, 主角头像),
   };
   const 已用id = new Set();
   const characters = (Array.isArray(原始.characters) ? 原始.characters : []).flatMap((原角色) => {
@@ -265,6 +281,7 @@ function 规范化角色阵容(原始值) {
     if (已用id.has(id)) return [];
     已用id.add(id);
     const name = 非空字符串(原角色.name) || 人性化角色id(id);
+    const portrait = 非空字符串(原角色.portrait);
     const 原关系 = 是普通对象(原角色.relationship) ? 原角色.relationship : {};
     const 原初值 = 是普通对象(原关系.initial) ? 原关系.initial : {};
     return [{
@@ -276,7 +293,8 @@ function 规范化角色阵容(原始值) {
       theme: 非空字符串(原角色.theme),
       color: 规范化颜色(原角色.color, '#9aa9bd'),
       accent: 规范化颜色(原角色.accent, '#293341'),
-      portrait: 非空字符串(原角色.portrait),
+      portrait,
+      portraits: 规范化表情头像映射(原角色.portraits, portrait),
       voiceId: 非空字符串(原角色.voiceId),
       romanceable: 原角色.romanceable === true,
       relationship: {
@@ -298,6 +316,7 @@ function 规范化节点(原始值, id, startNodeId, id映射, slug) {
     ? 原始.lines.filter(是普通对象).map((行) => ({
         ...行,
         speaker: 非空字符串(行.speaker) || 'narrator',
+        expression: 规范化表情(行.expression),
         text: typeof 行.text === 'string' ? 行.text : '',
       }))
     : [];
@@ -305,6 +324,7 @@ function 规范化节点(原始值, id, startNodeId, id映射, slug) {
     ...选项,
     id: 选项id,
     label: 非空字符串(选项.label) || '继续',
+    intent: 非空字符串(选项.intent),
     next:
       typeof 选项.next === 'string'
         ? (id映射.get(选项.next) ?? 非空字符串(选项.next) ?? startNodeId)
@@ -332,6 +352,7 @@ function 规范化节点(原始值, id, startNodeId, id映射, slug) {
     ...原始,
     id,
     title: 非空字符串(原始.title) || id,
+    backdrop: 非空字符串(原始.backdrop),
     panorama: typeof 原始.panorama === 'string' ? 原始.panorama.trim() : '',
     palette: {
       ...原调色板,
@@ -344,6 +365,44 @@ function 规范化节点(原始值, id, startNodeId, id映射, slug) {
     hotspots,
     cinematics,
   };
+}
+
+// Level 3 的竖屏轻电影字段是增量契约：旧作品没有这些字段时保持原对象形状；
+// 新作品声明后，则在加载边界收紧枚举与可读文案，避免 UI 各自猜测脏数据。
+function 规范化内容(原始值) {
+  if (!是普通对象(原始值)) return 原始值 === undefined ? undefined : {};
+  const 内容 = { ...原始值 };
+  if ('playerLayout' in 原始值) 内容.playerLayout = 非空字符串(原始值.playerLayout);
+  if ('theme' in 原始值) 内容.theme = 非空字符串(原始值.theme);
+  if ('expressionSet' in 原始值) {
+    内容.expressionSet = 规范化字符串数组(原始值.expressionSet).filter((表情) => 支持的表情.has(表情));
+  }
+  if ('investigation' in 原始值) {
+    const 调查 = 是普通对象(原始值.investigation) ? 原始值.investigation : {};
+    内容.investigation = {
+      ...调查,
+      mode: 调查.mode === 'on-demand' ? 'on-demand' : 'always',
+      label: 非空字符串(调查.label) || '调查现场',
+    };
+  }
+  return 内容;
+}
+
+function 规范化表情(值) {
+  const 表情 = 非空字符串(值);
+  return 支持的表情.has(表情) ? 表情 : undefined;
+}
+
+function 规范化表情头像映射(值, 默认头像) {
+  const 头像们 = {};
+  if (是普通对象(值)) {
+    for (const [表情, 地址] of Object.entries(值)) {
+      const 安全地址 = 非空字符串(地址);
+      if (支持的表情.has(表情) && 安全地址) 头像们[表情] = 安全地址;
+    }
+  }
+  if (默认头像 && !头像们.neutral) 头像们.neutral = 默认头像;
+  return 头像们;
 }
 
 // 发布包里的 assetPath 使用 assets/videos/<文件名>，本地静态目录则按作品 slug 分组。

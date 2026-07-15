@@ -12,19 +12,23 @@ import {
 } from 'lucide-react';
 
 import 全景视图 from './全景渲染/全景视图.jsx';
+import 轻电影场景 from './全景渲染/轻电影场景.jsx';
 import 顶部栏 from './界面组件/顶部栏.jsx';
 import 状态栏 from './界面组件/状态栏.jsx';
 import 对白区 from './界面组件/对白区.jsx';
+import 对白历史面板 from './界面组件/对白历史面板.jsx';
 import {
   STORY_TITLE,
   getVisibleScoreDefinitions,
+  storyContent,
   storyNodeList,
+  storyNodes,
 } from './剧情引擎/剧情加载.js';
 import {
   创建初始状态,
   取当前节点,
   已到最后一行,
-  推进对白,
+  安全推进对白,
   做出选择,
   点击热点,
   可用选择列表,
@@ -34,13 +38,16 @@ import {
   结局已达成,
   本周目决策,
   本周目因果回放,
-  生成选择反馈,
+  生成叙事选择反馈,
   命运类型显示名,
   条件满足,
   更新设置,
   当前关系角色顺序,
   取角色档案,
   说话人显示名,
+  记录当前对白,
+  计算对白阅读时长,
+  关系组合摘要,
 } from './剧情引擎/状态与结算.js';
 import {
   保存存档,
@@ -67,6 +74,7 @@ import {
   试听已禁用,
 } from './音频系统/音频管理.js';
 import { 取平面视频地址 } from './全景渲染/视觉模式.js';
+import '../样式/播放器-心界.css';
 
 export default function 播放器应用() {
   const [state, setState] = useState(() => 读取存档() ?? 创建初始状态());
@@ -75,6 +83,8 @@ export default function 播放器应用() {
   const [选择反馈, set选择反馈] = useState(null);
   const [引导热点, set引导热点] = useState(null);
   const [语音状态, set语音状态] = useState('idle');
+  const [调查中, set调查中] = useState(false);
+  const [页面可见, set页面可见] = useState(true);
 
   const 语音ref = useRef(null);
   const 语音版本ref = useRef(0);
@@ -84,10 +94,15 @@ export default function 播放器应用() {
   const 上传音乐keyRef = useRef('');
   const 音乐解锁器ref = useRef(null);
   const 存档失败已提示ref = useRef(false);
+  const 语音自动推进ref = useRef({ key: '', status: 'fallback' });
+  const 调查入口ref = useRef(null);
+  const 调查退出ref = useRef(null);
+  const 待恢复调查焦点ref = useRef(false);
 
   const 节点 = 取当前节点(state);
   const 行 = 节点.lines[state.lineIndex] ?? 节点.lines[0] ?? { speaker: 'system', text: '当前节点没有对白。' };
   const voiceSrc = 行.voiceSrc ?? '';
+  const 语音行key = `${节点.id}:${state.lineIndex}:${voiceSrc}`;
   const 平面视频src = 取平面视频地址(节点);
   const 声音模式 = 场景声音模式(节点, state.settings.audio.sceneAudioDefault);
   const 可播放语音 = 语音已启用(state.settings.audio);
@@ -98,6 +113,11 @@ export default function 播放器应用() {
     !!voiceSrc && 可播放语音 && (声音模式 === 'voice' || 声音模式 === 'mix' || !平面视频src);
   const 到最后一行 = 已到最后一行(state);
   const 已达成结局 = 结局已达成(state);
+  const 启用轻电影 = storyContent?.playerLayout === 'portrait-cinema' && Boolean(节点.backdrop);
+  const 线索总数 = Array.isArray(节点.hotspots) ? 节点.hotspots.length : 0;
+  const 已查看线索数 = (Array.isArray(节点.hotspots) ? 节点.hotspots : []).filter((热点) =>
+    state.seenHotspots.includes(`${节点.id}:${热点.id}`),
+  ).length;
 
   const 可选项 = useMemo(() => (到最后一行 ? 可用选择列表(state) : []), [到最后一行, state]);
   const 锁定项 = useMemo(() => (到最后一行 ? 锁定选择列表(state) : []), [到最后一行, state]);
@@ -105,6 +125,33 @@ export default function 播放器应用() {
   const 结局回放 = useMemo(() => 本周目因果回放(state), [state]);
   const 音乐轨 = useMemo(() => 取节点音乐轨列表(节点), [节点]);
   const 音乐签名 = 音乐轨.map(音乐轨key).join('|');
+  const 对白历史 = useMemo(() => {
+    const 已记录 = Array.isArray(state.dialogueLog) ? state.dialogueLog : [];
+    const 最后一条 = 已记录.at(-1);
+    const 当前已记录 =
+      最后一条?.loop === state.loopCount &&
+      最后一条?.nodeId === 节点.id &&
+      最后一条?.lineIndex === state.lineIndex;
+    const 当前条目 = {
+      ...行,
+      id: `current-${state.loopCount}-${节点.id}-${state.lineIndex}`,
+      loop: state.loopCount,
+      nodeId: 节点.id,
+      nodeTitle: 节点.title,
+      lineIndex: state.lineIndex,
+      chapter: 节点.chapter,
+      location: 节点.location,
+    };
+    return [...已记录, ...(当前已记录 ? [] : [当前条目])].map((条目) => {
+      const 条目节点 = storyNodes[条目.nodeId];
+      return {
+        ...条目,
+        chapter: 条目.chapter ?? 条目节点?.chapter,
+        nodeTitle: 条目.nodeTitle ?? 条目节点?.title,
+        location: 条目.location ?? 条目节点?.location,
+      };
+    });
+  }, [state.dialogueLog, state.lineIndex, state.loopCount, 节点, 行]);
 
   const 播音效 = useCallback(
     (名字) => 播放界面音效(名字, state.settings.audio),
@@ -126,7 +173,44 @@ export default function 播放器应用() {
 
   useEffect(() => {
     set引导热点(null);
+    待恢复调查焦点ref.current = false;
+    set调查中(false);
   }, [节点.id]);
+
+  useEffect(() => {
+    const 同步可见性 = () => set页面可见(!document.hidden);
+    同步可见性();
+    document.addEventListener('visibilitychange', 同步可见性);
+    return () => document.removeEventListener('visibilitychange', 同步可见性);
+  }, []);
+
+  useEffect(() => {
+    const 按键 = (事件) => {
+      if (事件.key !== 'Escape') return;
+      if (当前面板) {
+        set当前面板(null);
+        return;
+      }
+      if (调查中) {
+        待恢复调查焦点ref.current = true;
+        set调查中(false);
+        set引导热点(null);
+      }
+    };
+    window.addEventListener('keydown', 按键);
+    return () => window.removeEventListener('keydown', 按键);
+  }, [当前面板, 调查中]);
+
+  useEffect(() => {
+    const 帧 = window.requestAnimationFrame(() => {
+      if (调查中) 调查退出ref.current?.focus();
+      else if (待恢复调查焦点ref.current) {
+        待恢复调查焦点ref.current = false;
+        调查入口ref.current?.focus();
+      }
+    });
+    return () => window.cancelAnimationFrame(帧);
+  }, [调查中]);
 
   useEffect(() => {
     try {
@@ -156,18 +240,23 @@ export default function 播放器应用() {
   useEffect(() => {
     const 当前版本 = ++语音版本ref.current;
     const 安全设置语音状态 = (状态) => {
-      if (语音版本ref.current === 当前版本) set语音状态(状态);
+      if (语音版本ref.current !== 当前版本) return;
+      语音自动推进ref.current = { key: 语音行key, status: 状态 };
+      set语音状态(状态);
     };
     销毁音频(语音ref.current);
     语音ref.current = null;
     if (!voiceSrc) {
+      语音自动推进ref.current = { key: 语音行key, status: 'fallback' };
       set语音状态('missing');
       return undefined;
     }
     if (!自动播放语音) {
-      set语音状态('idle');
+      语音自动推进ref.current = { key: 语音行key, status: 'fallback' };
+      set语音状态('paused');
       return undefined;
     }
+    语音自动推进ref.current = { key: 语音行key, status: 'loading' };
     const 音频 = 创建对白语音(voiceSrc, 当前语音音量, 安全设置语音状态);
     语音ref.current = 音频;
     return () => {
@@ -175,7 +264,58 @@ export default function 播放器应用() {
       销毁音频(音频);
       if (语音ref.current === 音频) 语音ref.current = null;
     };
-  }, [voiceSrc, 节点.id, 当前语音音量, 自动播放语音, state.lineIndex]);
+  }, [voiceSrc, 语音行key, 当前语音音量, 自动播放语音]);
+
+  // 自动播放只负责把已经写好的对白推进一行；选择、调查和结局始终留给玩家。
+  useEffect(() => {
+    const 自动语音阶段 =
+      语音自动推进ref.current.key === 语音行key
+        ? 语音自动推进ref.current.status
+        : 'loading';
+    if (
+      !启用轻电影 ||
+      !state.settings.autoAdvance ||
+      到最后一行 ||
+      当前面板 ||
+      调查中 ||
+      选择反馈 ||
+      !页面可见 ||
+      (自动播放语音 && ['loading', 'playing'].includes(自动语音阶段))
+    )
+      return undefined;
+    const 当前节点id = 节点.id;
+    const 当前行索引 = state.lineIndex;
+    const 等待时间 = 自动播放语音 && voiceSrc && 自动语音阶段 === 'ended'
+      ? 700
+      : 计算对白阅读时长(行.text);
+    const 定时器 = window.setTimeout(() => {
+      setState((旧) => {
+        if (
+          旧.currentNodeId !== 当前节点id ||
+          旧.lineIndex !== 当前行索引 ||
+          已到最后一行(旧)
+        )
+          return 旧;
+        return 安全推进对白(旧, 当前节点id, 当前行索引);
+      });
+    }, 等待时间);
+    return () => window.clearTimeout(定时器);
+  }, [
+    state.settings.autoAdvance,
+    state.lineIndex,
+    节点.id,
+    行.text,
+    启用轻电影,
+    到最后一行,
+    当前面板,
+    调查中,
+    选择反馈,
+    页面可见,
+    自动播放语音,
+    voiceSrc,
+    语音行key,
+    语音状态,
+  ]);
 
   // BGM 采用生成/上传双轨，同一首歌跨节点不重建，保证连续播放。
   useEffect(() => {
@@ -230,8 +370,10 @@ export default function 播放器应用() {
 
   const 推进 = () => {
     if (到最后一行) return;
+    const 预期节点id = 节点.id;
+    const 预期行索引 = state.lineIndex;
     播音效('advance');
-    setState((旧) => 推进对白(旧));
+    setState((旧) => 安全推进对白(旧, 预期节点id, 预期行索引));
   };
 
   const 切换语音 = () => {
@@ -242,7 +384,9 @@ export default function 播放器应用() {
       src: voiceSrc,
       音量: 当前语音音量,
       设状态: (状态) => {
-        if (语音版本ref.current === 当前版本) set语音状态(状态);
+        if (语音版本ref.current !== 当前版本) return;
+        语音自动推进ref.current = { key: 语音行key, status: 状态 };
+        set语音状态(状态);
       },
     });
   };
@@ -250,11 +394,20 @@ export default function 播放器应用() {
   const 选择 = (选项) => {
     播音效(选项.major ? 'choiceMajor' : 'choice');
     set引导热点(null);
-    set选择反馈(生成选择反馈(选项));
-    setState((旧) => 做出选择(旧, 选项));
+    待恢复调查焦点ref.current = false;
+    set调查中(false);
+    const 反馈 = 生成叙事选择反馈(选项);
+    set选择反馈({
+      ...反馈,
+      consequence: 玩家可见后果(反馈.consequence),
+    });
+    setState((旧) => 做出选择(记录当前对白(旧), 选项));
     set提示({
       title: 选项.major ? '路线发生变化' : '选择已记录',
-      body: 选项.consequence ?? 选项.caption ?? '你的选择会影响信任、压力和结局。',
+      body: 玩家可见后果(
+        选项.consequence ?? 选项.caption,
+        '这个选择已被故事记住，之后会以人物回应和局势变化呈现。',
+      ),
     });
   };
 
@@ -269,6 +422,11 @@ export default function 播放器应用() {
     const 热点 = 找解锁热点(节点, 选项);
     播音效('error');
     if (热点) {
+      set当前面板(null);
+      if (启用轻电影) {
+        待恢复调查焦点ref.current = true;
+        set调查中(true);
+      }
       set引导热点({ id: 热点.id, focusKey: Date.now() });
       set提示({
         title: '需要先发现线索',
@@ -341,25 +499,85 @@ export default function 播放器应用() {
     set当前面板(null);
   };
 
+  const 进入调查 = () => {
+    if (!线索总数) return;
+    播音效('panelOpen');
+    set当前面板(null);
+    待恢复调查焦点ref.current = true;
+    set调查中(true);
+  };
+
+  const 退出调查 = () => {
+    播音效('panelClose');
+    待恢复调查焦点ref.current = true;
+    set调查中(false);
+    set引导热点(null);
+  };
+
+  const 切换自动推进 = () => {
+    播音效('click');
+    setState((旧) => 更新设置(旧, { autoAdvance: !旧.settings.autoAdvance }));
+  };
+
   const 返回创作台 = () => {
     清理全部音频();
     window.location.assign('/creator');
   };
 
+  const 全景属性 = {
+    autoDrift: state.settings.autoDrift,
+    highlightedHotspotFocusKey: 引导热点?.focusKey ?? 0,
+    highlightedHotspotId: 引导热点?.id ?? '',
+    hotspots: 节点.hotspots,
+    node: 节点,
+    onHotspot: 触发热点,
+    reducedMotion: state.settings.reducedMotion,
+    seenHotspots: state.seenHotspots,
+    videoAudioEnabled: 视频声音开启,
+    videoVolume: 当前语音音量,
+  };
+
   return (
-    <main className={`game-shell scale-${state.settings.uiScale}`}>
-      <全景视图
-        autoDrift={state.settings.autoDrift}
-        highlightedHotspotFocusKey={引导热点?.focusKey ?? 0}
-        highlightedHotspotId={引导热点?.id ?? ''}
-        hotspots={节点.hotspots}
-        node={节点}
-        onHotspot={触发热点}
-        reducedMotion={state.settings.reducedMotion}
-        seenHotspots={state.seenHotspots}
-        videoAudioEnabled={视频声音开启}
-        videoVolume={当前语音音量}
-      />
+    <main
+      className={`game-shell scale-${state.settings.uiScale}${启用轻电影 ? ' layout-portrait-cinema theme-twilight' : ''}${state.settings.reducedMotion ? ' is-reduced-motion' : ''}`}
+      data-layout={启用轻电影 ? 'portrait-cinematic' : 'panorama'}
+    >
+      {启用轻电影 ? (
+        调查中 ? (
+          <section
+            aria-label="调查现场"
+            className="cinema-investigation-region"
+            id="cinema-investigation-view"
+            role="region"
+          >
+            <全景视图 {...全景属性} />
+            <button
+              aria-controls="cinema-investigation-view"
+              aria-expanded="true"
+              className="cinema-investigation-exit"
+              onClick={退出调查}
+              ref={调查退出ref}
+              type="button"
+            >
+              <X aria-hidden="true" size={17} />
+              返回角色演出
+            </button>
+          </section>
+        ) : (
+          <轻电影场景
+            可调查={线索总数 > 0}
+            节点={节点}
+            行={行}
+            调查中={false}
+            调查入口ref={调查入口ref}
+            调查标签={storyContent?.investigation?.label || '调查场景'}
+            调查提示={`${已查看线索数} / ${线索总数} 个线索已查看`}
+            进入调查={进入调查}
+          />
+        )
+      ) : (
+        <全景视图 {...全景属性} />
+      )}
 
       <顶部栏
         剧情标题={STORY_TITLE}
@@ -367,6 +585,7 @@ export default function 播放器应用() {
         当前面板={当前面板}
         切换面板={切换面板}
         返回创作台={返回创作台}
+        显示对白记录={启用轻电影}
       />
 
       <状态栏 state={state} 可见分数定义={可见分数定义} />
@@ -379,6 +598,8 @@ export default function 播放器应用() {
           点语音={切换语音}
           已到最后一行={到最后一行}
           点继续={推进}
+          自动推进={state.settings.autoAdvance}
+          切换自动推进={启用轻电影 ? 切换自动推进 : undefined}
         />
 
         {选择反馈 && !已达成结局 && (
@@ -400,9 +621,9 @@ export default function 播放器应用() {
                 onClick={() => 选择(选项)}
                 type="button"
               >
-                {选项.fateType && (
+                {(选项.intent || 选项.fateType) && (
                   <i className={`fate-badge fate-${选项.fateType}`}>
-                    {命运类型显示名(选项.fateType)}
+                    {选项.intent ? `意图 · ${选项.intent}` : 命运类型显示名(选项.fateType)}
                   </i>
                 )}
                 <span>{选项.label}</span>
@@ -418,7 +639,7 @@ export default function 播放器应用() {
                 type="button"
               >
                 <span className={`lock-label fate-${选项.fateType ?? 'web'}`}>
-                  {命运类型显示名(选项.fateType)}
+                  {选项.intent ? `意图 · ${选项.intent}` : 命运类型显示名(选项.fateType)}
                 </span>
                 <span>{选项.label}</span>
                 <small>{锁定提示(节点, 选项)}</small>
@@ -438,12 +659,23 @@ export default function 播放器应用() {
         )}
       </section>
 
-      {当前面板 && (
+      {当前面板 === 'history' && (
+        <aside aria-label="对白记录" className="side-panel dialogue-history-side">
+          <对白历史面板
+            当前条目id={`current-${state.loopCount}-${节点.id}-${state.lineIndex}`}
+            关闭={关闭面板}
+            条目们={对白历史}
+          />
+        </aside>
+      )}
+
+      {当前面板 && 当前面板 !== 'history' && (
         <侧面板 title={{ memories: '回忆', save: '存档', settings: '设置' }[当前面板]} onClose={关闭面板}>
           {当前面板 === 'memories' && <回忆面板 currentNode={节点} state={state} />}
           {当前面板 === 'settings' && (
             <设置面板
               settings={state.settings}
+              启用自动推进={启用轻电影}
               onChange={(增量) => setState((旧) => 更新设置(旧, 增量))}
               onPreview={播音效}
             />
@@ -475,8 +707,8 @@ function 选择反馈板({ feedback, onClose }) {
         {feedback.consequence && <p>{feedback.consequence}</p>}
       </div>
       <div className="choice-feedback-grid">
-        <反馈列表 title="状态变化" entries={feedback.changes} empty="没有直接数值变化" />
-        <反馈列表 title="因果记录" entries={feedback.unlocks} empty="没有新增记忆或标记" />
+        <反馈列表 title="关系与局势" entries={feedback.changes} empty="这次行动没有改变当前关系或局势" />
+        <反馈列表 title="留下的记录" entries={feedback.unlocks} empty="这次行动没有留下新的公开记录" />
       </div>
       <button aria-label="关闭选择反馈" onClick={onClose} title="关闭选择反馈" type="button">
         <X size={16} />
@@ -506,8 +738,8 @@ function 结局回放({ entries }) {
         {列表.map((条) => (
           <li key={条.id}>
             <span>{命运类型显示名(条.fateType)}</span>
-            <strong>{条.nodeTitle}</strong>
-            <p>{条.consequence ?? 条.label}</p>
+            <strong>{玩家可见后果(条.nodeTitle, '过去的场景')}</strong>
+            <p>{玩家可见后果(条.consequence, 条.label ?? '这次选择已被命运记录。')}</p>
           </li>
         ))}
       </ol>
@@ -582,6 +814,16 @@ const 关系维度文案 = {
   boundary: { label: '边界', stages: ['失衡', '摸索', '尊重', '安稳'] },
 };
 
+const 工程后果模式 = /\b(?:spark|trust|boundary|pressure|career|integrity|stress|route|flags?|variables?|memories?)\b|\b[a-z][a-z0-9_]*_flag\b|\b[a-z][a-z0-9_]*\s*[:=]\s*(?:[+-]?\d+|true|false|null|["'][^"']*["'])|[\p{Script=Han}a-z_][\p{Script=Han}a-z0-9_·]{0,15}\s*[+-]\s*\d+|(?:^|[\s,，;；:：])[+-]\s*\d+|(?:因果|状态|路线)?标记\s*[:：]|(?:变量|字段)\s*[:：]|[{}\[\]]/iu;
+const 默认可见后果 = '这次选择已被故事记住。';
+
+export function 玩家可见后果(原文, 兜底文案 = 默认可见后果) {
+  const 文案 = typeof 原文 === 'string' ? 原文.trim() : '';
+  if (文案 && !工程后果模式.test(文案)) return 文案;
+  const 兜底 = typeof 兜底文案 === 'string' ? 兜底文案.trim() : '';
+  return 兜底 && !工程后果模式.test(兜底) ? 兜底 : 默认可见后果;
+}
+
 export function 关系手账({ state }) {
   const 角色们 = 当前关系角色顺序().filter((id) => !!state.relationships?.[id]);
   const [选中角色, set选中角色] = useState(() => 角色们[0] ?? '');
@@ -592,6 +834,12 @@ export function 关系手账({ state }) {
   const 档案 = 取角色档案(当前角色id);
   const 姓名 = 档案?.name ?? 说话人显示名(当前角色id);
   const 关系 = state.relationships[当前角色id];
+  const 关系详情 = Object.entries(关系维度文案).map(([维度, 文案]) => {
+    const 原值 = Number(关系?.[维度]);
+    const 值 = Number.isFinite(原值) ? Math.max(0, Math.min(100, Math.round(原值))) : 0;
+    const 阶段 = 文案.stages[Math.min(3, Math.floor(值 / 25))];
+    return { 维度, 文案, 值, 阶段 };
+  });
   const 痕迹 = (Array.isArray(state.decisionLog) ? state.decisionLog : [])
     .filter((记录) => 记录.loop === state.loopCount && 记录.effect?.relationships?.[当前角色id])
     .sort((甲, 乙) => Number(乙.createdAt ?? 0) - Number(甲.createdAt ?? 0))
@@ -607,20 +855,25 @@ export function 关系手账({ state }) {
         })}
       </div>
       <section className="relationship-card">
-        <header><span style={{ '--relationship-color': 档案?.color }}>{姓名.slice(0, 1)}</span><div><strong>{姓名}</strong><small>{档案?.role || '故事中的重要关系'}</small></div></header>
+        <header>
+          <span className={档案?.portrait ? 'has-portrait' : ''} style={{ '--relationship-color': 档案?.color }}>
+            {档案?.portrait ? <img alt="" src={档案.portrait} /> : 姓名.slice(0, 1)}
+          </span>
+          <div><strong>{姓名}</strong><small>{档案?.role || '故事中的重要关系'}</small></div>
+        </header>
         {档案?.theme && <p className="relationship-theme">{档案.theme}</p>}
+        <p className="relationship-summary">{关系组合摘要(关系)}</p>
         <div className="relationship-meters">
-          {Object.entries(关系维度文案).map(([维度, 文案]) => {
-            const 原值 = Number(关系?.[维度]);
-            const 值 = Number.isFinite(原值) ? Math.max(0, Math.min(100, 原值)) : 0;
-            const 阶段 = 文案.stages[Math.min(3, Math.floor(值 / 25))];
-            return <div className="relationship-meter" key={维度}><div><span>{文案.label}</span><em>{阶段}</em></div><div aria-label={`${姓名} ${文案.label}`} aria-valuemax="100" aria-valuemin="0" aria-valuenow={值} aria-valuetext={`${阶段}，${值}/100`} className="relationship-meter-track" role="progressbar"><i style={{ width: `${值}%`, background: 档案?.color }} /></div></div>;
-          })}
+          {关系详情.map(({ 维度, 文案, 值, 阶段 }) => <div className="relationship-meter" key={维度}><div><span>{文案.label}</span><em>{阶段}</em></div><div aria-label={`${姓名}${文案.label}：${阶段}`} className="relationship-meter-track" role="img"><i style={{ width: `${值}%`, background: 档案?.color }} /></div></div>)}
         </div>
+        <details className="relationship-details">
+          <summary>查看关系细节</summary>
+          <dl>{关系详情.map(({ 维度, 文案, 值, 阶段 }) => <div key={维度}><dt>{文案.label}</dt><dd>{值} / 100 · {阶段}</dd></div>)}</dl>
+        </details>
       </section>
       <section className="relationship-traces">
         <h3>最近留下的痕迹</h3>
-        {痕迹.length ? <ol>{痕迹.map((记录) => <li key={记录.id}><span>{记录.nodeTitle}</span><strong>{记录.label}</strong><p>{记录.consequence || '这次选择已记入关系手账。'}</p></li>)}</ol> : <p className="relationship-traces-empty">还没有共同记录。带有关系变化的选择会出现在这里。</p>}
+        {痕迹.length ? <ol>{痕迹.map((记录) => <li key={记录.id}><span>{玩家可见后果(记录.nodeTitle, '过去的场景')}</span><strong>{玩家可见后果(记录.label, '一次重要选择')}</strong><p>{玩家可见后果(记录.consequence, '这次选择已记入关系手账。')}</p></li>)}</ol> : <p className="relationship-traces-empty">还没有共同记录。带有关系变化的选择会出现在这里。</p>}
       </section>
     </div>
   );
@@ -659,7 +912,7 @@ function 命运地图({ state, visitedNodes }) {
         <h3>本周目关键选择</h3>
         <ol className="fate-decision-list">
           {(本轮选择.length ? 本轮选择 : [{ id: 'empty', fateType: 'web', nodeTitle: '还没有关键选择', consequence: '推进到第一个选择后，命运地图会记录你的行动。' }]).map((条) => (
-            <li key={条.id}><i className={`fate-badge fate-${条.fateType ?? 'web'}`}>{命运类型显示名(条.fateType)}</i><strong>{条.nodeTitle}</strong><p>{条.consequence ?? 条.label}</p></li>
+            <li key={条.id}><i className={`fate-badge fate-${条.fateType ?? 'web'}`}>{命运类型显示名(条.fateType)}</i><strong>{玩家可见后果(条.nodeTitle, '过去的场景')}</strong><p>{玩家可见后果(条.consequence, 条.label ?? '这次选择已被命运记录。')}</p></li>
           ))}
         </ol>
       </section>
@@ -684,11 +937,14 @@ function 命运地图({ state, visitedNodes }) {
   );
 }
 
-function 设置面板({ settings, onChange, onPreview }) {
+function 设置面板({ settings, 启用自动推进 = false, onChange, onPreview }) {
   const 改音频 = (增量) => onChange({ audio: 增量 });
   const audio = settings.audio;
   return (
     <div className="settings-panel">
+      {启用自动推进 && (
+        <开关行 label="对白自动播放" description="只推进对白，遇到选择时一定停下" checked={settings.autoAdvance} onChange={(值) => onChange({ autoAdvance: 值 })} />
+      )}
       <开关行 label="自动环视" description="暂停操作后缓慢移动视角" checked={settings.autoDrift} onChange={(值) => onChange({ autoDrift: 值 })} />
       <开关行 label="减少动效" description="关闭环境漂移和部分过渡" checked={settings.reducedMotion} onChange={(值) => onChange({ reducedMotion: 值 })} />
       <开关行 label="声音" description="启用界面反馈音和对白语音" checked={!audio.muted} onChange={(值) => 改音频({ muted: !值 })} />

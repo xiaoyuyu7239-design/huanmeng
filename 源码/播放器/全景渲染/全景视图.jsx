@@ -87,6 +87,7 @@ export default function 全景视图({
   const [投影热点, set投影热点] = useState([]); // 每帧算出的 {id,x,y,visible} 列表
   const [纹理状态, set纹理状态] = useState('loading'); // "loading" | "ready" | "fallback"
   const [当前fov, set当前fov] = useState(入场.fov); // 同步给"视角远近"滑杆的 React 态
+  const [系统减少动效, set系统减少动效] = useState(false);
   const 已看集合 = useMemo(() => new Set(已看热点), [已看热点]);
 
   // (热点, style) → 一枚热点纸签按钮 → JSX。已触发过加 is-seen、被引导加 is-guided；
@@ -121,8 +122,21 @@ export default function 全景视图({
   }, [热点们]);
 
   useEffect(() => {
-    动效设置Ref.current = { 自动环视, 减少动效 };
-  }, [自动环视, 减少动效]);
+    const 查询 = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+    if (!查询) return undefined;
+    const 同步 = () => set系统减少动效(查询.matches);
+    同步();
+    if (查询.addEventListener) 查询.addEventListener('change', 同步);
+    else 查询.addListener?.(同步);
+    return () => {
+      if (查询.removeEventListener) 查询.removeEventListener('change', 同步);
+      else 查询.removeListener?.(同步);
+    };
+  }, []);
+
+  useEffect(() => {
+    动效设置Ref.current = { 自动环视, 减少动效: 减少动效 || 系统减少动效 };
+  }, [自动环视, 减少动效, 系统减少动效]);
 
   // 节点切换：把相机整体重置为新节点的入场视角（没有补间动画——直接跳，
   // 视觉过渡由纹理加载期间的"载入全景"提示层承担），并清空旧投影热点

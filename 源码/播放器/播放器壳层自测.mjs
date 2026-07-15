@@ -50,7 +50,20 @@ function 无告警渲染(名字, 元素) {
 try {
   const 剧情模块 = await 服务.ssrLoadModule('/源码/播放器/剧情引擎/剧情加载.js');
   const 状态模块 = await 服务.ssrLoadModule('/源码/播放器/剧情引擎/状态与结算.js');
-  const { default: 播放器应用, 关系手账 } = await 服务.ssrLoadModule('/源码/播放器/播放器应用.jsx');
+  const { default: 播放器应用, 关系手账, 玩家可见后果 } = await 服务.ssrLoadModule('/源码/播放器/播放器应用.jsx');
+  const 安全文案 = '这个选择已被故事记住。';
+  for (const 原始工程文案 of ['+8', 'trust +8', 'career +8', '真相 +8', 'score=8', '因果标记：audit_ready', '{"boundary":-2}']) {
+    if (玩家可见后果(原始工程文案, 安全文案) !== 安全文案) {
+      throw new Error(`玩家可见后果未过滤工程文案：${原始工程文案}`);
+    }
+  }
+  const 正常叙事文案 = '他把主控密钥放回了两人都看得见的位置。';
+  if (玩家可见后果(正常叙事文案, 安全文案) !== 正常叙事文案) {
+    throw new Error('玩家可见后果误伤了正常叙事文案');
+  }
+  if (玩家可见后果('career +8', 'route=solo') !== '这次选择已被故事记住。') {
+    throw new Error('玩家可见后果允许工程化兜底文案再次泄漏');
+  }
   const 游戏根 = resolve(项目根, '公共资源/games');
   const 剧情路径们 = (await readdir(游戏根, { withFileTypes: true }))
     .filter((条目) => 条目.isDirectory())
@@ -81,6 +94,19 @@ try {
       if (!html.includes('game-shell') || !html.includes(剧情.title)) {
         throw new Error(`${slug}/${节点.id} 未渲染出播放器壳层或故事标题`);
       }
+      if (节点.choices?.length > 0) {
+        if (slug === 'ninth-seat' && !html.includes('意图 ·')) {
+          throw new Error(`${slug}/${节点.id} 未渲染作者配置的选择意图`);
+        }
+        if (slug !== 'ninth-seat' && html.includes('意图 ·')) {
+          throw new Error(`${slug}/${节点.id} 把旧作品选择文案重复显示成了意图标签`);
+        }
+      }
+      if (slug === 'ninth-seat' && 节点.id === 剧情.startNodeId) {
+        if (!html.includes('data-layout="portrait-cinematic"') || !html.includes('自动播放') || !html.includes('调查现场')) {
+          throw new Error('第九席首节点未渲染竖屏轻电影、自动播放或按需调查入口');
+        }
+      }
       节点通过 += 1;
     }
     if (slug === 'project-20260620-231058') {
@@ -100,7 +126,7 @@ try {
       const 手账html = 无告警渲染('关系手账', React.createElement(关系手账, { state: 手账状态 }));
       if (
         !['温甜茉', '林晚晴', '花容离', '她记住了你的认真回应。'].every((文本) => 手账html.includes(文本)) ||
-        (手账html.match(/role="progressbar"/g) ?? []).length !== 3 ||
+        (手账html.match(/role="img"/g) ?? []).length !== 3 ||
         手账html.includes('NaN')
       ) {
         throw new Error('关系手账未正确渲染角色、三维关系、痕迹或异常值兜底');
@@ -125,12 +151,15 @@ try {
       if (
         !['陆沉舟', '周衍', '贺清野', '沈确', '他把主控密钥放回了两人都看得见的位置。'].every((文本) => 手账html.includes(文本)) ||
         ['林渺', '乔雯'].some((文本) => 手账html.includes(文本)) ||
-        (手账html.match(/role="progressbar"/g) ?? []).length !== 3 ||
+        (手账html.match(/role="img"/g) ?? []).length !== 3 ||
+        !手账html.includes('选择空间') ||
+        !手账html.includes('查看关系细节') ||
+        !手账html.includes('/ 100') ||
         手账html.includes('NaN')
       ) {
         throw new Error('第九席关系手账未正确区分四名可发展角色与两名女性同盟角色');
       }
-      console.log('  ✓ 第九席关系手账：四名可发展角色、三维刻度、女性同盟不数值化');
+      console.log('  ✓ 第九席关系手账：四名可发展角色、默认阶段反馈与按需精确值');
     }
     通过 += 1;
     console.log(`  ✓ ${slug}：${剧情.title}（${Object.keys(剧情.nodes).length} 节点）`);

@@ -32,6 +32,7 @@ import {
   创建初始状态,
   创建默认设置,
   规范化设置,
+  规范化对白日志,
   刷新存档时间,
   取节点,
   取当前节点,
@@ -119,7 +120,8 @@ export function 导入存档码(存档码) {
 //   flags/memories/seenHotspots/persistentMemories 只留字符串并去重；
 //   visitedNodes 还要求节点真实存在；route 只认 null/team/solo/当前剧情角色；
 //   loopCount 非法回 1；unlockedEndings 过滤不存在的节点；decisionLog 逐条修补且
-//   最多留 120 条；settings 深合并回默认形状；gameId/storyId 强制改成当前作品。
+//   最多留 120 条；dialogueLog 只保留当前剧情真实台词且最多 240 条；
+//   settings 深合并回默认形状；gameId/storyId 强制改成当前作品。
 // 为什么先铺 ...初始 再铺 ...原始：未知的多余字段随存档保留（线上就是这么做的）。
 export function 消毒存档(原始) {
   if (!原始 || typeof 原始 !== 'object' || Array.isArray(原始)) 原始 = {};
@@ -148,6 +150,7 @@ export function 消毒存档(原始) {
       (原始.persistentMemories ?? []).filter((条) => typeof 条 === 'string'),
     ),
     decisionLog: 消毒决策日志(原始.decisionLog),
+    dialogueLog: 规范化对白日志(原始.dialogueLog),
     settings: 规范化设置(原始.settings),
     gameId: ACTIVE_GAME_ID,
     storyId: STORY_ID,
