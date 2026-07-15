@@ -1,0 +1,1229 @@
+{
+  "title": "九尾狐仙下凡",
+  "startNodeId": "s00-meet-temple",
+  "nodes": {
+    "s00-meet-temple": {
+      "id": "s00-meet-temple",
+      "chapter": "第一幕",
+      "title": "古庙相遇",
+      "location": "深山古庙",
+      "panorama": "/panoramas/s00-meet-temple.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "暴雨之夜，你躲进一座破旧古庙。烛火摇曳中，一位白衣女子静坐角落，九尾隐现。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "ready",
+          "text": "暴雨把山路冲成黑河，你推开古庙残门，烛火在狐仙神像前一盏盏颤动。",
+          "voiceSrc": "/voices/project-20260620-185116/s00-meet-temple/line-001-550e6326da06.mp3",
+          "voiceAssetPath": "assets/voices/s00-meet-temple/line-001-550e6326da06.mp3",
+          "voiceHash": "550e6326da06",
+          "voiceGeneratedAt": "2026-06-20T11:51:38.959Z"
+        },
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "ready",
+          "text": "右侧的白衣女子静坐在阴影里，身后的九尾银光一闪即逝，像在等你认出她。",
+          "voiceSrc": "/voices/project-20260620-185116/s00-meet-temple/line-002-769a994206a4.mp3",
+          "voiceAssetPath": "assets/voices/s00-meet-temple/line-002-769a994206a4.mp3",
+          "voiceHash": "769a994206a4",
+          "voiceGeneratedAt": "2026-06-20T11:51:39.936Z"
+        },
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "ready",
+          "text": "你能上前问清她的来意，也能转身逃向山下，但答案藏在她身后的光里。",
+          "voiceSrc": "/voices/project-20260620-185116/s00-meet-temple/line-003-80c8563628ec.mp3",
+          "voiceAssetPath": "assets/voices/s00-meet-temple/line-003-80c8563628ec.mp3",
+          "voiceHash": "80c8563628ec",
+          "voiceGeneratedAt": "2026-06-20T11:51:40.804Z"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hs00-1",
+          "label": "九尾银光",
+          "description": "看向右侧白衣女子身后的九尾狐影，尾尖在冷光里泛着银白。",
+          "yaw": 86,
+          "pitch": -8,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "hs00-1-found",
+              "found-s01-follow-fox",
+              "found-s01-escape-village"
+            ],
+            "memories": [
+              "发现线索：右侧白衣女子身后的九尾银光。",
+              "解锁线索：狐仙之路",
+              "解锁线索：逃向村庄"
+            ]
+          }
+        },
+        {
+          "id": "hs00-2",
+          "label": "狐仙神像",
+          "description": "破旧的神像，似乎是一尊狐仙像，与女子面容相似。",
+          "yaw": 0,
+          "pitch": 12,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "hs00-2-found"
+            ],
+            "memories": [
+              "发现线索：破旧的神像，似乎是一尊狐仙像，与女子面容相似。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "ch00-1",
+          "label": "上前搭话",
+          "caption": "1",
+          "next": "s01-follow-fox",
+          "fateType": "river",
+          "consequence": "你选择了信任，跟随狐仙深入秘密。",
+          "lockedHint": "先点击右侧白衣女子身后的「九尾银光」，再决定是否上前搭话。",
+          "condition": {
+            "flags": [
+              "found-s01-follow-fox"
+            ]
+          },
+          "effect": {
+            "globals": {
+              "trust": 10
+            },
+            "flags": [
+              "chose_follow"
+            ],
+            "memories": [
+              "古庙初见"
+            ]
+          }
+        },
+        {
+          "id": "ch00-2",
+          "label": "转身逃离",
+          "caption": "2",
+          "next": "s01-escape-village",
+          "fateType": "river",
+          "consequence": "你选择了恐惧，逃向未知的村庄。",
+          "lockedHint": "先点击右侧白衣女子身后的「九尾银光」，确认她的身份后再决定是否转身逃离。",
+          "condition": {
+            "flags": [
+              "found-s01-escape-village"
+            ]
+          },
+          "effect": {
+            "globals": {
+              "trust": -10,
+              "fear": 15
+            },
+            "flags": [
+              "chose_escape"
+            ],
+            "memories": [
+              "雨夜奔逃"
+            ]
+          }
+        }
+      ],
+      "entryView": {
+        "yaw": 0,
+        "pitch": 5,
+        "fov": 100
+      }
+    },
+    "s01-follow-fox": {
+      "id": "s01-follow-fox",
+      "chapter": "第一幕",
+      "title": "狐仙之路",
+      "location": "古庙后院",
+      "panorama": "/panoramas/s01-follow-fox.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "你跟随狐仙穿过庭院，她带你走向后山。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "ready",
+          "text": "你跟着她绕过古庙后墙，雨声被庭院里的雾吞没，只剩衣摆擦过石阶的轻响。",
+          "voiceSrc": "/voices/project-20260620-185116/s01-follow-fox/line-001-2f45ad172684.mp3",
+          "voiceAssetPath": "assets/voices/s01-follow-fox/line-001-2f45ad172684.mp3",
+          "voiceHash": "2f45ad172684",
+          "voiceGeneratedAt": "2026-06-20T11:51:41.928Z"
+        },
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "ready",
+          "text": "她没有回头，却准确说出你梦里反复出现的名字，仿佛这条路你们已经走过很多次。",
+          "voiceSrc": "/voices/project-20260620-185116/s01-follow-fox/line-002-40586ced384f.mp3",
+          "voiceAssetPath": "assets/voices/s01-follow-fox/line-002-40586ced384f.mp3",
+          "voiceHash": "40586ced384f",
+          "voiceGeneratedAt": "2026-06-20T11:51:43.193Z"
+        },
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "ready",
+          "text": "后山洞口透出灵石微光，你可以继续跟她进去，也可以停下直接逼问她的身份。",
+          "voiceSrc": "/voices/project-20260620-185116/s01-follow-fox/line-003-cd96285e9a6b.mp3",
+          "voiceAssetPath": "assets/voices/s01-follow-fox/line-003-cd96285e9a6b.mp3",
+          "voiceHash": "cd96285e9a6b",
+          "voiceGeneratedAt": "2026-06-20T11:51:44.420Z"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hs01-1",
+          "label": "线索",
+          "description": "她发间一支白玉发簪，刻着远古符文。",
+          "yaw": 20,
+          "pitch": -5,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "hs01-1-found"
+            ],
+            "memories": [
+              "发现线索：她发间一支白玉发簪，刻着远古符文。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "ch01-1",
+          "label": "跟她进山洞",
+          "next": "s02-fox-cave",
+          "fateType": "river",
+          "consequence": "你深入狐仙的巢穴，发现她的秘密。",
+          "effect": {
+            "globals": {
+              "trust": 5
+            },
+            "flags": [
+              "entered_cave"
+            ],
+            "memories": [
+              "洞穴入口"
+            ]
+          }
+        },
+        {
+          "id": "ch01-2",
+          "label": "直接问她身份",
+          "next": "s03-revelation",
+          "fateType": "web",
+          "consequence": "你开门见山，加速了真相的暴露。",
+          "effect": {
+            "globals": {
+              "trust": 8
+            },
+            "memories": [
+              "直接质问"
+            ]
+          }
+        }
+      ],
+      "entryView": {
+        "yaw": -10,
+        "pitch": 10,
+        "fov": 100
+      }
+    },
+    "s01-escape-village": {
+      "id": "s01-escape-village",
+      "chapter": "第一幕",
+      "title": "逃向村庄",
+      "location": "山间小路",
+      "panorama": "/panoramas/s01-escape-village.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "你拼命跑下山，远处村庄灯火微明。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "ready",
+          "text": "你冲出古庙，山路泥水没过脚踝，身后的烛光像一只不肯闭上的眼。",
+          "voiceSrc": "/voices/project-20260620-185116/s01-escape-village/line-001-a82ed02e2ece.mp3",
+          "voiceAssetPath": "assets/voices/s01-escape-village/line-001-a82ed02e2ece.mp3",
+          "voiceHash": "a82ed02e2ece",
+          "voiceGeneratedAt": "2026-06-20T11:51:45.351Z"
+        },
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "ready",
+          "text": "村庄的灯火在雨幕里忽明忽暗，远处传来更夫敲梆和低声议论。",
+          "voiceSrc": "/voices/project-20260620-185116/s01-escape-village/line-002-8403fd9967b5.mp3",
+          "voiceAssetPath": "assets/voices/s01-escape-village/line-002-8403fd9967b5.mp3",
+          "voiceHash": "8403fd9967b5",
+          "voiceGeneratedAt": "2026-06-20T11:51:46.175Z"
+        },
+        {
+          "speaker": "narrator",
+          "text": "你可以求助村民，把恐惧交给人群，也可以独自查探，弄清那女子为何追进你的梦。",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-185116/s01-escape-village/line-003-fbb46dc33d74.mp3",
+          "voiceAssetPath": "assets/voices/s01-escape-village/line-003-fbb46dc33d74.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "fbb46dc33d74",
+          "voiceGeneratedAt": "2026-06-20T11:51:47.196Z"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hs01-2",
+          "label": "线索",
+          "description": "牌坊上刻着‘青丘村’三个字，古老而诡异。",
+          "yaw": 0,
+          "pitch": 15,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "hs01-2-found"
+            ],
+            "memories": [
+              "发现线索：牌坊上刻着‘青丘村’三个字，古老而诡异。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "ch01-3",
+          "label": "向村民求助",
+          "next": "s02-village-secrets",
+          "fateType": "river",
+          "consequence": "你寻求村民庇护，却听到恐怖传说。",
+          "effect": {
+            "globals": {
+              "fear": 10
+            },
+            "flags": [
+              "sought_help"
+            ],
+            "memories": [
+              "村民的警告"
+            ]
+          }
+        },
+        {
+          "id": "ch01-4",
+          "label": "独自查探",
+          "next": "s03-hidden-library",
+          "fateType": "web",
+          "consequence": "你选择独立调查，发现隐藏古籍。",
+          "effect": {
+            "memories": [
+              "夜探村庄"
+            ]
+          }
+        }
+      ],
+      "entryView": {
+        "yaw": 30,
+        "pitch": 5,
+        "fov": 100
+      }
+    },
+    "s02-fox-cave": {
+      "id": "s02-fox-cave",
+      "chapter": "第二幕",
+      "title": "狐仙洞穴",
+      "location": "后山洞穴",
+      "panorama": "/panoramas/s02-fox-cave.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "洞穴深处，灵石闪光，墙上壁画描绘着狐仙的过去。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "ready",
+          "text": "洞穴深处的灵石照亮湿冷岩壁，九尾狐影在壁画之间无声游动。",
+          "voiceSrc": "/voices/project-20260620-185116/s02-fox-cave/line-001-11a3a91ea945.mp3",
+          "voiceAssetPath": "assets/voices/s02-fox-cave/line-001-11a3a91ea945.mp3",
+          "voiceHash": "11a3a91ea945",
+          "voiceGeneratedAt": "2026-06-20T11:51:48.291Z"
+        },
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "ready",
+          "text": "画上反复出现一个救狐的人影，眉眼与你惊人相似，百年前的因果第一次露出轮廓。",
+          "voiceSrc": "/voices/project-20260620-185116/s02-fox-cave/line-002-d3726f41b215.mp3",
+          "voiceAssetPath": "assets/voices/s02-fox-cave/line-002-d3726f41b215.mp3",
+          "voiceHash": "d3726f41b215",
+          "voiceGeneratedAt": "2026-06-20T11:51:49.431Z"
+        },
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "ready",
+          "text": "她递来的礼物像救赎也像锁链，你必须决定是接受这份牵连，还是立刻抽身离开。",
+          "voiceSrc": "/voices/project-20260620-185116/s02-fox-cave/line-003-e48f1a5de00e.mp3",
+          "voiceAssetPath": "assets/voices/s02-fox-cave/line-003-e48f1a5de00e.mp3",
+          "voiceHash": "e48f1a5de00e",
+          "voiceGeneratedAt": "2026-06-20T11:51:50.806Z"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hs02-1",
+          "label": "线索",
+          "description": "壁画描绘白狐书生相遇场景，细节与古庙神像一致。",
+          "yaw": -45,
+          "pitch": 5,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "hs02-1-found"
+            ],
+            "memories": [
+              "发现线索：壁画描绘白狐书生相遇场景，细节与古庙神像一致。"
+            ]
+          }
+        },
+        {
+          "id": "hs02-2",
+          "label": "线索",
+          "description": "发光的灵石，蕴含着狐仙的修为。",
+          "yaw": 30,
+          "pitch": -10,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "hs02-2-found"
+            ],
+            "memories": [
+              "发现线索：发光的灵石，蕴含着狐仙的修为。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "ch02-1",
+          "label": "接受她的礼物",
+          "next": "s03-revelation",
+          "fateType": "river",
+          "consequence": "你接受灵石，进一步信任狐仙。",
+          "effect": {
+            "globals": {
+              "trust": 10
+            },
+            "flags": [
+              "accepted_gift"
+            ]
+          }
+        },
+        {
+          "id": "ch02-2",
+          "label": "怀疑离开",
+          "next": "s03-hidden-library",
+          "fateType": "web",
+          "consequence": "你的怀疑将你引向古籍的线索。",
+          "effect": {
+            "globals": {
+              "trust": -5
+            },
+            "flags": [
+              "left_cave"
+            ]
+          }
+        }
+      ],
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      }
+    },
+    "s02-village-secrets": {
+      "id": "s02-village-secrets",
+      "chapter": "第二幕",
+      "title": "村庄秘闻",
+      "location": "村长家",
+      "panorama": "/panoramas/s02-village-secrets.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "村长告诉你关于狐仙的可怕传说。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "ready",
+          "text": "村长家的木门紧闭，油灯把老人脸上的皱纹照得像一道道旧伤。",
+          "voiceSrc": "/voices/project-20260620-185116/s02-village-secrets/line-001-61b709d99d5d.mp3",
+          "voiceAssetPath": "assets/voices/s02-village-secrets/line-001-61b709d99d5d.mp3",
+          "voiceHash": "61b709d99d5d",
+          "voiceGeneratedAt": "2026-06-20T11:51:51.812Z"
+        },
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "ready",
+          "text": "他说狐仙不是报恩，而是在寻找能替她挡下天劫的人，村里的失踪者都与她有关。",
+          "voiceSrc": "/voices/project-20260620-185116/s02-village-secrets/line-002-f9d2e827c194.mp3",
+          "voiceAssetPath": "assets/voices/s02-village-secrets/line-002-f9d2e827c194.mp3",
+          "voiceHash": "f9d2e827c194",
+          "voiceGeneratedAt": "2026-06-20T11:51:52.900Z"
+        },
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "ready",
+          "text": "这些传说可能救你，也可能诱你背叛她；你要查古籍，还是去找她当面求证。",
+          "voiceSrc": "/voices/project-20260620-185116/s02-village-secrets/line-003-abee1ec06609.mp3",
+          "voiceAssetPath": "assets/voices/s02-village-secrets/line-003-abee1ec06609.mp3",
+          "voiceHash": "abee1ec06609",
+          "voiceGeneratedAt": "2026-06-20T11:51:53.857Z"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hs02-3",
+          "label": "线索",
+          "description": "黄纸朱砂，镇压狐妖的符咒。",
+          "yaw": 15,
+          "pitch": 10,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "hs02-3-found"
+            ],
+            "memories": [
+              "发现线索：黄纸朱砂，镇压狐妖的符咒。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "ch02-3",
+          "label": "相信村长，去查古籍",
+          "next": "s03-hidden-library",
+          "fateType": "river",
+          "consequence": "你选择相信村民，寻找镇压之法。",
+          "effect": {
+            "globals": {
+              "fear": 10
+            },
+            "flags": [
+              "believed_village"
+            ]
+          }
+        },
+        {
+          "id": "ch02-4",
+          "label": "寻找狐仙求证",
+          "next": "s03-revelation",
+          "fateType": "web",
+          "consequence": "你决定直接问狐仙，让真相更早浮现。",
+          "effect": {
+            "globals": {
+              "trust": -3
+            },
+            "memories": [
+              "求助狐仙"
+            ]
+          }
+        }
+      ],
+      "entryView": {
+        "yaw": -20,
+        "pitch": 5,
+        "fov": 100
+      }
+    },
+    "s03-revelation": {
+      "id": "s03-revelation",
+      "chapter": "第二幕",
+      "title": "真相浮现",
+      "location": "狐仙居所",
+      "panorama": "/panoramas/s03-revelation.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "狐仙坦白一切：百年前你救过她，她下凡报恩，但天条不容。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "ready",
+          "text": "狐仙居所里月光如水，她终于卸下伪装，九尾在身后缓缓展开。",
+          "voiceSrc": "/voices/project-20260620-185116/s03-revelation/line-001-940d5a085ef9.mp3",
+          "voiceAssetPath": "assets/voices/s03-revelation/line-001-940d5a085ef9.mp3",
+          "voiceHash": "940d5a085ef9",
+          "voiceGeneratedAt": "2026-06-20T11:51:54.955Z"
+        },
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "ready",
+          "text": "她承认百年前你曾救她一命，她下凡报恩，却让你一次次卷入天条的惩罚。",
+          "voiceSrc": "/voices/project-20260620-185116/s03-revelation/line-002-b0e227089098.mp3",
+          "voiceAssetPath": "assets/voices/s03-revelation/line-002-b0e227089098.mp3",
+          "voiceHash": "b0e227089098",
+          "voiceGeneratedAt": "2026-06-20T11:51:55.902Z"
+        },
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "ready",
+          "text": "天劫已经临近，你可以为她承担代价，也可以劝她放弃执念，和你留在人间。",
+          "voiceSrc": "/voices/project-20260620-185116/s03-revelation/line-003-01cec8d899cd.mp3",
+          "voiceAssetPath": "assets/voices/s03-revelation/line-003-01cec8d899cd.mp3",
+          "voiceHash": "01cec8d899cd",
+          "voiceGeneratedAt": "2026-06-20T11:51:56.833Z"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hs03-1",
+          "label": "线索",
+          "description": "她眼角滑落的泪珠，落地化为珍珠。",
+          "yaw": 0,
+          "pitch": -5,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "hs03-1-found"
+            ],
+            "memories": [
+              "发现线索：她眼角滑落的泪珠，落地化为珍珠。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "ch03-1",
+          "label": "愿意牺牲自己救她",
+          "next": "s04-choice-sacrifice",
+          "fateType": "river",
+          "consequence": "你决定付出生命来换取她的存续。",
+          "effect": {
+            "globals": {
+              "self_sacrifice": 1
+            },
+            "flags": [
+              "willing_sacrifice"
+            ]
+          }
+        },
+        {
+          "id": "ch03-2",
+          "label": "劝说她放弃，与你共度余生",
+          "next": "s04-confront",
+          "fateType": "web",
+          "consequence": "你想找到两全之法，却可能引发对抗。",
+          "effect": {
+            "globals": {
+              "persuade": 1
+            }
+          }
+        }
+      ],
+      "entryView": {
+        "yaw": 10,
+        "pitch": 5,
+        "fov": 100
+      }
+    },
+    "s03-hidden-library": {
+      "id": "s03-hidden-library",
+      "chapter": "第二幕",
+      "title": "古籍密藏",
+      "location": "村庄旧祠堂",
+      "panorama": "/panoramas/s03-hidden-library.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "你在祠堂暗格中发现一本古籍，记载着轮回契约和破解诅咒之法。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "ready",
+          "text": "旧祠堂的香灰被风吹开，暗格里露出一本被红线缠住的古籍。",
+          "voiceSrc": "/voices/project-20260620-185116/s03-hidden-library/line-001-955372749b68.mp3",
+          "voiceAssetPath": "assets/voices/s03-hidden-library/line-001-955372749b68.mp3",
+          "voiceHash": "955372749b68",
+          "voiceGeneratedAt": "2026-06-20T11:51:57.600Z"
+        },
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "ready",
+          "text": "书页记载轮回契约：每一世相遇都不是偶然，而是有人故意把你们推回原点。",
+          "voiceSrc": "/voices/project-20260620-185116/s03-hidden-library/line-002-7b83890d9b39.mp3",
+          "voiceAssetPath": "assets/voices/s03-hidden-library/line-002-7b83890d9b39.mp3",
+          "voiceHash": "7b83890d9b39",
+          "voiceGeneratedAt": "2026-06-20T11:51:58.494Z"
+        },
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "ready",
+          "text": "你可以留下研究破解方法，也可以带着古籍去见狐仙，让她面对这个真相。",
+          "voiceSrc": "/voices/project-20260620-185116/s03-hidden-library/line-003-dde9d0a24459.mp3",
+          "voiceAssetPath": "assets/voices/s03-hidden-library/line-003-dde9d0a24459.mp3",
+          "voiceHash": "dde9d0a24459",
+          "voiceGeneratedAt": "2026-06-20T11:51:59.924Z"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hs03-2",
+          "label": "线索",
+          "description": "翻开的一页，详细描述了轮回契的解法。",
+          "yaw": 0,
+          "pitch": -10,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "hs03-2-found"
+            ],
+            "memories": [
+              "发现线索：翻开的一页，详细描述了轮回契的解法。"
+            ]
+          }
+        },
+        {
+          "id": "hs03-3",
+          "label": "线索",
+          "description": "墙上的古符文，与书中所画相同。",
+          "yaw": 45,
+          "pitch": 10,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "hs03-3-found"
+            ],
+            "memories": [
+              "发现线索：墙上的古符文，与书中所画相同。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "ch03-3",
+          "label": "研究古籍，寻找破解方法",
+          "next": "s04-choice-sacrifice",
+          "fateType": "web",
+          "consequence": "你发现了轮回真相，但需要牺牲来打破。",
+          "effect": {
+            "globals": {
+              "knowledge": 1
+            },
+            "flags": [
+              "found_ancient_book",
+              "know_reincarnation"
+            ],
+            "memories": [
+              "轮回契"
+            ]
+          }
+        },
+        {
+          "id": "ch03-4",
+          "label": "带着古籍去见狐仙",
+          "next": "s04-confront",
+          "fateType": "web",
+          "consequence": "你决定直接对质，也许能找出出路。",
+          "effect": {
+            "flags": [
+              "took_book",
+              "found_ancient_book"
+            ],
+            "memories": [
+              "对质古籍"
+            ]
+          }
+        }
+      ],
+      "entryView": {
+        "yaw": -30,
+        "pitch": 15,
+        "fov": 100
+      }
+    },
+    "s04-choice-sacrifice": {
+      "id": "s04-choice-sacrifice",
+      "chapter": "第三幕",
+      "title": "牺牲抉择",
+      "location": "狐仙居所内",
+      "panorama": "/panoramas/s04-choice-sacrifice.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "月圆之夜，天劫降临。你必须做出最终选择。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "ready",
+          "text": "月圆之夜，狐仙居所被雷光照成白昼，天劫正从云层深处压下来。",
+          "voiceSrc": "/voices/project-20260620-185116/s04-choice-sacrifice/line-001-0e81d070aa9f.mp3",
+          "voiceAssetPath": "assets/voices/s04-choice-sacrifice/line-001-0e81d070aa9f.mp3",
+          "voiceHash": "0e81d070aa9f",
+          "voiceGeneratedAt": "2026-06-20T11:52:00.973Z"
+        },
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "ready",
+          "text": "她望着你，像是在求你离开，又像早已知道你不会离开。",
+          "voiceSrc": "/voices/project-20260620-185116/s04-choice-sacrifice/line-002-af06119b398f.mp3",
+          "voiceAssetPath": "assets/voices/s04-choice-sacrifice/line-002-af06119b398f.mp3",
+          "voiceHash": "af06119b398f",
+          "voiceGeneratedAt": "2026-06-20T11:52:02.061Z"
+        },
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "ready",
+          "text": "献祭能换她活下去，夺取内丹也许能保住你自己；这一刻没有干净的答案。",
+          "voiceSrc": "/voices/project-20260620-185116/s04-choice-sacrifice/line-003-5396491b30c9.mp3",
+          "voiceAssetPath": "assets/voices/s04-choice-sacrifice/line-003-5396491b30c9.mp3",
+          "voiceHash": "5396491b30c9",
+          "voiceGeneratedAt": "2026-06-20T11:52:03.454Z"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hs04-1",
+          "label": "线索",
+          "description": "她胸口浮现的发光内丹，是她千年修为所聚。",
+          "yaw": 0,
+          "pitch": -10,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "hs04-1-found"
+            ],
+            "memories": [
+              "发现线索：她胸口浮现的发光内丹，是她千年修为所聚。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "ch04-1",
+          "label": "献祭自己，救她",
+          "next": "e01-together",
+          "fateType": "river",
+          "consequence": "你选择牺牲，灵魂与她融为一体，共赴天庭。",
+          "effect": {
+            "globals": {
+              "sacrifice": 1
+            },
+            "flags": [
+              "sacrificed_self"
+            ],
+            "memories": [
+              "最后的拥抱"
+            ]
+          }
+        },
+        {
+          "id": "ch04-2",
+          "label": "假意答应，偷袭夺取内丹",
+          "next": "s04-confront",
+          "fateType": "web",
+          "consequence": "你欺骗了她，但内心挣扎，走向对峙。",
+          "lockedHint": "她必须仍对你保留一点信任，才会给你靠近内丹的机会。",
+          "condition": {
+            "minGlobal": [
+              {
+                "key": "trust",
+                "value": 10
+              }
+            ]
+          },
+          "effect": {
+            "globals": {
+              "deceit": 1
+            },
+            "flags": [
+              "betrayed"
+            ],
+            "memories": [
+              "虚假的承诺"
+            ]
+          }
+        }
+      ],
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      }
+    },
+    "s04-confront": {
+      "id": "s04-confront",
+      "chapter": "第三幕",
+      "title": "最后对峙",
+      "location": "山巅祭坛",
+      "panorama": "/panoramas/s04-confront.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "天雷滚滚，你和狐仙在祭坛上对峙，一切都将在此终结。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "ready",
+          "text": "山巅祭坛上天雷滚滚，狐火和雨水在石阶间交织成一张发亮的网。",
+          "voiceSrc": "/voices/project-20260620-185116/s04-confront/line-001-f636ff7e3666.mp3",
+          "voiceAssetPath": "assets/voices/s04-confront/line-001-f636ff7e3666.mp3",
+          "voiceHash": "f636ff7e3666",
+          "voiceGeneratedAt": "2026-06-20T11:52:04.359Z"
+        },
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceStatus": "ready",
+          "text": "你手里的古籍、她体内的内丹、以及你们之间残存的信任，都在决定最后的走向。",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-185116/s04-confront/line-002-2c98116f70fa.mp3",
+          "voiceAssetPath": "assets/voices/s04-confront/line-002-2c98116f70fa.mp3",
+          "voiceHash": "2c98116f70fa",
+          "voiceGeneratedAt": "2026-06-20T11:52:05.661Z"
+        },
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceStatus": "ready",
+          "text": "战斗、拥抱或揭开轮回真相，每一个动作都会把故事推向不可逆的结局。",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-185116/s04-confront/line-003-1bc3903e72db.mp3",
+          "voiceAssetPath": "assets/voices/s04-confront/line-003-1bc3903e72db.mp3",
+          "voiceHash": "1bc3903e72db",
+          "voiceGeneratedAt": "2026-06-20T11:52:06.623Z"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hs04-2",
+          "label": "线索",
+          "description": "天空中的紫色雷劫，正在凝聚。",
+          "yaw": 60,
+          "pitch": 30,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "hs04-2-found"
+            ],
+            "memories": [
+              "发现线索：天空中的紫色雷劫，正在凝聚。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "ch04-3",
+          "label": "与她战斗，夺取内丹",
+          "next": "e02-devoured",
+          "fateType": "river",
+          "consequence": "你攻击她，但被她的力量反噬，魂飞魄散。",
+          "effect": {
+            "memories": [
+              "最后的天雷"
+            ]
+          }
+        },
+        {
+          "id": "ch04-4",
+          "label": "放下武器，拥抱她",
+          "next": "e01-together",
+          "fateType": "river",
+          "consequence": "你选择爱与原谅，天劫被你们的真心化解，一同飞升。",
+          "effect": {
+            "globals": {
+              "love": 1
+            },
+            "flags": [
+              "embraced"
+            ],
+            "memories": [
+              "月下拥吻"
+            ]
+          }
+        },
+        {
+          "id": "ch04-5",
+          "label": "展示古籍，揭露轮回真相",
+          "next": "e03-eternal",
+          "fateType": "wheel",
+          "consequence": "你揭示了百年前的真实契约，打破了轮回诅咒，获得永恒。",
+          "lockedHint": "你需要古籍、轮回真相，以及此前仍未断绝的信任，才能揭示隐藏真相。",
+          "condition": {
+            "flags": [
+              "found_ancient_book",
+              "know_reincarnation"
+            ],
+            "minGlobal": [
+              {
+                "key": "trust",
+                "value": 10
+              }
+            ]
+          },
+          "effect": {
+            "flags": [
+              "revealed_truth"
+            ]
+          }
+        }
+      ],
+      "entryView": {
+        "yaw": -15,
+        "pitch": 10,
+        "fov": 100
+      }
+    },
+    "e01-together": {
+      "id": "e01-together",
+      "chapter": "结局",
+      "title": "飞升",
+      "location": "天国",
+      "panorama": "/panoramas/e01-together.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "你和狐仙的灵魂融为一体，共赴天庭，从此长相厮守。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceStatus": "ready",
+          "text": "天劫的雷光被你们交缠的魂火劈开，古庙上空第一次出现清亮的晨色。",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-185116/e01-together/line-001-d8014911085f.mp3",
+          "voiceAssetPath": "assets/voices/e01-together/line-001-d8014911085f.mp3",
+          "voiceHash": "d8014911085f",
+          "voiceGeneratedAt": "2026-06-20T11:52:07.362Z"
+        },
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceStatus": "ready",
+          "text": "她握住你的手，九尾化作漫天银光，你们的灵魂一同升向天庭。",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-185116/e01-together/line-002-4f66de097452.mp3",
+          "voiceAssetPath": "assets/voices/e01-together/line-002-4f66de097452.mp3",
+          "voiceHash": "4f66de097452",
+          "voiceGeneratedAt": "2026-06-20T11:52:08.195Z"
+        },
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceStatus": "ready",
+          "text": "人间只剩狐仙报恩的传说，而你们终于不必再在轮回里错过。",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-185116/e01-together/line-003-1fa4a1bac91a.mp3",
+          "voiceAssetPath": "assets/voices/e01-together/line-003-1fa4a1bac91a.mp3",
+          "voiceHash": "1fa4a1bac91a",
+          "voiceGeneratedAt": "2026-06-20T11:52:09.019Z"
+        }
+      ],
+      "hotspots": [],
+      "choices": [],
+      "entryView": {
+        "yaw": 0,
+        "pitch": -10,
+        "fov": 100
+      },
+      "ending": {
+        "title": "飞升",
+        "subtitle": "你和狐仙的灵魂融为一体，共赴天庭，从此长相厮守。"
+      }
+    },
+    "e02-devoured": {
+      "id": "e02-devoured",
+      "chapter": "结局",
+      "title": "吞噬",
+      "location": "山巅",
+      "panorama": "/panoramas/e02-devoured.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "你被狐仙的力量反噬，灵魂被吞噬，永世不得解脱。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceStatus": "failed",
+          "text": "你夺向内丹的一瞬，狐火反噬而来，山巅祭坛被暗红光芒吞没。",
+          "voiceError": "insufficient balance"
+        },
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceStatus": "failed",
+          "text": "她的力量没有成为你的生路，反而把你的灵魂锁进永不醒来的梦里。",
+          "voiceError": "insufficient balance"
+        },
+        {
+          "speaker": "narrator",
+          "text": "从此每逢雨夜，古庙深处都会响起一个人后悔的呼吸声。",
+          "voiceProfileId": "narrator",
+          "voiceStatus": "failed",
+          "voiceError": "insufficient balance"
+        }
+      ],
+      "hotspots": [],
+      "choices": [],
+      "entryView": {
+        "yaw": -180,
+        "pitch": 0,
+        "fov": 100
+      },
+      "ending": {
+        "title": "吞噬",
+        "subtitle": "你被狐仙的力量反噬，灵魂被吞噬，永世不得解脱。"
+      }
+    },
+    "e03-eternal": {
+      "id": "e03-eternal",
+      "chapter": "隐藏结局",
+      "title": "永恒轮回",
+      "location": "时空裂隙",
+      "panorama": "/panoramas/e03-eternal.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "你揭示百年前的契约，打破诅咒，与狐仙进入永恒的轮回之中，每一世都相遇。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceStatus": "failed",
+          "text": "古籍上的契约在时空裂隙中亮起，百年前的名字一个接一个浮现。",
+          "voiceError": "insufficient balance"
+        },
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceStatus": "failed",
+          "text": "你揭开真正的诅咒：不是相遇让你们受罚，而是遗忘让你们反复重来。",
+          "voiceError": "insufficient balance"
+        },
+        {
+          "speaker": "narrator",
+          "voiceProfileId": "narrator",
+          "voiceStatus": "failed",
+          "text": "当狐仙牵住你的手，轮回不再是牢笼，而成为你们每一世重新相认的约定。",
+          "voiceError": "insufficient balance"
+        }
+      ],
+      "hotspots": [],
+      "choices": [],
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      },
+      "ending": {
+        "title": "永恒轮回",
+        "subtitle": "你揭示百年前的契约，打破诅咒，与狐仙进入永恒的轮回之中，每一世都相遇。"
+      }
+    }
+  }
+}

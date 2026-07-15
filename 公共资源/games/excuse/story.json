@@ -1,0 +1,1664 @@
+{
+  "title": "Excuse",
+  "startNodeId": "s00-blue-salon",
+  "mechanics": {
+    "mode": "published",
+    "scores": [
+      {
+        "id": "truth",
+        "label": "真相",
+        "description": "被保护下来的客观证据与公开可能性。",
+        "initial": 35,
+        "min": 0,
+        "max": 100,
+        "visibility": "debug",
+        "tone": "truth"
+      },
+      {
+        "id": "trust",
+        "label": "信任",
+        "description": "八位表演者相信玩家不会把她们当素材消耗的程度。",
+        "initial": 45,
+        "min": 0,
+        "max": 100,
+        "visibility": "debug",
+        "tone": "affinity"
+      },
+      {
+        "id": "pressure",
+        "label": "直播压力",
+        "description": "舞台、舆论和倒计时对玩家选择的压迫。",
+        "initial": 55,
+        "min": 0,
+        "max": 100,
+        "visibility": "debug",
+        "tone": "pressure",
+        "warnAt": 75
+      },
+      {
+        "id": "mirror",
+        "label": "镜厅感知",
+        "description": "玩家对隐藏系统真相的接近程度。",
+        "initial": 20,
+        "min": 0,
+        "max": 100,
+        "visibility": "debug",
+        "tone": "route"
+      }
+    ]
+  },
+  "nodes": {
+    "s00-blue-salon": {
+      "id": "s00-blue-salon",
+      "chapter": "Opening",
+      "title": "蓝厅入场",
+      "location": "银蓝宫殿主沙龙",
+      "panorama": "/panoramas/s00-blue-salon.jpg",
+      "palette": {
+        "from": "#d7e6fb",
+        "via": "#7b93b8",
+        "to": "#f5d9a7"
+      },
+      "synopsis": "玩家进入银蓝宫殿，八位成年表演者在直播前等待，第九席空着。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "水晶灯把每张脸都照得干净，只有地板上的倒影像刚被剪掉一块。"
+        },
+        {
+          "speaker": "viola",
+          "text": "导演，直播二十分钟后开始。今晚没有事故，只有一点误会。"
+        },
+        {
+          "speaker": "mira",
+          "text": "如果你要救这场演出，就先决定你相信哪个版本。"
+        },
+        {
+          "speaker": "you",
+          "text": "我先看现场，再决定谁的借口能成立。"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "empty-ninth-seat",
+          "label": "空着的第九席",
+          "description": "舞台走位中留着一个没有人的位置，灯光却仍然给它留了亮度。",
+          "yaw": 12,
+          "pitch": -8,
+          "effect": {
+            "globals": {
+              "mirror": 6,
+              "truth": 3
+            },
+            "flags": [
+              "noticed_empty_ninth_seat"
+            ],
+            "memories": [
+              "第九席不是普通空位"
+            ]
+          }
+        },
+        {
+          "id": "crystal-hairline",
+          "label": "水晶杯细裂",
+          "description": "桌上的新水晶杯底部有极细的裂线，像是替换得太急。",
+          "yaw": -28,
+          "pitch": -18,
+          "effect": {
+            "globals": {
+              "truth": 5
+            },
+            "flags": [
+              "noticed_crystal_crack"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "direct-accusation",
+          "label": "直接问谁在撒谎",
+          "caption": "强压会逼出反应，也会让房间开始防御。",
+          "next": "s01-official-line",
+          "fateType": "river",
+          "consequence": "你让所有借口提前站队，后续证词会更紧绷。",
+          "effect": {
+            "globals": {
+              "truth": 4,
+              "pressure": 8,
+              "trust": -4
+            },
+            "flags": [
+              "opened_with_accusation"
+            ]
+          }
+        },
+        {
+          "id": "observe-stage-first",
+          "label": "先观察座位和水晶桌",
+          "caption": "你把第一轮主动权交给现场物证。",
+          "next": "s01-official-line",
+          "fateType": "web",
+          "consequence": "你留下了早期线索，隐藏路线更容易打开。",
+          "effect": {
+            "globals": {
+              "truth": 5,
+              "mirror": 4,
+              "pressure": -2
+            },
+            "flags": [
+              "observed_before_questioning"
+            ]
+          }
+        },
+        {
+          "id": "ask-for-replay",
+          "label": "要求先调出事故回放",
+          "caption": "你把问题交给镜头，但镜头也可能已经被编辑。",
+          "next": "s01-official-line",
+          "fateType": "wheel",
+          "consequence": "你触碰了剪辑权限，Mira会更早注意你。",
+          "effect": {
+            "globals": {
+              "truth": 3,
+              "pressure": 5,
+              "mirror": 3
+            },
+            "flags": [
+              "asked_for_replay"
+            ]
+          }
+        }
+      ]
+    },
+    "s01-official-line": {
+      "id": "s01-official-line",
+      "chapter": "Opening",
+      "title": "官方说法",
+      "location": "直播开场位",
+      "panorama": "/panoramas/s01-official-line.jpg",
+      "palette": {
+        "from": "#ccd8ef",
+        "via": "#64799b",
+        "to": "#f0c88e"
+      },
+      "synopsis": "Viola代表全员提出官方版本：灯光故障、杯子意外、影像取消。",
+      "lines": [
+        {
+          "speaker": "viola",
+          "text": "灯控跳闸，Nia摔倒，临时取消一段影像。这个版本够用了。"
+        },
+        {
+          "speaker": "lune",
+          "text": "观众不会关心过程，只会记得我们有没有失态。"
+        },
+        {
+          "speaker": "celeste",
+          "text": "有些真相被说出口以后，就不再属于当事人了。"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "monitor-latency",
+          "label": "延迟的监看屏",
+          "description": "监看屏上的时间码比Viola说的事故时间晚了七分钟。",
+          "yaw": 42,
+          "pitch": -6,
+          "effect": {
+            "globals": {
+              "truth": 7,
+              "mirror": 2
+            },
+            "flags": [
+              "saw_timecode_gap"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "support-viola-control",
+          "label": "先帮Viola稳住全场",
+          "caption": "秩序会回来，真相会变远。",
+          "next": "s03-throne-edit",
+          "fateType": "river",
+          "consequence": "你让官方版本获得喘息空间，完美借口路线开始成形。",
+          "effect": {
+            "globals": {
+              "trust": 4,
+              "pressure": -8,
+              "truth": -4
+            },
+            "flags": [
+              "supported_official_line"
+            ],
+            "memories": [
+              "你第一次帮借口站稳"
+            ]
+          }
+        },
+        {
+          "id": "split-witnesses",
+          "label": "把证词分开询问",
+          "caption": "群体沉默会被切开，但压力也会升高。",
+          "next": "s02-left-sofa",
+          "fateType": "river",
+          "consequence": "你阻止她们互相补台，后续矛盾会更明显。",
+          "effect": {
+            "globals": {
+              "truth": 5,
+              "pressure": 6
+            },
+            "flags": [
+              "split_witnesses"
+            ]
+          }
+        },
+        {
+          "id": "ask-about-ninth-seat",
+          "label": "追问第九席为什么还亮着",
+          "caption": "空位会把话题带离官方版本。",
+          "next": "s05-side-balcony",
+          "condition": {
+            "flags": [
+              "noticed_empty_ninth_seat"
+            ]
+          },
+          "lockedHint": "此前如果你注意过那个空位，就能追问灯光为什么还给它留着。",
+          "fateType": "web",
+          "consequence": "你把第九席从布景变成了证词入口。",
+          "effect": {
+            "globals": {
+              "truth": 6,
+              "mirror": 8,
+              "pressure": 4
+            },
+            "flags": [
+              "questioned_ninth_seat"
+            ]
+          }
+        }
+      ]
+    },
+    "s02-left-sofa": {
+      "id": "s02-left-sofa",
+      "chapter": "Witnesses",
+      "title": "左侧沙发",
+      "location": "蓝灰绒面长沙发",
+      "panorama": "/panoramas/s02-left-sofa.jpg",
+      "palette": {
+        "from": "#e3ecfb",
+        "via": "#758cb3",
+        "to": "#d8b47b"
+      },
+      "synopsis": "Lune与Sera给出彼此能补上的借口，但耳返里残留的杂音改变了证词含义。",
+      "lines": [
+        {
+          "speaker": "lune",
+          "text": "灯灭时我在补妆，镜前有粉痕，可以证明。"
+        },
+        {
+          "speaker": "sera",
+          "text": "我在让大家冷静。有人哭了，但不是因为杯子。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "Sera的耳返还亮着，里面漏出半秒被压低的人声。"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "live-earpiece",
+          "label": "仍在发热的耳返",
+          "description": "耳返里残留一句断裂的声音：不要让第九席播出去。",
+          "yaw": -18,
+          "pitch": -12,
+          "effect": {
+            "globals": {
+              "truth": 8,
+              "mirror": 4
+            },
+            "flags": [
+              "found_live_earpiece"
+            ],
+            "memories": [
+              "不要让第九席播出去"
+            ]
+          }
+        },
+        {
+          "id": "powder-clock",
+          "label": "粉盒上的时间印",
+          "description": "Lune的粉盒卡在事故后七分钟才打开的状态。",
+          "yaw": 30,
+          "pitch": -20,
+          "effect": {
+            "globals": {
+              "truth": 5
+            },
+            "flags": [
+              "found_powder_time"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "challenge-lune",
+          "label": "拆穿Lune的补妆时间",
+          "caption": "你会得到时间线，也会失去她的配合。",
+          "next": "s04-crystal-table",
+          "fateType": "river",
+          "consequence": "Lune的完美证词被撬开，物证线变得更清楚。",
+          "effect": {
+            "globals": {
+              "truth": 6,
+              "pressure": 5,
+              "trust": -3
+            },
+            "flags": [
+              "challenged_lune"
+            ]
+          }
+        },
+        {
+          "id": "protect-sera",
+          "label": "给Sera一个私下说话的空间",
+          "caption": "温和会换来信任，但会拖慢公开证据。",
+          "next": "s06-carpet-confession",
+          "fateType": "web",
+          "consequence": "Sera开始相信你不是来挑人祭旗的。",
+          "effect": {
+            "globals": {
+              "trust": 8,
+              "truth": 3,
+              "pressure": -2
+            },
+            "flags": [
+              "protected_sera"
+            ]
+          }
+        },
+        {
+          "id": "play-earpiece-private",
+          "label": "只给Sera播放耳返残音",
+          "caption": "你把证据留在小范围内，逼她选择是否帮你。",
+          "next": "s06-carpet-confession",
+          "condition": {
+            "flags": [
+              "found_live_earpiece"
+            ]
+          },
+          "lockedHint": "你需要先检查沙发旁仍在发热的耳返。",
+          "fateType": "web",
+          "consequence": "耳返证据没有立刻公开，却打开了原始音轨的线索。",
+          "effect": {
+            "globals": {
+              "truth": 7,
+              "trust": 5,
+              "mirror": 3
+            },
+            "flags": [
+              "heard_cut_phrase"
+            ]
+          }
+        }
+      ]
+    },
+    "s03-throne-edit": {
+      "id": "s03-throne-edit",
+      "chapter": "Image",
+      "title": "王座剪辑",
+      "location": "中央王座与后台控制台",
+      "panorama": "/panoramas/s03-throne-edit.jpg",
+      "palette": {
+        "from": "#d9e6f7",
+        "via": "#526985",
+        "to": "#ecd1a2"
+      },
+      "synopsis": "Mira坐在王座上，承认她能让任何版本看起来合理。",
+      "lines": [
+        {
+          "speaker": "mira",
+          "text": "镜头不是谎言。镜头只是决定谁有资格被看见。"
+        },
+        {
+          "speaker": "viola",
+          "text": "Mira，别把技术说得像审判。"
+        },
+        {
+          "speaker": "mira",
+          "text": "今晚所有人都在求我审判得温柔一点。"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "edit-tablet",
+          "label": "剪辑平板",
+          "description": "时间线上有一段被命名为 ninth-seat-take 的素材，被锁在灰色轨道里。",
+          "yaw": 6,
+          "pitch": -16,
+          "effect": {
+            "globals": {
+              "truth": 6,
+              "mirror": 7
+            },
+            "flags": [
+              "saw_edit_timeline"
+            ]
+          }
+        },
+        {
+          "id": "soft-delete-bin",
+          "label": "软删除素材箱",
+          "description": "删除箱没有清空，说明有人想隐藏而不是销毁。",
+          "yaw": -36,
+          "pitch": -10,
+          "effect": {
+            "globals": {
+              "mirror": 5
+            },
+            "flags": [
+              "saw_soft_delete"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "accept-mira-rule",
+          "label": "接受Mira的剪辑规则",
+          "caption": "让专家处理危机会让夜晚变得顺滑。",
+          "next": "s07-broadcast-countdown",
+          "fateType": "river",
+          "consequence": "你把真相交给剪辑台，官方路线获得强支撑。",
+          "effect": {
+            "globals": {
+              "pressure": -10,
+              "truth": -7,
+              "trust": 3
+            },
+            "flags": [
+              "trusted_mira_edit"
+            ]
+          }
+        },
+        {
+          "id": "bargain-for-raw-file",
+          "label": "用不公开交换未剪素材",
+          "caption": "你暂时保护她，换取进入隐藏层的钥匙。",
+          "next": "s08-mirror-room",
+          "condition": {
+            "flags": [
+              "saw_edit_timeline",
+              "noticed_crystal_crack"
+            ]
+          },
+          "lockedHint": "此前你需要看见剪辑轨道，也需要注意过水晶杯不是原来的那只。",
+          "fateType": "web",
+          "consequence": "Mira给了你一条非公开路径，镜厅路线提前打开。",
+          "effect": {
+            "globals": {
+              "truth": 8,
+              "mirror": 12,
+              "pressure": 5
+            },
+            "flags": [
+              "entered_mirror_route",
+              "mira_bargain"
+            ]
+          }
+        },
+        {
+          "id": "turn-mira-against-viola",
+          "label": "逼Mira指出Viola改过开场",
+          "caption": "你让控制者互相拆台。",
+          "next": "s04-crystal-table",
+          "fateType": "river",
+          "consequence": "Viola的领导权被削弱，杯子和灯光线索会汇合。",
+          "effect": {
+            "globals": {
+              "truth": 6,
+              "pressure": 8,
+              "trust": -5
+            },
+            "flags": [
+              "turned_mira_against_viola"
+            ]
+          }
+        }
+      ]
+    },
+    "s04-crystal-table": {
+      "id": "s04-crystal-table",
+      "chapter": "Evidence",
+      "title": "水晶桌",
+      "location": "中央水晶茶几",
+      "panorama": "/panoramas/s04-crystal-table.jpg",
+      "palette": {
+        "from": "#eef5ff",
+        "via": "#7f92aa",
+        "to": "#d6bd91"
+      },
+      "synopsis": "新水晶杯、蓝花胸针和湿痕证明事故现场被整理过。",
+      "lines": [
+        {
+          "speaker": "nia",
+          "text": "我只是摔了一下，杯子自己滚下去了。"
+        },
+        {
+          "speaker": "ran",
+          "text": "如果杯子自己滚下去，就不会滚到换杯子的托盘旁边。"
+        },
+        {
+          "speaker": "celeste",
+          "text": "别把每个保护动作都叫成犯罪。"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "replacement-cup",
+          "label": "备用水晶杯",
+          "description": "备用杯的编号与台本里的道具编号不一致。",
+          "yaw": 4,
+          "pitch": -24,
+          "effect": {
+            "globals": {
+              "truth": 7
+            },
+            "flags": [
+              "found_replacement_cup"
+            ]
+          }
+        },
+        {
+          "id": "blue-flower-pin",
+          "label": "蓝花胸针",
+          "description": "胸针掉在桌脚，花瓣边缘沾着细小玻璃粉。",
+          "yaw": -25,
+          "pitch": -28,
+          "effect": {
+            "globals": {
+              "truth": 5,
+              "mirror": 2
+            },
+            "flags": [
+              "found_blue_pin"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "preserve-glass",
+          "label": "封存杯子和碎片",
+          "caption": "证据会变强，直播风险也会变强。",
+          "next": "s06-carpet-confession",
+          "fateType": "river",
+          "consequence": "你保护了物证，也让每个人都知道谎言会留下形状。",
+          "effect": {
+            "globals": {
+              "truth": 9,
+              "pressure": 7
+            },
+            "flags": [
+              "preserved_crystal_evidence"
+            ]
+          }
+        },
+        {
+          "id": "clean-crystal-scene",
+          "label": "允许她们换掉杯子",
+          "caption": "现场会恢复美观，但你也参与了清理。",
+          "next": "s07-broadcast-countdown",
+          "fateType": "web",
+          "consequence": "你帮舞台抹平了裂痕，完美借口结局更近。",
+          "effect": {
+            "globals": {
+              "pressure": -9,
+              "truth": -8,
+              "trust": 3
+            },
+            "flags": [
+              "cleaned_crystal_scene",
+              "became_stage_cleaner"
+            ]
+          }
+        },
+        {
+          "id": "confront-nia",
+          "label": "让Nia解释备用杯编号",
+          "caption": "她必须承认自己不是单纯摔倒。",
+          "next": "s06-carpet-confession",
+          "condition": {
+            "flags": [
+              "found_replacement_cup"
+            ]
+          },
+          "lockedHint": "你需要先检查水晶杯编号，才能证明现场被替换过。",
+          "fateType": "river",
+          "consequence": "Nia的摔倒借口崩开，她会承认自己打断了开场。",
+          "effect": {
+            "globals": {
+              "truth": 8,
+              "pressure": 5,
+              "trust": -1
+            },
+            "flags": [
+              "nia_admitted_breaking_cup"
+            ]
+          }
+        }
+      ]
+    },
+    "s05-side-balcony": {
+      "id": "s05-side-balcony",
+      "chapter": "Witness",
+      "title": "侧台阳台",
+      "location": "玻璃侧台与栏杆",
+      "panorama": "/panoramas/s05-side-balcony.jpg",
+      "palette": {
+        "from": "#dce8f7",
+        "via": "#5e7390",
+        "to": "#e3c18f"
+      },
+      "synopsis": "Yue承认她看见一个影子在事故前经过侧台，但她害怕成为新的空位。",
+      "lines": [
+        {
+          "speaker": "yue",
+          "text": "我不是没看见。我是知道看见以后会发生什么。"
+        },
+        {
+          "speaker": "you",
+          "text": "发生什么？"
+        },
+        {
+          "speaker": "yue",
+          "text": "谁先说出影子，谁就会被影子替掉。"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "side-camera",
+          "label": "侧台隐藏机位",
+          "description": "隐藏机位没有接入直播，但本地缓存仍在闪烁。",
+          "yaw": 52,
+          "pitch": -4,
+          "effect": {
+            "globals": {
+              "truth": 7,
+              "mirror": 6
+            },
+            "flags": [
+              "found_side_camera"
+            ]
+          }
+        },
+        {
+          "id": "balcony-scuff",
+          "label": "栏杆擦痕",
+          "description": "银色栏杆上有刚留下的擦痕，方向朝向后台镜厅。",
+          "yaw": -8,
+          "pitch": -18,
+          "effect": {
+            "globals": {
+              "mirror": 5
+            },
+            "flags": [
+              "found_balcony_scuff"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "shield-yue",
+          "label": "保护Yue的证词来源",
+          "caption": "你让她不用立刻成为公开证人。",
+          "next": "s06-carpet-confession",
+          "fateType": "web",
+          "consequence": "Yue保留了继续作证的勇气，团队信任上升。",
+          "effect": {
+            "globals": {
+              "trust": 8,
+              "truth": 4,
+              "pressure": -2
+            },
+            "flags": [
+              "shielded_yue"
+            ]
+          }
+        },
+        {
+          "id": "force-yue-name",
+          "label": "逼Yue说出影子的名字",
+          "caption": "你会得到更快的答案，也会制造新的恐惧。",
+          "next": "s07-broadcast-countdown",
+          "fateType": "river",
+          "consequence": "Yue被迫站到灯下，后续团队会更怕你。",
+          "effect": {
+            "globals": {
+              "truth": 5,
+              "pressure": 9,
+              "trust": -7
+            },
+            "flags": [
+              "forced_yue_name"
+            ]
+          }
+        },
+        {
+          "id": "rewind-side-camera",
+          "label": "回放隐藏机位",
+          "caption": "影子路线会变清楚，但官方版本会彻底不稳。",
+          "next": "s08-mirror-room",
+          "condition": {
+            "flags": [
+              "found_side_camera"
+            ]
+          },
+          "lockedHint": "你需要先找到侧台隐藏机位，才能回放影子经过的画面。",
+          "fateType": "wheel",
+          "consequence": "侧台影像把你带向镜厅，隐藏路线打开。",
+          "effect": {
+            "globals": {
+              "truth": 8,
+              "mirror": 12,
+              "pressure": 6
+            },
+            "flags": [
+              "saw_pre_entry_shadow",
+              "entered_mirror_route"
+            ]
+          }
+        }
+      ]
+    },
+    "s06-carpet-confession": {
+      "id": "s06-carpet-confession",
+      "chapter": "Confession",
+      "title": "地毯证词",
+      "location": "前景绒毯与碎光区",
+      "panorama": "/panoramas/s06-carpet-confession.jpg",
+      "palette": {
+        "from": "#edf4ff",
+        "via": "#7188aa",
+        "to": "#dfc394"
+      },
+      "synopsis": "Nia和Ran的证词彼此冲突，却共同指向被删掉的原始音轨。",
+      "lines": [
+        {
+          "speaker": "nia",
+          "text": "我打碎杯子，是因为开场如果继续，那个版本会把一个人永远抹掉。"
+        },
+        {
+          "speaker": "ran",
+          "text": "我没有阻止她。我只把声音录了下来。"
+        },
+        {
+          "speaker": "sera",
+          "text": "原始音轨里有哭声，也有命令。你确定要听吗？"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "raw-recorder",
+          "label": "原始录音笔",
+          "description": "Ran把录音笔藏在裙摆阴影下，文件名是 before_blackout。",
+          "yaw": 18,
+          "pitch": -24,
+          "effect": {
+            "globals": {
+              "truth": 10,
+              "mirror": 5
+            },
+            "flags": [
+              "got_raw_audio"
+            ],
+            "memories": [
+              "原始音轨没有经过Mira的剪辑"
+            ]
+          }
+        },
+        {
+          "id": "staged-fall-ribbon",
+          "label": "打结的脚踝缎带",
+          "description": "Nia的缎带不是摔散的，而是提前打成会绊住自己的结。",
+          "yaw": -20,
+          "pitch": -28,
+          "effect": {
+            "globals": {
+              "truth": 7
+            },
+            "flags": [
+              "found_staged_fall"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "play-raw-audio",
+          "label": "公开播放原始音轨",
+          "caption": "你把真相推上灯光，也把每个人推向失控。",
+          "next": "s07-broadcast-countdown",
+          "condition": {
+            "flags": [
+              "got_raw_audio"
+            ]
+          },
+          "lockedHint": "你需要先拿到Ran藏起的原始录音。",
+          "fateType": "river",
+          "consequence": "原始音轨成为公开证据，真相结局获得钥匙。",
+          "effect": {
+            "globals": {
+              "truth": 12,
+              "pressure": 12,
+              "trust": -4
+            },
+            "flags": [
+              "raw_audio_public"
+            ]
+          }
+        },
+        {
+          "id": "hide-audio-for-now",
+          "label": "暂时藏起音轨保护全员",
+          "caption": "她们会感谢你，但这个感谢本身会变危险。",
+          "next": "s07-broadcast-countdown",
+          "fateType": "web",
+          "consequence": "你把证据从公开层移开，完美借口路线继续变强。",
+          "effect": {
+            "globals": {
+              "trust": 8,
+              "pressure": -6,
+              "truth": -6
+            },
+            "flags": [
+              "hid_raw_audio",
+              "protected_group_from_audio"
+            ]
+          }
+        },
+        {
+          "id": "reconstruct-blackout",
+          "label": "合并摔倒、碎杯和音轨",
+          "caption": "你不急着审判，而是先复原事故动作。",
+          "next": "s08-mirror-room",
+          "condition": {
+            "flags": [
+              "got_raw_audio",
+              "found_staged_fall"
+            ]
+          },
+          "lockedHint": "你需要先拿到原始音轨，也需要看懂Nia的摔倒是主动设计。",
+          "fateType": "wheel",
+          "consequence": "事故从混乱变成可复原路径，隐藏镜厅路线打开。",
+          "effect": {
+            "globals": {
+              "truth": 10,
+              "mirror": 12,
+              "trust": 4
+            },
+            "flags": [
+              "reconstructed_blackout",
+              "entered_mirror_route"
+            ]
+          }
+        }
+      ]
+    },
+    "s07-broadcast-countdown": {
+      "id": "s07-broadcast-countdown",
+      "chapter": "Bottleneck",
+      "title": "直播倒计时",
+      "location": "主舞台倒计时区",
+      "panorama": "/panoramas/s07-broadcast-countdown.jpg",
+      "palette": {
+        "from": "#cfdcf1",
+        "via": "#495f7c",
+        "to": "#f0c674"
+      },
+      "synopsis": "所有路线汇合到直播前最后五分钟，玩家必须决定让什么版本进入镜头。",
+      "lines": [
+        {
+          "speaker": "system",
+          "text": "直播倒计时：五分钟。"
+        },
+        {
+          "speaker": "viola",
+          "text": "给我一个能站上台的版本。不是最真的，是能活过今晚的。"
+        },
+        {
+          "speaker": "mira",
+          "text": "你只要点头，观众就永远不会知道哪里缺了一席。"
+        },
+        {
+          "speaker": "ran",
+          "text": "你也可以让他们知道我们曾经害怕过。"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "live-switch",
+          "label": "直播推流开关",
+          "description": "开关旁贴着应急标签：只允许播出官方剪辑。",
+          "yaw": 0,
+          "pitch": -14,
+          "effect": {
+            "globals": {
+              "pressure": 4,
+              "mirror": 3
+            },
+            "flags": [
+              "saw_live_switch"
+            ]
+          }
+        },
+        {
+          "id": "stage-blocking-map",
+          "label": "九人走位图",
+          "description": "走位图上有九个点，但舞台上只有八个人。",
+          "yaw": 34,
+          "pitch": -10,
+          "effect": {
+            "globals": {
+              "truth": 5,
+              "mirror": 6
+            },
+            "flags": [
+              "found_nine_point_blocking"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "go-live-official",
+          "label": "按官方版本开播",
+          "caption": "演出会顺利，代价会在结束后才显形。",
+          "next": "s09-final-stage",
+          "fateType": "web",
+          "consequence": "你让官方版本成为默认现实，E2完美借口随时可达。",
+          "effect": {
+            "globals": {
+              "pressure": -14,
+              "truth": -10,
+              "trust": 3
+            },
+            "flags": [
+              "chose_official_frame"
+            ]
+          }
+        },
+        {
+          "id": "change-stage-blocking",
+          "label": "临时改成八人走位",
+          "caption": "你不提真相，但拒绝假装第九席从未存在。",
+          "next": "s09-final-stage",
+          "fateType": "river",
+          "consequence": "舞台会带着痕迹播出，团队结局更容易达成。",
+          "effect": {
+            "globals": {
+              "truth": 5,
+              "trust": 6,
+              "pressure": 8
+            },
+            "flags": [
+              "changed_stage_blocking"
+            ]
+          }
+        },
+        {
+          "id": "cut-feed-to-mirror",
+          "label": "切断推流进入镜厅",
+          "caption": "这是最危险的停播，也可能是唯一的真相入口。",
+          "next": "s08-mirror-room",
+          "condition": {
+            "flags": [
+              "raw_audio_public",
+              "noticed_empty_ninth_seat"
+            ]
+          },
+          "lockedHint": "此前你需要注意过第九席，并让原始音轨进入公开压力场。",
+          "fateType": "wheel",
+          "consequence": "你把直播倒计时改成镜厅审判，隐藏路线打开。",
+          "effect": {
+            "globals": {
+              "mirror": 12,
+              "truth": 8,
+              "pressure": 10
+            },
+            "flags": [
+              "cut_feed_to_mirror",
+              "entered_mirror_route"
+            ]
+          }
+        }
+      ]
+    },
+    "s08-mirror-room": {
+      "id": "s08-mirror-room",
+      "chapter": "Secret",
+      "title": "隐藏镜厅",
+      "location": "舞台后的镜面控制室",
+      "panorama": "/panoramas/s08-mirror-room.jpg",
+      "palette": {
+        "from": "#edf6ff",
+        "via": "#3f526e",
+        "to": "#c5d5e9"
+      },
+      "synopsis": "玩家进入隐藏路线，发现第九席是被删除的共同失败记忆，而不是单一缺席者。",
+      "lines": [
+        {
+          "speaker": "mira",
+          "text": "这里保存的不是丑闻，是每一次我们不被允许失败的证据。"
+        },
+        {
+          "speaker": "celeste",
+          "text": "第九席最早是给一个人留的，后来变成给所有说不出口的事留的。"
+        },
+        {
+          "speaker": "you",
+          "text": "所以今晚被删掉的，不是某个人。是你们失败的权利。"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "mirrored-ninth-seat",
+          "label": "镜中的第九席",
+          "description": "镜面里出现九个位置，玩家靠近时，自己的影子也落进空位。",
+          "yaw": 0,
+          "pitch": -8,
+          "effect": {
+            "globals": {
+              "mirror": 12,
+              "truth": 6
+            },
+            "flags": [
+              "touched_ninth_seat"
+            ],
+            "memories": [
+              "第九席也在要求玩家作答"
+            ]
+          }
+        },
+        {
+          "id": "deleted-take-cache",
+          "label": "被删素材缓存",
+          "description": "缓存里保留了未播出的第九席影像和事故前的命令声。",
+          "yaw": -34,
+          "pitch": -14,
+          "effect": {
+            "globals": {
+              "truth": 12,
+              "mirror": 8
+            },
+            "flags": [
+              "recovered_deleted_take"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "expose-system-edit",
+          "label": "公开系统如何剪掉失败",
+          "caption": "你不只指认个人，而是指认规则。",
+          "next": "s09-final-stage",
+          "fateType": "wheel",
+          "consequence": "隐藏敌人被命名，第九席结局获得核心条件。",
+          "effect": {
+            "globals": {
+              "truth": 10,
+              "mirror": 10,
+              "pressure": 8
+            },
+            "flags": [
+              "defeated_mirror_room"
+            ],
+            "route": "team"
+          }
+        },
+        {
+          "id": "let-eight-decide",
+          "label": "让八个人自己决定公开多少",
+          "caption": "你把主导权还给当事人，放弃部分证据控制。",
+          "next": "s09-final-stage",
+          "fateType": "web",
+          "consequence": "团队重新拥有自己的叙述，蓝时契约结局更稳。",
+          "effect": {
+            "globals": {
+              "trust": 10,
+              "truth": 4,
+              "mirror": 6,
+              "pressure": -3
+            },
+            "flags": [
+              "shared_ninth_seat_truth"
+            ],
+            "route": "team"
+          }
+        },
+        {
+          "id": "hand-file-to-mira",
+          "label": "把删除文件交给Mira保管",
+          "caption": "你逼剪辑者成为证人，而不是操作者。",
+          "next": "s09-final-stage",
+          "condition": {
+            "flags": [
+              "recovered_deleted_take"
+            ]
+          },
+          "lockedHint": "你需要先恢复被删素材，才能让Mira拿着无法否认的原件。",
+          "fateType": "web",
+          "consequence": "Mira欠下真相债，最终舞台会多一个证人。",
+          "effect": {
+            "globals": {
+              "truth": 8,
+              "trust": 4,
+              "mirror": 6
+            },
+            "flags": [
+              "mira_owes_truth"
+            ],
+            "route": "solo"
+          }
+        }
+      ]
+    },
+    "s09-final-stage": {
+      "id": "s09-final-stage",
+      "chapter": "Finale",
+      "title": "最后舞台",
+      "location": "银蓝主舞台",
+      "panorama": "/panoramas/s09-final-stage.jpg",
+      "palette": {
+        "from": "#f0f7ff",
+        "via": "#536b8f",
+        "to": "#f3cf8c"
+      },
+      "synopsis": "直播灯亮起，玩家决定哪个版本成为今晚的公开事实。",
+      "lines": [
+        {
+          "speaker": "system",
+          "text": "直播信号已恢复。最终确认将在十秒后锁定。"
+        },
+        {
+          "speaker": "viola",
+          "text": "导演，给我们一个能承受的结局。"
+        },
+        {
+          "speaker": "mira",
+          "text": "每个版本都会伤人。区别只是伤口留在哪里。"
+        },
+        {
+          "speaker": "celeste",
+          "text": "如果你要说真话，请至少让它像人话。"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "final-floor-crack",
+          "label": "地板里的裂纹",
+          "description": "镜面地板反射出已经被换掉的水晶杯裂纹。",
+          "yaw": 18,
+          "pitch": -30,
+          "effect": {
+            "globals": {
+              "truth": 5,
+              "mirror": 4
+            },
+            "flags": [
+              "saw_final_crack"
+            ]
+          }
+        },
+        {
+          "id": "audience-light",
+          "label": "观众席白光",
+          "description": "观众看不见后台，只等一个没有瑕疵的开场。",
+          "yaw": -46,
+          "pitch": -6,
+          "effect": {
+            "globals": {
+              "pressure": 5
+            },
+            "flags": [
+              "felt_audience_pressure"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "publish-full-version",
+          "label": "发布完整事故记录",
+          "caption": "真相会抵达观众，但不会温柔抵达。",
+          "next": "e01-cracked-curtain",
+          "condition": {
+            "flags": [
+              "raw_audio_public"
+            ]
+          },
+          "lockedHint": "此前你需要让原始音轨进入公开压力场，否则完整记录缺少核心证据。",
+          "fateType": "river",
+          "consequence": "你选择让舞台带着裂缝谢幕。",
+          "effect": {
+            "globals": {
+              "truth": 12,
+              "pressure": 10,
+              "trust": -4
+            },
+            "flags": [
+              "published_full_record"
+            ],
+            "route": "solo"
+          }
+        },
+        {
+          "id": "accept-official-version",
+          "label": "接受官方版本",
+          "caption": "今晚会完美结束，代价被你签收。",
+          "next": "e02-perfect-excuse",
+          "fateType": "web",
+          "consequence": "舞台顺利完成，但你成为剪掉真相的人。",
+          "effect": {
+            "globals": {
+              "truth": -18,
+              "pressure": -14,
+              "mirror": -10,
+              "trust": 2
+            },
+            "flags": [
+              "accepted_official_version",
+              "became_accomplice"
+            ],
+            "memories": [
+              "the perfect excuse"
+            ]
+          }
+        },
+        {
+          "id": "team-limited-confession",
+          "label": "让八人共同承认一部分真相",
+          "caption": "不把所有伤口交给观众，也不继续假装无事。",
+          "next": "e03-blue-hour-pact",
+          "condition": {
+            "minGlobal": [
+              {
+                "key": "trust",
+                "value": 20
+              }
+            ]
+          },
+          "lockedHint": "你需要先积累足够信任，团队才敢用自己的声音承认真相。",
+          "fateType": "river",
+          "consequence": "她们不是被你曝光，而是一起选择承担。",
+          "effect": {
+            "globals": {
+              "truth": 6,
+              "trust": 6,
+              "pressure": 4
+            },
+            "flags": [
+              "team_confessed_together"
+            ],
+            "route": "team"
+          }
+        },
+        {
+          "id": "reveal-ninth-seat",
+          "label": "揭示第九席真正含义",
+          "caption": "你不只改变今晚，也改变她们以后如何面对失败。",
+          "next": "e04-ninth-seat",
+          "condition": {
+            "flags": [
+              "touched_ninth_seat",
+              "defeated_mirror_room"
+            ]
+          },
+          "lockedHint": "此前你必须进入镜厅、触碰第九席，并命名那个剪掉失败的系统。",
+          "fateType": "wheel",
+          "consequence": "隐藏结局打开，舞台拒绝继续替系统表演借口。",
+          "effect": {
+            "globals": {
+              "truth": 10,
+              "mirror": 12,
+              "trust": 8,
+              "pressure": 8
+            },
+            "flags": [
+              "revealed_ninth_seat_truth"
+            ],
+            "route": "team"
+          }
+        }
+      ]
+    },
+    "e01-cracked-curtain": {
+      "id": "e01-cracked-curtain",
+      "chapter": "11-1 结局",
+      "title": "带裂痕的谢幕",
+      "location": "直播事故后的主舞台",
+      "panorama": "/panoramas/e01-cracked-curtain.jpg",
+      "palette": {
+        "from": "#f2f6ff",
+        "via": "#6b7487",
+        "to": "#c98e76"
+      },
+      "synopsis": "玩家公开完整事故记录，舞台崩塌但真相留下。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "直播没有完成预设开场，灯光还亮着，舞台却先一步裂开。"
+        },
+        {
+          "speaker": "viola",
+          "text": "我以为只要站得够直，就能把所有人都撑过去。原来那也是一种逃。"
+        },
+        {
+          "speaker": "ran",
+          "text": "原始音轨已经公开。至少这一次，声音不是从删除箱里传出来的。"
+        },
+        {
+          "speaker": "nia",
+          "text": "我打碎杯子只争到十秒，你把那十秒变成了所有人都必须听见的证词。"
+        },
+        {
+          "speaker": "you",
+          "text": "完整记录已经上传。今晚不会完美，但它终于不能被改成没发生。"
+        },
+        {
+          "speaker": "system",
+          "text": "结局解锁：带裂痕的谢幕。真相抵达了观众，也把每个人推向必须承担的明天。"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "broken-broadcast-curtain",
+          "label": "裂开的直播帷幕",
+          "description": "帷幕没有完全落下，观众看见了后台的一角。那一角无法再被剪掉。",
+          "yaw": -12,
+          "pitch": -10,
+          "effect": {
+            "globals": {
+              "truth": 4,
+              "pressure": 2
+            },
+            "flags": [
+              "reviewed_cracked_curtain"
+            ],
+            "memories": [
+              "公开真相会留下裂痕，但裂痕也是证据"
+            ]
+          }
+        },
+        {
+          "id": "raw-audio-meter",
+          "label": "仍在跳动的音轨",
+          "description": "录音电平还在闪，证明刚才播放的不是整理后的版本。",
+          "yaw": 34,
+          "pitch": -18,
+          "effect": {
+            "globals": {
+              "truth": 3
+            },
+            "flags": [
+              "reviewed_raw_audio_meter"
+            ]
+          }
+        }
+      ],
+      "choices": [],
+      "ending": {
+        "title": "带裂痕的谢幕",
+        "subtitle": "真相抵达了观众，也把每个人推向必须承担的明天。",
+        "type": "growth"
+      }
+    },
+    "e02-perfect-excuse": {
+      "id": "e02-perfect-excuse",
+      "chapter": "12-1 结局",
+      "title": "完美借口",
+      "location": "直播结束后的空宫殿",
+      "panorama": "/panoramas/e02-perfect-excuse.jpg",
+      "palette": {
+        "from": "#f3f8ff",
+        "via": "#7f91aa",
+        "to": "#f5d69b"
+      },
+      "synopsis": "玩家接受官方版本，舞台成功，玩家成为共犯。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "掌声像雪一样落下来，轻、亮、干净。新的水晶杯被摆在桌心，正好挡住地板里的裂纹。"
+        },
+        {
+          "speaker": "viola",
+          "text": "谢谢你。今晚没有事故，只有一次完美的演出。"
+        },
+        {
+          "speaker": "sera",
+          "text": "这样大家都会好过一点，对吗？如果没人再问，我们是不是就能睡着？"
+        },
+        {
+          "speaker": "mira",
+          "text": "你看，真相不一定要消失。它只要别出现在镜头里。"
+        },
+        {
+          "speaker": "you",
+          "text": "我签下了最终播出版。第九席没有进入画面，也没有进入今晚的记录。"
+        },
+        {
+          "speaker": "system",
+          "text": "结局解锁：完美借口。你保住了舞台，也保住了那个最漂亮、最安静的谎言。"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "new-crystal-cup",
+          "label": "崭新的水晶杯",
+          "description": "它没有裂纹，也没有历史。正因为太新，才显得像一份证词。",
+          "yaw": 8,
+          "pitch": -22,
+          "effect": {
+            "globals": {
+              "truth": -2,
+              "mirror": 1
+            },
+            "flags": [
+              "noticed_clean_lie"
+            ],
+            "memories": [
+              "完美有时只是替换得足够快"
+            ]
+          }
+        },
+        {
+          "id": "dark-ninth-seat",
+          "label": "暗下去的第九席",
+          "description": "灯控终于关掉了那个空位，像是它从来没有被点亮过。",
+          "yaw": -38,
+          "pitch": -8,
+          "effect": {
+            "globals": {
+              "mirror": 3
+            },
+            "flags": [
+              "saw_ninth_seat_go_dark"
+            ]
+          }
+        }
+      ],
+      "choices": [],
+      "ending": {
+        "title": "完美借口",
+        "subtitle": "舞台成功，真相退场。你没有被欺骗，你只是同意了剪辑。",
+        "type": "regret"
+      }
+    },
+    "e03-blue-hour-pact": {
+      "id": "e03-blue-hour-pact",
+      "chapter": "13-1 结局",
+      "title": "蓝时契约",
+      "location": "天亮前的银蓝舞台",
+      "panorama": "/panoramas/e03-blue-hour-pact.jpg",
+      "palette": {
+        "from": "#e9f5ff",
+        "via": "#6f8ab0",
+        "to": "#f0c891"
+      },
+      "synopsis": "团队共同承认部分真相，舞台受损但关系没有彻底断裂。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "天快亮时，银蓝色的灯不再像审讯，也不再像滤镜。"
+        },
+        {
+          "speaker": "sera",
+          "text": "我们不会讲完整的伤口，但我们也不会再说它不存在。"
+        },
+        {
+          "speaker": "viola",
+          "text": "这是我们自己的声音，不是官方说法。"
+        },
+        {
+          "speaker": "celeste",
+          "text": "第九席可以先保持沉默，但沉默不再代表删除。"
+        },
+        {
+          "speaker": "ran",
+          "text": "原始音轨我会封存。下一次如果有人要改，我们至少知道原件还在。"
+        },
+        {
+          "speaker": "system",
+          "text": "结局解锁：蓝时契约。她们没有逃过代价，但第一次把代价握在自己手里。"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "shared-microphone",
+          "label": "共用麦克风",
+          "description": "麦克风被放在八个人中间，没有任何一个人独自承担全部说法。",
+          "yaw": 4,
+          "pitch": -16,
+          "effect": {
+            "globals": {
+              "trust": 4,
+              "truth": 2
+            },
+            "flags": [
+              "reviewed_shared_microphone"
+            ],
+            "memories": [
+              "她们选择一起说出能承受的部分"
+            ]
+          }
+        },
+        {
+          "id": "golden-repair-seam",
+          "label": "金色修补线",
+          "description": "镜面地板上的裂缝被金色线条补住，痕迹没有消失，只是不再伪装成完好。",
+          "yaw": -24,
+          "pitch": -28,
+          "effect": {
+            "globals": {
+              "mirror": 2
+            },
+            "flags": [
+              "saw_repair_seam"
+            ]
+          }
+        }
+      ],
+      "choices": [],
+      "ending": {
+        "title": "蓝时契约",
+        "subtitle": "她们没有逃过代价，但第一次把代价握在自己手里。",
+        "type": "team"
+      }
+    },
+    "e04-ninth-seat": {
+      "id": "e04-ninth-seat",
+      "chapter": "14-1 隐藏结局",
+      "title": "第九席",
+      "location": "镜厅与主舞台重叠的空间",
+      "panorama": "/panoramas/e04-ninth-seat.jpg",
+      "palette": {
+        "from": "#f7fbff",
+        "via": "#455c7c",
+        "to": "#b8cde8"
+      },
+      "synopsis": "隐藏结局。玩家揭示第九席代表被系统删除的失败权利。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "镜厅和主舞台重叠在一起，八个人围着空位站定，像终于承认那里一直有人。"
+        },
+        {
+          "speaker": "celeste",
+          "text": "原来那个位置不是少了一个人，是多了一种被允许失败的可能。"
+        },
+        {
+          "speaker": "mira",
+          "text": "我可以继续剪辑，但我不会再替它们擦掉痛感。"
+        },
+        {
+          "speaker": "yue",
+          "text": "如果影子还会经过侧台，至少这一次，我会说我看见了。"
+        },
+        {
+          "speaker": "you",
+          "text": "第九席保留。不是为了等待谁回来，而是提醒所有人不要再把失败剪成不存在。"
+        },
+        {
+          "speaker": "system",
+          "text": "隐藏结局解锁：第九席。空位仍然发亮，那不是缺口，是她们拒绝再删除自己的证明。"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "luminous-ninth-seat",
+          "label": "发亮的第九席",
+          "description": "空位没有坐下任何人，却照见了玩家自己的影子。",
+          "yaw": 0,
+          "pitch": -10,
+          "effect": {
+            "globals": {
+              "mirror": 5,
+              "truth": 2
+            },
+            "flags": [
+              "reviewed_luminous_ninth_seat"
+            ],
+            "memories": [
+              "第九席保留给不再被删除的失败"
+            ]
+          }
+        },
+        {
+          "id": "opened-archive-drawer",
+          "label": "打开的素材抽屉",
+          "description": "被删素材没有被销毁，它们被移出阴影，放在所有人能看见的位置。",
+          "yaw": 31,
+          "pitch": -18,
+          "effect": {
+            "globals": {
+              "truth": 3
+            },
+            "flags": [
+              "reviewed_open_archive"
+            ]
+          }
+        }
+      ],
+      "choices": [],
+      "ending": {
+        "title": "第九席",
+        "subtitle": "八个人站在灯下，空位仍然发亮。那不是缺口，是她们拒绝再删除自己的证明。",
+        "type": "team"
+      }
+    }
+  }
+}

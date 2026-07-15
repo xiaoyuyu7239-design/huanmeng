@@ -1,0 +1,1433 @@
+{
+  "title": "七仙女下凡",
+  "startNodeId": "s00-opening",
+  "nodes": {
+    "s00-opening": {
+      "id": "s00-opening",
+      "chapter": "Opening",
+      "title": "七仙女下凡",
+      "location": "现代都市上空",
+      "panorama": "/panoramas/s00-opening.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "七仙女从云端坠落，落在城市霓虹灯之间。手机屏幕闪烁，她看到了凡间的第一个画面。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "现代都市上空里，七仙女从云端坠落，落在城市霓虹灯之间。手机屏幕闪烁，她看到了凡间的第一个画面。",
+          "voiceProfileId": "s00-opening-narrator-947057e1",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s00-opening/line-001-4f13801fd422.mp3",
+          "voiceAssetPath": "assets/voices/s00-opening/line-001-4f13801fd422.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "4f13801fd422",
+          "voiceGeneratedAt": "2026-06-20T14:01:34.202Z"
+        },
+        {
+          "speaker": "narrator",
+          "text": "你注意到「线索」：手机屏幕显示一条来自‘A Qing’的消息，背景是粉色霓虹。",
+          "voiceProfileId": "s00-opening-narrator-947057e1",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s00-opening/line-002-5c24767c284b.mp3",
+          "voiceAssetPath": "assets/voices/s00-opening/line-002-5c24767c284b.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "5c24767c284b",
+          "voiceGeneratedAt": "2026-06-20T14:01:35.345Z"
+        },
+        {
+          "speaker": "narrator",
+          "text": "接下来，你必须在「前往时代广场」和「先探索周围环境」之间做出选择。",
+          "voiceProfileId": "s00-opening-narrator-947057e1",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s00-opening/line-003-0f2653027efa.mp3",
+          "voiceAssetPath": "assets/voices/s00-opening/line-003-0f2653027efa.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "0f2653027efa",
+          "voiceGeneratedAt": "2026-06-20T13:56:45.383Z"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hotspot-phone",
+          "label": "线索",
+          "description": "手机屏幕显示一条来自‘A Qing’的消息，背景是粉色霓虹。",
+          "yaw": 45,
+          "pitch": -10,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "hotspot-phone-found"
+            ],
+            "memories": [
+              "发现线索：手机屏幕显示一条来自‘A Qing’的消息，背景"
+            ]
+          }
+        },
+        {
+          "id": "hotspot-city",
+          "label": "线索",
+          "description": "远处的高楼大厦，其中一栋有巨大的LED屏幕播放着网红直播。",
+          "yaw": -30,
+          "pitch": 5,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "hotspot-city-found"
+            ],
+            "memories": [
+              "发现线索：远处的高楼大厦，其中一栋有巨大的LED屏幕播放着"
+            ]
+          }
+        },
+        {
+          "id": "clue-c00-2",
+          "label": "关键线索",
+          "description": "解锁「先探索周围环境」所需的现场线索。",
+          "yaw": 0,
+          "pitch": 0,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "clue-c00-2-found",
+              "seen_city"
+            ],
+            "memories": [
+              "发现线索：解锁「先探索周围环境」所需的现场线索。",
+              "解锁线索：先探索周围环境"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c00-1",
+          "label": "前往时代广场",
+          "next": "s01-first-choice",
+          "fateType": "river",
+          "consequence": "你选择直接面对神秘人，走向明亮的城市中心。",
+          "effect": {
+            "globals": {
+              "curiosity": 10
+            },
+            "flags": [
+              "go_times_square"
+            ]
+          }
+        },
+        {
+          "id": "c00-2",
+          "label": "先探索周围环境",
+          "next": "s01-first-choice",
+          "fateType": "web",
+          "consequence": "你谨慎地观察四周，发现了隐藏的线索。",
+          "lockedHint": "先调查「关键线索」，再尝试「先探索周围环境」。",
+          "condition": {
+            "flags": [
+              "seen_city"
+            ]
+          },
+          "effect": {
+            "globals": {
+              "caution": 10
+            },
+            "memories": [
+              "first_glance"
+            ]
+          }
+        },
+        {
+          "id": "c00-3",
+          "label": "回复消息试探",
+          "next": "s02-hidden-clue",
+          "fateType": "wheel",
+          "consequence": "你试图用天界的法术隐藏身份，却无意中触发了碎片共鸣。",
+          "effect": {
+            "flags": [
+              "replied_mystery"
+            ],
+            "memories": [
+              "first_contact"
+            ]
+          }
+        }
+      ],
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      },
+      "cinematics": [
+        {
+          "id": "s00-opening-flat-video",
+          "type": "flat-video",
+          "trigger": "beforeEnter",
+          "title": "场景平面视频",
+          "src": "/videos/project-20260620-201739/s00-opening-e53a50f1d3.mov",
+          "assetPath": "assets/videos/s00-opening-e53a50f1d3.mov",
+          "skippable": false,
+          "loop": false,
+          "uploadedAt": "2026-06-20T15:49:51.634Z"
+        }
+      ],
+      "panoramaType": "video",
+      "musicLayers": {
+        "generated": {
+          "cueId": "bgm-s00-opening",
+          "source": "generated",
+          "src": "https://cdn1.suno.ai/ec6fecc9-a0d2-4d32-b477-594b3461fb12.mp3",
+          "title": "云落霓虹"
+        },
+        "uploaded": {
+          "cueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+          "source": "uploaded",
+          "src": "/music/project-20260620-201739/20260510-bgm-crush-datin-eb5463a02a.mp3",
+          "title": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+        }
+      },
+      "musicPlayback": {
+        "mode": "uploaded-first",
+        "generatedVolume": 1,
+        "uploadedVolume": 1,
+        "loop": true
+      },
+      "musicCueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+      "musicSrc": "/music/project-20260620-201739/20260510-bgm-crush-datin-eb5463a02a.mp3",
+      "musicTitle": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+    },
+    "s01-first-choice": {
+      "id": "s01-first-choice",
+      "chapter": "Opening",
+      "title": "初遇董永",
+      "location": "时代广场",
+      "panorama": "/panoramas/s01-first-choice.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "在时代广场，你遇到了董永，他正在拍摄街景。他注意到你的异常。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "时代广场里，在时代广场，你遇到了董永，他正在拍摄街景。他注意到你的异常。",
+          "voiceProfileId": "s01-first-choice-narrator-05868d07",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s01-first-choice/line-001-c9569d2a5860.mp3",
+          "voiceAssetPath": "assets/voices/s01-first-choice/line-001-c9569d2a5860.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "c9569d2a5860",
+          "voiceGeneratedAt": "2026-06-20T14:01:36.283Z"
+        },
+        {
+          "speaker": "narrator",
+          "text": "你注意到「线索」：相机上有一个古老的符文，与天界文字相似。",
+          "voiceProfileId": "s01-first-choice-narrator-05868d07",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s01-first-choice/line-002-dc56cee733ac.mp3",
+          "voiceAssetPath": "assets/voices/s01-first-choice/line-002-dc56cee733ac.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "dc56cee733ac",
+          "voiceGeneratedAt": "2026-06-20T14:01:37.018Z"
+        },
+        {
+          "speaker": "narrator",
+          "text": "接下来，你必须在「接受帮助，询问碎片」和「拒绝并独自行动」之间做出选择。",
+          "voiceProfileId": "s01-first-choice-narrator-05868d07",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s01-first-choice/line-003-e8dcc78392f1.mp3",
+          "voiceAssetPath": "assets/voices/s01-first-choice/line-003-e8dcc78392f1.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "e8dcc78392f1",
+          "voiceGeneratedAt": "2026-06-20T14:01:37.889Z"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hotspot-camera",
+          "label": "线索",
+          "description": "相机上有一个古老的符文，与天界文字相似。",
+          "yaw": 20,
+          "pitch": -5,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "hotspot-camera-found"
+            ],
+            "memories": [
+              "发现线索：相机上有一个古老的符文，与天界文字相似。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c01-1",
+          "label": "接受帮助，询问碎片",
+          "next": "s03-market",
+          "fateType": "river",
+          "consequence": "你信任了凡人，获得了关于碎片位置的情报。",
+          "effect": {
+            "globals": {
+              "trust": 10
+            },
+            "relationships": {
+              "dong-yong": 15
+            }
+          }
+        },
+        {
+          "id": "c01-2",
+          "label": "拒绝并独自行动",
+          "next": "s02-hidden-clue",
+          "fateType": "web",
+          "consequence": "你独自跟踪碎片信号，发现了隐藏线索。",
+          "effect": {
+            "globals": {
+              "independence": 10
+            },
+            "flags": [
+              "alone_mode"
+            ]
+          }
+        }
+      ],
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      }
+    },
+    "s02-hidden-clue": {
+      "id": "s02-hidden-clue",
+      "chapter": "Clue",
+      "title": "霓虹密语",
+      "location": "地下通道",
+      "panorama": "/panoramas/s02-hidden-clue.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "你走进一条地下通道，墙壁上的涂鸦闪烁着微弱的仙力。这里藏有第一块碎片的线索。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "地下通道里，你走进一条地下通道，墙壁上的涂鸦闪烁着微弱的仙力。这里藏有第一块碎片的线索。",
+          "voiceProfileId": "s02-hidden-clue-narrator-6abed30b",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s02-hidden-clue/line-001-ec7a4f93779c.mp3",
+          "voiceAssetPath": "assets/voices/s02-hidden-clue/line-001-ec7a4f93779c.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "ec7a4f93779c",
+          "voiceGeneratedAt": "2026-06-20T14:01:38.839Z"
+        },
+        {
+          "speaker": "narrator",
+          "text": "你注意到「线索」：涂鸦中隐藏着碎片的位置坐标。",
+          "voiceProfileId": "s02-hidden-clue-narrator-6abed30b",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s02-hidden-clue/line-002-eceda1d613e8.mp3",
+          "voiceAssetPath": "assets/voices/s02-hidden-clue/line-002-eceda1d613e8.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "eceda1d613e8",
+          "voiceGeneratedAt": "2026-06-20T14:01:39.489Z"
+        },
+        {
+          "speaker": "narrator",
+          "text": "接下来，你必须在「仔细研究涂鸦」和「追踪声音来源」之间做出选择。",
+          "voiceProfileId": "s02-hidden-clue-narrator-6abed30b",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s02-hidden-clue/line-003-c681d9f98eab.mp3",
+          "voiceAssetPath": "assets/voices/s02-hidden-clue/line-003-c681d9f98eab.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "c681d9f98eab",
+          "voiceGeneratedAt": "2026-06-20T14:01:40.267Z"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hotspot-graffiti",
+          "label": "线索",
+          "description": "涂鸦中隐藏着碎片的位置坐标。",
+          "yaw": 0,
+          "pitch": 10,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "hotspot-graffiti-found"
+            ],
+            "memories": [
+              "发现线索：涂鸦中隐藏着碎片的位置坐标。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c02-1",
+          "label": "仔细研究涂鸦",
+          "next": "s03-market",
+          "fateType": "web",
+          "consequence": "你破译了涂鸦，发现碎片在古玩市场。",
+          "effect": {
+            "globals": {
+              "knowledge": 10
+            },
+            "flags": [
+              "decoded_graffiti"
+            ]
+          }
+        },
+        {
+          "id": "c02-2",
+          "label": "追踪声音来源",
+          "next": "s05-web-fame",
+          "fateType": "river",
+          "consequence": "你追寻三姐的声音，提前进入了网络世界。",
+          "effect": {
+            "globals": {
+              "risk": 15
+            },
+            "memories": [
+              "chased_sister_voice"
+            ]
+          }
+        }
+      ],
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      }
+    },
+    "s03-market": {
+      "id": "s03-market",
+      "chapter": "Act2",
+      "title": "古玩市场",
+      "location": "城隍庙古玩市场",
+      "panorama": "/panoramas/s03-market.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "古玩市场里琳琅满目，你感受到碎片就在附近。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "城隍庙古玩市场里，古玩市场里琳琅满目，你感受到碎片就在附近。",
+          "voiceProfileId": "s03-market-narrator-b6043e9f",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s03-market/line-001-1342c9531fd3.mp3",
+          "voiceAssetPath": "assets/voices/s03-market/line-001-1342c9531fd3.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "1342c9531fd3",
+          "voiceGeneratedAt": "2026-06-20T14:01:41.029Z"
+        },
+        {
+          "speaker": "narrator",
+          "text": "你注意到「线索」：玉镯中封存着第二块碎片，需要仙力激活。",
+          "voiceProfileId": "s03-market-narrator-b6043e9f",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s03-market/line-002-1d80b41ffe41.mp3",
+          "voiceAssetPath": "assets/voices/s03-market/line-002-1d80b41ffe41.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "1d80b41ffe41",
+          "voiceGeneratedAt": "2026-06-20T14:01:41.746Z"
+        },
+        {
+          "speaker": "narrator",
+          "text": "接下来，你必须在「用仙力买下玉镯」和「用凡人的方法交换」之间做出选择。",
+          "voiceProfileId": "s03-market-narrator-b6043e9f",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s03-market/line-003-943078d55754.mp3",
+          "voiceAssetPath": "assets/voices/s03-market/line-003-943078d55754.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "943078d55754",
+          "voiceGeneratedAt": "2026-06-20T14:01:42.741Z"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hotspot-jade",
+          "label": "线索",
+          "description": "玉镯中封存着第二块碎片，需要仙力激活。",
+          "yaw": -15,
+          "pitch": -20,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "hotspot-jade-found"
+            ],
+            "memories": [
+              "发现线索：玉镯中封存着第二块碎片，需要仙力激活。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c03-1",
+          "label": "用仙力买下玉镯",
+          "next": "s04-temple",
+          "fateType": "river",
+          "consequence": "你消耗仙力换取玉镯，碎片被激活。",
+          "lockedHint": "你的仙力不足，先去其他地方补充灵力？",
+          "condition": {
+            "minGlobal": [
+              {
+                "key": "fairy_power",
+                "value": 20
+              }
+            ]
+          },
+          "effect": {
+            "globals": {
+              "fairy_power": -10,
+              "fragments": 1
+            },
+            "flags": [
+              "clue2"
+            ],
+            "memories": [
+              "bought_jade"
+            ]
+          }
+        },
+        {
+          "id": "c03-2",
+          "label": "用凡人的方法交换",
+          "next": "s04-temple",
+          "fateType": "web",
+          "consequence": "你用手机支付买下玉镯，但被三姐的监控系统记录。",
+          "effect": {
+            "globals": {
+              "exposure": 10
+            },
+            "flags": [
+              "used_mobile_pay"
+            ]
+          }
+        }
+      ],
+      "entryView": {
+        "yaw": 10,
+        "pitch": -5,
+        "fov": 100
+      }
+    },
+    "s04-temple": {
+      "id": "s04-temple",
+      "chapter": "Act2",
+      "title": "废弃神庙",
+      "location": "郊外废弃神庙",
+      "panorama": "/panoramas/s04-temple.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "神庙内供奉着古老的仙女像，第二块碎片藏于神像之下。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "郊外废弃神庙里，神庙内供奉着古老的仙女像，第二块碎片藏于神像之下。",
+          "voiceProfileId": "s04-temple-narrator-08d50ce5",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s04-temple/line-001-fa9c3252cb82.mp3",
+          "voiceAssetPath": "assets/voices/s04-temple/line-001-fa9c3252cb82.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "fa9c3252cb82",
+          "voiceGeneratedAt": "2026-06-20T14:01:43.492Z"
+        },
+        {
+          "speaker": "narrator",
+          "text": "你注意到「线索」：玉佩中封存着第二块碎片，还有一段记忆。",
+          "voiceProfileId": "s04-temple-narrator-08d50ce5",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s04-temple/line-002-39a393069c02.mp3",
+          "voiceAssetPath": "assets/voices/s04-temple/line-002-39a393069c02.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "39a393069c02",
+          "voiceGeneratedAt": "2026-06-20T14:01:44.239Z"
+        },
+        {
+          "speaker": "narrator",
+          "text": "接下来，你必须在「融合玉佩」和「搜索神庙其他角落」之间做出选择。",
+          "voiceProfileId": "s04-temple-narrator-08d50ce5",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s04-temple/line-003-7288346aaeac.mp3",
+          "voiceAssetPath": "assets/voices/s04-temple/line-003-7288346aaeac.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "7288346aaeac",
+          "voiceGeneratedAt": "2026-06-20T14:01:45.053Z"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hotspot-pendant",
+          "label": "线索",
+          "description": "玉佩中封存着第二块碎片，还有一段记忆。",
+          "yaw": 0,
+          "pitch": -30,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "hotspot-pendant-found"
+            ],
+            "memories": [
+              "发现线索：玉佩中封存着第二块碎片，还有一段记忆。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c04-1",
+          "label": "融合玉佩",
+          "next": "s06-bottleneck",
+          "fateType": "river",
+          "consequence": "你吸收第二块碎片，仙力增强，但也引起三姐注意。",
+          "effect": {
+            "globals": {
+              "fairy_power": 15,
+              "fragments": 2
+            },
+            "flags": [
+              "clue2"
+            ],
+            "memories": [
+              "fused_pendant"
+            ]
+          }
+        },
+        {
+          "id": "c04-2",
+          "label": "搜索神庙其他角落",
+          "next": "s05-web-fame",
+          "fateType": "web",
+          "consequence": "你发现三姐留下的一封警告信，提前了解她的计划。",
+          "effect": {
+            "flags": [
+              "found_warning_letter"
+            ],
+            "memories": [
+              "read_warning"
+            ]
+          }
+        }
+      ],
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      }
+    },
+    "s05-web-fame": {
+      "id": "s05-web-fame",
+      "chapter": "Act2",
+      "title": "网红陷阱",
+      "location": "网红直播间",
+      "panorama": "/panoramas/s05-web-fame.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "你误入三姐设置的网络迷阵，她通过直播控制凡人精神。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "网红直播间里，你误入三姐设置的网络迷阵，她通过直播控制凡人精神。",
+          "voiceProfileId": "s05-web-fame-narrator-9b1fadc3",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s05-web-fame/line-001-f42eaf7a675c.mp3",
+          "voiceAssetPath": "assets/voices/s05-web-fame/line-001-f42eaf7a675c.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "f42eaf7a675c",
+          "voiceGeneratedAt": "2026-06-20T14:01:45.814Z"
+        },
+        {
+          "speaker": "narrator",
+          "text": "你注意到「线索」：屏幕上有念力陷阱，点击可尝试破坏。",
+          "voiceProfileId": "s05-web-fame-narrator-9b1fadc3",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s05-web-fame/line-002-4983f7e9848c.mp3",
+          "voiceAssetPath": "assets/voices/s05-web-fame/line-002-4983f7e9848c.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "4983f7e9848c",
+          "voiceGeneratedAt": "2026-06-20T14:01:46.569Z"
+        },
+        {
+          "speaker": "narrator",
+          "text": "接下来，你必须在「用仙力黑掉直播间」和「假装迎合，获取情报」之间做出选择。",
+          "voiceProfileId": "s05-web-fame-narrator-9b1fadc3",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s05-web-fame/line-003-0719f75613f3.mp3",
+          "voiceAssetPath": "assets/voices/s05-web-fame/line-003-0719f75613f3.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "0719f75613f3",
+          "voiceGeneratedAt": "2026-06-20T14:01:47.525Z"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hotspot-screen",
+          "label": "线索",
+          "description": "屏幕上有念力陷阱，点击可尝试破坏。",
+          "yaw": 0,
+          "pitch": 0,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "hotspot-screen-found"
+            ],
+            "memories": [
+              "发现线索：屏幕上有念力陷阱，点击可尝试破坏。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c05-1",
+          "label": "用仙力黑掉直播间",
+          "next": "s06-bottleneck",
+          "fateType": "wheel",
+          "consequence": "你干扰了直播信号，暂时摆脱三姐控制，但消耗大量法力。",
+          "effect": {
+            "globals": {
+              "fairy_power": -20,
+              "tech_skill": 10
+            },
+            "flags": [
+              "hacked_stream"
+            ]
+          }
+        },
+        {
+          "id": "c05-2",
+          "label": "假装迎合，获取情报",
+          "next": "s06-bottleneck",
+          "fateType": "web",
+          "consequence": "你假装参加挑战，三姐放松警惕，透露了碎片所在地。",
+          "effect": {
+            "globals": {
+              "deception": 10
+            },
+            "memories": [
+              "pretended_to_join"
+            ]
+          }
+        },
+        {
+          "id": "c05-3",
+          "label": "呼叫董永帮助",
+          "next": "s06-bottleneck",
+          "fateType": "river",
+          "consequence": "董永用摄像器材制造干扰，你趁机逃脱。",
+          "lockedHint": "你还没有和董永建立足够的信任，他可能不会回应。",
+          "condition": {
+            "relationships": {
+              "dong-yong": {
+                "min": 10
+              }
+            }
+          },
+          "effect": {
+            "relationships": {
+              "dong-yong": 20
+            }
+          }
+        }
+      ],
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      }
+    },
+    "s06-bottleneck": {
+      "id": "s06-bottleneck",
+      "chapter": "Bottleneck",
+      "title": "瓶颈抉择",
+      "location": "城市天台",
+      "panorama": "/panoramas/s06-bottleneck.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "三块碎片已集齐两块，第三块悬浮在天台中央，但三姐出现。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "城市天台里，三块碎片已集齐两块，第三块悬浮在天台中央，但三姐出现。",
+          "voiceProfileId": "s06-bottleneck-narrator-6f659be3",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s06-bottleneck/line-001-2442b1767b19.mp3",
+          "voiceAssetPath": "assets/voices/s06-bottleneck/line-001-2442b1767b19.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "2442b1767b19",
+          "voiceGeneratedAt": "2026-06-20T14:01:48.429Z"
+        },
+        {
+          "speaker": "narrator",
+          "text": "你注意到「线索」：碎片中封印着天界真相，触碰即可吸收。",
+          "voiceProfileId": "s06-bottleneck-narrator-6f659be3",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s06-bottleneck/line-002-1cef76a8dafe.mp3",
+          "voiceAssetPath": "assets/voices/s06-bottleneck/line-002-1cef76a8dafe.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "1cef76a8dafe",
+          "voiceGeneratedAt": "2026-06-20T14:01:49.198Z"
+        },
+        {
+          "speaker": "narrator",
+          "text": "接下来，你必须在「抢夺碎片并战斗」和「试图说服三姐」之间做出选择。",
+          "voiceProfileId": "s06-bottleneck-narrator-6f659be3",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s06-bottleneck/line-003-971ac2ab3f21.mp3",
+          "voiceAssetPath": "assets/voices/s06-bottleneck/line-003-971ac2ab3f21.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "971ac2ab3f21",
+          "voiceGeneratedAt": "2026-06-20T14:01:50.044Z"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hotspot-fragment",
+          "label": "线索",
+          "description": "碎片中封印着天界真相，触碰即可吸收。",
+          "yaw": 0,
+          "pitch": 10,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "hotspot-fragment-found"
+            ],
+            "memories": [
+              "发现线索：碎片中封印着天界真相，触碰即可吸收。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c06-1",
+          "label": "抢夺碎片并战斗",
+          "next": "s07-hidden-boss-unlock",
+          "fateType": "river",
+          "consequence": "你强行夺取碎片，进入与三姐的正面冲突。",
+          "effect": {
+            "globals": {
+              "conflict": 20
+            },
+            "flags": [
+              "fight_route"
+            ]
+          }
+        },
+        {
+          "id": "c06-2",
+          "label": "试图说服三姐",
+          "next": "s07-hidden-boss-unlock",
+          "fateType": "wheel",
+          "consequence": "你用姐妹情谊劝说，三姐犹豫，隐藏路线开启。",
+          "effect": {
+            "globals": {
+              "compassion": 10
+            },
+            "flags": [
+              "persuasion_route"
+            ]
+          }
+        },
+        {
+          "id": "c06-3",
+          "label": "用计谋调虎离山",
+          "next": "s09-final-choice",
+          "fateType": "web",
+          "consequence": "你制造假象让三姐离开，直接拿到碎片，但错过隐藏真相。",
+          "effect": {
+            "flags": [
+              "tricked_sister"
+            ]
+          }
+        }
+      ],
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      }
+    },
+    "s07-hidden-boss-unlock": {
+      "id": "s07-hidden-boss-unlock",
+      "chapter": "Secret",
+      "title": "三姐的真相",
+      "location": "意识空间",
+      "panorama": "/panoramas/s07-hidden-boss-unlock.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "你打开三姐的记忆之门，看见她堕落的真正原因。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "意识空间里，你打开三姐的记忆之门，看见她堕落的真正原因。",
+          "voiceProfileId": "s07-hidden-boss-unlock-narrator-99461933",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s07-hidden-boss-unlock/line-001-4c020994cee8.mp3",
+          "voiceAssetPath": "assets/voices/s07-hidden-boss-unlock/line-001-4c020994cee8.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "4c020994cee8",
+          "voiceGeneratedAt": "2026-06-20T14:01:51.116Z"
+        },
+        {
+          "speaker": "narrator",
+          "text": "你注意到「线索」：碎片的背面刻着天界禁令：仙子不得贪恋凡尘。",
+          "voiceProfileId": "s07-hidden-boss-unlock-narrator-99461933",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s07-hidden-boss-unlock/line-002-d754c5cae637.mp3",
+          "voiceAssetPath": "assets/voices/s07-hidden-boss-unlock/line-002-d754c5cae637.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "d754c5cae637",
+          "voiceGeneratedAt": "2026-06-20T14:01:52.032Z"
+        },
+        {
+          "speaker": "narrator",
+          "text": "接下来，你必须在「原谅三姐」和「责备三姐并夺取碎片」之间做出选择。",
+          "voiceProfileId": "s07-hidden-boss-unlock-narrator-99461933",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s07-hidden-boss-unlock/line-003-0a2e2434f7d6.mp3",
+          "voiceAssetPath": "assets/voices/s07-hidden-boss-unlock/line-003-0a2e2434f7d6.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "0a2e2434f7d6",
+          "voiceGeneratedAt": "2026-06-20T14:01:52.978Z"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hotspot-memory",
+          "label": "线索",
+          "description": "碎片的背面刻着天界禁令：仙子不得贪恋凡尘。",
+          "yaw": 0,
+          "pitch": -15,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "hotspot-memory-found"
+            ],
+            "memories": [
+              "发现线索：碎片的背面刻着天界禁令：仙子不得贪恋凡尘。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c07-1",
+          "label": "原谅三姐",
+          "next": "s08-hidden-boss",
+          "fateType": "river",
+          "consequence": "你选择理解，三姐放下心防，但碎片力量失衡。",
+          "effect": {
+            "globals": {
+              "forgiveness": 20
+            },
+            "flags": [
+              "forgave_sister"
+            ]
+          }
+        },
+        {
+          "id": "c07-2",
+          "label": "责备三姐并夺取碎片",
+          "next": "s08-hidden-boss",
+          "fateType": "web",
+          "consequence": "你强行收回碎片，三姐暴走，进入Boss战。",
+          "effect": {
+            "globals": {
+              "anger": 20
+            },
+            "flags": [
+              "blamed_sister"
+            ]
+          }
+        }
+      ],
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      }
+    },
+    "s08-hidden-boss": {
+      "id": "s08-hidden-boss",
+      "chapter": "Secret",
+      "title": "隐藏Boss：堕落三姐",
+      "location": "网络虚空",
+      "panorama": "/panoramas/s08-hidden-boss.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "三姐完全释放堕落力量，以网红形态与你对决。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "网络虚空里，三姐完全释放堕落力量，以网红形态与你对决。",
+          "voiceProfileId": "s08-hidden-boss-narrator-ddc0e95f",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s08-hidden-boss/line-001-49f967699667.mp3",
+          "voiceAssetPath": "assets/voices/s08-hidden-boss/line-001-49f967699667.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "49f967699667",
+          "voiceGeneratedAt": "2026-06-20T14:01:53.748Z"
+        },
+        {
+          "speaker": "narrator",
+          "text": "你注意到「线索」：一块巨大的粉色水晶，是她力量的来源。",
+          "voiceProfileId": "s08-hidden-boss-narrator-ddc0e95f",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s08-hidden-boss/line-002-81a7c5c24cb9.mp3",
+          "voiceAssetPath": "assets/voices/s08-hidden-boss/line-002-81a7c5c24cb9.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "81a7c5c24cb9",
+          "voiceGeneratedAt": "2026-06-20T14:01:54.494Z"
+        },
+        {
+          "speaker": "narrator",
+          "text": "接下来，你必须在「用仙力净化水晶」和「拥抱三姐」之间做出选择。",
+          "voiceProfileId": "s08-hidden-boss-narrator-ddc0e95f",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s08-hidden-boss/line-003-8d8cc72840b9.mp3",
+          "voiceAssetPath": "assets/voices/s08-hidden-boss/line-003-8d8cc72840b9.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "8d8cc72840b9",
+          "voiceGeneratedAt": "2026-06-20T14:01:55.319Z"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hotspot-core",
+          "label": "线索",
+          "description": "一块巨大的粉色水晶，是她力量的来源。",
+          "yaw": 0,
+          "pitch": -5,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "hotspot-core-found"
+            ],
+            "memories": [
+              "发现线索：一块巨大的粉色水晶，是她力量的来源。"
+            ]
+          }
+        },
+        {
+          "id": "clue-c08-1",
+          "label": "关键线索",
+          "description": "解锁「用仙力净化水晶」所需的现场线索。",
+          "yaw": 0,
+          "pitch": 0,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "clue-c08-1-found",
+              "clue1",
+              "clue3"
+            ],
+            "memories": [
+              "发现线索：解锁「用仙力净化水晶」所需的现场线索。",
+              "解锁线索：用仙力净化水晶"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c08-1",
+          "label": "用仙力净化水晶",
+          "next": "e03-secret",
+          "fateType": "river",
+          "consequence": "你净化了三姐的堕落之源，她恢复理智，天界之门重开。",
+          "lockedHint": "此前还缺少「clue2」线索或状态；同时先调查「关键线索」。",
+          "condition": {
+            "flags": [
+              "clue1",
+              "clue2",
+              "clue3"
+            ]
+          },
+          "effect": {
+            "globals": {
+              "fairy_power": -30,
+              "fragments": 3
+            },
+            "flags": [
+              "purified_sister"
+            ]
+          }
+        },
+        {
+          "id": "c08-2",
+          "label": "拥抱三姐",
+          "next": "e01-growth",
+          "fateType": "wheel",
+          "consequence": "你放弃战斗，用亲情打动三姐，最终她自愿交出碎片。",
+          "lockedHint": "此前还缺少「forgave sister」线索或状态，先完成相关场景调查。",
+          "condition": {
+            "flags": [
+              "forgave_sister"
+            ]
+          },
+          "effect": {
+            "globals": {
+              "love": 30
+            },
+            "memories": [
+              "final_hug"
+            ]
+          }
+        },
+        {
+          "id": "c08-3",
+          "label": "逃离虚空",
+          "next": "e02-regret",
+          "fateType": "web",
+          "consequence": "你无法战胜她，逃回人间，但裂缝扩大。",
+          "effect": {
+            "globals": {
+              "cowardice": 30
+            }
+          }
+        }
+      ],
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      }
+    },
+    "s09-final-choice": {
+      "id": "s09-final-choice",
+      "chapter": "Final",
+      "title": "最终抉择",
+      "location": "天界裂缝前",
+      "panorama": "/panoramas/s09-final-choice.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "收集到所有碎片后，王母娘娘出现，给你最后的考验。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "天界裂缝前里，收集到所有碎片后，王母娘娘出现，给你最后的考验。",
+          "voiceProfileId": "s09-final-choice-narrator-7da34f67",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/s09-final-choice/line-001-2474ddd972a7.mp3",
+          "voiceAssetPath": "assets/voices/s09-final-choice/line-001-2474ddd972a7.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "2474ddd972a7",
+          "voiceGeneratedAt": "2026-06-20T14:01:56.191Z"
+        },
+        {
+          "speaker": "narrator",
+          "text": "你注意到「线索」：门中透出温暖的光芒，但会吞噬记忆。",
+          "voiceProfileId": "s09-final-choice-narrator-7da34f67",
+          "voiceStatus": "failed",
+          "voiceError": "rate limit exceeded(RPM)"
+        },
+        {
+          "speaker": "narrator",
+          "text": "接下来，你必须在「选择忘记，返回天庭」和「拒绝忘记，留在人间」之间做出选择。",
+          "voiceProfileId": "s09-final-choice-narrator-7da34f67",
+          "voiceStatus": "failed",
+          "voiceError": "rate limit exceeded(RPM)"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hotspot-gate",
+          "label": "线索",
+          "description": "门中透出温暖的光芒，但会吞噬记忆。",
+          "yaw": 0,
+          "pitch": 15,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "hotspot-gate-found"
+            ],
+            "memories": [
+              "发现线索：门中透出温暖的光芒，但会吞噬记忆。"
+            ]
+          }
+        },
+        {
+          "id": "clue-c09-3",
+          "label": "关键线索",
+          "description": "解锁「质疑天界律法」所需的现场线索。",
+          "yaw": 0,
+          "pitch": 0,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "clue-c09-3-found",
+              "understood_sister"
+            ],
+            "memories": [
+              "发现线索：解锁「质疑天界律法」所需的现场线索。",
+              "解锁线索：质疑天界律法"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c09-1",
+          "label": "选择忘记，返回天庭",
+          "next": "e01-growth",
+          "fateType": "river",
+          "consequence": "你斩断尘缘，回到天庭但失去人间记忆。",
+          "effect": {
+            "globals": {
+              "fairy_power": 50,
+              "fragments": 3
+            },
+            "flags": [
+              "returned_to_heaven"
+            ]
+          }
+        },
+        {
+          "id": "c09-2",
+          "label": "拒绝忘记，留在人间",
+          "next": "e02-regret",
+          "fateType": "web",
+          "consequence": "你放弃仙籍，成为凡人，但天界裂缝永闭。",
+          "effect": {
+            "globals": {
+              "humanity": 50
+            },
+            "flags": [
+              "stayed_on_earth"
+            ]
+          }
+        },
+        {
+          "id": "c09-3",
+          "label": "质疑天界律法",
+          "next": "e03-secret",
+          "fateType": "wheel",
+          "consequence": "你提出挑战，王母沉默，隐藏的第三条路出现。",
+          "lockedHint": "先调查「关键线索」，再尝试「质疑天界律法」。",
+          "condition": {
+            "flags": [
+              "understood_sister"
+            ]
+          },
+          "effect": {
+            "globals": {
+              "rebellion": 30
+            },
+            "flags": [
+              "challenged_heaven"
+            ]
+          }
+        }
+      ],
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      }
+    },
+    "e01-growth": {
+      "id": "e01-growth",
+      "chapter": "Ending",
+      "title": "成长结局",
+      "location": "天庭云端",
+      "panorama": "/panoramas/e01-growth.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "你回到天庭，但记忆空白。王母赐予你新的职责。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "成长结局成为这条命运线的终点，你回到天庭，但记忆空白。王母赐予你新的职责。",
+          "voiceProfileId": "e01-growth-narrator-173213e0",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/e01-growth/line-001-9dd2f32271cb.mp3",
+          "voiceAssetPath": "assets/voices/e01-growth/line-001-9dd2f32271cb.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "9dd2f32271cb",
+          "voiceGeneratedAt": "2026-06-20T14:10:34.685Z"
+        },
+        {
+          "speaker": "narrator",
+          "text": "天庭云端里的最后一幕落下，玩家此前的选择在此显出代价。",
+          "voiceProfileId": "e01-growth-narrator-173213e0",
+          "voiceStatus": "failed",
+          "voiceError": "rate limit exceeded(RPM)"
+        },
+        {
+          "speaker": "narrator",
+          "text": "这条路线以「成长结局」收束，留下无法回头的回响。",
+          "voiceProfileId": "e01-growth-narrator-173213e0",
+          "voiceStatus": "failed",
+          "voiceError": "rate limit exceeded(RPM)"
+        }
+      ],
+      "hotspots": [],
+      "choices": [],
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      },
+      "ending": {
+        "title": "成长结局",
+        "subtitle": "你回到天庭，但记忆空白。王母赐予你新的职责。"
+      }
+    },
+    "e02-regret": {
+      "id": "e02-regret",
+      "chapter": "Ending",
+      "title": "遗憾结局",
+      "location": "人间公寓",
+      "panorama": "/panoramas/e02-regret.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "你成为凡人，与董永在一起，但天界裂缝让灵气泄露，人间开始出现异常。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "遗憾结局成为这条命运线的终点，你成为凡人，与董永在一起，但天界裂缝让灵气泄露，人间开始出现异常。",
+          "voiceProfileId": "e02-regret-narrator-657a19a8",
+          "voiceId": "Chinese (Mandarin)_Radio_Host",
+          "voiceSrc": "/voices/project-20260620-201739/e02-regret/line-001-ac8199278e75.mp3",
+          "voiceAssetPath": "assets/voices/e02-regret/line-001-ac8199278e75.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "ac8199278e75",
+          "voiceGeneratedAt": "2026-06-20T14:01:58.348Z"
+        },
+        {
+          "speaker": "narrator",
+          "text": "人间公寓里的最后一幕落下，玩家此前的选择在此显出代价。",
+          "voiceProfileId": "e02-regret-narrator-657a19a8",
+          "voiceStatus": "failed",
+          "voiceError": "rate limit exceeded(RPM)"
+        },
+        {
+          "speaker": "narrator",
+          "text": "这条路线以「遗憾结局」收束，留下无法回头的回响。",
+          "voiceProfileId": "e02-regret-narrator-657a19a8",
+          "voiceStatus": "failed",
+          "voiceError": "rate limit exceeded(RPM)"
+        }
+      ],
+      "hotspots": [],
+      "choices": [],
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      },
+      "ending": {
+        "title": "遗憾结局",
+        "subtitle": "你成为凡人，与董永在一起，但天界裂缝让灵气泄露，人间开始出现异常。"
+      }
+    },
+    "e03-secret": {
+      "id": "e03-secret",
+      "chapter": "Secret Ending",
+      "title": "真·重返天界",
+      "location": "天界议会",
+      "panorama": "/panoramas/e03-secret.jpg",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "你凭智慧和情感改变了天界律法，仙女下凡不再需要遗忘。",
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "真·重返天界成为这条命运线的终点，你凭智慧和情感改变了天界律法，仙女下凡不再需要遗忘。",
+          "voiceProfileId": "e03-secret-narrator-bb271106",
+          "voiceStatus": "failed",
+          "voiceError": "rate limit exceeded(RPM)"
+        },
+        {
+          "speaker": "narrator",
+          "text": "天界议会里的最后一幕落下，玩家此前的选择在此显出代价。",
+          "voiceProfileId": "e03-secret-narrator-bb271106",
+          "voiceStatus": "failed",
+          "voiceError": "rate limit exceeded(RPM)"
+        },
+        {
+          "speaker": "narrator",
+          "text": "这条路线以「真·重返天界」收束，留下无法回头的回响。",
+          "voiceProfileId": "e03-secret-narrator-bb271106",
+          "voiceStatus": "failed",
+          "voiceError": "rate limit exceeded(RPM)"
+        }
+      ],
+      "hotspots": [],
+      "choices": [],
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      },
+      "ending": {
+        "title": "真·重返天界",
+        "subtitle": "你凭智慧和情感改变了天界律法，仙女下凡不再需要遗忘。"
+      }
+    }
+  }
+}

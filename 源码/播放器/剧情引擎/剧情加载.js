@@ -1,0 +1,554 @@
+// ============================================================================
+// 这个文件是播放器的「片库管理员」：整个放映厅只有这一位管理员（模块级单例），
+// 他手里永远挂着一部"正在放映的片子"（默认是随包自带的《第十五封愿望》拷贝），
+// 谁来问"现在放哪部、从哪一幕开始、有哪些数值规则"，他都直接把手上的东西给你看；
+// 有人喊"换片"（loadStoryBySlug / setActiveStory），他先验片没坏，再整卷替换。
+// 对应线上打包产物 story-BDynpsCw.js（分析文档：剧情引擎分析.md）。
+//
+// 【导出清单（与线上模块完全等价 + 一个入口契约别名）】
+//   STORY_TITLE                 string   当前剧情标题（live binding，换片后自动更新）
+//   START_NODE_ID               string   起始节点 id
+//   storyMechanics              object?  当前剧情 mechanics（可能为 undefined）
+//   storyNodes                  object   节点字典 { [nodeId]: node }
+//   storyNodeList               array    节点数组（换片时同步重算）
+//   ACTIVE_GAME_ID              string   当前剧情 slug（清洗后），初始 "bundled"
+//   setActiveStory(story, slug) void     校验后整体切换剧情，校验失败抛错
+//   loadStoryBySlug(slug)       async→boolean  localStorage草稿优先→fetch线上
+//   按slug加载剧情(slug)         async→boolean  同 loadStoryBySlug（main.jsx 的硬契约名）
+//   getScoreDefinitions()       ScoreDef[]     规范化后的全部分数定义（每次现算）
+//   getScoreDefinition(id)      ScoreDef|undefined
+//   getVisibleScoreDefinitions() ScoreDef[]    过滤掉 visibility==="hidden" 的
+// ============================================================================
+
+// 内置兜底剧情：线上版是把 56KB 的 JSON 字符串直接压进代码里；我们直接 import
+// 公共资源里的同一部作品（Vite 会在打包时把它内联成 JS 模块，效果一致）。
+// 这样即使断网/线上 story.json 拉不到，播放器也永远有片可放。
+import 兜底剧情 from '../../../公共资源/games/project-20260620-231058/story.json';
+
+// 创作端"浏览器草稿仓库"的 localStorage 键名——创作台没发布的草稿也能直接试玩
+const 浏览器草稿仓库键 = 'creator:browser-projects:v1';
+
+// scores 缺失/全非法时的兜底分数定义（原样照抄线上）
+const 兜底分数定义 = [
+  {
+    id: 'career',
+    label: '身份',
+    initial: 32,
+    min: 0,
+    max: 100,
+    visibility: 'debug',
+    tone: 'route',
+  },
+  {
+    id: 'integrity',
+    label: '真相',
+    initial: 38,
+    min: 0,
+    max: 100,
+    visibility: 'debug',
+    tone: 'truth',
+  },
+  {
+    id: 'stress',
+    label: '压力',
+    initial: 45,
+    min: 0,
+    max: 100,
+    visibility: 'debug',
+    tone: 'pressure',
+    warnAt: 70,
+  },
+];
+
+// 分数 id → 中文标签字典（字典优先于作者自定义 label，原样照抄线上）
+const 分数中文字典 = {
+  career: '身份',
+  integrity: '真相',
+  stress: '压力',
+  pressure: '压力',
+  truth: '真相',
+  trust: '信任',
+  evidence: '证据',
+  comfort: '安心',
+  suspicion: '疑点',
+  discretion: '谨慎',
+  insight: '洞察',
+  progress: '进展',
+  seal_fragments: '碎片',
+  fox_trust: '狐族信任',
+  demon_corruption: '妖化侵蚀',
+  memory_truth: '前世真相',
+  sacrifice_resolve: '牺牲意志',
+  human_alignment: '人类倾向',
+};
+
+// 输入剧情对象 → 检查最基本的骨架（有 nodes、有 startNodeId、起始节点真的存在）→ 不合格直接抛错
+// 报错文案与线上逐字一致（英文），别翻译。
+function 校验剧情骨架(story) {
+  if (
+    !story ||
+    typeof story !== 'object' ||
+    !story.nodes ||
+    typeof story.nodes !== 'object' ||
+    Array.isArray(story.nodes) ||
+    typeof story.startNodeId !== 'string' ||
+    !story.startNodeId
+  )
+    throw new Error('Story data is malformed: missing nodes or startNodeId.');
+  if (!story.nodes[story.startNodeId])
+    throw new Error(`Story start node "${story.startNodeId}" is missing.`);
+}
+
+// 模块一加载就先验自带的片子，坏了宁可 import 时就炸（和线上行为一致）
+校验剧情骨架(兜底剧情);
+const 已规范化兜底剧情 = 规范化剧情(兜底剧情, 'bundled');
+
+// ---- 模块级单例状态（ES module live binding：这里重新赋值，所有 import 方同步看到）----
+export let STORY_TITLE = 已规范化兜底剧情.title;
+export let START_NODE_ID = 已规范化兜底剧情.startNodeId;
+export let storyMechanics = 已规范化兜底剧情.mechanics;
+export let storyNodes = 已规范化兜底剧情.nodes;
+export let storyNodeList = Object.values(storyNodes);
+export let ACTIVE_GAME_ID = 'bundled';
+
+// 输入(剧情对象, slug) → 校验、规范化后把模块级状态整卷替换 → 无返回值；
+// 校验失败抛错、状态不动。规范化集中发生在加载边界，消费方由此始终拿到稳定字段形状。
+export function setActiveStory(story, slug = 'bundled') {
+  校验剧情骨架(story);
+  const 安全slug = 清洗slug(slug);
+  const 安全剧情 = 规范化剧情(story, 安全slug);
+  STORY_TITLE = 安全剧情.title;
+  START_NODE_ID = 安全剧情.startNodeId;
+  storyMechanics = 安全剧情.mechanics;
+  storyNodes = 安全剧情.nodes;
+  storyNodeList = Object.values(安全剧情.nodes);
+  ACTIVE_GAME_ID = 安全slug;
+}
+
+// () → 当前剧情里使用现代嵌套 relationships 的角色 id 列表。
+// 状态工厂和存档消毒据此扩展关系表，不再把作者自定义角色静默丢掉。
+export function getRelationshipCharacterIds() {
+  const 角色们 = new Set();
+  for (const 节点 of storyNodeList) {
+    for (const 条目 of [...节点.hotspots, ...节点.choices]) {
+      for (const [角色, 增量组] of Object.entries(条目.effect?.relationships ?? {}))
+        if (是合法关系角色(角色) && 是普通对象(增量组)) 角色们.add(角色);
+      for (const 条件 of Array.isArray(条目.condition?.minRelationship) ? 条目.condition.minRelationship : [])
+        if (是合法关系角色(条件?.character)) 角色们.add(条件.character);
+    }
+  }
+  return [...角色们];
+}
+
+// 输入 slug → 先翻浏览器里的创作草稿，再去线上拉 /games/<slug>/story.json → 吐出 true/false。
+// 为什么所有错误都吞掉只回布尔值：加载失败时播放器要继续放手上那部片，不能黑屏。
+export async function loadStoryBySlug(slug) {
+  if (尝试加载浏览器草稿(slug)) return true;
+  try {
+    const 响应 = await fetch(`/games/${encodeURIComponent(slug)}/story.json`, {
+      cache: 'no-cache',
+    });
+    if (!响应.ok) return false;
+    const 数据 = await 响应.json();
+    setActiveStory(数据, slug);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// main.jsx 的硬契约名：入口就按这个名字 import，内部就是 loadStoryBySlug
+export async function 按slug加载剧情(slug) {
+  return loadStoryBySlug(slug);
+}
+
+// 输入 slug → 查 localStorage 的创作草稿仓库（结构 { [slug]: { project: { story } } }）→
+// 命中就地激活并返回 true，否则 false。草稿永远优先于线上发布版。
+function 尝试加载浏览器草稿(slug) {
+  if (typeof window === 'undefined') return false;
+  try {
+    const 仓库 = JSON.parse(window.localStorage.getItem(浏览器草稿仓库键) ?? '{}');
+    if (!仓库 || typeof 仓库 !== 'object' || Array.isArray(仓库)) return false;
+    const 草稿 = 仓库[slug]?.project?.story;
+    if (草稿) {
+      setActiveStory(草稿, slug);
+      return true;
+    }
+    return false;
+  } catch {
+    return false;
+  }
+}
+
+// ---- 剧情加载边界规范化 ----
+
+const 默认调色板 = { from: '#10151f', via: '#31404f', to: '#c78356' };
+
+// 输入原始剧情 → 保留作者扩展字段，同时把播放器直接消费的字段补成安全形状。
+// 节点 key 是图结构的权威 id；空 key 才回退 node.id / 自动 id，并同步改写 choice.next。
+function 规范化剧情(story, slug = 'bundled') {
+  const 原节点条目 = Object.entries(story.nodes);
+  const id映射 = new Map();
+  const 节点id们 = [];
+  const 已用id = new Set();
+
+  原节点条目.forEach(([原key, 原节点], 索引) => {
+    const 原节点id = 是普通对象(原节点) ? 非空字符串(原节点.id) : '';
+    const 候选 = 非空字符串(原key) || 原节点id || `node-${索引 + 1}`;
+    const id = 取唯一id(候选, 已用id);
+    节点id们.push(id);
+    id映射.set(原key, id);
+    if (原节点id && !id映射.has(原节点id)) id映射.set(原节点id, id);
+  });
+
+  const startNodeId = id映射.get(story.startNodeId) ?? story.startNodeId;
+  const nodes = Object.fromEntries(
+    原节点条目.map(([, 原节点], 索引) => {
+      const id = 节点id们[索引];
+      return [id, 规范化节点(原节点, id, startNodeId, id映射, slug)];
+    }),
+  );
+  return {
+    ...story,
+    title: 非空字符串(story.title) || '互动影游',
+    startNodeId,
+    mechanics: 是普通对象(story.mechanics) ? story.mechanics : undefined,
+    nodes,
+  };
+}
+
+function 规范化节点(原始值, id, startNodeId, id映射, slug) {
+  const 原始 = 是普通对象(原始值) ? 原始值 : {};
+  const lines = Array.isArray(原始.lines)
+    ? 原始.lines.filter(是普通对象).map((行) => ({
+        ...行,
+        speaker: 非空字符串(行.speaker) || 'narrator',
+        text: typeof 行.text === 'string' ? 行.text : '',
+      }))
+    : [];
+  const choices = 规范化交互列表(原始.choices, `${id}-choice`, (选项, 选项id) => ({
+    ...选项,
+    id: 选项id,
+    label: 非空字符串(选项.label) || '继续',
+    next:
+      typeof 选项.next === 'string'
+        ? (id映射.get(选项.next) ?? 非空字符串(选项.next) ?? startNodeId)
+        : startNodeId,
+    condition: 规范化旧条件(选项.condition),
+    effect: 规范化效果(选项.effect),
+  }));
+  const hotspots = 规范化交互列表(原始.hotspots, `${id}-hotspot`, (热点, 热点id) => ({
+    ...热点,
+    id: 热点id,
+    label: 非空字符串(热点.label) || '线索',
+    description: typeof 热点.description === 'string' ? 热点.description : '',
+    yaw: 转有限数(热点.yaw, 0),
+    pitch: 转有限数(热点.pitch, 0),
+    effect: 规范化效果(热点.effect),
+  }));
+  const cinematics = Array.isArray(原始.cinematics)
+    ? 原始.cinematics.filter(是普通对象).map((过场) => ({
+        ...过场,
+        src: 非空字符串(过场.src) || 解析项目资产地址(过场.assetPath, slug),
+      }))
+    : [];
+  const 原调色板 = 是普通对象(原始.palette) ? 原始.palette : {};
+  return {
+    ...原始,
+    id,
+    title: 非空字符串(原始.title) || id,
+    panorama: typeof 原始.panorama === 'string' ? 原始.panorama.trim() : '',
+    palette: {
+      ...原调色板,
+      from: 非空字符串(原调色板.from) || 默认调色板.from,
+      via: 非空字符串(原调色板.via) || 默认调色板.via,
+      to: 非空字符串(原调色板.to) || 默认调色板.to,
+    },
+    lines,
+    choices,
+    hotspots,
+    cinematics,
+  };
+}
+
+// 发布包里的 assetPath 使用 assets/videos/<文件名>，本地静态目录则按作品 slug 分组。
+// 在加载边界补出播放器可直接请求的 URL；绝对地址、blob/data URL 保持原样。
+function 解析项目资产地址(assetPath, slug) {
+  const 路径 = 非空字符串(assetPath);
+  if (!路径) return '';
+  if (/^(?:[a-z]+:|\/\/|\/)/i.test(路径)) return 路径;
+  const 视频前缀 = 'assets/videos/';
+  if (路径.startsWith(视频前缀)) {
+    return `/videos/${encodeURIComponent(slug)}/${路径.slice(视频前缀.length)}`;
+  }
+  return 路径;
+}
+
+function 规范化交互列表(原始列表, id前缀, 变换) {
+  if (!Array.isArray(原始列表)) return [];
+  const 已用id = new Set();
+  return 原始列表.filter(是普通对象).map((条目, 索引) => {
+    const id = 取唯一id(非空字符串(条目.id) || `${id前缀}-${索引 + 1}`, 已用id);
+    return 变换(条目, id);
+  });
+}
+
+// 旧创作器把单刻度好感度写成 relationships: { role: number }；播放器的新模型则是
+// relationships: { role: { trust/spark/boundary } }。标量会迁到 <role>_affinity 全局键，
+// 与作者已经写入的同名 globals 增量相加，避免任何一边的数据被覆盖。
+function 规范化效果(原始值) {
+  if (!是普通对象(原始值)) return undefined;
+  const 原始关系 = 是普通对象(原始值.relationships) ? 原始值.relationships : {};
+  const globals = {};
+  if (是普通对象(原始值.globals)) {
+    for (const [键, 增量] of Object.entries(原始值.globals)) {
+      if (是合法键(键) && typeof 增量 === 'number' && Number.isFinite(增量)) globals[键] = 增量;
+    }
+  }
+  const relationships = {};
+  let 有现代关系 = false;
+  for (const [角色, 增量组] of Object.entries(原始关系)) {
+    if (typeof 增量组 === 'number' && Number.isFinite(增量组)) {
+      const 键 = 旧关系全局键(角色);
+      if (键) globals[键] = (Number.isFinite(globals[键]) ? globals[键] : 0) + 增量组;
+    } else if (是合法关系角色(角色) && 是普通对象(增量组)) {
+      const 安全增量 = {};
+      for (const 维度 of ['spark', 'trust', 'boundary']) {
+        if (typeof 增量组[维度] === 'number' && Number.isFinite(增量组[维度])) 安全增量[维度] = 增量组[维度];
+      }
+      if (Object.keys(安全增量).length > 0) {
+        relationships[角色] = 安全增量;
+        有现代关系 = true;
+      }
+    }
+  }
+  const 有globals = Object.keys(globals).length > 0;
+  return {
+    ...原始值,
+    globals: 有globals ? globals : undefined,
+    relationships: 有现代关系 ? relationships : undefined,
+    flags: 规范化字符串数组(原始值.flags),
+    memories: 规范化字符串数组(原始值.memories),
+    route:
+      原始值.route === undefined || 原始值.route === null || typeof 原始值.route === 'string'
+        ? 原始值.route
+        : undefined,
+  };
+}
+
+// 旧条件 relationships: { role: { min/max } } 与上面的迁移键保持一致。
+function 规范化旧条件(原始值) {
+  if (!是普通对象(原始值)) return undefined;
+  const minGlobal = 规范化全局阈值列表(原始值.minGlobal);
+  const maxGlobal = 规范化全局阈值列表(原始值.maxGlobal);
+  if (是普通对象(原始值.relationships)) {
+    for (const [角色, 阈值] of Object.entries(原始值.relationships)) {
+      const 键 = 旧关系全局键(角色);
+      if (!键) continue;
+      if (typeof 阈值 === 'number' && Number.isFinite(阈值)) minGlobal.push({ key: 键, value: 阈值 });
+      if (是普通对象(阈值)) {
+        if (Number.isFinite(阈值.min)) minGlobal.push({ key: 键, value: 阈值.min });
+        if (Number.isFinite(阈值.max)) maxGlobal.push({ key: 键, value: 阈值.max });
+      }
+    }
+  }
+  const { relationships: _旧关系, ...其余 } = 原始值;
+  return {
+    ...其余,
+    flags: 规范化字符串数组(原始值.flags),
+    missingFlags: 规范化字符串数组(原始值.missingFlags),
+    memories: 规范化字符串数组(原始值.memories),
+    missingMemories: 规范化字符串数组(原始值.missingMemories),
+    minRelationship: 规范化关系阈值列表(原始值.minRelationship),
+    minGlobal,
+    maxGlobal,
+  };
+}
+
+function 规范化字符串数组(值) {
+  if (!Array.isArray(值)) return [];
+  return [...new Set(值.filter((条目) => typeof 条目 === 'string').map((条目) => 条目.trim()).filter(Boolean))];
+}
+
+function 规范化全局阈值列表(值) {
+  if (!Array.isArray(值)) return [];
+  return 值.flatMap((条目) => {
+    if (!是普通对象(条目) || !是合法键(条目.key) || !Number.isFinite(Number(条目.value))) return [];
+    return [{ key: 条目.key, value: Number(条目.value) }];
+  });
+}
+
+function 规范化关系阈值列表(值) {
+  if (!Array.isArray(值)) return [];
+  return 值.flatMap((条目) => {
+    if (
+      !是普通对象(条目) ||
+      !是合法关系角色(条目.character) ||
+      typeof 条目.metric !== 'string' ||
+      !条目.metric.trim() ||
+      !Number.isFinite(Number(条目.value))
+    ) return [];
+    return [{ character: 条目.character, metric: 条目.metric.trim(), value: Number(条目.value) }];
+  });
+}
+
+function 旧关系全局键(角色) {
+  if (typeof 角色 !== 'string') return '';
+  let 主体 = 角色.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+  if (!主体) return '';
+  if (!/^[a-z]/.test(主体)) 主体 = `relationship_${主体}`;
+  return `${主体}_affinity`;
+}
+
+function 是普通对象(值) {
+  return !!值 && typeof 值 === 'object' && !Array.isArray(值);
+}
+
+function 非空字符串(值) {
+  return typeof 值 === 'string' ? 值.trim() : '';
+}
+
+function 取唯一id(候选, 已用id) {
+  let id = 候选;
+  let 序号 = 2;
+  while (已用id.has(id)) id = `${候选}-${序号++}`;
+  已用id.add(id);
+  return id;
+}
+
+function 是合法关系角色(值) {
+  return (
+    typeof 值 === 'string' &&
+    /^[a-z][a-z0-9_-]*$/.test(值) &&
+    值 !== '__proto__' &&
+    值 !== 'constructor' &&
+    值 !== 'prototype'
+  );
+}
+
+// ---- 分数（scores）定义规范化：三个读取函数 ----
+
+// () → 把当前剧情的 mechanics.scores 清洗成带完整默认值的定义列表 → ScoreDef[]
+// 每次调用都重新算（无缓存），这样换片后立刻生效。
+export function getScoreDefinitions() {
+  return 规范化分数定义列表(storyMechanics?.scores);
+}
+
+// (id) → 在定义列表里找这一条 → ScoreDef | undefined
+export function getScoreDefinition(id) {
+  return getScoreDefinitions().find((定义) => 定义.id === id);
+}
+
+// () → 过滤掉 visibility === "hidden" 的定义（public 和 debug 都会返回）→ ScoreDef[]
+export function getVisibleScoreDefinitions() {
+  return getScoreDefinitions().filter((定义) => 定义.visibility !== 'hidden');
+}
+
+// 输入 mechanics.scores 原始数据（可能是 undefined/非数组/脏数据）→
+// 逐条清洗补默认值、按 id 去重（后写覆盖先写）；全军覆没就换上兜底三件套；
+// 最后把剧情里实际用到但没声明的全局键自动补成 debug 定义 → 吐出 ScoreDef[]。
+// 为什么要自动补齐：作者在 effect 里手滑用了没声明的键，结算也得有 min/max 可钳。
+function 规范化分数定义列表(原始列表) {
+  const 收集 = new Map();
+  const 列表 = Array.isArray(原始列表) ? 原始列表 : [];
+  for (const 条目 of 列表) {
+    if (!条目 || typeof 条目 !== 'object') continue;
+    if (是合法键(条目.id))
+      收集.set(条目.id, {
+        id: 条目.id,
+        label: 解析标签(条目.label, 条目.id),
+        description: typeof 条目.description === 'string' ? 条目.description : undefined,
+        initial: 转有限数(条目.initial, 0),
+        min: 转有限数(条目.min, 0),
+        max: 转有限数(条目.max, 100),
+        visibility: 规范化可见性(条目.visibility),
+        tone: 规范化基调(条目.tone),
+        warnAt: typeof 条目.warnAt === 'number' ? 条目.warnAt : undefined,
+        format:
+          条目.format === 'percent' || 条目.format === 'count' ? 条目.format : 'number',
+      });
+  }
+  if (收集.size === 0) for (const 条目 of 兜底分数定义) 收集.set(条目.id, 条目);
+  for (const 键 of 收集剧情全局键())
+    if (!收集.has(键))
+      收集.set(键, {
+        id: 键,
+        label: 人性化标签(键),
+        initial: 0,
+        min: 0,
+        max: 100,
+        // 旧标量 relationships 迁移出的亲密度只是兼容层，不占用玩家状态栏。
+        visibility: 键.endsWith('_affinity') ? 'hidden' : 'debug',
+        tone: 键.endsWith('_affinity') ? 'affinity' : 'custom',
+      });
+  return [...收集.values()];
+}
+
+// () → 扫一遍全部节点：热点/选项 effect.globals 里出现过的键、
+// 选项 condition.minGlobal/maxGlobal 里引用过的键 → 吐出 Set<合法键>
+function 收集剧情全局键() {
+  const 键集 = new Set();
+  for (const 节点 of storyNodeList) {
+    for (const 条目 of [...(节点.hotspots ?? []), ...(节点.choices ?? [])])
+      for (const 键 of Object.keys(条目.effect?.globals ?? {})) if (是合法键(键)) 键集.add(键);
+    for (const 选项 of 节点.choices ?? [])
+      for (const 条目 of [
+        ...(选项.condition?.minGlobal ?? []),
+        ...(选项.condition?.maxGlobal ?? []),
+      ])
+        if (是合法键(条目.key)) 键集.add(条目.key);
+  }
+  return 键集;
+}
+
+// (作者写的label, id) → label 是非空字符串就 trim 用它，否则按 id 造一个 →
+// 最后再被中文字典强制覆盖（字典里有的 id 一律用字典的中文名）
+function 解析标签(标签, id) {
+  const 候选 = typeof 标签 === 'string' && 标签.trim() ? 标签.trim() : 人性化标签(id);
+  return 字典覆盖(id, 候选);
+}
+
+// (id) → 字典有中文就用中文；没有就把下划线换空格、每个单词首字母大写 → 可读标签
+function 人性化标签(id) {
+  return 分数中文字典[id] ?? id.replace(/_/g, ' ').replace(/\b\w/g, (字) => 字.toUpperCase());
+}
+
+// (id, 备选文案) → 字典命中返回字典中文，否则返回备选
+function 字典覆盖(id, 备选) {
+  return 分数中文字典[id] ?? 备选;
+}
+
+// 可见性只认 public/hidden/debug 三个值，其他一律当 debug
+function 规范化可见性(值) {
+  return 值 === 'public' || 值 === 'hidden' || 值 === 'debug' ? 值 : 'debug';
+}
+
+// 基调只认这七种，其他一律当 custom
+function 规范化基调(值) {
+  return 值 === 'truth' ||
+    值 === 'pressure' ||
+    值 === 'affinity' ||
+    值 === 'resource' ||
+    值 === 'morality' ||
+    值 === 'route' ||
+    值 === 'custom'
+    ? 值
+    : 'custom';
+}
+
+// (任意值, 默认值) → Number() 一下，是有限数就用，否则用默认值
+function 转有限数(值, 默认值) {
+  const 数 = Number(值);
+  return Number.isFinite(数) ? 数 : 默认值;
+}
+
+// 分数 id 必须是小写字母开头的 snake_case（如 truth / seal_fragments），别的全拒收
+function 是合法键(值) {
+  return typeof 值 === 'string' && /^[a-z][a-z0-9_]*$/.test(值);
+}
+
+// slug 清洗：非字母数字下划线连字符全部替换成 "-"，空串兜底 "bundled"
+// （这个值会拼进 localStorage 存档键名，必须无害化）
+function 清洗slug(slug) {
+  return slug.replace(/[^a-zA-Z0-9_-]/g, '-') || 'bundled';
+}

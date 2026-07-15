@@ -1,0 +1,60 @@
+{
+  "default": "project-20260620-231058",
+  "featured": [
+    {
+      "slug": "project-20260620-002835",
+      "title": "云巅仙阁·命运抉择",
+      "tagline": "盛会开幕之夜，你以散修身份踏入云巅仙阁，十位传人依次向你投来目光。",
+      "cover": "/panoramas/project-20260620-002835-s00-arrival.webp",
+      "chapters": "第一章 · 云巅初会",
+      "tags": [
+        "命运长河",
+        "因果之网"
+      ]
+    },
+    {
+      "slug": "project-20260620-185116",
+      "title": "九尾狐仙下凡",
+      "tagline": "暴雨之夜，你躲进一座破旧古庙。烛火摇曳中，一位白衣女子静坐角落，九尾隐现。",
+      "cover": "/panoramas/s00-meet-temple.jpg",
+      "chapters": "第一幕 · 古庙相遇",
+      "tags": [
+        "命运长河",
+        "因果之网"
+      ]
+    },
+    {
+      "slug": "project-20260620-201739",
+      "title": "七仙女下凡",
+      "tagline": "七仙女从云端坠落，落在城市霓虹灯之间。手机屏幕闪烁，她看到了凡间的第一个画面。",
+      "cover": "/panoramas/s00-opening.jpg",
+      "chapters": "Opening · 七仙女下凡",
+      "tags": [
+        "命运长河",
+        "因果之网"
+      ]
+    },
+    {
+      "slug": "project-20260620-231058",
+      "title": "第十五封愿望",
+      "tagline": "三位主角站在愿望箱前，玩家通过观察互动选择调查视角。",
+      "cover": "/panoramas/s00-character-select.webp",
+      "chapters": "序章 · 角色选择：第十五封愿望",
+      "tags": [
+        "因果之网",
+        "命运长河"
+      ]
+    },
+    {
+      "slug": "excuse",
+      "title": "Excuse",
+      "tagline": "玩家进入银蓝宫殿，八位成年表演者在直播前等待，第九席空着。",
+      "cover": "/panoramas/s00-blue-salon.jpg",
+      "chapters": "Opening · 蓝厅入场",
+      "tags": [
+        "命运长河",
+        "因果之网"
+      ]
+    }
+  ]
+}

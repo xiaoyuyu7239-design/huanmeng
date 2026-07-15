@@ -1,0 +1,35 @@
+/* 小字号辅助文本保持可读对比度；原 42% 透明度在深色背景上不足 4.5:1。 */
+.lp {
+  --faint: rgba(247, 241, 232, 0.55);
+}
+
+.lp .exp-stage .scene::after {
+  pointer-events: none;
+}
+
+.lp .marquee:focus .marquee-track,
+.lp .style-marquee:focus .style-track {
+  animation-play-state: paused;
+}
+
+/* 尊重系统“减少动态效果”，同时让 reveal 内容无需动画也始终可见。 */
+@media (prefers-reduced-motion: reduce) {
+  .lp *,
+  .lp *::before,
+  .lp *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .lp .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .lp .marquee-track,
+  .lp .style-marquee > * {
+    animation-play-state: paused !important;
+  }
+}

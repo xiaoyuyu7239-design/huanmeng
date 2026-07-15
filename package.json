@@ -1,0 +1,29 @@
+{
+  "name": "yanjing",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "衍境 · 互动影游智能体创作系统（本地复刻版）",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "npm run test:engine && npm run test:creator && npm run test:assets && npm run test:smoke",
+    "test:engine": "node 源码/播放器/剧情引擎/引擎自测.mjs",
+    "test:creator": "node 源码/创作台/创作台自测.mjs",
+    "test:assets": "node 源码/公共工具/资源自测.mjs",
+    "test:smoke": "node 源码/播放器/播放器壳层自测.mjs",
+    "test:player": "npm run test:smoke",
+    "素材爬取": "node 源码/公共工具/素材爬取.mjs"
+  },
+  "dependencies": {
+    "lucide-react": "0.475.0",
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
+    "three": "0.174.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^6.2.0"
+  }
+}

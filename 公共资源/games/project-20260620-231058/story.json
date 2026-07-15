@@ -1,0 +1,2687 @@
+{
+  "id": "project-20260620-231058",
+  "title": "第十五封愿望",
+  "subtitle": "校园悬疑互动影游",
+  "startNodeId": "s00-character-select",
+  "mechanics": {
+    "mode": "published",
+    "scores": [
+      {
+        "id": "truth",
+        "label": "真相",
+        "initial": 0,
+        "min": 0,
+        "max": 100,
+        "visibility": "public",
+        "tone": "truth"
+      },
+      {
+        "id": "evidence",
+        "label": "证据",
+        "initial": 0,
+        "min": 0,
+        "max": 100,
+        "visibility": "public",
+        "tone": "resource"
+      },
+      {
+        "id": "pressure",
+        "label": "压力",
+        "initial": 0,
+        "min": -20,
+        "max": 100,
+        "visibility": "debug",
+        "tone": "pressure"
+      },
+      {
+        "id": "public_truth",
+        "label": "公开度",
+        "initial": 0,
+        "min": 0,
+        "max": 100,
+        "visibility": "public",
+        "tone": "truth"
+      }
+    ]
+  },
+  "nodes": {
+    "s00-character-select": {
+      "id": "s00-character-select",
+      "chapter": "序章",
+      "title": "角色选择：第十五封愿望",
+      "location": "雨夜校园入口",
+      "panorama": "/panoramas/s00-character-select.webp",
+      "palette": {
+        "from": "#111827",
+        "via": "#334155",
+        "to": "#d9b98f"
+      },
+      "synopsis": "三位主角站在愿望箱前，玩家通过观察互动选择调查视角。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 95
+      },
+      "cinematics": [
+        {
+          "id": "s00-character-select-flat-video",
+          "type": "flat-video",
+          "trigger": "beforeEnter",
+          "title": "场景平面视频",
+          "src": "/videos/project-20260620-231058/s00-character-select-902ee4b49d.mp4",
+          "assetPath": "assets/videos/s00-character-select-902ee4b49d.mp4",
+          "skippable": false,
+          "loop": false,
+          "uploadedAt": "2026-06-20T23:26:53.636Z"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "雨幕像一层薄纱罩住校园，三个人同时看向你。",
+          "voiceProfileId": "s00-character-select-narrator-a69a206e",
+          "voiceId": "female-yujie",
+          "voiceSrc": "/voices/project-20260620-231058/s00-character-select/line-001-3f98953e0824.mp3",
+          "voiceAssetPath": "assets/voices/s00-character-select/line-001-3f98953e0824.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "3f98953e0824",
+          "voiceGeneratedAt": "2026-06-20T23:40:03.357Z"
+        },
+        {
+          "speaker": "hua_rongli",
+          "text": "选中我，真相会回应你。",
+          "voiceProfileId": "s00-character-select-hua-rongli-c25257c4",
+          "voiceId": "male-qn-jingying",
+          "voiceSrc": "/voices/project-20260620-231058/s00-character-select/line-002-bf3177d35237.mp3",
+          "voiceAssetPath": "assets/voices/s00-character-select/line-002-bf3177d35237.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "bf3177d35237",
+          "voiceGeneratedAt": "2026-06-20T23:40:17.567Z"
+        },
+        {
+          "speaker": "narrator",
+          "text": "鼠标划过每个人时，他们用截然不同的方式打招呼：甜茉亲近，晚晴克制，花容离温柔而危险。",
+          "voiceProfileId": "s00-character-select-narrator-a69a206e",
+          "voiceId": "female-yujie",
+          "voiceSrc": "/voices/project-20260620-231058/s00-character-select/line-003-cdf5b486bfac.mp3",
+          "voiceAssetPath": "assets/voices/s00-character-select/line-003-cdf5b486bfac.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "cdf5b486bfac",
+          "voiceGeneratedAt": "2026-06-20T23:40:20.285Z"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hotspot-tianmo-wave",
+          "label": "温甜茉的糖光",
+          "description": "粉色糖纸在她掌心亮起，像是在邀请你靠近。",
+          "yaw": -55,
+          "pitch": 4,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "noticed_tianmo"
+            ],
+            "memories": [
+              "温甜茉用可爱的方式向你打招呼。"
+            ]
+          }
+        },
+        {
+          "id": "hotspot-wanqing-glance",
+          "label": "林晚晴的镜面",
+          "description": "她抬眼看你，镜面反光里闪过一张名单。",
+          "yaw": 45,
+          "pitch": 2,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "noticed_wanqing"
+            ],
+            "memories": [
+              "林晚晴的高冷招呼里藏着名单线索。"
+            ]
+          }
+        },
+        {
+          "id": "hotspot-huarongli-pen",
+          "label": "花容离的钢笔",
+          "description": "花容离轻敲钢笔，旧书页像被风自动翻开。",
+          "yaw": 0,
+          "pitch": -2,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "noticed_huarongli"
+            ],
+            "memories": [
+              "花容离的暖意背后，有不属于校园的气息。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice-tianmo",
+          "label": "先回应温甜茉的招呼",
+          "next": "s14-new-node",
+          "fateType": "web",
+          "consequence": "你记住她慌张却真诚的笑，之后更容易走近她。",
+          "effect": {
+            "relationships": {
+              "wen_tianmo": {
+                "trust": 8
+              }
+            },
+            "flags": [
+              "focus_tianmo"
+            ]
+          }
+        },
+        {
+          "id": "choice-wanqing",
+          "label": "先接住林晚晴的视线",
+          "next": "s01-rain-gate",
+          "fateType": "web",
+          "consequence": "你意识到名单才是事件核心，林晚晴会更快把流程告诉你。",
+          "effect": {
+            "relationships": {
+              "lin_wanqing": {
+                "trust": 8
+              }
+            },
+            "flags": [
+              "focus_wanqing"
+            ]
+          }
+        },
+        {
+          "id": "choice-huarongli",
+          "label": "选中中间的花容离",
+          "next": "s01-rain-gate",
+          "fateType": "river",
+          "consequence": "镜头推进，其他人影淡去，花容离的旧书替你打开第一条线索。",
+          "effect": {
+            "relationships": {
+              "hua_rongli": {
+                "trust": 10
+              }
+            },
+            "flags": [
+              "first_chose_huarongli"
+            ]
+          }
+        }
+      ],
+      "audioPlayback": {
+        "mode": "mix"
+      },
+      "panoramaType": "video",
+      "musicLayers": {
+        "generated": {
+          "cueId": "bgm-s01-rainy-gate",
+          "source": "generated",
+          "src": "https://cdn1.suno.ai/ed0d326b-6987-490d-813c-43e34fd2f089.mp3",
+          "title": "校门雨夜"
+        },
+        "uploaded": {
+          "cueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+          "source": "uploaded",
+          "src": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+          "title": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+        }
+      },
+      "musicPlayback": {
+        "mode": "uploaded-only",
+        "generatedVolume": 1,
+        "uploadedVolume": 1,
+        "loop": true
+      },
+      "musicCueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+      "musicSrc": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+      "musicTitle": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+    },
+    "s14-new-node": {
+      "id": "s14-new-node",
+      "chapter": "序章",
+      "title": "选择",
+      "location": "天台",
+      "synopsis": "玩家在这里面对新的选择。",
+      "panorama": "/panoramas/s14-new-node.jpg",
+      "lines": [
+        {
+          "speaker": "you",
+          "text": "今晚不该叫替别人选择。",
+          "voiceProfileId": "s14-new-node-you-22e5d654",
+          "voiceMode": "catalog",
+          "voiceId": "Chinese (Mandarin)_Male_Announcer",
+          "voiceSrc": "/voices/project-20260620-231058/s14-new-node/line-001-5b5b666210bd.mp3",
+          "voiceAssetPath": "assets/voices/s14-new-node/line-001-5b5b666210bd.mp3",
+          "voiceStatus": "ready",
+          "voiceHash": "5b5b666210bd",
+          "voiceGeneratedAt": "2026-06-21T00:25:42.871Z"
+        }
+      ],
+      "choices": [
+        {
+          "id": "continue-s01-rain-gate",
+          "label": "继续前往「雨夜校门」",
+          "caption": "插入节点后的原路线出口。",
+          "next": "s01-rain-gate",
+          "fateType": "river",
+          "consequence": "你从新增场景回到「雨夜校门」路线。",
+          "effect": {
+            "globals": {
+              "integrity": 1
+            }
+          }
+        }
+      ],
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "hotspots": [],
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      },
+      "cinematics": [
+        {
+          "id": "s14-new-node-flat-video",
+          "type": "flat-video",
+          "trigger": "beforeEnter",
+          "title": "场景平面视频",
+          "src": "/videos/project-20260620-231058/s14-new-node-3ef1152696.mp4",
+          "assetPath": "assets/videos/s14-new-node-3ef1152696.mp4",
+          "skippable": false,
+          "loop": false,
+          "uploadedAt": "2026-06-20T23:34:59.193Z"
+        }
+      ],
+      "panoramaType": "video",
+      "musicLayers": {
+        "generated": {
+          "cueId": "bgm-s01-rainy-gate",
+          "source": "generated",
+          "src": "https://cdn1.suno.ai/ed0d326b-6987-490d-813c-43e34fd2f089.mp3",
+          "title": "校门雨夜"
+        },
+        "uploaded": {
+          "cueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+          "source": "uploaded",
+          "src": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+          "title": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+        }
+      },
+      "musicPlayback": {
+        "mode": "mix",
+        "generatedVolume": 0.72,
+        "uploadedVolume": 0.72,
+        "loop": true
+      },
+      "musicCueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+      "musicSrc": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+      "musicTitle": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+    },
+    "s01-rain-gate": {
+      "id": "s01-rain-gate",
+      "chapter": "第一章",
+      "title": "雨夜校门",
+      "location": "大学校门",
+      "panorama": "/panoramas/s01-rain-gate.png",
+      "palette": {
+        "from": "#111827",
+        "via": "#334155",
+        "to": "#d9b98f"
+      },
+      "synopsis": "失物招领箱里出现第十五封愿望，信封没有署名，却写着三个人都熟悉的字迹。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      },
+      "cinematics": [
+        {
+          "id": "s01-rain-gate-flat-video",
+          "type": "flat-video",
+          "trigger": "beforeEnter",
+          "title": "5秒交互视频",
+          "src": "/videos/project-20260620-231058/s01-rain-gate.mp4",
+          "assetPath": "assets/videos/s01-rain-gate.mp4",
+          "skippable": false,
+          "loop": false,
+          "uploadedAt": "2026-06-20T18:15:02.260Z"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "校门灯在雨里晕开，失物招领箱夹着一封不该出现的信。",
+          "voiceProfileId": "s01-rain-gate-narrator-742556f5"
+        },
+        {
+          "speaker": "you",
+          "text": "第十五封愿望？校庆投稿不是只有十四封吗？",
+          "voiceProfileId": "s01-rain-gate-you-1bb199d4"
+        },
+        {
+          "speaker": "hua_rongli",
+          "text": "先别急着交出去，信封上的水痕比字更诚实。",
+          "voiceProfileId": "s01-rain-gate-hua-rongli-25516243"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hotspot-envelope",
+          "label": "湿信封",
+          "description": "信封封口被重新压过，边角沾着图书馆旧木柜的灰。",
+          "yaw": 174,
+          "pitch": -7,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "letter_seen",
+              "gate_envelope"
+            ],
+            "memories": [
+              "你确认第十五封信被人二次封存。"
+            ]
+          }
+        },
+        {
+          "id": "hotspot-lostbox",
+          "label": "失物招领箱",
+          "description": "箱底有一截银白羽毛书签，像从某本旧书里滑落。",
+          "yaw": -155,
+          "pitch": -10,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "silver_bookmark"
+            ],
+            "memories": [
+              "银白羽毛书签可能属于花容离。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice-open-letter",
+          "label": "拆开信，确认里面写了什么",
+          "next": "s02-orientation-room",
+          "fateType": "river",
+          "consequence": "你读到“愿望箱会替胆小的人说话”，真相线提前开启。",
+          "effect": {
+            "globals": {
+              "truth": 8
+            },
+            "flags": [
+              "read_letter"
+            ]
+          }
+        },
+        {
+          "id": "choice-keep-envelope",
+          "label": "先拍照留证，不破坏封口",
+          "next": "s02-orientation-room",
+          "fateType": "web",
+          "consequence": "你保留完整证据，之后能反驳伪造说法。",
+          "effect": {
+            "globals": {
+              "evidence": 8
+            },
+            "flags": [
+              "envelope_photo"
+            ]
+          }
+        },
+        {
+          "id": "choice-follow-bookmark",
+          "label": "追着银白书签的线索找花容离",
+          "next": "s06-reading-room-huarongli",
+          "fateType": "web",
+          "consequence": "你跳过公开流程，先接近最像旁观者的人。",
+          "effect": {
+            "relationships": {
+              "hua_rongli": {
+                "trust": 5
+              }
+            },
+            "flags": [
+              "followed_bookmark"
+            ]
+          }
+        }
+      ],
+      "musicLayers": {
+        "generated": {
+          "cueId": "bgm-s01-rainy-gate",
+          "source": "generated",
+          "src": "https://cdn1.suno.ai/ed0d326b-6987-490d-813c-43e34fd2f089.mp3",
+          "title": "校门雨夜"
+        },
+        "uploaded": {
+          "cueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+          "source": "uploaded",
+          "src": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+          "title": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+        }
+      },
+      "musicPlayback": {
+        "mode": "mix",
+        "generatedVolume": 0.72,
+        "uploadedVolume": 0.72,
+        "loop": true
+      },
+      "musicCueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+      "musicSrc": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+      "musicTitle": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+    },
+    "s02-orientation-room": {
+      "id": "s02-orientation-room",
+      "chapter": "第一章",
+      "title": "新生导览教室",
+      "location": "教学楼教室",
+      "panorama": "/panoramas/s02-orientation-room.png",
+      "palette": {
+        "from": "#111827",
+        "via": "#334155",
+        "to": "#d9b98f"
+      },
+      "synopsis": "三位主角首次同框，糖纸、名单、旧书同时指向第十五封信。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      },
+      "cinematics": [
+        {
+          "id": "s02-orientation-room-flat-video",
+          "type": "flat-video",
+          "trigger": "beforeEnter",
+          "title": "场景平面视频",
+          "src": "/videos/project-20260620-231058/s02-orientation-room-a25c40ea41.mp4",
+          "assetPath": "assets/videos/s02-orientation-room-a25c40ea41.mp4",
+          "skippable": false,
+          "loop": false,
+          "uploadedAt": "2026-06-21T00:57:53.188Z"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "wen_tianmo",
+          "text": "要不要尝一颗糖？也许线索就藏在甜味里。",
+          "voiceProfileId": "s02-orientation-room-wen-tianmo-4257c68d"
+        },
+        {
+          "speaker": "lin_wanqing",
+          "text": "名单先放这里。别让没有证据的话先跑出去。",
+          "voiceProfileId": "s02-orientation-room-lin-wanqing-d669a2d0"
+        },
+        {
+          "speaker": "hua_rongli",
+          "text": "有些愿望不是写出来的，是被人推上去的。",
+          "voiceProfileId": "s02-orientation-room-hua-rongli-4867900f"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hotspot-candy",
+          "label": "糖纸编号",
+          "description": "温甜茉的糖纸内侧印着采购批次十五号。",
+          "yaw": -35,
+          "pitch": 7,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "candy_batch_seen"
+            ],
+            "memories": [
+              "糖纸批次可以追到甜品社仓库。"
+            ]
+          }
+        },
+        {
+          "id": "hotspot-list",
+          "label": "导览名单",
+          "description": "林晚晴的名单上有一行被涂掉，旁边写着“去年”。",
+          "yaw": 35,
+          "pitch": 4,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "list_erasure_seen"
+            ],
+            "memories": [
+              "名单涂改和去年事件有关。"
+            ]
+          }
+        },
+        {
+          "id": "hotspot-old-book",
+          "label": "旧书边注",
+          "description": "花容离翻开的旧书边注写着“孤独的人会把愿望藏起来”。",
+          "yaw": 0,
+          "pitch": -4,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "book_margin_seen"
+            ],
+            "memories": [
+              "旧书边注与第十五封信语气相同。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice-candy",
+          "label": "接过温甜茉递来的糖",
+          "next": "s03-old-library-wishbox",
+          "fateType": "river",
+          "consequence": "她放松下来，愿意带你去甜品社看采购记录。",
+          "effect": {
+            "relationships": {
+              "wen_tianmo": {
+                "trust": 10
+              }
+            },
+            "flags": [
+              "route_tianmo_seed",
+              "candy_accepted"
+            ]
+          }
+        },
+        {
+          "id": "choice-list",
+          "label": "帮林晚晴核对导览名单",
+          "next": "s05-mirror-dressing-room",
+          "fateType": "river",
+          "consequence": "你看见名单截图的缺口，晚晴允许你继续查流程。",
+          "effect": {
+            "relationships": {
+              "lin_wanqing": {
+                "trust": 10
+              }
+            },
+            "flags": [
+              "list_screenshot_seed"
+            ]
+          }
+        },
+        {
+          "id": "choice-book",
+          "label": "追问花容离旧书从哪里来",
+          "next": "s03-old-library-wishbox",
+          "fateType": "web",
+          "consequence": "花容离没有否认，只把旧图书馆的位置告诉你。",
+          "effect": {
+            "relationships": {
+              "hua_rongli": {
+                "trust": 6
+              }
+            },
+            "flags": [
+              "library_location"
+            ]
+          }
+        }
+      ],
+      "musicLayers": {
+        "generated": {
+          "cueId": "bgm-s01-rainy-gate",
+          "source": "generated",
+          "src": "https://cdn1.suno.ai/ed0d326b-6987-490d-813c-43e34fd2f089.mp3",
+          "title": "校门雨夜"
+        },
+        "uploaded": {
+          "cueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+          "source": "uploaded",
+          "src": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+          "title": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+        }
+      },
+      "musicPlayback": {
+        "mode": "mix",
+        "generatedVolume": 0.72,
+        "uploadedVolume": 0.72,
+        "loop": true
+      },
+      "musicCueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+      "musicSrc": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+      "musicTitle": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+    },
+    "s03-old-library-wishbox": {
+      "id": "s03-old-library-wishbox",
+      "chapter": "第二章",
+      "title": "旧图书馆愿望箱",
+      "location": "旧图书馆",
+      "panorama": "/panoramas/s03-old-library-wishbox.png",
+      "palette": {
+        "from": "#111827",
+        "via": "#334155",
+        "to": "#d9b98f"
+      },
+      "synopsis": "旧愿望箱里本该有十四封信，现在多出一封；旁边的《百年孤独》和粉色丝带都像证物。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      },
+      "cinematics": [
+        {
+          "id": "s03-old-library-wishbox-flat-video",
+          "type": "flat-video",
+          "trigger": "beforeEnter",
+          "title": "场景平面视频",
+          "src": "/videos/project-20260620-231058/s03-old-library-wishbox-bcf9fc3ece.mp4",
+          "assetPath": "assets/videos/s03-old-library-wishbox-bcf9fc3ece.mp4",
+          "skippable": false,
+          "loop": false,
+          "uploadedAt": "2026-06-21T00:58:00.111Z"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "旧图书馆的木门吱呀一声，愿望箱在尘光里像一只闭上的眼。",
+          "voiceProfileId": "s03-old-library-wishbox-narrator-437ad658"
+        },
+        {
+          "speaker": "hua_rongli",
+          "text": "第十五封不属于箱子，它属于把箱子打开的人。",
+          "voiceProfileId": "s03-old-library-wishbox-hua-rongli-fbfe4663"
+        },
+        {
+          "speaker": "you",
+          "text": "那本书、那条丝带，还有锁孔，全都被人安排在这里。",
+          "voiceProfileId": "s03-old-library-wishbox-you-bfcb5d79"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hotspot-wishbox-lock",
+          "label": "愿望箱锁孔",
+          "description": "锁孔边缘有细细的黑色墨痕，像钢笔尖留下的。",
+          "yaw": 5,
+          "pitch": -8,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "lock_ink_seen"
+            ],
+            "memories": [
+              "锁孔上的墨痕和钢笔有关。"
+            ]
+          }
+        },
+        {
+          "id": "hotspot-garcia-book",
+          "label": "《百年孤独》",
+          "description": "旧书夹着银白羽毛书签，边注与信里语气相似。",
+          "yaw": -28,
+          "pitch": -6,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "book_found"
+            ],
+            "memories": [
+              "《百年孤独》是花容离线的关键物。"
+            ]
+          }
+        },
+        {
+          "id": "hotspot-pink-ribbon",
+          "label": "粉色丝带",
+          "description": "粉色丝带带着甜品社包装纸的香气。",
+          "yaw": 38,
+          "pitch": -4,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "pink_ribbon_seen"
+            ],
+            "memories": [
+              "丝带指向温甜茉。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice-take-book",
+          "label": "带走《百年孤独》",
+          "next": "s04-sweets-club",
+          "fateType": "web",
+          "consequence": "你获得能让花容离开口的旧书。",
+          "lockedHint": "先调查「《百年孤独》」，再尝试「带走《百年孤独》」。",
+          "condition": {
+            "flags": [
+              "book_found"
+            ]
+          },
+          "effect": {
+            "flags": [
+              "has_book"
+            ],
+            "relationships": {
+              "hua_rongli": {
+                "trust": 8
+              }
+            },
+            "globals": {
+              "evidence": 5
+            }
+          }
+        },
+        {
+          "id": "choice-take-ribbon",
+          "label": "拿走粉色丝带去问温甜茉",
+          "next": "s04-sweets-club",
+          "fateType": "river",
+          "consequence": "丝带的香气把你带回甜品社。",
+          "effect": {
+            "flags": [
+              "pink_ribbon"
+            ],
+            "relationships": {
+              "wen_tianmo": {
+                "trust": 4
+              }
+            }
+          }
+        },
+        {
+          "id": "choice-reset-box",
+          "label": "把愿望箱原样复位",
+          "next": "s05-mirror-dressing-room",
+          "fateType": "wheel",
+          "consequence": "你暂时不惊动开箱的人，换到学生会流程查证。",
+          "effect": {
+            "globals": {
+              "pressure": -3
+            },
+            "flags": [
+              "box_restored"
+            ]
+          }
+        }
+      ],
+      "musicLayers": {
+        "generated": {
+          "cueId": "bgm-s01-rainy-gate",
+          "source": "generated",
+          "src": "https://cdn1.suno.ai/ed0d326b-6987-490d-813c-43e34fd2f089.mp3",
+          "title": "校门雨夜"
+        },
+        "uploaded": {
+          "cueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+          "source": "uploaded",
+          "src": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+          "title": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+        }
+      },
+      "musicPlayback": {
+        "mode": "mix",
+        "generatedVolume": 0.72,
+        "uploadedVolume": 0.72,
+        "loop": true
+      },
+      "musicCueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+      "musicSrc": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+      "musicTitle": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+    },
+    "s04-sweets-club": {
+      "id": "s04-sweets-club",
+      "chapter": "第二章",
+      "title": "甜品社活动室",
+      "location": "甜品社活动室",
+      "panorama": "/panoramas/s04-sweets-club.png",
+      "palette": {
+        "from": "#111827",
+        "via": "#334155",
+        "to": "#d9b98f"
+      },
+      "synopsis": "温甜茉用可爱掩饰慌张，她的兔包里露出校庆旧票根。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      },
+      "cinematics": [
+        {
+          "id": "s04-sweets-club-flat-video",
+          "type": "flat-video",
+          "trigger": "beforeEnter",
+          "title": "场景平面视频",
+          "src": "/videos/project-20260620-231058/s04-sweets-club-f346f4fa1d.mp4",
+          "assetPath": "assets/videos/s04-sweets-club-f346f4fa1d.mp4",
+          "skippable": false,
+          "loop": false,
+          "uploadedAt": "2026-06-21T00:59:17.902Z"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "wen_tianmo",
+          "text": "别急着相信我，也别急着怀疑我，好吗？",
+          "voiceProfileId": "s04-sweets-club-wen-tianmo-5e95f947"
+        },
+        {
+          "speaker": "you",
+          "text": "你捡到过那封信？",
+          "voiceProfileId": "s04-sweets-club-you-5dca7c04"
+        },
+        {
+          "speaker": "wen_tianmo",
+          "text": "我只是害怕，说出来会连累另一个人。",
+          "voiceProfileId": "s04-sweets-club-wen-tianmo-5e95f947"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hotspot-bunny-bag",
+          "label": "兔包票根",
+          "description": "兔包夹层里露出去年校庆的入场票根。",
+          "yaw": -25,
+          "pitch": -2,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "ticket_stub_seen"
+            ],
+            "memories": [
+              "温甜茉去年也在现场。"
+            ]
+          }
+        },
+        {
+          "id": "hotspot-sugar-ledger",
+          "label": "糖纸采购单",
+          "description": "采购单上十五号批次只发给校庆彩排组。",
+          "yaw": 40,
+          "pitch": -6,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "purchase_record"
+            ],
+            "memories": [
+              "糖纸编号能证明信不是温甜茉投的。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice-gentle-ask",
+          "label": "温柔询问兔包里的票根",
+          "next": "s05-mirror-dressing-room",
+          "fateType": "river",
+          "consequence": "她承认捡到信，却坚持自己没有投进箱子。",
+          "effect": {
+            "flags": [
+              "route_tianmo",
+              "tianmo_confessed"
+            ],
+            "relationships": {
+              "wen_tianmo": {
+                "trust": 12
+              }
+            }
+          }
+        },
+        {
+          "id": "choice-photo-bag",
+          "label": "先拍下兔包和采购单",
+          "next": "s08-tianmo-storage",
+          "fateType": "web",
+          "consequence": "你得到采购记录，能在舞台上保护她。",
+          "lockedHint": "先调查「糖纸采购单」，再尝试「先拍下兔包和采购单」。",
+          "condition": {
+            "flags": [
+              "purchase_record"
+            ]
+          },
+          "effect": {
+            "flags": [
+              "route_tianmo",
+              "purchase_record"
+            ],
+            "globals": {
+              "evidence": 8
+            }
+          }
+        },
+        {
+          "id": "choice-hide-tianmo",
+          "label": "暂时替她隐瞒到过图书馆",
+          "next": "s07-rehearsal-hall",
+          "fateType": "wheel",
+          "consequence": "你降低了现场压力，但也让另一条指控更快扩散。",
+          "effect": {
+            "flags": [
+              "protected_tianmo"
+            ],
+            "globals": {
+              "pressure": -4
+            }
+          }
+        }
+      ],
+      "musicLayers": {
+        "generated": {
+          "cueId": "bgm-s01-rainy-gate",
+          "source": "generated",
+          "src": "https://cdn1.suno.ai/ed0d326b-6987-490d-813c-43e34fd2f089.mp3",
+          "title": "校门雨夜"
+        },
+        "uploaded": {
+          "cueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+          "source": "uploaded",
+          "src": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+          "title": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+        }
+      },
+      "musicPlayback": {
+        "mode": "mix",
+        "generatedVolume": 0.72,
+        "uploadedVolume": 0.72,
+        "loop": true
+      },
+      "musicCueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+      "musicSrc": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+      "musicTitle": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+    },
+    "s05-mirror-dressing-room": {
+      "id": "s05-mirror-dressing-room",
+      "chapter": "第二章",
+      "title": "镜前化妆间",
+      "location": "礼堂化妆间",
+      "panorama": "/panoramas/s05-mirror-dressing-room.png",
+      "palette": {
+        "from": "#111827",
+        "via": "#334155",
+        "to": "#d9b98f"
+      },
+      "synopsis": "林晚晴在镜前整理名单，冷静背后藏着去年没有说出的歉意。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      },
+      "cinematics": [
+        {
+          "id": "s05-mirror-dressing-room-flat-video",
+          "type": "flat-video",
+          "trigger": "beforeEnter",
+          "title": "场景平面视频",
+          "src": "/videos/project-20260620-231058/s05-mirror-dressing-room-95b8ff987f.mp4",
+          "assetPath": "assets/videos/s05-mirror-dressing-room-95b8ff987f.mp4",
+          "skippable": false,
+          "loop": false,
+          "uploadedAt": "2026-06-21T00:59:23.565Z"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "lin_wanqing",
+          "text": "镜子不会说谎，只是看见它的人会害怕。",
+          "voiceProfileId": "s05-mirror-dressing-room-lin-wanqing-54afbd7e"
+        },
+        {
+          "speaker": "you",
+          "text": "名单截图为什么只剩半张？",
+          "voiceProfileId": "s05-mirror-dressing-room-you-082a2b89"
+        },
+        {
+          "speaker": "lin_wanqing",
+          "text": "因为完整流程会让很多人都不好看。",
+          "voiceProfileId": "s05-mirror-dressing-room-lin-wanqing-54afbd7e"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hotspot-mirror-list",
+          "label": "镜后名单截图",
+          "description": "镜子背后夹着奖学金名单截图，时间戳来自去年校庆前夜。",
+          "yaw": 18,
+          "pitch": 2,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "screenshot_seen"
+            ],
+            "memories": [
+              "名单截图说明去年已有类似事件。"
+            ]
+          }
+        },
+        {
+          "id": "hotspot-pink-diary",
+          "label": "粉色日记本",
+          "description": "日记本第十四页被撕掉，压痕写着“别让她一个人背”。",
+          "yaw": -36,
+          "pitch": -5,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "diary_14_records"
+            ],
+            "memories": [
+              "第十四页压痕能解释林晚晴的隐瞒。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice-ask-list",
+          "label": "直接问名单截图从哪来",
+          "next": "s06-reading-room-huarongli",
+          "fateType": "river",
+          "consequence": "林晚晴承认自己早知道流程有漏洞。",
+          "effect": {
+            "flags": [
+              "route_wanqing",
+              "list_flow"
+            ],
+            "relationships": {
+              "lin_wanqing": {
+                "trust": 10
+              }
+            }
+          }
+        },
+        {
+          "id": "choice-shield-wanqing",
+          "label": "先帮她挡住围观同学",
+          "next": "s09-wanqing-office",
+          "fateType": "web",
+          "consequence": "她把去年删报道的事告诉你。",
+          "effect": {
+            "flags": [
+              "route_wanqing",
+              "wanqing_confessed"
+            ],
+            "relationships": {
+              "lin_wanqing": {
+                "trust": 12
+              }
+            }
+          }
+        },
+        {
+          "id": "choice-cross-check",
+          "label": "拿截图去找花容离交叉验证",
+          "next": "s06-reading-room-huarongli",
+          "fateType": "web",
+          "consequence": "花容离看见时间戳，终于承认旧校刊里有被删报道。",
+          "lockedHint": "先调查「镜后名单截图」，再尝试「拿截图去找花容离交叉验证」。",
+          "condition": {
+            "flags": [
+              "screenshot_seen"
+            ]
+          },
+          "effect": {
+            "flags": [
+              "screenshot_to_huarongli"
+            ],
+            "relationships": {
+              "hua_rongli": {
+                "trust": 6
+              }
+            }
+          }
+        }
+      ],
+      "musicLayers": {
+        "generated": {
+          "cueId": "bgm-s01-rainy-gate",
+          "source": "generated",
+          "src": "https://cdn1.suno.ai/ed0d326b-6987-490d-813c-43e34fd2f089.mp3",
+          "title": "校门雨夜"
+        },
+        "uploaded": {
+          "cueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+          "source": "uploaded",
+          "src": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+          "title": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+        }
+      },
+      "musicPlayback": {
+        "mode": "mix",
+        "generatedVolume": 0.72,
+        "uploadedVolume": 0.72,
+        "loop": true
+      },
+      "musicCueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+      "musicSrc": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+      "musicTitle": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+    },
+    "s06-reading-room-huarongli": {
+      "id": "s06-reading-room-huarongli",
+      "chapter": "第二章",
+      "title": "花容离阅览室",
+      "location": "图书馆阅览室",
+      "panorama": "/panoramas/s06-reading-room-huarongli.png",
+      "palette": {
+        "from": "#111827",
+        "via": "#334155",
+        "to": "#d9b98f"
+      },
+      "synopsis": "花容离独自修纪录片，钢笔墨迹和愿望箱锁孔痕迹相似。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      },
+      "cinematics": [
+        {
+          "id": "s06-reading-room-huarongli-flat-video",
+          "type": "flat-video",
+          "trigger": "beforeEnter",
+          "title": "5秒交互视频",
+          "src": "/videos/project-20260620-231058/s06-reading-room-huarongli.mp4",
+          "assetPath": "assets/videos/s06-reading-room-huarongli.mp4",
+          "skippable": false,
+          "loop": false,
+          "uploadedAt": "2026-06-20T18:15:02.260Z"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "hua_rongli",
+          "text": "这支笔确实开过箱。但我想保护的，不止一个人。",
+          "voiceProfileId": "s06-reading-room-huarongli-hua-rongli-b28f4acd"
+        },
+        {
+          "speaker": "you",
+          "text": "保护，还是替别人选择？",
+          "voiceProfileId": "s06-reading-room-huarongli-you-1c8956dc"
+        },
+        {
+          "speaker": "hua_rongli",
+          "text": "如果你能承受答案，我会把旧报道给你。",
+          "voiceProfileId": "s06-reading-room-huarongli-hua-rongli-b28f4acd"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hotspot-fountain-pen",
+          "label": "黑色钢笔",
+          "description": "钢笔尖残留的墨色与愿望箱锁孔吻合。",
+          "yaw": 18,
+          "pitch": -6,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "pen_match_seen"
+            ],
+            "memories": [
+              "花容离的钢笔开过愿望箱。"
+            ]
+          }
+        },
+        {
+          "id": "hotspot-edited-film",
+          "label": "纪录片时间线",
+          "description": "剪辑轨道里有一段被隐藏的旧校刊采访。",
+          "yaw": -42,
+          "pitch": -3,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "hidden_clip_seen"
+            ],
+            "memories": [
+              "纪录片里藏着旧报道。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice-question-pen",
+          "label": "质疑他的钢笔为什么开过箱",
+          "next": "s07-rehearsal-hall",
+          "fateType": "web",
+          "consequence": "他承认开箱，但要求你先看完整彩排投屏。",
+          "effect": {
+            "flags": [
+              "pen_questioned"
+            ],
+            "relationships": {
+              "hua_rongli": {
+                "trust": -2
+              }
+            }
+          }
+        },
+        {
+          "id": "choice-talk-book",
+          "label": "谈《百年孤独》的边注",
+          "next": "s10-secret-archive",
+          "fateType": "river",
+          "consequence": "旧书让花容离放下防备，带你进入档案室。",
+          "lockedHint": "此前还缺少「book」线索或状态，先完成相关场景调查。",
+          "condition": {
+            "flags": [
+              "has_book"
+            ]
+          },
+          "effect": {
+            "flags": [
+              "route_huarongli",
+              "old_report"
+            ],
+            "relationships": {
+              "hua_rongli": {
+                "trust": 14
+              }
+            }
+          }
+        },
+        {
+          "id": "choice-help-edit",
+          "label": "不追问，先帮他剪完纪录片",
+          "next": "s07-rehearsal-hall",
+          "fateType": "wheel",
+          "consequence": "他保留你的信任，彩排时会替你挡下一次误导。",
+          "effect": {
+            "flags": [
+              "helped_huarongli_edit"
+            ],
+            "relationships": {
+              "hua_rongli": {
+                "trust": 7
+              }
+            }
+          }
+        }
+      ],
+      "musicLayers": {
+        "generated": {
+          "cueId": "bgm-s01-rainy-gate",
+          "source": "generated",
+          "src": "https://cdn1.suno.ai/ed0d326b-6987-490d-813c-43e34fd2f089.mp3",
+          "title": "校门雨夜"
+        },
+        "uploaded": {
+          "cueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+          "source": "uploaded",
+          "src": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+          "title": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+        }
+      },
+      "musicPlayback": {
+        "mode": "mix",
+        "generatedVolume": 0.72,
+        "uploadedVolume": 0.72,
+        "loop": true
+      },
+      "musicCueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+      "musicSrc": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+      "musicTitle": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+    },
+    "s07-rehearsal-hall": {
+      "id": "s07-rehearsal-hall",
+      "chapter": "第三章",
+      "title": "校庆彩排礼堂",
+      "location": "礼堂",
+      "panorama": "/panoramas/s07-rehearsal-hall.png",
+      "palette": {
+        "from": "#111827",
+        "via": "#334155",
+        "to": "#d9b98f"
+      },
+      "synopsis": "告白墙投屏突然开始滚动，所有人的秘密都被推到灯光下。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      },
+      "cinematics": [
+        {
+          "id": "s07-rehearsal-hall-flat-video",
+          "type": "flat-video",
+          "trigger": "beforeEnter",
+          "title": "5秒交互视频",
+          "src": "/videos/project-20260620-231058/s07-rehearsal-hall.mp4",
+          "assetPath": "assets/videos/s07-rehearsal-hall.mp4",
+          "skippable": false,
+          "loop": false,
+          "uploadedAt": "2026-06-20T18:15:02.260Z"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "lin_wanqing",
+          "text": "我们先排练这一段。跟着灯光走，我把线索递给你。",
+          "voiceProfileId": "s07-rehearsal-hall-lin-wanqing-17ee5498"
+        },
+        {
+          "speaker": "narrator",
+          "text": "舞台灯缓慢亮起，线索卡从台侧递到你面前。",
+          "voiceProfileId": "s07-rehearsal-hall-narrator-ac55aaca"
+        },
+        {
+          "speaker": "you",
+          "text": "如果有人操控投屏，现在就是他最想看见混乱的时候。",
+          "voiceProfileId": "s07-rehearsal-hall-you-a4234f60"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hotspot-projection",
+          "label": "告白墙投影",
+          "description": "投影里出现剪碎的匿名句子，时间码来自后台预设。",
+          "yaw": 0,
+          "pitch": 0,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "projection_timer_seen"
+            ],
+            "memories": [
+              "告白墙内容是预设播放，不是现场投稿。"
+            ]
+          }
+        },
+        {
+          "id": "hotspot-cue-card",
+          "label": "线索卡",
+          "description": "线索卡上写着甜品社、学生会、旧校刊三个来源。",
+          "yaw": -22,
+          "pitch": -4,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "three_sources_seen"
+            ],
+            "memories": [
+              "三条线索需要汇合。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice-defend-tianmo",
+          "label": "先替温甜茉稳住现场",
+          "next": "s08-tianmo-storage",
+          "fateType": "river",
+          "consequence": "你让她不用在嘈杂中自证，之后她愿意给你仓库钥匙。",
+          "effect": {
+            "flags": [
+              "route_tianmo",
+              "tianmo_key"
+            ],
+            "relationships": {
+              "wen_tianmo": {
+                "trust": 8
+              }
+            }
+          }
+        },
+        {
+          "id": "choice-let-wanqing-speak",
+          "label": "让林晚晴公布流程",
+          "next": "s09-wanqing-office",
+          "fateType": "web",
+          "consequence": "她把流程图交给你，但要求你不要剪掉去年部分。",
+          "effect": {
+            "flags": [
+              "route_wanqing",
+              "list_flow"
+            ],
+            "relationships": {
+              "lin_wanqing": {
+                "trust": 8
+              }
+            }
+          }
+        },
+        {
+          "id": "choice-stop-stream",
+          "label": "看向花容离，要求暂停直播",
+          "next": "s10-secret-archive",
+          "fateType": "web",
+          "consequence": "花容离停下投屏，把旧校刊档案入口交给你。",
+          "effect": {
+            "flags": [
+              "route_huarongli",
+              "stream_paused"
+            ],
+            "relationships": {
+              "hua_rongli": {
+                "trust": 8
+              }
+            }
+          }
+        }
+      ],
+      "musicLayers": {
+        "generated": {
+          "cueId": "bgm-s01-rainy-gate",
+          "source": "generated",
+          "src": "https://cdn1.suno.ai/ed0d326b-6987-490d-813c-43e34fd2f089.mp3",
+          "title": "校门雨夜"
+        },
+        "uploaded": {
+          "cueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+          "source": "uploaded",
+          "src": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+          "title": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+        }
+      },
+      "musicPlayback": {
+        "mode": "mix",
+        "generatedVolume": 0.72,
+        "uploadedVolume": 0.72,
+        "loop": true
+      },
+      "musicCueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+      "musicSrc": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+      "musicTitle": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+    },
+    "s08-tianmo-storage": {
+      "id": "s08-tianmo-storage",
+      "chapter": "第三章",
+      "title": "温甜茉支线：甜品社仓库",
+      "location": "甜品社仓库",
+      "panorama": "/panoramas/s08-tianmo-storage.png",
+      "palette": {
+        "from": "#111827",
+        "via": "#334155",
+        "to": "#d9b98f"
+      },
+      "synopsis": "温甜茉承认捡到信，但她没有投进去；糖纸编号能证明她只是被选中的替罪羊。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      },
+      "cinematics": [
+        {
+          "id": "s08-tianmo-storage-flat-video",
+          "type": "flat-video",
+          "trigger": "beforeEnter",
+          "title": "场景平面视频",
+          "src": "/videos/project-20260620-231058/s08-tianmo-storage-0e3ee7a498.mp4",
+          "assetPath": "assets/videos/s08-tianmo-storage-0e3ee7a498.mp4",
+          "skippable": false,
+          "loop": false,
+          "uploadedAt": "2026-06-21T00:59:43.747Z"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "wen_tianmo",
+          "text": "我捡到了那封信，可我真的没有投进去。",
+          "voiceProfileId": "s08-tianmo-storage-wen-tianmo-dd3eb518"
+        },
+        {
+          "speaker": "you",
+          "text": "你害怕的不是被怀疑，是喜欢的人被一起拖下水。",
+          "voiceProfileId": "s08-tianmo-storage-you-0bb5f345"
+        },
+        {
+          "speaker": "wen_tianmo",
+          "text": "如果要公开，请让我自己说。",
+          "voiceProfileId": "s08-tianmo-storage-wen-tianmo-dd3eb518"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hotspot-storage-ledger",
+          "label": "仓库出入表",
+          "description": "出入表显示第十五号糖纸在彩排前被别人领走。",
+          "yaw": 34,
+          "pitch": -6,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "purchase_record"
+            ],
+            "memories": [
+              "采购记录排除了温甜茉投信。"
+            ]
+          }
+        },
+        {
+          "id": "hotspot-unsent-note",
+          "label": "未送出的便签",
+          "description": "便签上只有一句“别让她替我道歉”。",
+          "yaw": -28,
+          "pitch": -5,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "tianmo_note"
+            ],
+            "memories": [
+              "温甜茉在保护别人。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice-protect-name",
+          "label": "保护她，不逼问喜欢的人是谁",
+          "next": "s09-wanqing-office",
+          "fateType": "river",
+          "consequence": "她选择自己上台说明捡信经过。",
+          "effect": {
+            "flags": [
+              "route_tianmo",
+              "tianmo_ready",
+              "purchase_record"
+            ],
+            "relationships": {
+              "wen_tianmo": {
+                "trust": 12
+              }
+            }
+          }
+        },
+        {
+          "id": "choice-check-purchase",
+          "label": "拿糖纸编号去查采购记录",
+          "next": "s11-rooftop-confrontation",
+          "fateType": "web",
+          "consequence": "你得到能公开展示的物证。",
+          "effect": {
+            "flags": [
+              "route_tianmo",
+              "purchase_record"
+            ],
+            "globals": {
+              "evidence": 10
+            }
+          }
+        },
+        {
+          "id": "choice-force-name",
+          "label": "追问她想保护的人",
+          "next": "s11-rooftop-confrontation",
+          "fateType": "wheel",
+          "consequence": "她没有回答，但沉默让你意识到三人都在互相保护。",
+          "effect": {
+            "flags": [
+              "protection_triangle_seen"
+            ],
+            "globals": {
+              "pressure": 4
+            }
+          }
+        }
+      ],
+      "musicLayers": {
+        "generated": {
+          "cueId": "bgm-s01-rainy-gate",
+          "source": "generated",
+          "src": "https://cdn1.suno.ai/ed0d326b-6987-490d-813c-43e34fd2f089.mp3",
+          "title": "校门雨夜"
+        },
+        "uploaded": {
+          "cueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+          "source": "uploaded",
+          "src": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+          "title": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+        }
+      },
+      "musicPlayback": {
+        "mode": "mix",
+        "generatedVolume": 0.72,
+        "uploadedVolume": 0.72,
+        "loop": true
+      },
+      "musicCueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+      "musicSrc": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+      "musicTitle": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+    },
+    "s09-wanqing-office": {
+      "id": "s09-wanqing-office",
+      "chapter": "第三章",
+      "title": "林晚晴支线：学生会办公室",
+      "location": "学生会办公室",
+      "panorama": "/panoramas/s09-wanqing-office.png",
+      "palette": {
+        "from": "#111827",
+        "via": "#334155",
+        "to": "#d9b98f"
+      },
+      "synopsis": "林晚晴承认自己去年删过报道，她不是幕后黑手，却是沉默链条的一环。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      },
+      "cinematics": [
+        {
+          "id": "s09-wanqing-office-flat-video",
+          "type": "flat-video",
+          "trigger": "beforeEnter",
+          "title": "场景平面视频",
+          "src": "/videos/project-20260620-231058/s09-wanqing-office-346c3a7f9a.mp4",
+          "assetPath": "assets/videos/s09-wanqing-office-346c3a7f9a.mp4",
+          "skippable": false,
+          "loop": false,
+          "uploadedAt": "2026-06-21T00:59:49.432Z"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "lin_wanqing",
+          "text": "去年也有第十五封信。那次，我们都沉默了。",
+          "voiceProfileId": "s09-wanqing-office-lin-wanqing-de621644"
+        },
+        {
+          "speaker": "you",
+          "text": "所以你今年才想把流程握在自己手里。",
+          "voiceProfileId": "s09-wanqing-office-you-f879fead"
+        },
+        {
+          "speaker": "lin_wanqing",
+          "text": "控制不是正义。公开才是。",
+          "voiceProfileId": "s09-wanqing-office-lin-wanqing-de621644"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hotspot-flow-chart",
+          "label": "名单流转图",
+          "description": "名单从学生会、教务系统到告白墙后台，存在一段无人签收的空白。",
+          "yaw": 12,
+          "pitch": -4,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "list_flow"
+            ],
+            "memories": [
+              "名单流转图能解释截图来源。"
+            ]
+          }
+        },
+        {
+          "id": "hotspot-deleted-report",
+          "label": "删稿记录",
+          "description": "删稿记录显示去年旧校刊报道被临时撤下。",
+          "yaw": -38,
+          "pitch": -3,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "deleted_report_record"
+            ],
+            "memories": [
+              "林晚晴承认去年删稿。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice-believe-wanqing",
+          "label": "相信她的判断，让她补完流程",
+          "next": "s10-secret-archive",
+          "fateType": "river",
+          "consequence": "她把名单流程完整交给你。",
+          "effect": {
+            "flags": [
+              "route_wanqing",
+              "list_flow"
+            ],
+            "relationships": {
+              "lin_wanqing": {
+                "trust": 12
+              }
+            }
+          }
+        },
+        {
+          "id": "choice-ask-last-year",
+          "label": "追问她为什么隐瞒去年事件",
+          "next": "s10-secret-archive",
+          "fateType": "web",
+          "consequence": "她把你带到旧校刊档案前，让你亲自看删掉的报道。",
+          "effect": {
+            "flags": [
+              "deleted_report_record"
+            ],
+            "globals": {
+              "truth": 7
+            }
+          }
+        },
+        {
+          "id": "choice-public-all-records",
+          "label": "要求她一起公开全部记录",
+          "next": "s11-rooftop-confrontation",
+          "fateType": "web",
+          "consequence": "截图和日记压痕合在一起，她愿意承担删稿责任。",
+          "lockedHint": "此前还缺少「diary 14 records、screenshot seen」线索或状态，先完成相关场景调查。",
+          "condition": {
+            "flags": [
+              "diary_14_records",
+              "screenshot_seen"
+            ]
+          },
+          "effect": {
+            "flags": [
+              "route_wanqing",
+              "wanqing_ready",
+              "list_flow"
+            ],
+            "relationships": {
+              "lin_wanqing": {
+                "trust": 10
+              }
+            }
+          }
+        }
+      ],
+      "musicLayers": {
+        "generated": {
+          "cueId": "bgm-s01-rainy-gate",
+          "source": "generated",
+          "src": "https://cdn1.suno.ai/ed0d326b-6987-490d-813c-43e34fd2f089.mp3",
+          "title": "校门雨夜"
+        },
+        "uploaded": {
+          "cueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+          "source": "uploaded",
+          "src": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+          "title": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+        }
+      },
+      "musicPlayback": {
+        "mode": "mix",
+        "generatedVolume": 0.72,
+        "uploadedVolume": 0.72,
+        "loop": true
+      },
+      "musicCueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+      "musicSrc": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+      "musicTitle": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+    },
+    "s10-secret-archive": {
+      "id": "s10-secret-archive",
+      "chapter": "第三章",
+      "title": "花容离隐藏线：旧校刊档案室",
+      "location": "旧校刊档案室",
+      "panorama": "/panoramas/s10-secret-archive.png",
+      "palette": {
+        "from": "#111827",
+        "via": "#334155",
+        "to": "#d9b98f"
+      },
+      "synopsis": "旧报道揭开去年匿名墙不是恋爱纠纷，而是一场操控舆论的试演。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      },
+      "cinematics": [
+        {
+          "id": "s10-secret-archive-flat-video",
+          "type": "flat-video",
+          "trigger": "beforeEnter",
+          "title": "场景平面视频",
+          "src": "/videos/project-20260620-231058/s10-secret-archive-e77effac5b.mp4",
+          "assetPath": "assets/videos/s10-secret-archive-e77effac5b.mp4",
+          "skippable": false,
+          "loop": false,
+          "uploadedAt": "2026-06-21T00:59:56.072Z"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "hua_rongli",
+          "text": "旧报道没有消失，它只是等一个敢打开的人。",
+          "voiceProfileId": "s10-secret-archive-hua-rongli-538ae037"
+        },
+        {
+          "speaker": "you",
+          "text": "你一直知道真相，为什么不自己公开？",
+          "voiceProfileId": "s10-secret-archive-you-b46b9a49"
+        },
+        {
+          "speaker": "hua_rongli",
+          "text": "因为替别人做正确选择，也是一种傲慢。",
+          "voiceProfileId": "s10-secret-archive-hua-rongli-538ae037"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hotspot-old-report",
+          "label": "被删旧报道",
+          "description": "报道记录去年第十五封愿望引发的名单泄露。",
+          "yaw": 8,
+          "pitch": -5,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "old_report"
+            ],
+            "memories": [
+              "旧报道证明今年事件有前史。"
+            ]
+          }
+        },
+        {
+          "id": "hotspot-backend-key",
+          "label": "后台密钥便签",
+          "description": "便签上的临时密钥曾登录告白墙后台。",
+          "yaw": -32,
+          "pitch": -4,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "wall_backend_key"
+            ],
+            "memories": [
+              "后台密钥把三条支线串起来。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice-read-report",
+          "label": "读取被删报道",
+          "next": "s11-rooftop-confrontation",
+          "fateType": "river",
+          "consequence": "你得到去年事件的关键证据。",
+          "effect": {
+            "flags": [
+              "route_huarongli",
+              "old_report"
+            ],
+            "globals": {
+              "truth": 12
+            }
+          }
+        },
+        {
+          "id": "choice-ask-open-box",
+          "label": "问花容离为什么替人开箱",
+          "next": "s11-rooftop-confrontation",
+          "fateType": "web",
+          "consequence": "他承认开箱是为了阻止替罪羊出现。",
+          "effect": {
+            "flags": [
+              "route_huarongli",
+              "pen_confession"
+            ],
+            "relationships": {
+              "hua_rongli": {
+                "trust": 12
+              }
+            }
+          }
+        },
+        {
+          "id": "choice-suspect-hua",
+          "label": "怀疑花容离就是幕后操控者",
+          "next": "s11-rooftop-confrontation",
+          "fateType": "wheel",
+          "consequence": "你的怀疑逼他公开后台密钥来源。",
+          "effect": {
+            "flags": [
+              "route_huarongli",
+              "wall_backend_key"
+            ],
+            "globals": {
+              "pressure": 5
+            }
+          }
+        }
+      ],
+      "musicLayers": {
+        "generated": {
+          "cueId": "bgm-s01-rainy-gate",
+          "source": "generated",
+          "src": "https://cdn1.suno.ai/ed0d326b-6987-490d-813c-43e34fd2f089.mp3",
+          "title": "校门雨夜"
+        },
+        "uploaded": {
+          "cueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+          "source": "uploaded",
+          "src": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+          "title": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+        }
+      },
+      "musicPlayback": {
+        "mode": "mix",
+        "generatedVolume": 0.72,
+        "uploadedVolume": 0.72,
+        "loop": true
+      },
+      "musicCueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+      "musicSrc": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+      "musicTitle": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+    },
+    "s11-rooftop-confrontation": {
+      "id": "s11-rooftop-confrontation",
+      "chapter": "第四章",
+      "title": "天台对质",
+      "location": "教学楼天台",
+      "panorama": "/panoramas/s11-rooftop-confrontation.png",
+      "palette": {
+        "from": "#111827",
+        "via": "#334155",
+        "to": "#d9b98f"
+      },
+      "synopsis": "雨停后，三人在天台对质；他们都犯过错，但都不是幕后操控者。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      },
+      "cinematics": [
+        {
+          "id": "s11-rooftop-confrontation-flat-video",
+          "type": "flat-video",
+          "trigger": "beforeEnter",
+          "title": "场景平面视频",
+          "src": "/videos/project-20260620-231058/s11-rooftop-confrontation-3ef1152696.mp4",
+          "assetPath": "assets/videos/s11-rooftop-confrontation-3ef1152696.mp4",
+          "skippable": false,
+          "loop": false,
+          "uploadedAt": "2026-06-21T01:00:01.278Z"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "hua_rongli",
+          "text": "让他们一起说吧。今晚，不该再有人替别人选择。",
+          "voiceProfileId": "s11-rooftop-confrontation-hua-rongli-17c9b97a"
+        },
+        {
+          "speaker": "wen_tianmo",
+          "text": "我可以说我捡到了信，但我不想再被当成笑话。",
+          "voiceProfileId": "s11-rooftop-confrontation-wen-tianmo-1bde3365"
+        },
+        {
+          "speaker": "lin_wanqing",
+          "text": "我会承认删稿，也会把流程公开。",
+          "voiceProfileId": "s11-rooftop-confrontation-lin-wanqing-f28acf7b"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hotspot-three-evidence",
+          "label": "三份证据",
+          "description": "糖纸采购、名单流程、旧校刊报道并排放在天台栏杆上。",
+          "yaw": 0,
+          "pitch": -5,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "evidence_bundle_seen"
+            ],
+            "memories": [
+              "三份证据可以支持真结局。"
+            ]
+          }
+        },
+        {
+          "id": "hotspot-campus-broadcast",
+          "label": "校园广播",
+          "description": "广播室仍连着校庆舞台，最后一次公开即将开始。",
+          "yaw": 55,
+          "pitch": -2,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "broadcast_ready"
+            ],
+            "memories": [
+              "校庆舞台是最终公开场。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice-tianmo-first",
+          "label": "让温甜茉先说捡信经过",
+          "next": "s12-festival-stage-final-choice",
+          "fateType": "river",
+          "consequence": "她不再逃避，甜茉线结局开启。",
+          "effect": {
+            "flags": [
+              "route_tianmo",
+              "stage_tianmo_first"
+            ],
+            "relationships": {
+              "wen_tianmo": {
+                "trust": 6
+              }
+            }
+          }
+        },
+        {
+          "id": "choice-wanqing-first",
+          "label": "让林晚晴先说名单流程",
+          "next": "s12-festival-stage-final-choice",
+          "fateType": "river",
+          "consequence": "她承认删稿和流程漏洞，晚晴线结局开启。",
+          "effect": {
+            "flags": [
+              "route_wanqing",
+              "stage_wanqing_first"
+            ],
+            "relationships": {
+              "lin_wanqing": {
+                "trust": 6
+              }
+            }
+          }
+        },
+        {
+          "id": "choice-hua-first",
+          "label": "让花容离先公开旧报道",
+          "next": "s12-festival-stage-final-choice",
+          "fateType": "web",
+          "consequence": "他把选择还给当事人，花容离线结局开启。",
+          "effect": {
+            "flags": [
+              "route_huarongli",
+              "stage_hua_first"
+            ],
+            "relationships": {
+              "hua_rongli": {
+                "trust": 6
+              }
+            }
+          }
+        },
+        {
+          "id": "choice-all-evidence",
+          "label": "拿出三份证据，要求一起说",
+          "next": "s12-festival-stage-final-choice",
+          "fateType": "web",
+          "consequence": "三条支线同时闭合，真结局开启。",
+          "lockedHint": "此前还缺少「old report、list flow、purchase record」线索或状态，先完成相关场景调查。",
+          "condition": {
+            "flags": [
+              "old_report",
+              "list_flow",
+              "purchase_record"
+            ]
+          },
+          "effect": {
+            "flags": [
+              "evidence_bundle",
+              "route_tianmo",
+              "route_wanqing",
+              "route_huarongli"
+            ],
+            "globals": {
+              "truth": 20,
+              "evidence": 20
+            }
+          }
+        }
+      ],
+      "musicLayers": {
+        "generated": {
+          "cueId": "bgm-s01-rainy-gate",
+          "source": "generated",
+          "src": "https://cdn1.suno.ai/ed0d326b-6987-490d-813c-43e34fd2f089.mp3",
+          "title": "校门雨夜"
+        },
+        "uploaded": {
+          "cueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+          "source": "uploaded",
+          "src": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+          "title": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+        }
+      },
+      "musicPlayback": {
+        "mode": "mix",
+        "generatedVolume": 0.72,
+        "uploadedVolume": 0.72,
+        "loop": true
+      },
+      "musicCueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+      "musicSrc": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+      "musicTitle": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+    },
+    "s12-festival-stage-final-choice": {
+      "id": "s12-festival-stage-final-choice",
+      "chapter": "终章",
+      "title": "校庆舞台：最终选择",
+      "location": "校庆舞台",
+      "panorama": "/panoramas/s12-festival-stage-final-choice.png",
+      "palette": {
+        "from": "#111827",
+        "via": "#334155",
+        "to": "#d9b98f"
+      },
+      "synopsis": "纪录片开始播放，玩家决定公开哪一版真相。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 100
+      },
+      "cinematics": [
+        {
+          "id": "s12-festival-stage-final-choice-flat-video",
+          "type": "flat-video",
+          "trigger": "beforeEnter",
+          "title": "5秒交互视频",
+          "src": "/videos/project-20260620-231058/s12-festival-stage-final-choice.mp4",
+          "assetPath": "assets/videos/s12-festival-stage-final-choice.mp4",
+          "skippable": false,
+          "loop": false,
+          "uploadedAt": "2026-06-20T18:15:02.260Z"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "lin_wanqing",
+          "text": "纪录片开始播放。你选择公开哪一个真相？",
+          "voiceProfileId": "s12-festival-stage-final-choice-lin-wanqing-8d2bad1e"
+        },
+        {
+          "speaker": "narrator",
+          "text": "舞台灯亮到最白，所有手机镜头都对准大屏。",
+          "voiceProfileId": "s12-festival-stage-final-choice-narrator-c02ce23d"
+        },
+        {
+          "speaker": "you",
+          "text": "这一次，不让任何人替另一个人沉默。",
+          "voiceProfileId": "s12-festival-stage-final-choice-you-c83dd74e"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hotspot-projector-switch",
+          "label": "投影控制台",
+          "description": "控制台可以切换温甜茉自白、名单流程、旧报道和完整合辑。",
+          "yaw": 0,
+          "pitch": -5,
+          "effect": {
+            "globals": {
+              "evidence": 2
+            },
+            "flags": [
+              "projector_ready"
+            ],
+            "memories": [
+              "投影控制台决定最终结局。"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice-ending-tianmo",
+          "label": "播温甜茉的自白",
+          "next": "e01-sweet-echo",
+          "fateType": "river",
+          "consequence": "你选择先保护被推到台前的人。",
+          "lockedHint": "此前还缺少「route tianmo」线索或状态，先完成相关场景调查。",
+          "condition": {
+            "flags": [
+              "route_tianmo"
+            ]
+          },
+          "effect": {
+            "flags": [
+              "ended_tianmo"
+            ],
+            "globals": {
+              "public_truth": 30
+            }
+          }
+        },
+        {
+          "id": "choice-ending-wanqing",
+          "label": "播林晚晴的名单流程",
+          "next": "e02-clear-mirror",
+          "fateType": "river",
+          "consequence": "你选择先修复制度流程里的沉默。",
+          "lockedHint": "此前还缺少「route wanqing」线索或状态，先完成相关场景调查。",
+          "condition": {
+            "flags": [
+              "route_wanqing"
+            ]
+          },
+          "effect": {
+            "flags": [
+              "ended_wanqing"
+            ],
+            "globals": {
+              "public_truth": 35
+            }
+          }
+        },
+        {
+          "id": "choice-ending-hua",
+          "label": "播花容离的旧校刊报道",
+          "next": "e03-prince-pages",
+          "fateType": "web",
+          "consequence": "你选择公开过去，让花容离不再独自保管真相。",
+          "lockedHint": "此前还缺少「route huarongli」线索或状态，先完成相关场景调查。",
+          "condition": {
+            "flags": [
+              "route_huarongli"
+            ]
+          },
+          "effect": {
+            "flags": [
+              "ended_huarongli"
+            ],
+            "globals": {
+              "public_truth": 38
+            }
+          }
+        },
+        {
+          "id": "choice-ending-true",
+          "label": "播放三份证据合辑，重写第十五封愿望",
+          "next": "e04-fifteenth-wish-true-ending",
+          "fateType": "web",
+          "consequence": "你让三个人共同说出真相，第十五封愿望不再属于匿名墙。",
+          "lockedHint": "此前还缺少「evidence bundle、first chose huarongli」线索或状态，先完成相关场景调查。",
+          "condition": {
+            "flags": [
+              "evidence_bundle",
+              "first_chose_huarongli"
+            ]
+          },
+          "effect": {
+            "flags": [
+              "ended_true"
+            ],
+            "globals": {
+              "public_truth": 50
+            }
+          }
+        }
+      ],
+      "musicLayers": {
+        "generated": {
+          "cueId": "bgm-s01-rainy-gate",
+          "source": "generated",
+          "src": "https://cdn1.suno.ai/ed0d326b-6987-490d-813c-43e34fd2f089.mp3",
+          "title": "校门雨夜"
+        },
+        "uploaded": {
+          "cueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+          "source": "uploaded",
+          "src": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+          "title": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+        }
+      },
+      "musicPlayback": {
+        "mode": "mix",
+        "generatedVolume": 0.72,
+        "uploadedVolume": 0.72,
+        "loop": true
+      },
+      "musicCueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+      "musicSrc": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+      "musicTitle": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+    },
+    "e01-sweet-echo": {
+      "id": "e01-sweet-echo",
+      "chapter": "结局",
+      "title": "甜梦留声",
+      "location": "校庆舞台",
+      "panorama": "/panoramas/e01-sweet-echo.png",
+      "palette": {
+        "from": "#111827",
+        "via": "#334155",
+        "to": "#d9b98f"
+      },
+      "synopsis": "温甜茉在舞台上承认自己捡到信，却没有再替别人背锅。她的可爱不再是逃避，而是重新站起来的方式。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 95
+      },
+      "cinematics": [
+        {
+          "id": "e01-sweet-echo-flat-video",
+          "type": "flat-video",
+          "trigger": "beforeEnter",
+          "title": "场景平面视频",
+          "src": "/videos/project-20260620-231058/e01-sweet-echo-fb3c24400b.mp4",
+          "assetPath": "assets/videos/e01-sweet-echo-fb3c24400b.mp4",
+          "skippable": false,
+          "loop": false,
+          "uploadedAt": "2026-06-21T00:40:26.673Z"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "wen_tianmo",
+          "text": "这一次，我想自己站出来。谢谢你没有替我逃开。",
+          "voiceProfileId": "e01-sweet-echo-wen-tianmo-ec56e31c"
+        },
+        {
+          "speaker": "narrator",
+          "text": "甜味散在礼堂里，像迟到很久的勇气。",
+          "voiceProfileId": "e01-sweet-echo-narrator-8c5e2700"
+        }
+      ],
+      "hotspots": [],
+      "choices": [],
+      "ending": {
+        "title": "甜梦留声",
+        "subtitle": "温甜茉在舞台上承认自己捡到信，却没有再替别人背锅。她的可爱不再是逃避，而是重新站起来的方式。",
+        "type": "growth"
+      },
+      "musicLayers": {
+        "generated": {
+          "cueId": "bgm-s01-rainy-gate",
+          "source": "generated",
+          "src": "https://cdn1.suno.ai/ed0d326b-6987-490d-813c-43e34fd2f089.mp3",
+          "title": "校门雨夜"
+        },
+        "uploaded": {
+          "cueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+          "source": "uploaded",
+          "src": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+          "title": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+        }
+      },
+      "musicPlayback": {
+        "mode": "mix",
+        "generatedVolume": 0.72,
+        "uploadedVolume": 0.72,
+        "loop": true
+      },
+      "musicCueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+      "musicSrc": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+      "musicTitle": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+    },
+    "e02-clear-mirror": {
+      "id": "e02-clear-mirror",
+      "chapter": "结局",
+      "title": "明镜不负",
+      "location": "校庆舞台",
+      "panorama": "/panoramas/e02-clear-mirror.png",
+      "palette": {
+        "from": "#111827",
+        "via": "#334155",
+        "to": "#d9b98f"
+      },
+      "synopsis": "林晚晴公开名单流转流程，也承认去年删稿的错误。镜子终于不再只照见她一个人的责任。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 95
+      },
+      "cinematics": [
+        {
+          "id": "e02-clear-mirror-flat-video",
+          "type": "flat-video",
+          "trigger": "beforeEnter",
+          "title": "场景平面视频",
+          "src": "/videos/project-20260620-231058/e02-clear-mirror-0c9247c468.mp4",
+          "assetPath": "assets/videos/e02-clear-mirror-0c9247c468.mp4",
+          "skippable": false,
+          "loop": false,
+          "uploadedAt": "2026-06-21T01:00:22.921Z"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "lin_wanqing",
+          "text": "真实不该需要许可。哪怕代价由我承担。",
+          "voiceProfileId": "e02-clear-mirror-lin-wanqing-6ecabcb2"
+        },
+        {
+          "speaker": "narrator",
+          "text": "镜面反光落在舞台上，像一份迟来的道歉。",
+          "voiceProfileId": "e02-clear-mirror-narrator-85367b64"
+        }
+      ],
+      "hotspots": [],
+      "choices": [],
+      "ending": {
+        "title": "明镜不负",
+        "subtitle": "林晚晴公开名单流转流程，也承认去年删稿的错误。镜子终于不再只照见她一个人的责任。",
+        "type": "growth"
+      },
+      "musicLayers": {
+        "generated": {
+          "cueId": "bgm-s01-rainy-gate",
+          "source": "generated",
+          "src": "https://cdn1.suno.ai/ed0d326b-6987-490d-813c-43e34fd2f089.mp3",
+          "title": "校门雨夜"
+        },
+        "uploaded": {
+          "cueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+          "source": "uploaded",
+          "src": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+          "title": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+        }
+      },
+      "musicPlayback": {
+        "mode": "mix",
+        "generatedVolume": 0.72,
+        "uploadedVolume": 0.72,
+        "loop": true
+      },
+      "musicCueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+      "musicSrc": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+      "musicTitle": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+    },
+    "e03-prince-pages": {
+      "id": "e03-prince-pages",
+      "chapter": "结局",
+      "title": "皇子书页",
+      "location": "校庆舞台",
+      "panorama": "/panoramas/e03-prince-pages.png",
+      "palette": {
+        "from": "#111827",
+        "via": "#334155",
+        "to": "#d9b98f"
+      },
+      "synopsis": "花容离把旧报道交给校刊，承认自己曾打开愿望箱。温柔不再是替别人决定，而是陪他们说完。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 95
+      },
+      "cinematics": [
+        {
+          "id": "e03-prince-pages-flat-video",
+          "type": "flat-video",
+          "trigger": "beforeEnter",
+          "title": "场景平面视频",
+          "src": "/videos/project-20260620-231058/e03-prince-pages-06ddacd477.mp4",
+          "assetPath": "assets/videos/e03-prince-pages-06ddacd477.mp4",
+          "skippable": false,
+          "loop": false,
+          "uploadedAt": "2026-06-21T01:00:29.233Z"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "hua_rongli",
+          "text": "我会把选择还给你，也把真相还给所有人。",
+          "voiceProfileId": "e03-prince-pages-hua-rongli-879208fc"
+        },
+        {
+          "speaker": "narrator",
+          "text": "银白羽毛落进书页，像一枚终于解除的封印。",
+          "voiceProfileId": "e03-prince-pages-narrator-e4ba5fa0"
+        }
+      ],
+      "hotspots": [],
+      "choices": [],
+      "ending": {
+        "title": "皇子书页",
+        "subtitle": "花容离把旧报道交给校刊，承认自己曾打开愿望箱。温柔不再是替别人决定，而是陪他们说完。",
+        "type": "romance"
+      },
+      "musicLayers": {
+        "generated": {
+          "cueId": "bgm-s01-rainy-gate",
+          "source": "generated",
+          "src": "https://cdn1.suno.ai/ed0d326b-6987-490d-813c-43e34fd2f089.mp3",
+          "title": "校门雨夜"
+        },
+        "uploaded": {
+          "cueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+          "source": "uploaded",
+          "src": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+          "title": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+        }
+      },
+      "musicPlayback": {
+        "mode": "mix",
+        "generatedVolume": 0.72,
+        "uploadedVolume": 0.72,
+        "loop": true
+      },
+      "musicCueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+      "musicSrc": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+      "musicTitle": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+    },
+    "e04-fifteenth-wish-true-ending": {
+      "id": "e04-fifteenth-wish-true-ending",
+      "chapter": "结局",
+      "title": "第十五封愿望",
+      "location": "校庆舞台",
+      "panorama": "/panoramas/e04-fifteenth-wish-true-ending.png",
+      "palette": {
+        "from": "#111827",
+        "via": "#334155",
+        "to": "#d9b98f"
+      },
+      "synopsis": "三份证据同时公开，匿名墙被关闭重建。第十五封愿望被改写成一句公开署名的道歉。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 95
+      },
+      "cinematics": [
+        {
+          "id": "e04-fifteenth-wish-true-ending-flat-video",
+          "type": "flat-video",
+          "trigger": "beforeEnter",
+          "title": "场景平面视频",
+          "src": "/videos/project-20260620-231058/e04-fifteenth-wish-true-ending-b7d5693ae3.mp4",
+          "assetPath": "assets/videos/e04-fifteenth-wish-true-ending-b7d5693ae3.mp4",
+          "skippable": false,
+          "loop": false,
+          "uploadedAt": "2026-06-21T01:00:35.013Z"
+        }
+      ],
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "第十五封愿望重新写下。真相，终于被所有人听见。",
+          "voiceProfileId": "e04-fifteenth-wish-true-ending-narrator-a5165f2b"
+        },
+        {
+          "speaker": "you",
+          "text": "愿望箱还在，但从今晚起，它不再替沉默说话。",
+          "voiceProfileId": "e04-fifteenth-wish-true-ending-you-9b01b68e"
+        }
+      ],
+      "hotspots": [],
+      "choices": [],
+      "ending": {
+        "title": "第十五封愿望",
+        "subtitle": "三份证据同时公开，匿名墙被关闭重建。第十五封愿望被改写成一句公开署名的道歉。",
+        "type": "team"
+      },
+      "musicLayers": {
+        "generated": {
+          "cueId": "bgm-s01-rainy-gate",
+          "source": "generated",
+          "src": "https://cdn1.suno.ai/ed0d326b-6987-490d-813c-43e34fd2f089.mp3",
+          "title": "校门雨夜"
+        },
+        "uploaded": {
+          "cueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+          "source": "uploaded",
+          "src": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+          "title": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+        }
+      },
+      "musicPlayback": {
+        "mode": "mix",
+        "generatedVolume": 0.72,
+        "uploadedVolume": 0.72,
+        "loop": true
+      },
+      "musicCueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
+      "musicSrc": "/music/project-20260620-231058/20260510-bgm-crush-datin-eb5463a02a.mp3",
+      "musicTitle": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+    }
+  }
+}
