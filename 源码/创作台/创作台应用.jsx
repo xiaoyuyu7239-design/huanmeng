@@ -24,13 +24,14 @@ import {
   Upload, Download, Save, RotateCcw, Activity, BookOpen, ShieldCheck,
 } from 'lucide-react';
 import {
-  读本机项目, 保存本机项目, 删除本机项目, 本机项目列表, 合并项目列表,
+  读本机项目, 保存本机项目, 发布本机项目, 删除本机项目, 本机项目列表, 合并项目列表,
   新建本机项目, 归一化项目, 深拷贝, 默认slug, 清洗slug, 读选中slug, 写选中slug,
   补正健康状态, 读精选覆盖, 写精选覆盖,
 } from './项目管理/本机项目存储.js';
 import { 加载示例项目名录, 加载示例项目 } from './项目管理/示例项目加载.js';
 import { 运行校验, 生成QA报告, 校验选择机制结构 } from './校验发布/校验规则.js';
 import 就绪状态条 from './校验发布/就绪状态条.jsx';
+import QA结果面板 from './校验发布/QA结果面板.jsx';
 import { 新增节点, 插入节点, 移动节点, 拖拽重排, 按章节分组 } from './节点编辑/图操作.js';
 import 节点卡片 from './节点编辑/节点卡片.jsx';
 import 节点编辑弹窗 from './节点编辑/节点编辑弹窗.jsx';
@@ -146,6 +147,32 @@ function 标记语音过期(新句, 旧句) {
   delete 新句.voiceHash;
   delete 新句.voiceGeneratedAt;
   delete 新句.voiceError;
+}
+
+export function 标记剧情规则待复核(项目) {
+  if (!项目?.authoring || !Array.isArray(项目.authoring.consistencyRules)) return 项目;
+  return {
+    ...项目,
+    authoring: {
+      ...项目.authoring,
+      consistencyRules: 项目.authoring.consistencyRules.map((规则) =>
+        规则.enabled !== false
+          ? { ...规则, reviewStatus: 'pending', reviewNote: '', reviewed: false }
+          : 规则
+      ),
+    },
+  };
+}
+
+// 草稿试玩返回时使用显式 ?project=slug。只有已经是规范 slug 的值才优先于
+// 浏览器上次选择，避免把任意查询文本悄悄清洗成另一个项目。
+export function 解析创作项目入口(查询字符串 = '', 上次选择 = '') {
+  const 参数 = 查询字符串 instanceof URLSearchParams
+    ? 查询字符串
+    : new URLSearchParams(typeof 查询字符串 === 'string' ? 查询字符串 : '');
+  const 请求项目 = 参数.get('project')?.trim() ?? '';
+  if (请求项目 && 清洗slug(请求项目) === 请求项目) return 请求项目;
+  return 上次选择;
 }
 
 // 占位表格组件(线上 Us)：左栏"记忆/模板"、右栏"属性/数值/事件"等预留 Tab 共用的小桌板
@@ -393,7 +420,9 @@ export default function 应用() {
   const [健康状态, 设健康状态] = useState(() => 补正健康状态(基础健康));
   const [项目列表, 设项目列表] = useState([]);
   const [当前项目, 设当前项目] = useState(null);
-  const [选中slug, 设选中slug] = useState(() => 读选中slug());
+  const [选中slug, 设选中slug] = useState(() =>
+    解析创作项目入口(typeof window === 'undefined' ? '' : window.location?.search, 读选中slug())
+  );
   const [选中节点id, 设选中节点id] = useState('');
   const [有未保存修改, 置脏] = useState(false);
   const [进行中动作, 设进行中动作] = useState('load'); // 非 null = 有事在忙，按钮要转圈
@@ -416,6 +445,7 @@ export default function 应用() {
   const [默认Demo, 设默认Demo] = useState('');
   const [拖动节点id, 设拖动节点id] = useState('');
   const [悬停节点id, 设悬停节点id] = useState('');
+  const [QA面板开, 设QA面板开] = useState(false);
 
   // ref：加载序号防止旧请求覆盖新请求；slug/示例名录给异步回调读最新值。
   const 加载序号ref = useRef(0);
@@ -432,13 +462,25 @@ export default function 应用() {
   const 章节组 = useMemo(() => 按章节分组(节点列表), [节点列表]);
   const 当前条目 = 项目列表.find((条) => 条.slug === 选中slug);
   const 是本机项目 = 当前条目?.source === 'browser';
+  const 是内置示例 = 示例列表ref.current.some((条) => 条.slug === 选中slug);
   const 更新时间文案 = 当前条目?.updatedAt ? 格式化时间(当前条目.updatedAt) : '--:--';
   const 忙碌 = 进行中动作 !== null;
   const 视觉场景总数 = 当前项目?.summary?.visualSceneCount ?? 当前项目?.summary?.nodeCount ?? 0;
   const 已覆盖场景数 = 当前项目?.summary?.visualReadyCount ?? 0;
   const 视觉缺口数 = Math.max(视觉场景总数 - 已覆盖场景数, 0);
   const 当前节点序号 = 当前节点 ? Math.max(节点列表.findIndex((节) => 节.id === 当前节点.id), 0) : 0;
-  const 预览链接 = 当前项目?.slug ? `/play?game=${encodeURIComponent(当前项目.slug)}` : '/play';
+  const 预览链接 = 当前项目?.slug
+    ? `/play?game=${encodeURIComponent(当前项目.slug)}&preview=draft&from=creator`
+    : '/play?preview=draft&from=creator';
+  const 发布链接 = 当前项目?.slug ? `/play?game=${encodeURIComponent(当前项目.slug)}` : '/play';
+  const 有玩家版本 = !!当前项目 && (!是本机项目 || 当前条目?.hasPublished || 是内置示例);
+  const 发布状态文案 = 是本机项目
+    ? 当前条目?.hasPublished
+      ? `已发布${当前条目.publishedAt ? ` ${格式化时间(当前条目.publishedAt)}` : ''}`
+      : 是内置示例
+        ? '仍使用内置发布版本'
+        : '尚未发布'
+    : '内置发布版本';
   const 主视觉 = 当前节点?.panoramaType === 'video' ? 'video' : 'image';
   const 当前视觉预览 = 资产预览url(绑定资产) || 节点全景url(当前节点);
   const 当前有图 = !!当前视觉预览;
@@ -494,6 +536,25 @@ export default function 应用() {
     }
   }
 
+  // 只有零错误的显式发布动作可以进入这里；存储层会把 draft 与 publishedProject
+  // 在同一次写入中提交，失败时不得留下半发布状态。
+  function 应用本机发布(项目, 消息文案) {
+    if (选中slugRef.current === 项目?.slug && 拦截只读创作合同()) return false;
+    try {
+      发布本机项目(项目);
+      if (选中slugRef.current === 项目.slug) 设当前项目(归一化项目(项目));
+      刷新项目列表();
+      置脏(false);
+      if (消息文案) 追加消息('system', 消息文案);
+      return true;
+    } catch (错) {
+      const 文案 = 错误文案(错, '发布项目失败。');
+      设顶部错误(文案);
+      追加消息('system', 文案);
+      return false;
+    }
+  }
+
   // 未接入功能的统一出口：冒一条系统消息(第二棒用真实现替换各调用点)
   function 占位提示(功能名) {
     追加消息('system', `${功能名}功能尚未接入。`);
@@ -543,6 +604,7 @@ export default function 应用() {
       设选中slug(落点slug);
       设当前项目(规整项目);
       置脏(false);
+      设QA面板开(false);
       设编辑弹窗开(false);
       try {
         写选中slug(落点slug);
@@ -701,7 +763,7 @@ export default function 应用() {
       const 新剧情 = 深拷贝(旧.story);
       改法(新剧情);
       // 剧情一改，旧 QA 报告就不再能证明当前版本；同时重算摘要，避免节点/分支数停在旧值。
-      return 归一化项目({ ...旧, story: 新剧情, qaReport: '' });
+      return 归一化项目(标记剧情规则待复核({ ...旧, story: 新剧情, qaReport: '' }));
     });
     置脏(true);
   }
@@ -712,8 +774,20 @@ export default function 应用() {
     if (拦截只读创作合同()) return;
     设当前项目((旧) => {
       if (!旧?.story) return 旧;
-      const 草稿 = 深拷贝(旧);
+      let 草稿 = 深拷贝(旧);
       改法(草稿);
+      const 叙事作者字段 = (项目) => ({
+        characterBibles: 项目?.authoring?.characterBibles ?? [],
+        relationshipEdges: 项目?.authoring?.relationshipEdges ?? [],
+        emotionPoints: 项目?.authoring?.emotionPoints ?? [],
+        consistencyAssets: 项目?.authoring?.consistencyAssets ?? [],
+      });
+      if (
+        JSON.stringify(旧.story) !== JSON.stringify(草稿.story) ||
+        JSON.stringify(叙事作者字段(旧)) !== JSON.stringify(叙事作者字段(草稿))
+      ) {
+        草稿 = 标记剧情规则待复核(草稿);
+      }
       草稿.qaReport = '';
       return 归一化项目(草稿);
     });
@@ -738,7 +812,7 @@ export default function 应用() {
     设进行中动作('save-graph');
     设顶部错误(null);
     try {
-      应用本机写入(归一化项目({ ...当前项目 }), '项目、剧情与创作资产已保存到当前浏览器。');
+      应用本机写入(归一化项目({ ...当前项目 }), '项目、剧情与创作资产草稿已保存到当前浏览器；已发布版本未改变。');
     } finally {
       设进行中动作(null);
     }
@@ -762,25 +836,17 @@ export default function 应用() {
       const 规整 = 归一化项目({ ...当前项目 });
       const 结果 = 运行校验(规整);
       const 新项目 = 归一化项目({ ...规整, qaReport: 生成QA报告(规整.slug, 结果) });
-      if (是本机项目) {
-        // 本机项目：报告连同项目一起写进 localStorage；发布成功即 /play?game=slug 可玩
+      设QA面板开(true);
+      if (动作 === 'publish' && 结果.errors.length === 0) {
+        应用本机发布(
+          新项目,
+          `发布成功：玩家版本 ${发布链接}；草稿试玩 ${预览链接}`,
+        );
+      } else {
+        // 普通校验和失败发布都只更新草稿；publishedProject 始终保持上一次成功版本。
         应用本机写入(
           新项目,
-          动作 === 'publish' && 结果.errors.length === 0
-            ? `已发布到当前浏览器预览：/play?game=${新项目.slug}`
-            : `本机校验完成：${结果.errors.length} 个错误，${结果.warnings.length} 个警告。`
-        );
-      } else if (动作 === 'publish' && 结果.errors.length === 0) {
-        // 示例项目发布成功必须落成同 slug 的本机覆盖，播放器会优先读取这份编辑版。
-        应用本机写入(新项目, `已发布到当前浏览器预览：/play?game=${新项目.slug}`);
-      } else {
-        // 示例项目的单独校验（以及未通过的发布）只更新内存，不制造一份假发布副本。
-        设当前项目(新项目);
-        追加消息(
-          'system',
-          动作 === 'publish'
-            ? `本机校验完成：${结果.errors.length} 个错误，${结果.warnings.length} 个警告。`
-            : '校验完成，QA 报告已刷新。'
+          `草稿校验完成并已保存：${结果.errors.length} 个错误，${结果.warnings.length} 个警告。`,
         );
       }
       if (动作 === 'publish' && 结果.errors.length > 0) {
@@ -793,6 +859,15 @@ export default function 应用() {
     }
   }
 
+  function 定位QA节点(nodeId) {
+    if (!当前项目?.story?.nodes?.[nodeId]) return;
+    切换创作模式('professional');
+    设中栏视图('flow');
+    设选中节点id(nodeId);
+    设编辑弹窗开(true);
+    设QA面板开(false);
+  }
+
   // ---- 节点图动作 ----
   // 为什么不走 编辑剧情 管道：这几个动作要立刻拿到"新节点的 id"来选中它，
   // 而 setState 的更新函数什么时候执行由 React 决定，从里面往外带值不可靠。
@@ -801,7 +876,7 @@ export default function 应用() {
   // 输入算好的新 story → 换进当前项目并亮"有未保存修改" → 顺手选中指定节点
   function 应用剧情结果(新剧情, 选中id) {
     if (拦截只读创作合同()) return;
-    设当前项目((旧) => (旧?.story ? 归一化项目({ ...旧, story: 新剧情, qaReport: '' }) : 旧));
+    设当前项目((旧) => (旧?.story ? 归一化项目(标记剧情规则待复核({ ...旧, story: 新剧情, qaReport: '' })) : 旧));
     置脏(true);
     if (选中id) 设选中节点id(选中id);
   }
@@ -994,7 +1069,14 @@ export default function 应用() {
     设精选弹窗开(true);
     设精选加载中(true);
     try {
-      const 本机 = 本机项目列表().map((条) => ({ slug: 条.slug, title: 条.title, nodeCount: 条.nodeCount, source: 'browser' }));
+      const 本机 = 本机项目列表()
+        .filter((条) => 条.hasPublished)
+        .map((条) => ({
+          slug: 条.slug,
+          title: `${条.publishedTitle || 条.slug}（本机已发布）`,
+          nodeCount: 条.publishedNodeCount,
+          source: 'browser',
+        }));
       let 示例 = 示例列表ref.current;
       if (示例.length === 0) {
         const 名录 = await 加载示例项目名录();
@@ -1005,9 +1087,18 @@ export default function 应用() {
       const 已占 = new Set(本机.map((条) => 条.slug));
       const 候选 = [...本机, ...示例.filter((条) => !已占.has(条.slug))];
       const 覆盖 = 读精选覆盖();
+      const 可选slug = new Set(候选.map((条) => 条.slug));
+      const 默认精选 = 示例.map((条) => 条.slug).filter((slug) => 可选slug.has(slug));
+      const 初始精选 = (覆盖.featured.length > 0 ? 覆盖.featured : 默认精选)
+        .filter((slug) => 可选slug.has(slug));
+      const 初始默认 = 初始精选.includes(覆盖.default)
+        ? 覆盖.default
+        : 初始精选.includes(示例默认slugRef.current)
+          ? 示例默认slugRef.current
+          : 初始精选[0] ?? '';
       设精选候选(候选);
-      设精选slugs(覆盖.featured.length > 0 ? 覆盖.featured : 示例.map((条) => 条.slug));
-      设默认Demo(覆盖.default || 示例默认slugRef.current || 示例[0]?.slug || '');
+      设精选slugs(初始精选);
+      设默认Demo(初始默认);
     } finally {
       设精选加载中(false);
     }
@@ -1106,7 +1197,8 @@ export default function 应用() {
           <p>
             {是本机项目 ? '本机浏览器项目' : '发布示例项目'}
             {' · '}
-            {有未保存修改 ? '有未保存修改' : '已保存'} {更新时间文案}
+            {有未保存修改 ? '有未保存修改' : '草稿已保存'} {更新时间文案}
+            {' · '}{发布状态文案}
             <Check size={14} />
           </p>
         </div>
@@ -1117,15 +1209,21 @@ export default function 应用() {
             onClick={(事件) => {
               if (有未保存修改) {
                 事件.preventDefault();
-                设顶部错误('请先保存当前修改，再打开玩家试玩；试玩只读取已保存版本。');
+                设顶部错误('请先保存当前修改，再打开玩家试玩；试玩只读取已保存草稿。');
                 return;
               }
             }}
-            title={有未保存修改 ? '请先保存，再打开玩家试玩' : '打开当前游戏预览'}
+            title={有未保存修改 ? '请先保存，再打开玩家试玩' : '打开当前游戏的草稿预览'}
           >
             <Play size={17} />
-            <span>预览</span>
+            <span>草稿试玩</span>
           </a>
+          {有玩家版本 && (
+            <a className="studio-action is-secondary is-compactable" href={发布链接} title="打开上次成功发布的玩家版本">
+              <ShieldCheck size={17} />
+              <span>玩家版本</span>
+            </a>
+          )}
           <button
             className="studio-action is-secondary is-compactable"
             disabled={!当前项目 || 忙碌 || !健康状态?.imageConfigured}
@@ -1234,6 +1332,7 @@ export default function 应用() {
           on更新={编辑项目}
           on保存={保存修改}
           on校验={() => 校验或发布('validate')}
+          on发布={() => 校验或发布('publish')}
           on预览={打开试玩}
           on进入专业模式={() => 切换创作模式('professional')}
         />
@@ -1566,6 +1665,14 @@ export default function 应用() {
         </aside>
       </section>
       )}
+
+      <QA结果面板
+        打开={QA面板开}
+        报告={当前项目?.qaReport}
+        项目={当前项目}
+        on切换={设QA面板开}
+        on定位节点={定位QA节点}
+      />
 
       {/* ---- 底部就绪状态条 ---- */}
       <就绪状态条

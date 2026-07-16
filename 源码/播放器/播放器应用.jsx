@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   BookOpen,
   Download,
+  House,
   MessageCircle,
   RotateCcw,
   Save,
@@ -20,6 +21,7 @@ import 对白区 from './界面组件/对白区.jsx';
 import 对白历史面板 from './界面组件/对白历史面板.jsx';
 import 关系私聊面板 from './界面组件/关系私聊面板.jsx';
 import {
+  ACTIVE_GAME_ID,
   STORY_ID,
   STORY_TITLE,
   getVisibleScoreDefinitions,
@@ -78,6 +80,7 @@ import {
   试听已禁用,
 } from './音频系统/音频管理.js';
 import { 取平面视频地址 } from './全景渲染/视觉模式.js';
+import { 构建试玩返回地址, 解析试玩来源 } from '../入口/试玩来源.js';
 import '../样式/播放器-心界.css';
 
 export default function 播放器应用() {
@@ -105,6 +108,11 @@ export default function 播放器应用() {
   const 调查入口ref = useRef(null);
   const 调查退出ref = useRef(null);
   const 待恢复调查焦点ref = useRef(false);
+  const 试玩来源 = useMemo(
+    () => 解析试玩来源(typeof window === 'undefined' ? '' : window.location?.search),
+    [],
+  );
+  const 返回地址 = 构建试玩返回地址(试玩来源, ACTIVE_GAME_ID);
 
   const 节点 = 取当前节点(state);
   const 行 = 节点.lines[state.lineIndex] ?? 节点.lines[0] ?? { speaker: 'system', text: '当前节点没有对白。' };
@@ -544,9 +552,9 @@ export default function 播放器应用() {
     setState((旧) => 更新设置(旧, { autoAdvance: !旧.settings.autoAdvance }));
   };
 
-  const 返回创作台 = () => {
+  const 返回来源页 = () => {
     清理全部音频();
-    window.location.assign('/creator');
+    window.location.assign(返回地址);
   };
 
   const 全景属性 = {
@@ -609,7 +617,8 @@ export default function 播放器应用() {
         节点={节点}
         当前面板={当前面板}
         切换面板={切换面板}
-        返回创作台={返回创作台}
+        返回目标={返回来源页}
+        返回标签={试玩来源.returnLabel}
         显示对白记录={启用轻电影}
       />
 
@@ -696,7 +705,15 @@ export default function 播放器应用() {
         )}
 
         {已达成结局 && (
-          <结局板 节点={节点} 回放={结局回放} onExport={导出} onNextLoop={下一轮} onReset={重开} />
+          <结局板
+            节点={节点}
+            回放={结局回放}
+            onExport={导出}
+            onNextLoop={下一轮}
+            onReset={重开}
+            onReturn={返回来源页}
+            returnLabel={试玩来源.returnLabel}
+          />
         )}
       </section>
 
@@ -809,7 +826,7 @@ function 结局回放({ entries }) {
   );
 }
 
-function 结局板({ 节点, 回放, onExport, onNextLoop, onReset }) {
+function 结局板({ 节点, 回放, onExport, onNextLoop, onReset, onReturn, returnLabel }) {
   return (
     <div className={`ending-panel type-${节点.ending?.type ?? 'growth'}`}>
       <span>结局达成</span>
@@ -817,6 +834,7 @@ function 结局板({ 节点, 回放, onExport, onNextLoop, onReset }) {
       <p>{节点.ending?.subtitle}</p>
       <结局回放 entries={回放} />
       <div className="ending-actions">
+        <button onClick={onReturn} type="button"><House size={17} />{returnLabel}</button>
         <button onClick={onExport} type="button"><Download size={17} />导出存档</button>
         <button onClick={onNextLoop} type="button"><RotateCcw size={17} />进入下一轮</button>
         <button onClick={onReset} type="button"><RotateCcw size={17} />清空重开</button>

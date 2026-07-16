@@ -8,6 +8,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { 清除浏览器生产密钥 } from '../公共工具/浏览器密钥迁移.js';
+import { 解析试玩来源 } from './试玩来源.js';
 // 全局样式：整文件收编自线上产品(index.css)，保证像素级还原，任何页面都要用
 import '../样式/全局.css';
 
@@ -50,9 +51,11 @@ async function 启动() {
   // 播放器需要先弄清楚"今天放哪部片"：
   // 1) ?game= 明确指定；2) 创作台设置的本机默认；3) 静态 showcase 默认。
   const 查询作品 = new URLSearchParams(window.location.search).get('game') ?? '';
+  const 试玩来源 = 解析试玩来源(window.location.search);
   const { 按slug加载剧情 } = await import('../播放器/剧情引擎/剧情加载.js');
   if (查询作品) {
-    await 按slug加载剧情(查询作品);
+    if (试玩来源.allowDraft) await 按slug加载剧情(查询作品, { allowDraft: true });
+    else await 按slug加载剧情(查询作品);
     渲染();
     return;
   }

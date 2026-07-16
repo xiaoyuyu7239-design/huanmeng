@@ -18,12 +18,13 @@ import {
 import {
   构建玩家首页模型,
   合并首页精选,
-  清洗精选条目,
   清洗精选数据,
+  核对本机精选覆盖,
   读取首页存档,
 } from './玩家首页模型.js';
 
 const 本地精选键 = 'creator:browser-showcase:v1';
+const 本地项目键 = 'creator:browser-projects:v1';
 const 静态精选 = 清洗精选数据(静态精选清单);
 const 旗舰slug = 静态精选.default;
 
@@ -31,15 +32,8 @@ function 读取本地精选覆盖() {
   if (typeof window === 'undefined') return null;
   try {
     const 数据 = JSON.parse(window.localStorage.getItem(本地精选键) ?? '{}');
-    if (!数据 || typeof 数据 !== 'object' || Array.isArray(数据)) return null;
-    const entries = Array.isArray(数据.entries)
-      ? 数据.entries.map(清洗精选条目).filter(Boolean)
-      : [];
-    const featured = Array.isArray(数据.featured)
-      ? [...new Set(数据.featured.filter((slug) => typeof slug === 'string' && slug.trim()).map((slug) => slug.trim()))]
-      : entries.map((条目) => 条目.slug);
-    if (entries.length === 0 && featured.length === 0) return null;
-    return { entries, featured };
+    const 项目仓 = JSON.parse(window.localStorage.getItem(本地项目键) ?? '{}');
+    return 核对本机精选覆盖(数据, 项目仓, 静态精选清单);
   } catch {
     return null;
   }

@@ -3,23 +3,18 @@ import { ArrowLeft, ArrowRight, Archive, Layers3 } from 'lucide-react';
 import 静态精选清单 from '../../公共资源/showcase.json';
 import '../样式/落地页-心界.css';
 import '../样式/落地页可访问性.css';
-import { 合并首页精选, 清洗精选条目, 清洗精选数据 } from './玩家首页模型.js';
+import { 合并首页精选, 清洗精选数据, 核对本机精选覆盖 } from './玩家首页模型.js';
 
 const 本地精选键 = 'creator:browser-showcase:v1';
+const 本地项目键 = 'creator:browser-projects:v1';
 const 静态精选 = 清洗精选数据(静态精选清单);
 
 function 读取本地归档覆盖() {
   if (typeof window === 'undefined') return null;
   try {
     const 数据 = JSON.parse(window.localStorage.getItem(本地精选键) ?? '{}');
-    if (!数据 || typeof 数据 !== 'object' || Array.isArray(数据)) return null;
-    const entries = Array.isArray(数据.entries)
-      ? 数据.entries.map(清洗精选条目).filter(Boolean)
-      : [];
-    const featured = Array.isArray(数据.featured)
-      ? 数据.featured.filter((slug) => typeof slug === 'string')
-      : entries.map((条目) => 条目.slug);
-    return entries.length || featured.length ? { entries, featured } : null;
+    const 项目仓 = JSON.parse(window.localStorage.getItem(本地项目键) ?? '{}');
+    return 核对本机精选覆盖(数据, 项目仓, 静态精选清单);
   } catch {
     return null;
   }

@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { createServer } from 'vite';
-import { 合并首页精选, 构建玩家首页模型, 清洗精选数据 } from './玩家首页模型.js';
+import { 合并首页精选, 构建玩家首页模型, 清洗精选数据, 核对本机精选覆盖 } from './玩家首页模型.js';
 
 const 当前目录 = dirname(fileURLToPath(import.meta.url));
 const 项目根 = resolve(当前目录, '../..');
@@ -108,6 +108,49 @@ const 合并后旗舰 = 同slug覆盖.featured.find((条目) => 条目.slug === 
   合并后旗舰.title === 精选.featured[0].title && 合并后旗舰.cover === 精选.featured[0].cover,
   '本机同 slug 条目篡改了固定旗舰元数据',
 );
+
+const 旧缓存 = {
+  default: 'draft-only',
+  featured: ['draft-only', 'invalid-published', 精选.featured[1].slug, 'published-local'],
+  entries: [
+    { slug: 'draft-only', title: '未发布草稿标题', tagline: '未发布草稿梗概' },
+    { slug: 'invalid-published', title: '坏发布卡片', tagline: '没有真实可加载起点' },
+    { ...精选.featured[1], title: '缓存伪造的静态标题' },
+    { slug: 'published-local', title: '缓存里的旧标题', tagline: '缓存里的旧梗概' },
+  ],
+};
+const 已发布本机项目 = {
+  slug: 'published-local',
+  title: '冻结玩家版本',
+  storyBible: '来自已发布快照的简介\n不会泄露草稿',
+  story: {
+    startNodeId: 'start',
+    nodes: { start: { id: 'start', panorama: '/panoramas/published.webp', choices: [], ending: { title: '完成' } } },
+  },
+  manifest: { assets: [] },
+};
+const 核对后覆盖 = 核对本机精选覆盖(旧缓存, {
+  'draft-only': { project: { slug: 'draft-only', title: '未发布草稿标题' }, updatedAt: 1 },
+  'published-local': {
+    project: { ...已发布本机项目, title: '发布后的新草稿' },
+    publishedProject: 已发布本机项目,
+    updatedAt: 3,
+    publishedAt: 2,
+  },
+  'invalid-published': {
+    project: { slug: 'invalid-published' },
+    publishedProject: { slug: 'invalid-published', title: '坏发布卡片', story: { startNodeId: 'missing', nodes: {} } },
+    updatedAt: 3,
+    publishedAt: 2,
+  },
+}, 精选);
+断言(!核对后覆盖.featured.includes('draft-only'), '旧精选缓存仍保留未发布本机草稿');
+断言(!核对后覆盖.featured.includes('invalid-published'), '无法加载的坏发布快照仍进入首页形成死卡');
+断言(核对后覆盖.featured.includes(精选.featured[1].slug), '正式静态精选被旧缓存迁移误删');
+断言(
+  核对后覆盖.entries[0].title === '冻结玩家版本' && 核对后覆盖.entries[0].tagline === '来自已发布快照的简介',
+  '本机精选未从 publishedProject 重建，仍信任旧缓存或后续草稿元数据',
+);
 console.log('  ✓ 精选兼容：坏默认、重复条目与越界 slug 安全回退');
 
 const 区块源码 = await readFile(resolve(当前目录, '心界玩家区块.jsx'), 'utf8');
@@ -133,6 +176,10 @@ try {
   断言((html.match(/<h1/g) ?? []).length === 1, '首页必须且只能有一个 h1');
   断言(html.includes('这一次，故事会记住'), 'SSR 首屏没有玩家价值承诺');
   断言(html.includes('href="/play?game=ninth-seat"'), 'SSR 首屏没有精确旗舰玩家入口');
+  断言(
+    html.includes('AI 未接入时明确使用作者预设回应') && !html.includes('AI 关系层将在后续阶段接入'),
+    '玩家首页页脚仍把已交付的受约束关系回应写成未来能力',
+  );
   for (const 姓名 of [剧情.cast.protagonist.name, ...剧情.cast.characters.map((角色) => 角色.name)]) {
     断言(html.includes(姓名), `SSR 角色区缺少正式 cast：${姓名}`);
   }

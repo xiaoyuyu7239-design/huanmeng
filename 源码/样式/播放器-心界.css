@@ -853,6 +853,17 @@
   }
 }
 
+/* 玩家端唯一的返回入口在窄屏也必须保留；标题可以收起，但入口不能消失。 */
+@media (max-width: 560px) {
+  .game-shell .brand-button {
+    display: inline-flex;
+  }
+
+  .game-shell .topbar {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+}
+
 /* 320×568：进一步压缩舞台装饰，保留完整 44px 操作与选择滚动区。 */
 @media (max-width: 350px) and (max-height: 640px) {
   .layout-portrait-cinema.theme-twilight .cinema-character {

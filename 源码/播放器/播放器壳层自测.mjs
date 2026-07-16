@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { createServer } from 'vite';
+import { 构建试玩返回地址, 解析试玩来源 } from '../入口/试玩来源.js';
 
 const 当前目录 = dirname(fileURLToPath(import.meta.url));
 const 项目根 = resolve(当前目录, '../..');
@@ -27,12 +28,28 @@ globalThis.window = {
   localStorage: globalThis.localStorage,
   addEventListener() {},
   removeEventListener() {},
-  location: { assign() {} },
+  location: { search: '', assign() {} },
 };
 
 let 通过 = 0;
 let 节点通过 = 0;
 let 作品总数 = 0;
+
+const 普通玩家来源 = 解析试玩来源('?game=ninth-seat');
+const 创作草稿来源 = 解析试玩来源('?game=work-b&preview=draft&from=creator');
+if (
+  普通玩家来源.allowDraft ||
+  普通玩家来源.returnLabel !== '返回玩家首页' ||
+  构建试玩返回地址(普通玩家来源, 'ninth-seat') !== '/' ||
+  !创作草稿来源.allowDraft ||
+  创作草稿来源.returnLabel !== '返回创作项目' ||
+  构建试玩返回地址(创作草稿来源, 'work b') !== '/creator?project=work%20b' ||
+  解析试玩来源('?game=work-b&preview=draft').allowDraft ||
+  解析试玩来源('?game=work-b&from=creator').allowDraft ||
+  解析试玩来源('?preview=draft&from=creator').allowDraft
+) {
+  throw new Error('试玩来源未严格区分普通玩家与显式创作草稿预览');
+}
 
 function 无告警渲染(名字, 元素) {
   const 原consoleError = console.error;
@@ -93,6 +110,12 @@ try {
       const html = 无告警渲染(`${slug}/${节点.id}`, React.createElement(播放器应用));
       if (!html.includes('game-shell') || !html.includes(剧情.title)) {
         throw new Error(`${slug}/${节点.id} 未渲染出播放器壳层或故事标题`);
+      }
+      if (!html.includes('aria-label="返回玩家首页"')) {
+        throw new Error(`${slug}/${节点.id} 普通玩家入口没有返回玩家首页`);
+      }
+      if (节点.ending && !html.includes('返回玩家首页')) {
+        throw new Error(`${slug}/${节点.id} 结局板没有返回玩家首页入口`);
       }
       if (节点.choices?.length > 0) {
         if (slug === 'ninth-seat' && !html.includes('意图 ·')) {
@@ -173,6 +196,29 @@ try {
     console.log(`  ✓ ${slug}：${剧情.title}（${Object.keys(剧情.nodes).length} 节点）`);
   }
 
+  剧情模块.setActiveStory(
+    JSON.parse(await readFile(resolve(项目根, '公共资源/games/ninth-seat/story.json'), 'utf8')),
+    'ninth-seat',
+  );
+  window.location.search = '?game=ninth-seat&preview=draft&from=creator';
+  const 创作预览html = 无告警渲染('创作草稿试玩返回', React.createElement(播放器应用));
+  if (!创作预览html.includes('aria-label="返回创作项目"')) {
+    throw new Error('显式创作草稿试玩没有返回创作项目');
+  }
+  window.location.search = '';
+
+  const 入口源码 = await readFile(resolve(项目根, '源码/入口/main.jsx'), 'utf8');
+  if (
+    !入口源码.includes('试玩来源.allowDraft') ||
+    !入口源码.includes('按slug加载剧情(查询作品, { allowDraft: true })')
+  ) {
+    throw new Error('播放器入口没有只为显式创作来源开启草稿读取');
+  }
+  const 播放器样式 = await readFile(resolve(项目根, '源码/样式/播放器-心界.css'), 'utf8');
+  if (!播放器样式.includes('.game-shell .brand-button') || !播放器样式.includes('display: inline-flex')) {
+    throw new Error('窄屏播放器仍可能隐藏唯一返回入口');
+  }
+
   // 创作台刚新建的项目允许尚未生成全景，也可能缺少可选数组/调色板；加载边界应补齐后试玩。
   存储.clear();
   const 本机slug = 'local-empty-panorama';
@@ -192,7 +238,9 @@ try {
     'creator:browser-projects:v1',
     JSON.stringify({ [本机slug]: { project: { story: 本机剧情 } } }),
   );
-  if (!(await 剧情模块.loadStoryBySlug(本机slug))) throw new Error('本机新项目未能从草稿仓库加载');
+  if (!(await 剧情模块.loadStoryBySlug(本机slug, { allowDraft: true }))) {
+    throw new Error('显式草稿试玩未能从本机草稿仓库加载');
+  }
   const 本机节点 = 剧情模块.storyNodes['scene-1'];
   if (
     本机节点.panorama !== '' ||
@@ -222,7 +270,16 @@ try {
   ) throw new Error('玩家优先落地页壳层渲染失败');
   console.log('  ✓ 玩家优先落地页壳层');
 
-  const { default: 创作台应用 } = await 服务.ssrLoadModule('/源码/创作台/创作台应用.jsx');
+  const {
+    default: 创作台应用,
+    解析创作项目入口,
+    标记剧情规则待复核,
+  } = await 服务.ssrLoadModule('/源码/创作台/创作台应用.jsx');
+  if (
+    解析创作项目入口('?project=work-b', 'work-a') !== 'work-b' ||
+    解析创作项目入口('?project=Work%20B', 'work-a') !== 'work-a' ||
+    解析创作项目入口('?project=../work-b', 'work-a') !== 'work-a'
+  ) throw new Error('返回创作台时未安全恢复显式 project 查询参数');
   const 创作台html = 无告警渲染('创作台', React.createElement(创作台应用));
   if (
     !创作台html.includes('studio-shell') ||
@@ -233,6 +290,14 @@ try {
 
   const { 新建本机项目, 归一化项目 } = await 服务.ssrLoadModule('/源码/创作台/项目管理/本机项目存储.js');
   const 创作样例 = 新建本机项目('女性向创作测试', 'women-creator-test');
+  创作样例.authoring.consistencyRules.at(-1).enabled = false;
+  创作样例.authoring.consistencyRules.at(-1).reviewNote = '停用规则保留原结论';
+  const 待复核样例 = 标记剧情规则待复核(创作样例);
+  if (
+    待复核样例.authoring.consistencyRules.filter((规则) => 规则.enabled !== false)
+      .some((规则) => 规则.reviewStatus !== 'pending' || 规则.reviewNote !== '' || 规则.reviewed !== false) ||
+    待复核样例.authoring.consistencyRules.at(-1).reviewNote !== '停用规则保留原结论'
+  ) throw new Error('剧情或作者资产变化后未完整作废启用规则的旧人工结论');
   创作样例.story.cast.characters.push(
     {
       id: 'partner',
@@ -298,11 +363,12 @@ try {
     on更新: noop,
     on保存: noop,
     on校验: noop,
+    on发布: noop,
     on预览: noop,
     on进入专业模式: noop,
   }));
-  if (!快速html.includes('角色主动目标') || !快速html.includes('关系设计') || !快速html.includes('一致性资产')) {
-    throw new Error('快速创作步骤或角色圣经字段缺失');
+  if (!快速html.includes('故事骨架') || !快速html.includes('最小可试玩故事') || !快速html.includes('关系设计') || !快速html.includes('一致性资产')) {
+    throw new Error('快速创作首步、故事骨架或后续步骤缺失');
   }
   const 关系html = 无告警渲染('专业关系图', React.createElement(关系图面板, { 项目: 规整样例, on更新: noop }));
   if (!关系html.includes('沈遥') || !关系html.includes('林嘉') || !关系html.includes('叙事关系') || !关系html.includes('心动 / 信任 / 边界') || !关系html.includes('连接两名非玩家角色')) {

@@ -35,7 +35,9 @@ const 当前目录 = dirname(fileURLToPath(import.meta.url));
 const 项目根 = resolve(当前目录, '../../..');
 const 资源根 = join(项目根, '公共资源');
 const 剧情路径 = join(资源根, 'games/ninth-seat/story.json');
+const 创作资料路径 = join(资源根, 'games/ninth-seat/creator.json');
 const 剧情 = JSON.parse(await readFile(剧情路径, 'utf8'));
+const 创作资料 = JSON.parse(await readFile(创作资料路径, 'utf8'));
 
 const 加载 = await import('./剧情加载.js');
 const 引擎 = await import('./状态与结算.js');
@@ -214,6 +216,7 @@ for (const [节点id, 节点] of 节点条目) {
 const 创作台报告 = 运行校验({
   slug: 'ninth-seat',
   story: 剧情,
+  authoring: 创作资料.authoring,
   prompts: { prompts: [] },
   manifest: { assets: [] },
 });

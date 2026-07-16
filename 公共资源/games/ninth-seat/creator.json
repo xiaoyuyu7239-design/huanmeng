@@ -159,10 +159,10 @@
       { "nodeId": "e04-returned-ninth-seat", "intensity": 28, "agency": 98, "intimacy": 74, "note": "人类否决、可撤回与可追责机制同时成立，第九席被归还给真实的人。", "reviewed": true }
     ],
     "consistencyRules": [
-      { "id": "player-agency", "label": "主角主体性", "scope": "story", "targetId": "", "rule": "关键决定必须由许澄执行或明确授权，他人不得代替她作出结论。", "severity": "error", "enabled": true, "reviewed": true },
-      { "id": "explicit-consent-boundary", "label": "明确同意与边界", "scope": "story", "targetId": "", "rule": "亲密、公开、数据使用与越权行动都必须存在可识别的同意和撤回空间。", "severity": "error", "enabled": true, "reviewed": true },
-      { "id": "non-romance-equivalence", "label": "非恋爱关系等价", "scope": "story", "targetId": "", "rule": "女性同盟与独立路线在信息、行动权、职业成果和结局资格上不得降级。", "severity": "error", "enabled": true, "reviewed": true },
-      { "id": "female-alliance-correction", "label": "女性同盟保留纠错权", "scope": "story", "targetId": "", "rule": "林渺拥有独立目标、审计署名与平等纠错权，不能只做无条件附和者。", "severity": "warning", "enabled": true, "reviewed": true }
+      { "id": "player-agency", "label": "主角主体性", "scope": "story", "targetId": "", "rule": "关键决定必须由许澄执行或明确授权，他人不得代替她作出结论。", "severity": "error", "enabled": true, "reviewStatus": "passed", "reviewNote": "25 个正式节点逐一核对，最终操作与四个结局决定均由许澄执行或明确授权。", "reviewed": true },
+      { "id": "explicit-consent-boundary", "label": "明确同意与边界", "scope": "story", "targetId": "", "rule": "亲密、公开、数据使用与越权行动都必须存在可识别的同意和撤回空间。", "severity": "error", "enabled": true, "reviewStatus": "passed", "reviewNote": "公开、训练数据、私聊与关系场景均保留明确同意、撤回和禁发边界。", "reviewed": true },
+      { "id": "non-romance-equivalence", "label": "非恋爱关系等价", "scope": "story", "targetId": "", "rule": "女性同盟与独立路线在信息、行动权、职业成果和结局资格上不得降级。", "severity": "error", "enabled": true, "reviewStatus": "passed", "reviewNote": "林渺同盟与独立复核路线均获得完整证据、行动权和全部结局资格。", "reviewed": true },
+      { "id": "female-alliance-correction", "label": "女性同盟保留纠错权", "scope": "story", "targetId": "", "rule": "林渺拥有独立目标、审计署名与平等纠错权，不能只做无条件附和者。", "severity": "warning", "enabled": true, "reviewStatus": "passed", "reviewNote": "林渺在证据汇流、同盟复盘与责任签署节点均拥有独立意见和纠错动作。", "reviewed": true }
     ],
     "consistencyAssets": [
       { "id": "portrait-you", "kind": "portrait-reference", "title": "许澄基准立绘", "status": "approved", "characterIds": ["you"], "nodeIds": [], "sourcePath": "/portraits/ninth-seat/xu-cheng.png", "notes": "职业化站位；以眼神、手部操作和权限界面表现主导权。", "reviewed": true },

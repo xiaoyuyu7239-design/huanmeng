@@ -26,9 +26,16 @@ registerHooks({
 
 // ---- 浏览器环境桩：假 localStorage + 假 window（引擎只用到这几样）----
 const 假存储仓 = new Map();
+let 下次项目仓写失败 = false;
 const 假localStorage = {
   getItem: (键) => (假存储仓.has(键) ? 假存储仓.get(键) : null),
   setItem: (键, 值) => {
+    if (下次项目仓写失败 && 键 === 'creator:browser-projects:v1') {
+      下次项目仓写失败 = false;
+      const 错误 = new Error('mock project store write failure');
+      错误.name = 'SecurityError';
+      throw 错误;
+    }
     假存储仓.set(键, String(值));
   },
   removeItem: (键) => {
@@ -51,6 +58,8 @@ const 加载 = await import('./剧情加载.js');
 const 引擎 = await import('./状态与结算.js');
 const 存档 = await import('./存档系统.js');
 const 音频 = await import('../音频系统/音频管理.js');
+const 创作存储 = await import('../../创作台/项目管理/本机项目存储.js');
+const 创作校验 = await import('../../创作台/校验发布/校验规则.js');
 const 静态精选 = JSON.parse(
   readFileSync(new URL('../../../公共资源/showcase.json', import.meta.url), 'utf8'),
 );
@@ -163,20 +172,153 @@ const 空白剧情 = {
   相等(加载.storyNodes.video.cinematics[0].src, '/videos/asset-demo/scene.mp4');
 });
 
-const 草稿剧情 = { title: '草稿片', startNodeId: 'd1', nodes: { d1: { id: 'd1', title: 'D1', lines: [], hotspots: [], choices: [] } } };
-假localStorage.setItem('creator:browser-projects:v1', JSON.stringify({ draftgame: { project: { story: 草稿剧情 } } }));
+const 仓库键 = 创作存储.项目存储键;
+const 极简项目 = (slug, title) => {
+  const 项目 = 创作存储.新建本机项目(title, slug);
+  项目.story.id = slug;
+  项目.story.title = title;
+  return 项目;
+};
+
+检查('新建模板：开场双选择通往两个结局，且发布校验无错误', () => {
+  const 模板 = 创作存储.新建本机项目('最小闭环', 'minimum-loop');
+  const 节点们 = Object.values(模板.story.nodes);
+  相等([节点们.length, 模板.story.nodes['s00-start'].choices.length], [3, 2]);
+  相等(节点们.filter((节点) => !!节点.ending).length, 2);
+  为真(
+    模板.story.nodes['s00-start'].choices.every((选择) => !!模板.story.nodes[选择.next]?.ending),
+    '两个选择都必须落到真实结局节点',
+  );
+  相等(创作校验.运行校验(模板).errors, []);
+});
+
+// 旧仓只有 project：它仍是可编辑草稿，普通播放器必须回落同 slug 静态作品。
+const 旧草稿剧情 = 极简项目('draftgame', '旧仓草稿片').story;
+假localStorage.setItem(仓库键, JSON.stringify({ draftgame: { project: { story: 旧草稿剧情 } } }));
+let 旧仓静态请求数 = 0;
 globalThis.fetch = async () => {
-  throw new Error('草稿命中时不应发请求');
+  旧仓静态请求数 += 1;
+  return { ok: true, json: async () => 极简项目('draftgame', '同名静态片').story };
 };
 {
-  const 成功 = await 加载.loadStoryBySlug('draftgame');
-  检查('  · 草稿命中返回 true 且整卷切换', () => {
-    为真(成功);
-    相等(加载.STORY_TITLE, '草稿片');
+  const 普通成功 = await 加载.loadStoryBySlug('draftgame');
+  检查('旧 project 不自动发布：普通加载回落同 slug 静态作品', () => {
+    为真(普通成功);
+    相等(旧仓静态请求数, 1);
+    相等(加载.STORY_TITLE, '同名静态片');
+    相等(创作存储.读已发布本机项目('draftgame'), null);
+  });
+
+  globalThis.fetch = async () => {
+    throw new Error('allowDraft 命中旧草稿时不应发请求');
+  };
+  const 预览成功 = await 加载.loadStoryBySlug('draftgame', { allowDraft: true });
+  检查('显式 allowDraft 可继续试玩旧 project 草稿', () => {
+    为真(预览成功);
+    相等(加载.STORY_TITLE, '旧仓草稿片');
     相等(加载.ACTIVE_GAME_ID, 'draftgame');
   });
 }
-假localStorage.removeItem('creator:browser-projects:v1');
+
+// 新合同：发布冻结一份快照；之后保存只推进草稿，普通玩家与创作预览看到不同版本。
+假localStorage.removeItem(仓库键);
+const 首次发布 = 创作存储.发布本机项目(极简项目('snapshot-game', '已发布版本'));
+const 首次发布时刻 = 首次发布.publishedAt;
+创作存储.保存本机项目(极简项目('snapshot-game', '发布后草稿'));
+const 发布后原文 = JSON.parse(假localStorage.getItem(仓库键))['snapshot-game'];
+检查('保存草稿原样保留 publishedProject / publishedAt，列表暴露发布状态', () => {
+  相等(发布后原文.project.story.title, '发布后草稿');
+  相等(发布后原文.publishedProject.story.title, '已发布版本');
+  相等(发布后原文.publishedAt, 首次发布时刻);
+  const [列表项] = 创作存储.本机项目列表();
+  相等([列表项.hasPublished, 列表项.publishedAt], [true, 首次发布时刻]);
+});
+
+globalThis.fetch = async () => {
+  throw new Error('合法本机快照或草稿命中时不应发请求');
+};
+{
+  const 普通成功 = await 加载.loadStoryBySlug('snapshot-game');
+  检查('普通加载只读已发布快照', () => {
+    为真(普通成功);
+    相等(加载.STORY_TITLE, '已发布版本');
+  });
+  const 草稿成功 = await 加载.按slug加载剧情('snapshot-game', { allowDraft: true });
+  检查('硬契约别名透传 allowDraft 并优先读取最新草稿', () => {
+    为真(草稿成功);
+    相等(加载.STORY_TITLE, '发布后草稿');
+  });
+}
+
+检查('已发布快照读取为归一化深拷贝，读取和修改都不回写', () => {
+  const 读取前原文 = 假localStorage.getItem(仓库键);
+  const 第一次 = 创作存储.读已发布本机项目('snapshot-game');
+  第一次.story.title = '调用方误改';
+  const 第二次 = 创作存储.读已发布本机项目('snapshot-game');
+  相等(第二次.story.title, '已发布版本');
+  相等(假localStorage.getItem(仓库键), 读取前原文);
+});
+
+检查('校验失败在存储边界阻断，且不覆盖上一次玩家版本', () => {
+  const 失败前原文 = 假localStorage.getItem(仓库键);
+  const 坏草稿 = 极简项目('snapshot-game', '不合格草稿');
+  坏草稿.story.nodes[坏草稿.story.startNodeId].choices = [];
+  let 错误名 = '';
+  try {
+    创作存储.发布本机项目(坏草稿);
+  } catch (错) {
+    错误名 = 错?.name;
+  }
+  相等(错误名, 'CreatorPublishValidationError');
+  相等(假localStorage.getItem(仓库键), 失败前原文);
+  相等(创作存储.读已发布本机项目('snapshot-game').story.title, '已发布版本');
+});
+
+检查('发布写失败不产生 project / publishedProject 半更新', () => {
+  const 失败前原文 = 假localStorage.getItem(仓库键);
+  下次项目仓写失败 = true;
+  let 抛了 = false;
+  try {
+    创作存储.发布本机项目(极简项目('snapshot-game', '不应落盘'));
+  } catch {
+    抛了 = true;
+  }
+  为真(抛了, '模拟存储失败必须向上抛出');
+  相等(假localStorage.getItem(仓库键), 失败前原文);
+});
+
+// 坏草稿不能阻断同格合法快照；坏快照则继续走静态回退。
+const 坏草稿仓 = JSON.parse(假localStorage.getItem(仓库键));
+坏草稿仓['snapshot-game'].project.story = { title: '坏草稿' };
+假localStorage.setItem(仓库键, JSON.stringify(坏草稿仓));
+globalThis.fetch = async () => {
+  throw new Error('坏草稿应回落合法已发布快照，不应发请求');
+};
+{
+  const 成功 = await 加载.loadStoryBySlug('snapshot-game', { allowDraft: true });
+  检查('allowDraft 遇坏草稿时回落合法已发布快照', () => {
+    为真(成功);
+    相等(加载.STORY_TITLE, '已发布版本');
+  });
+}
+
+const 坏快照仓 = JSON.parse(假localStorage.getItem(仓库键));
+坏快照仓['snapshot-game'].publishedProject.story = { title: '坏快照' };
+假localStorage.setItem(仓库键, JSON.stringify(坏快照仓));
+let 坏快照静态请求数 = 0;
+globalThis.fetch = async () => {
+  坏快照静态请求数 += 1;
+  return { ok: true, json: async () => 极简项目('snapshot-game', '快照损坏后的静态片').story };
+};
+{
+  const 成功 = await 加载.loadStoryBySlug('snapshot-game');
+  检查('坏已发布快照不挡住同 slug 静态回退', () => {
+    为真(成功);
+    相等(坏快照静态请求数, 1);
+    相等(加载.STORY_TITLE, '快照损坏后的静态片');
+  });
+}
+假localStorage.removeItem(仓库键);
 
 {
   let 请求过的url = '';

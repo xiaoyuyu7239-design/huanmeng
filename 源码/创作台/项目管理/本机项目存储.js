@@ -17,6 +17,7 @@ import {
   计算创作资产完成度,
   校验创作资产,
 } from '../女性向资产/创作资产模型.js';
+import { 运行校验 } from '../校验发布/校验规则.js';
 
 // ---- 存储键(照抄线上源码，一个字符都不能差) ----
 export const 项目存储键 = 'creator:browser-projects:v1';   // 本机项目柜
@@ -29,11 +30,14 @@ export const 选中项目键 = 'creator:selected-slug';          // 记住上次
 // localStorage 在隐私模式、沙箱 iframe、存储额度耗尽时都可能抛异常。
 // 读失败时让界面仍能打开；写失败则抛出一条可直接展示给用户的错误，
 // 上层不得把失败冒充成“已保存”。
-function 读存储项(键) {
+function 读存储项(键, { 写入前 = false, 动作 = '读取本机数据' } = {}) {
   try {
     if (typeof window === 'undefined') return null;
     return window.localStorage.getItem(键);
-  } catch {
+  } catch (错) {
+    // 展示路径可暂时降级为空；任何准备写回的路径都必须区分“键不存在”和“读取失败”。
+    // 否则一次瞬时 getItem 异常就会被当成空仓，下一次成功 setItem 会覆盖全部项目。
+    if (写入前) throw 存储错误(`${动作}前读取本机数据`, 错);
     return null;
   }
 }
@@ -168,12 +172,13 @@ export function 归一化项目(项目) {
   return { ...规整项目, summary: 重算摘要(规整项目) };
 }
 
-// ---- 本机项目柜的四个基本动作：读表 / 存一件 / 取一件 / 删一件 ----
+// ---- 本机项目柜：草稿与已发布快照 ----
+// 每一格的 project 永远是创作台草稿；publishedProject 是玩家端可见的冻结快照。
+// 保存草稿不得挪动已发布版本，只有显式调用 发布本机项目() 才会同时推进两者。
 
 // 读取项目柜的原始对象。普通展示遇到整仓坏 JSON 时空表降级；
 // 保存/删除前则必须拦住，避免用一个空表覆盖尚可人工恢复的原数据。
-function 读原始项目表({ 写入前 = false } = {}) {
-  const 文本 = 读存储项(项目存储键);
+function 解析原始项目表文本(文本, { 写入前 = false } = {}) {
   if (文本 == null) return {};
   try {
     const 对象 = JSON.parse(文本);
@@ -190,16 +195,33 @@ function 读原始项目表({ 写入前 = false } = {}) {
   }
 }
 
-// 读整个柜子 → 校验每一格(slug 要对得上、时间戳要是数字) → 吐出 { slug: {project, updatedAt} }
+function 读原始项目表({ 写入前 = false, 动作 = '写入项目' } = {}) {
+  const 文本 = 读存储项(项目存储键, { 写入前, 动作 });
+  return 解析原始项目表文本(文本, { 写入前 });
+}
+
+// 读整个柜子 → 校验每一格(slug 要对得上、时间戳要是数字) →
+// 吐出 { slug: {project, updatedAt, publishedProject?, publishedAt?} }
 // 为什么这么啰嗦：localStorage 里的数据可能被旧版本或者手贱改坏，坏的直接扔，不让它炸掉界面。
-export function 读本机项目表() {
-  const 原始 = 读原始项目表();
+export function 读本机项目表({ 写入前 = false, 动作 = '写入项目' } = {}) {
+  const 原始 = 读原始项目表({ 写入前, 动作 });
   const 干净表 = {};
   for (const [slug, 条目] of Object.entries(原始)) {
     try {
       if (!条目 || typeof 条目 !== 'object' || Array.isArray(条目)) continue;
       if (条目.project?.slug === slug && Number.isFinite(条目.updatedAt)) {
-        干净表[slug] = { project: 归一化项目(条目.project), updatedAt: Number(条目.updatedAt) };
+        const 干净条目 = {
+          project: 归一化项目(深拷贝(条目.project)),
+          updatedAt: Number(条目.updatedAt),
+        };
+        if (
+          条目.publishedProject?.slug === slug &&
+          Number.isFinite(条目.publishedAt)
+        ) {
+          干净条目.publishedProject = 归一化项目(深拷贝(条目.publishedProject));
+          干净条目.publishedAt = Number(条目.publishedAt);
+        }
+        干净表[slug] = 干净条目;
       }
     } catch {
       // 单个坏项目只隔离这一格，不得让其他项目一起“消失”。
@@ -224,12 +246,59 @@ function 序列化项目表(表) {
   }
 }
 
-// 输入项目对象 → 盖上"现在"的时间戳塞进柜子 → 无返回。这一步就是"发布/保存到当前浏览器"的本体。
+function 是普通对象(值) {
+  return !!值 && typeof 值 === 'object' && !Array.isArray(值);
+}
+
+function 检查可存项目(项目, 动作) {
+  if (!项目?.slug || typeof 项目.slug !== 'string') {
+    throw new Error(`${动作}失败：项目缺少有效 slug。`);
+  }
+}
+
+// 输入项目对象 → 只推进草稿 project / updatedAt；已有发布快照与未知兼容字段原样保留。
 export function 保存本机项目(项目) {
-  if (!项目?.slug || typeof 项目.slug !== 'string') throw new Error('保存项目失败：项目缺少有效 slug。');
-  const 表 = 读原始项目表({ 写入前: true });
-  表[项目.slug] = { project: 归一化项目(项目), updatedAt: Date.now() };
+  检查可存项目(项目, '保存项目');
+  const 表 = 读原始项目表({ 写入前: true, 动作: '保存项目' });
+  const 原条目 = 是普通对象(表[项目.slug]) ? 表[项目.slug] : {};
+  表[项目.slug] = {
+    ...原条目,
+    project: 归一化项目(项目),
+    updatedAt: Date.now(),
+  };
   写回整表(表);
+}
+
+// 输入当前草稿 → 在同一次 localStorage 写入中同时冻结 publishedProject 并保存草稿。
+// 单键 setItem 要么整体成功、要么保留旧文本；调用方不会看到只更新了一半的发布状态。
+export function 发布本机项目(项目) {
+  检查可存项目(项目, '发布项目');
+  if (Number.isInteger(项目?.authoring?.schemaVersion) && 项目.authoring.schemaVersion > 1) {
+    const 异常 = new Error(`发布项目失败：创作资产来自更新版本 v${项目.authoring.schemaVersion}，当前版本只能只读保留，不能写入玩家版本。`);
+    异常.name = 'CreatorPublishCompatibilityError';
+    throw 异常;
+  }
+  const 定稿 = 归一化项目(项目);
+  const 校验结果 = 运行校验(定稿);
+  if (校验结果.errors.length > 0) {
+    const 异常 = new Error(`发布项目失败：仍有 ${校验结果.errors.length} 个校验错误，请先修复并重新校验。`);
+    异常.name = 'CreatorPublishValidationError';
+    异常.validation = 校验结果;
+    throw 异常;
+  }
+  const 表 = 读原始项目表({ 写入前: true, 动作: '发布项目' });
+  const 原条目 = 是普通对象(表[项目.slug]) ? 表[项目.slug] : {};
+  const 时间 = Date.now();
+  const 新条目 = {
+    ...原条目,
+    project: 深拷贝(定稿),
+    publishedProject: 深拷贝(定稿),
+    updatedAt: 时间,
+    publishedAt: 时间,
+  };
+  表[项目.slug] = 新条目;
+  写回整表(表);
+  return 深拷贝(新条目);
 }
 
 // 输入 slug → 从柜子取出对应项目(归一化) → 没有就吐 null
@@ -238,13 +307,30 @@ export function 读本机项目(slug) {
   return 条目 ? 归一化项目(条目.project) : null;
 }
 
+// 输入 slug → 只读取最后一次显式发布的冻结快照；旧版只有 project 的条目仍只是草稿。
+// 返回值再次深拷贝并归一化，调用方修改它不会污染后续读取，读取本身也绝不回写仓库。
+export function 读已发布本机项目(slug) {
+  const 原始 = 读原始项目表();
+  const 条目 = 是普通对象(原始[slug]) ? 原始[slug] : null;
+  if (
+    !条目 ||
+    条目.publishedProject?.slug !== slug ||
+    !Number.isFinite(条目.publishedAt)
+  ) return null;
+  try {
+    return 归一化项目(深拷贝(条目.publishedProject));
+  } catch {
+    return null;
+  }
+}
+
 // 输入 slug → 把那一格清空 → 无返回
 export function 删除本机项目(slug) {
-  const 原项目文本 = 读存储项(项目存储键);
-  const 表 = 读原始项目表({ 写入前: true });
+  const 原项目文本 = 读存储项(项目存储键, { 写入前: true, 动作: '删除项目' });
+  const 表 = 解析原始项目表文本(原项目文本, { 写入前: true });
   delete 表[slug];
   const 新项目文本 = 序列化项目表(表);
-  const 原精选文本 = 读存储项(精选存储键);
+  const 原精选文本 = 读存储项(精选存储键, { 写入前: true, 动作: '删除项目' });
   const 精选变更 = 计算移除后的精选(slug, 原精选文本);
 
   // 两个 localStorage 键无法原子提交：先写项目表，再清精选；第二步若失败就补偿恢复项目表。
@@ -279,6 +365,10 @@ export function 本机项目列表() {
       title: `${条目.project.title || 条目.project.slug}（本机）`,
       nodeCount: 条目.project.summary?.nodeCount ?? Object.keys(条目.project.story?.nodes ?? {}).length,
       updatedAt: 条目.updatedAt,
+      hasPublished: !!条目.publishedProject,
+      publishedAt: 条目.publishedAt ?? null,
+      publishedTitle: 条目.publishedProject?.title || 条目.publishedProject?.slug || '',
+      publishedNodeCount: 条目.publishedProject?.summary?.nodeCount ?? Object.keys(条目.publishedProject?.story?.nodes ?? {}).length,
       source: 'browser',
     }))
     .sort((甲, 乙) => 乙.updatedAt - 甲.updatedAt);
@@ -313,12 +403,14 @@ export function 清洗slug(原文) {
     .slice(0, 48);
 }
 
-// 输入(标题, slug) → 造一个只有"开场"一个节点的新项目 → 吐出完整项目对象
-// 模板里的每一句文案都照抄线上，起始节点固定叫 s00-start。
+// 输入(标题, slug) → 造一个“开场 + 两个选择 + 两个结局”的最小可发布项目。
+// 起始节点固定叫 s00-start；新作者不用先理解图结构，也能立刻校验、发布和试玩完整闭环。
 export function 新建本机项目(标题, slug) {
   const 干净标题 = 标题.trim() || '新项目';
   const 干净slug = 清洗slug(slug.trim()) || 默认slug();
   const 起始id = 's00-start';
+  const 结局一id = 'e01-choice-a';
+  const 结局二id = 'e02-choice-b';
   return 归一化项目({
     slug: 干净slug,
     title: 干净标题,
@@ -345,9 +437,115 @@ export function 新建本机项目(标题, slug) {
           synopsis: '在这里写下故事的第一幕。',
           panorama: '',
           lines: [{ speaker: 'narrator', text: '新的故事从这里开始。' }],
+          choices: [
+            {
+              id: 'choose-a',
+              label: '选择第一条路',
+              caption: '你决定先沿着第一条线索前进。',
+              consequence: '这个选择会带你抵达第一个阶段结果。',
+              fateType: 'river',
+              next: 结局一id,
+              effect: { flags: ['chose_first_path'] },
+            },
+            {
+              id: 'choose-b',
+              label: '选择第二条路',
+              caption: '你决定换一个角度寻找答案。',
+              consequence: '这个选择会带你抵达另一个阶段结果。',
+              fateType: 'web',
+              next: 结局二id,
+              effect: { flags: ['chose_second_path'] },
+            },
+          ],
+        },
+        [结局一id]: {
+          id: 结局一id,
+          chapter: '第一幕',
+          title: '结局一',
+          location: '未设定',
+          synopsis: '第一条路线的阶段结果。',
+          panorama: '',
+          lines: [{ speaker: 'narrator', text: '第一条路在这里暂时告一段落。' }],
           choices: [],
+          ending: {
+            title: '第一种答案',
+            subtitle: '你完成了第一条路线。',
+            type: 'growth',
+          },
+        },
+        [结局二id]: {
+          id: 结局二id,
+          chapter: '第一幕',
+          title: '结局二',
+          location: '未设定',
+          synopsis: '第二条路线的阶段结果。',
+          panorama: '',
+          lines: [{ speaker: 'narrator', text: '第二条路也留下了属于它的答案。' }],
+          choices: [],
+          ending: {
+            title: '第二种答案',
+            subtitle: '你完成了第二条路线。',
+            type: 'growth',
+          },
         },
       },
+    },
+    authoring: {
+      schemaVersion: 1,
+      characterBibles: [],
+      relationshipEdges: [],
+      emotionPoints: [],
+      consistencyRules: [
+        {
+          id: 'player-agency',
+          label: '主角主体性',
+          scope: 'story',
+          targetId: '',
+          rule: '关键决定必须由玩家主角执行或明确授权，他人不得代替她作出结论。',
+          severity: 'error',
+          enabled: true,
+          reviewStatus: 'passed',
+          reviewNote: '内置最小模板的两个分支均由玩家主动选择。',
+          reviewed: true,
+        },
+        {
+          id: 'explicit-consent-boundary',
+          label: '明确同意与边界',
+          scope: 'story',
+          targetId: '',
+          rule: '亲密、公开、数据使用与越权行动都必须存在可识别的同意与撤回空间。',
+          severity: 'error',
+          enabled: true,
+          reviewStatus: 'passed',
+          reviewNote: '内置最小模板不包含亲密、公开、数据使用或越权行动。',
+          reviewed: true,
+        },
+        {
+          id: 'non-romance-equivalence',
+          label: '非恋爱关系等价',
+          scope: 'story',
+          targetId: '',
+          rule: '非恋爱、女性同盟与独立路线不得在有效信息、行动权、职业成果或结局资格上被降级。',
+          severity: 'error',
+          enabled: true,
+          reviewStatus: 'passed',
+          reviewNote: '内置最小模板的两条非恋爱路线均可独立抵达结局。',
+          reviewed: true,
+        },
+        {
+          id: 'female-alliance-correction',
+          label: '女性同盟保留纠错权',
+          scope: 'story',
+          targetId: '',
+          rule: '女性同盟角色必须拥有独立目标、署名与对主角判断的平等纠错权，不能只做无条件附和者。',
+          severity: 'warning',
+          enabled: true,
+          reviewStatus: 'passed',
+          reviewNote: '内置最小模板尚未声明同盟角色。',
+          reviewed: true,
+        },
+      ],
+      consistencyAssets: [],
     },
     prompts: { prompts: [] },
     manifest: { assets: [] },
@@ -427,10 +625,10 @@ export function 读精选覆盖() {
   }
 }
 
-// 输入 {default, featured} → 顺手把本机项目做成落地页卡片(entries) → 一起写进精选柜
-// entries 的取值规则照抄线上：tagline 取 storyBible 第一行截 80 字、封面取第一张有预览图的资产。
+// 输入 {default, featured} → 只用已发布快照制作本机卡片，再与静态候选一起写进精选柜。
+// 未发布草稿即使与静态作品同 slug，也不能覆盖首页上真实可玩的玩家版本。
 export function 写精选覆盖({ default: 默认slug值, featured: 精选slugs, entries: 候选卡片 = [] }) {
-  const 项目表 = 读本机项目表();
+  const 项目表 = 读本机项目表({ 写入前: true, 动作: '保存落地页精选' });
   const 候选表 = new Map(
     候选卡片
       .filter((项) => 项 && typeof 项.slug === 'string' && typeof 项.title === 'string')
@@ -439,10 +637,11 @@ export function 写精选覆盖({ default: 默认slug值, featured: 精选slugs,
   const 去重slugs = [...new Set(精选slugs.filter((slug) => typeof slug === 'string' && slug))];
   const 卡片们 = 去重slugs
     .map((slug) => {
-      const 项目 = 项目表[slug]?.project;
+      const 本机条目 = 项目表[slug];
+      const 项目 = 本机条目?.publishedProject;
       if (!项目) {
         const 候选 = 候选表.get(slug);
-        if (!候选) return null;
+        if (!候选 || (本机条目 && 候选.source === 'browser')) return null;
         return {
           slug,
           title: 候选.title || slug,

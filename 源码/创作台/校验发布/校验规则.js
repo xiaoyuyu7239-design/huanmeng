@@ -437,3 +437,36 @@ export function 解析QA报告(报告) {
     recognized: !!(错误匹配 && 警告匹配),
   };
 }
+
+// 计数用于底部状态条，完整明细则供 Level 7 QA 抽屉展示和定位。
+// 只解析本模块生成的 Markdown 列表；未知格式仍保留 recognized=false，避免伪造“没有问题”。
+export function 解析QA明细(报告) {
+  const 计数 = 解析QA报告(报告);
+  const 结果 = {
+    recognized: 计数.recognized,
+    errorCount: 计数.errors,
+    warningCount: 计数.warnings,
+    errors: [],
+    warnings: [],
+  };
+  if (typeof 报告 !== 'string' || !计数.recognized) return 结果;
+  let 分区 = '';
+  for (const 原行 of 报告.split(/\r?\n/u)) {
+    const 行 = 原行.trim();
+    if (/^##\s+Errors\s*$/iu.test(行)) {
+      分区 = 'errors';
+      continue;
+    }
+    if (/^##\s+Warnings\s*$/iu.test(行)) {
+      分区 = 'warnings';
+      continue;
+    }
+    if (/^##\s+/u.test(行)) {
+      分区 = '';
+      continue;
+    }
+    const 条目 = 行.match(/^-\s+(.+)$/u)?.[1]?.trim();
+    if (条目 && (分区 === 'errors' || 分区 === 'warnings')) 结果[分区].push(条目);
+  }
+  return 结果;
+}

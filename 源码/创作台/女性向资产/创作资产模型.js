@@ -8,6 +8,7 @@ const 关系维度 = new Set(['spark', 'trust', 'boundary']);
 const 关系类型 = new Set(['potential-romance', 'ally', 'professional', 'rival', 'mentor', 'family', 'antagonistic']);
 const 规则严重度 = new Set(['error', 'warning']);
 const 规则范围 = new Set(['story', 'character', 'node', 'relationship', 'asset']);
+const 规则复核状态 = new Set(['pending', 'passed', 'failed', 'waived']);
 const 一致性资产类型 = new Set(['portrait-reference', 'expression-sheet', 'wardrobe-reference', 'voice-reference', 'prop-reference', 'location-reference']);
 const 一致性资产状态 = new Set(['reference', 'draft', 'approved', 'retired']);
 const 禁止资源协议 = /^(?:data|blob|javascript)\s*:/iu;
@@ -35,6 +36,8 @@ const 默认一致性规则 = [
     rule: '关键决定必须由玩家主角执行或明确授权，他人不得代替她作出结论。',
     severity: 'error',
     enabled: true,
+    reviewStatus: 'pending',
+    reviewNote: '',
     reviewed: false,
   },
   {
@@ -45,6 +48,8 @@ const 默认一致性规则 = [
     rule: '亲密、公开、数据使用与越权行动都必须存在可识别的同意与撤回空间。',
     severity: 'error',
     enabled: true,
+    reviewStatus: 'pending',
+    reviewNote: '',
     reviewed: false,
   },
   {
@@ -55,6 +60,8 @@ const 默认一致性规则 = [
     rule: '非恋爱、女性同盟与独立路线不得在有效信息、行动权、职业成果或结局资格上被降级。',
     severity: 'error',
     enabled: true,
+    reviewStatus: 'pending',
+    reviewNote: '',
     reviewed: false,
   },
   {
@@ -65,6 +72,8 @@ const 默认一致性规则 = [
     rule: '女性同盟角色必须拥有独立目标、署名与对主角判断的平等纠错权，不能只做无条件附和者。',
     severity: 'warning',
     enabled: true,
+    reviewStatus: 'pending',
+    reviewNote: '',
     reviewed: false,
   },
 ];
@@ -176,6 +185,14 @@ function 规范情绪点(原始值) {
 
 function 规范一致性规则(原始值) {
   const 原始 = 是普通对象(原始值) ? 原始值 : {};
+  const 显式状态 = 文本(原始.reviewStatus, 40);
+  // Level 6 只有 reviewed 布尔值。旧数据明确 reviewed=true 等价于“已通过”；
+  // reviewed=false/缺省不能冒充结论，统一进入待复核。
+  const reviewStatus = 规则复核状态.has(显式状态)
+    ? 显式状态
+    : 原始.reviewed === true
+      ? 'passed'
+      : 'pending';
   return {
     ...原始,
     id: 文本(原始.id, 100),
@@ -186,7 +203,10 @@ function 规范一致性规则(原始值) {
     // 缺省值可安全补 warning；显式写错的枚举必须保留给校验器阻断，不能静默降级。
     severity: 原始.severity == null || 原始.severity === '' ? 'warning' : 文本(原始.severity, 80),
     enabled: 原始.enabled == null ? true : 原始.enabled,
-    reviewed: 原始.reviewed === true,
+    reviewStatus,
+    reviewNote: 自由文本(原始.reviewNote, 1000),
+    // 暂留兼容镜像，旧消费方仍可判断“是否已经给出人工结论”；新逻辑只读 reviewStatus。
+    reviewed: reviewStatus !== 'pending',
   };
 }
 
@@ -407,7 +427,8 @@ export function 计算创作资产完成度(项目) {
       项.reviewed && 有效百分值(项.intensity) && 有效百分值(项.agency) &&
       有效百分值(项.intimacy) && 有内容(项.note)),
     consistencyRules: 分区完成度(资产.consistencyRules.filter((项) => 项.enabled !== false), (项) =>
-      项.reviewed && typeof 项.enabled === 'boolean' && [项.id, 项.label, 项.scope, 项.rule].every(有内容) &&
+      ['passed', 'waived'].includes(项.reviewStatus) && (项.reviewStatus !== 'waived' || 有内容(项.reviewNote)) &&
+      typeof 项.enabled === 'boolean' && [项.id, 项.label, 项.scope, 项.rule].every(有内容) &&
       规则范围.has(项.scope) && 规则严重度.has(项.severity) &&
       (项.scope === 'story' || 有内容(项.targetId))),
     consistencyAssets: 分区完成度(资产.consistencyAssets, (项) =>
@@ -552,7 +573,7 @@ export function 校验创作资产(项目) {
   校验字符串字段('characterBibles', [['characterId', 80], ['desire', 4000], ['fear', 4000], ['boundary', 4000], ['growth', 4000], ['voice', 4000]]);
   校验字符串字段('relationshipEdges', [['id', 100], ['from', 80], ['to', 80], ['type', 80], ['label', 240], ['dynamic', 4000], ['boundary', 4000]]);
   校验字符串字段('emotionPoints', [['nodeId', 100], ['note', 4000]]);
-  校验字符串字段('consistencyRules', [['id', 100], ['label', 240], ['scope', 80], ['targetId', 100], ['rule', 4000], ['severity', 80]]);
+  校验字符串字段('consistencyRules', [['id', 100], ['label', 240], ['scope', 80], ['targetId', 100], ['rule', 4000], ['severity', 80], ['reviewStatus', 40], ['reviewNote', 1000]]);
   校验字符串字段('consistencyAssets', [['id', 100], ['kind', 80], ['title', 240], ['status', 80], ['sourcePath', 600], ['notes', 4000]]);
   校验布尔字段('characterBibles', ['reviewed']);
   校验布尔字段('relationshipEdges', ['reviewed']);
@@ -638,6 +659,10 @@ export function 校验创作资产(项目) {
 
   for (const 规则 of 资产.consistencyRules) {
     const path = `authoring.consistencyRules.${规则.id}`;
+    const 原规则 = 取原始数组(原始, 'consistencyRules').find((项) => 是普通对象(项) && 文本(项.id, 100) === 规则.id);
+    if (原规则 && 'reviewStatus' in 原规则 && !规则复核状态.has(文本(原规则.reviewStatus, 40))) {
+      加问题('error', 'consistency-rule-review-status-invalid', 'consistencyRules', `${path}.reviewStatus`, `一致性规则 ${规则.id} 使用了不支持的复核状态：${文本(原规则.reviewStatus, 40) || 'missing'}`, 规则.id);
+    }
     if (typeof 规则.enabled !== 'boolean') {
       加问题('error', 'consistency-rule-enabled-invalid', 'consistencyRules', `${path}.enabled`, `一致性规则 ${规则.id}.enabled 必须是布尔值。`, 规则.id);
     }
@@ -654,7 +679,21 @@ export function 校验创作资产(项目) {
     if (!规则目标存在(规则, 角色id, 节点id, 关系id, 资产id)) {
       加问题('error', 'consistency-rule-orphan', 'consistencyRules', `${path}.targetId`, `一致性规则 ${规则.id} 引用了无效目标：${规则.targetId || 'missing'}`, 规则.id);
     }
-    if (!规则.reviewed) 加问题('warning', 'consistency-rule-unreviewed', 'consistencyRules', path, `一致性规则 ${规则.id} 尚未人工审阅。`, 规则.id);
+    if (规则.severity === 'error') {
+      if (规则.reviewStatus === 'pending') {
+        加问题('error', 'consistency-rule-review-pending', 'consistencyRules', `${path}.reviewStatus`, `阻塞规则 ${规则.id} 尚未给出人工复核结论。`, 规则.id);
+      } else if (规则.reviewStatus === 'failed') {
+        加问题('error', 'consistency-rule-review-failed', 'consistencyRules', `${path}.reviewStatus`, `阻塞规则 ${规则.id} 已判定未通过，请先修复内容。`, 规则.id);
+      } else if (规则.reviewStatus === 'waived' && !有内容(规则.reviewNote)) {
+        加问题('error', 'consistency-rule-waiver-note-missing', 'consistencyRules', `${path}.reviewNote`, `阻塞规则 ${规则.id} 标记为豁免时必须填写理由。`, 规则.id);
+      }
+    } else if (规则.reviewStatus === 'pending') {
+      加问题('warning', 'consistency-rule-review-pending', 'consistencyRules', `${path}.reviewStatus`, `提醒规则 ${规则.id} 尚未给出人工复核结论。`, 规则.id);
+    } else if (规则.reviewStatus === 'failed') {
+      加问题('warning', 'consistency-rule-review-failed', 'consistencyRules', `${path}.reviewStatus`, `提醒规则 ${规则.id} 已判定未通过。`, 规则.id);
+    } else if (规则.reviewStatus === 'waived' && !有内容(规则.reviewNote)) {
+      加问题('warning', 'consistency-rule-waiver-note-missing', 'consistencyRules', `${path}.reviewNote`, `提醒规则 ${规则.id} 标记为豁免时应填写理由。`, 规则.id);
+    }
   }
 
   const 原资产表 = new Map(

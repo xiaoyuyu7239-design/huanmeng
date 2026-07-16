@@ -59,6 +59,72 @@ export function 清洗精选数据(数据) {
   };
 }
 
+function 本机发布卡片(slug, 条目) {
+  const 项目 = 是普通对象(条目?.publishedProject) ? 条目.publishedProject : null;
+  const 节点表 = 是普通对象(项目?.story?.nodes) ? 项目.story.nodes : null;
+  const 起点 = 非空文本(项目?.story?.startNodeId);
+  if (
+    !项目 ||
+    项目.slug !== slug ||
+    !Number.isFinite(条目?.publishedAt) ||
+    !节点表 ||
+    !起点 ||
+    !是普通对象(节点表[起点])
+  ) return null;
+
+  const 资产路径 = 数组(项目.manifest?.assets)
+    .map((资产) => 非空文本(资产?.previewUrl || 资产?.generatedPath || 资产?.targetPath))
+    .find(Boolean) ?? '';
+  const 首场全景 = Object.values(节点表)
+    .map((节点) => 非空文本(节点?.panorama))
+    .find(Boolean) ?? '';
+  const 候选封面 = (资产路径 || 首场全景).replace(/^public/u, '');
+  const cover = /^\/(?!\/)[^\u0000-\u001f]*$/u.test(候选封面) ? 候选封面 : '';
+  const tagline = 非空文本(项目.storyBible)
+    .split(/\r?\n/u)
+    .map((行) => 行.trim())
+    .find(Boolean)
+    ?.slice(0, 80) ?? '';
+  return 清洗精选条目({
+    slug,
+    title: 非空文本(项目.title, slug),
+    cover,
+    tagline: tagline || `${Object.keys(节点表).length} 个场景的本机互动影游`,
+    chapters: `${Object.keys(节点表).length} 场景`,
+    tags: ['本机项目', 'Browser'],
+  });
+}
+
+// 旧版精选缓存可能保存的是草稿元数据。读取端必须重新核对项目仓：
+// 正式清单中的 slug 只采用正式卡片；本机 slug 只有存在有效 publishedProject 才能保留，
+// 且卡片文案从冻结快照重建，绝不继续信任缓存里的标题与梗概。
+export function 核对本机精选覆盖(缓存, 项目仓, 正式数据) {
+  if (!是普通对象(缓存) || !是普通对象(项目仓)) return null;
+  const 正式 = 清洗精选数据(正式数据);
+  const 正式slug = new Set(正式.featured.map((条目) => 条目.slug));
+  const 发布卡片 = new Map();
+  for (const [slug, 条目] of Object.entries(项目仓)) {
+    const 安全id = 安全slug(slug);
+    if (!安全id || 安全id !== slug) continue;
+    const 卡片 = 本机发布卡片(slug, 条目);
+    if (卡片) 发布卡片.set(slug, 卡片);
+  }
+
+  const 缓存条目 = 数组(缓存.entries).map(清洗精选条目).filter(Boolean);
+  const 原顺序 = Array.isArray(缓存.featured)
+    ? 缓存.featured
+    : 缓存条目.map((条目) => 条目.slug);
+  const featured = 文本列表(原顺序)
+    .map(安全slug)
+    .filter((slug) => slug && (正式slug.has(slug) || 发布卡片.has(slug)));
+  if (featured.length === 0) return null;
+  return {
+    default: featured.includes(安全slug(缓存.default)) ? 安全slug(缓存.default) : featured[0],
+    featured,
+    entries: featured.map((slug) => 发布卡片.get(slug)).filter(Boolean),
+  };
+}
+
 // 固定旗舰来自仓库内的正式静态清单；远端与本机覆盖只负责补充、排序其他世界。
 // 即使本机伪造同 slug 条目，也不能把官方封面/梗概与官方剧情混成两套内容。
 export function 合并首页精选(静态数据, 远端数据 = 静态数据, 本地覆盖 = null) {

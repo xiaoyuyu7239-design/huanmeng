@@ -72,6 +72,7 @@ const 可清理孤儿代码 = new Set([
 ]);
 
 const 快速步骤 = [
+  { id: 'skeleton', title: '故事骨架', copy: '先建立可试玩的开场、两项选择与两个结局，再继续补足人物和关系。', icon: Network },
   { id: 'bible', title: '角色圣经', copy: '先确定每个人想要什么、害怕什么，以及不可被越过的边界。', icon: BookOpen },
   { id: 'relationship', title: '关系设计', copy: '把恋爱、同盟、竞争和职业关系放在同一张叙事图里。', icon: HeartHandshake },
   { id: 'emotion', title: '章节节奏', copy: '用压力、联结与主导感校准节点节奏，不替代真实分支。', icon: Activity },
@@ -136,6 +137,154 @@ function 空状态({ icon, title, copy, action }) {
       <p>{copy}</p>
       {action}
     </div>
+  );
+}
+
+function 快速骨架状态(项目) {
+  const story = 项目?.story;
+  const 节点表 = story?.nodes ?? {};
+  const 起点 = 节点表[story?.startNodeId] ?? null;
+  const 选择们 = Array.isArray(起点?.choices) ? 起点.choices : [];
+  const 结局们 = 选择们.slice(0, 2).map((选择) => 节点表[选择?.next]).filter((节点) => !!节点?.ending);
+  const 是空白模板 = !!起点 && Object.keys(节点表).length === 1 && 选择们.length === 0 && !起点.ending;
+  const 是双结局骨架 = !!起点 && 选择们.length >= 2 && 结局们.length === 2 && Object.keys(节点表).length === 3;
+  return { story, 节点表, 起点, 选择们, 结局们, 是空白模板, 是双结局骨架 };
+}
+
+function 故事骨架完成度(项目) {
+  const { story, 起点, 选择们, 结局们 } = 快速骨架状态(项目);
+  const 检查项 = [
+    story?.title,
+    起点?.lines?.[0]?.text,
+    选择们[0]?.label,
+    选择们[1]?.label,
+    结局们.length === 2 && 结局们.every((节点) => 节点?.title && 节点?.lines?.[0]?.text),
+  ];
+  return { total: 检查项.length, completed: 检查项.filter(Boolean).length };
+}
+
+export function 故事骨架面板({ 项目, on更新, on进入专业模式 }) {
+  const { story, 起点, 选择们, 结局们, 是空白模板, 是双结局骨架 } = 快速骨架状态(项目);
+
+  function 修改(改法) {
+    on更新((草稿) => {
+      const 草稿故事 = 草稿.story;
+      const 草稿起点 = 草稿故事?.nodes?.[草稿故事.startNodeId];
+      if (!草稿故事 || !草稿起点) return;
+      改法(草稿, 草稿故事, 草稿起点);
+      for (const 规则 of 草稿.authoring?.consistencyRules ?? []) {
+        if (规则.enabled !== false && ['story', 'node', 'relationship'].includes(规则.scope)) {
+          规则.reviewStatus = 'pending';
+          规则.reviewed = false;
+        }
+      }
+    });
+  }
+
+  function 生成双结局骨架() {
+    if (!是空白模板) return;
+    修改((_草稿, 草稿故事, 草稿起点) => {
+      const 已有id = new Set(Object.keys(草稿故事.nodes));
+      const 唯一id = (基础) => {
+        let id = 基础;
+        let 序号 = 2;
+        while (已有id.has(id)) id = `${基础}-${序号++}`;
+        已有id.add(id);
+        return id;
+      };
+      const 结局Aid = 唯一id('e01-choice-a');
+      const 结局Bid = 唯一id('e02-choice-b');
+      草稿起点.choices = [
+        {
+          id: 'choice-1',
+          label: '选择主动公开真相',
+          next: 结局Aid,
+          fateType: 'river',
+          consequence: '你承担公开决定，并让证据进入可核验流程。',
+          effect: {},
+        },
+        {
+          id: 'choice-2',
+          label: '选择先保护当事人边界',
+          next: 结局Bid,
+          fateType: 'web',
+          consequence: '你先确认同意与撤回，再决定哪些事实可以公开。',
+          effect: {},
+        },
+      ];
+      const 建结局 = (id, title, text, type) => ({
+        id,
+        chapter: '第一幕 · 结局',
+        title,
+        location: '故事落点',
+        synopsis: text,
+        panorama: '',
+        lines: [{ speaker: 'narrator', text }],
+        hotspots: [],
+        choices: [],
+        ending: { title, subtitle: text, type },
+      });
+      草稿故事.nodes[结局Aid] = 建结局(结局Aid, '真相被看见', '你让事实先于表演抵达，也接受了公开选择带来的责任。', 'growth');
+      草稿故事.nodes[结局Bid] = 建结局(结局Bid, '边界被守住', '你没有抢在当事人之前定义真相，让撤回与选择仍有主人。', 'independent');
+    });
+  }
+
+  if (!story || !起点) {
+    return <空状态 icon={<Network size={24} />} title="还没有故事骨架" copy="先创建项目，快速模式会从可试玩骨架开始。" />;
+  }
+
+  if (!是空白模板 && !是双结局骨架) {
+    const 结局数 = Object.values(story.nodes ?? {}).filter((节点) => !!节点?.ending).length;
+    return (
+      <section className="women-skeleton-layout" aria-label="故事骨架">
+        <div className="women-skeleton-summary">
+          <span>EXISTING STORY</span>
+          <h3>{story.title || 项目.title}</h3>
+          <p>这是一份已有复杂分支的作品。快速模式不会把它压缩成双结局模板，以免覆盖现有节点。</p>
+          <dl>
+            <div><dt>场景</dt><dd>{Object.keys(story.nodes ?? {}).length}</dd></div>
+            <div><dt>开场选择</dt><dd>{选择们.length}</dd></div>
+            <div><dt>结局</dt><dd>{结局数}</dd></div>
+          </dl>
+          <button onClick={on进入专业模式} type="button">进入专业模式编辑完整剧情 <ArrowRight size={14} /></button>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="women-skeleton-layout" aria-label="故事骨架">
+      <div className="women-skeleton-editor">
+        <div className="women-section-heading">
+          <div><span>PLAYABLE STORY SKELETON</span><strong>最小可试玩故事</strong></div>
+          <状态徽章 已确认={是双结局骨架}>{是双结局骨架 ? '双结局已建立' : '等待生成分支'}</状态徽章>
+        </div>
+        <p className="women-section-note">骨架只创建开场、两项选择和两个结局；图片、语音与复杂机制可以稍后在专业模式补充。</p>
+        <div className="women-form-grid">
+          <label className="is-wide"><span>作品标题</span><input maxLength={80} onChange={(事件) => 修改((草稿, 草稿故事) => { 草稿.title = 事件.target.value; 草稿故事.title = 事件.target.value; })} value={项目.title ?? story.title ?? ''} /></label>
+          <label><span>开场标题</span><input maxLength={80} onChange={(事件) => 修改((_草稿, _故事, 草稿起点) => { 草稿起点.title = 事件.target.value; })} value={起点.title ?? ''} /></label>
+          <label><span>开场地点</span><input maxLength={80} onChange={(事件) => 修改((_草稿, _故事, 草稿起点) => { 草稿起点.location = 事件.target.value; })} value={起点.location ?? ''} /></label>
+          <label className="is-wide"><span>开场旁白</span><textarea maxLength={300} onChange={(事件) => 修改((_草稿, _故事, 草稿起点) => { 草稿起点.lines ??= []; 草稿起点.lines[0] = { ...(草稿起点.lines[0] ?? {}), speaker: 草稿起点.lines[0]?.speaker || 'narrator', text: 事件.target.value }; })} value={起点.lines?.[0]?.text ?? ''} /></label>
+        </div>
+        {是空白模板 ? (
+          <button className="women-skeleton-generate" onClick={生成双结局骨架} type="button"><Sparkles size={15} /> 生成两项选择与两个结局</button>
+        ) : (
+          <div className="women-skeleton-branches">
+            {选择们.slice(0, 2).map((选择, 索引) => {
+              const 结局 = story.nodes?.[选择.next];
+              return (
+                <article key={选择.id}>
+                  <span>分支 {索引 + 1}</span>
+                  <label><span>玩家选择</span><input maxLength={120} onChange={(事件) => 修改((_草稿, _故事, 草稿起点) => { 草稿起点.choices[索引].label = 事件.target.value; })} value={选择.label ?? ''} /></label>
+                  <label><span>结局标题</span><input maxLength={80} onChange={(事件) => 修改((_草稿, 草稿故事, 草稿起点) => { const 目标 = 草稿故事.nodes[草稿起点.choices[索引].next]; if (目标) { 目标.title = 事件.target.value; if (目标.ending && typeof 目标.ending === 'object') 目标.ending.title = 事件.target.value; } })} value={结局?.title ?? ''} /></label>
+                  <label><span>结局旁白</span><textarea maxLength={300} onChange={(事件) => 修改((_草稿, 草稿故事, 草稿起点) => { const 目标 = 草稿故事.nodes[草稿起点.choices[索引].next]; if (!目标) return; 目标.lines ??= []; 目标.lines[0] = { ...(目标.lines[0] ?? {}), speaker: 目标.lines[0]?.speaker || 'narrator', text: 事件.target.value }; if (目标.ending && typeof 目标.ending === 'object') 目标.ending.subtitle = 事件.target.value; })} value={结局?.lines?.[0]?.text ?? ''} /></label>
+                </article>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </section>
   );
 }
 
@@ -682,7 +831,12 @@ export function 一致性资产面板({ 项目, on更新, compact = false }) {
       if (!规则) return;
       规则[字段] = 值;
       if (字段 === 'scope') 规则.targetId = '';
-      if (字段 !== 'reviewed') 规则.reviewed = false;
+      if (字段 === 'reviewStatus') {
+        规则.reviewed = 值 !== 'pending';
+      } else if (字段 !== 'reviewNote') {
+        规则.reviewStatus = 'pending';
+        规则.reviewed = false;
+      }
     });
   }
 
@@ -700,6 +854,8 @@ export function 一致性资产面板({ 项目, on更新, compact = false }) {
         rule: '',
         severity: 'warning',
         enabled: true,
+        reviewStatus: 'pending',
+        reviewNote: '',
         reviewed: false,
       });
     });
@@ -879,10 +1035,19 @@ export function 一致性资产面板({ 项目, on更新, compact = false }) {
                   <label><span>级别</span><select onChange={(事件) => 改规则(规则.id, 'severity', 事件.target.value)} value={规则.severity ?? 'warning'}><option value="error">阻塞发布</option><option value="warning">提醒复核</option></select></label>
                 </div>
                 <label className="women-rule-copy"><span>规则内容</span><textarea aria-label={`${规则.label || 规则.id}规则内容`} maxLength={400} onChange={(事件) => 改规则(规则.id, 'rule', 事件.target.value)} value={规则.rule ?? ''} /></label>
+                <label className="women-rule-copy"><span>复核说明{规则.reviewStatus === 'waived' ? '（豁免必填）' : ''}</span><textarea aria-label={`${规则.label || 规则.id}复核说明`} maxLength={1000} onChange={(事件) => 改规则(规则.id, 'reviewNote', 事件.target.value)} placeholder="记录核对证据、未通过原因或豁免理由" value={规则.reviewNote ?? ''} /></label>
                 <small>稳定 ID：{规则.id}</small>
               </div>
               <div className="women-rule-actions">
-                <label className="women-rule-reviewed"><input checked={!!规则.reviewed} onChange={(事件) => 改规则(规则.id, 'reviewed', 事件.target.checked)} type="checkbox" />已复核</label>
+                <label className="women-rule-reviewed">
+                  <span>复核结论</span>
+                  <select onChange={(事件) => 改规则(规则.id, 'reviewStatus', 事件.target.value)} value={规则.reviewStatus ?? (规则.reviewed ? 'passed' : 'pending')}>
+                    <option value="pending">待复核</option>
+                    <option value="passed">已通过</option>
+                    <option value="failed">未通过</option>
+                    <option value="waived">有理由豁免</option>
+                  </select>
+                </label>
                 {!内置规则id.has(规则.id) && <button className="is-danger" onClick={() => 删除规则(规则.id)} type="button">删除</button>}
               </div>
             </div>
@@ -900,14 +1065,16 @@ export default function 快速创作面板({
   on更新,
   on保存,
   on校验,
+  on发布,
   on预览,
   on进入专业模式,
 }) {
-  const [步骤, 设步骤] = useState('bible');
+  const [步骤, 设步骤] = useState('skeleton');
   const 当前序号 = Math.max(0, 快速步骤.findIndex((条) => 条.id === 步骤));
   const 完成度 = useMemo(() => 计算创作资产完成度(项目), [项目]);
   const 总完成度 = Math.round(Number(完成度?.percentage ?? 完成度?.percent ?? 完成度?.overall ?? 0));
   const 分步完成度 = {
+    skeleton: 故事骨架完成度(项目),
     bible: 完成度?.sections?.characterBibles,
     relationship: 完成度?.sections?.relationshipEdges,
     emotion: 完成度?.sections?.emotionPoints,
@@ -917,7 +1084,9 @@ export default function 快速创作面板({
     },
   };
 
-  const 面板 = 步骤 === 'relationship'
+  const 面板 = 步骤 === 'skeleton'
+    ? <故事骨架面板 项目={项目} on更新={on更新} on进入专业模式={on进入专业模式} />
+    : 步骤 === 'relationship'
     ? <关系图面板 项目={项目} on更新={on更新} compact />
     : 步骤 === 'emotion'
       ? <情绪曲线面板 项目={项目} on更新={on更新} compact />
@@ -969,7 +1138,11 @@ export default function 快速创作面板({
           <button disabled={!项目 || 忙碌} onClick={on校验} type="button"><Check size={15} /> 校验</button>
           <button disabled={!项目 || 忙碌 || 有未保存修改} onClick={on预览} type="button"><Eye size={15} /> 试玩</button>
         </div>
-        <button className="is-primary" disabled={当前序号 === 快速步骤.length - 1 || 忙碌} onClick={() => 设步骤(快速步骤[当前序号 + 1].id)} type="button">下一步 <ArrowRight size={15} /></button>
+        {当前序号 === 快速步骤.length - 1 ? (
+          <button className="is-primary" disabled={!项目 || 忙碌} onClick={on发布} type="button"><Check size={15} /> 校验并发布</button>
+        ) : (
+          <button className="is-primary" disabled={忙碌} onClick={() => 设步骤(快速步骤[当前序号 + 1].id)} type="button">下一步 <ArrowRight size={15} /></button>
+        )}
       </footer>
     </section>
   );

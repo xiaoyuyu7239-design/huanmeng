@@ -16,8 +16,8 @@
 //   storyNodeList               array    节点数组（换片时同步重算）
 //   ACTIVE_GAME_ID              string   当前剧情 slug（清洗后），初始 "ninth-seat"
 //   setActiveStory(story, slug) void     校验后整体切换剧情，校验失败抛错
-//   loadStoryBySlug(slug)       async→boolean  localStorage草稿优先→fetch线上
-//   按slug加载剧情(slug)         async→boolean  同 loadStoryBySlug（main.jsx 的硬契约名）
+//   loadStoryBySlug(slug, options) async→boolean  默认已发布快照→线上；allowDraft 才可试玩草稿
+//   按slug加载剧情(slug, options)   async→boolean  同 loadStoryBySlug（main.jsx 的硬契约名）
 //   getScoreDefinitions()       ScoreDef[]     规范化后的全部分数定义（每次现算）
 //   getScoreDefinition(id)      ScoreDef|undefined
 //   getVisibleScoreDefinitions() ScoreDef[]    过滤掉 visibility==="hidden" 的
@@ -28,8 +28,8 @@
 // 这样即使断网/线上 story.json 拉不到，播放器也永远有片可放。
 import 兜底剧情 from '../../../公共资源/games/ninth-seat/story.json';
 
-// 创作端"浏览器草稿仓库"的 localStorage 键名——创作台没发布的草稿也能直接试玩
-const 浏览器草稿仓库键 = 'creator:browser-projects:v1';
+// 创作端本机仓库：project 是草稿，publishedProject 是玩家端默认读取的冻结快照。
+const 浏览器项目仓库键 = 'creator:browser-projects:v1';
 const 支持的表情 = new Set([
   'neutral',
   'focused',
@@ -182,10 +182,11 @@ export function getStoryCharacterIds() {
   return storyCast.characters.map((角色) => 角色.id);
 }
 
-// 输入 slug → 先翻浏览器里的创作草稿，再去线上拉 /games/<slug>/story.json → 吐出 true/false。
+// 输入 slug / 选项 → 默认先读本机已发布快照，再去线上拉 /games/<slug>/story.json。
+// 只有创作台显式传 allowDraft:true，才会把草稿放到已发布快照之前用于试玩。
 // 为什么所有错误都吞掉只回布尔值：加载失败时播放器要继续放手上那部片，不能黑屏。
-export async function loadStoryBySlug(slug) {
-  if (尝试加载浏览器草稿(slug)) return true;
+export async function loadStoryBySlug(slug, 选项 = {}) {
+  if (尝试加载浏览器项目(slug, { allowDraft: 选项?.allowDraft === true })) return true;
   try {
     const 响应 = await fetch(`/games/${encodeURIComponent(slug)}/story.json`, {
       cache: 'no-cache',
@@ -200,21 +201,33 @@ export async function loadStoryBySlug(slug) {
 }
 
 // main.jsx 的硬契约名：入口就按这个名字 import，内部就是 loadStoryBySlug
-export async function 按slug加载剧情(slug) {
-  return loadStoryBySlug(slug);
+export async function 按slug加载剧情(slug, 选项) {
+  return loadStoryBySlug(slug, 选项);
 }
 
-// 输入 slug → 查 localStorage 的创作草稿仓库（结构 { [slug]: { project: { story } } }）→
-// 命中就地激活并返回 true，否则 false。草稿永远优先于线上发布版。
-function 尝试加载浏览器草稿(slug) {
+// 输入 slug / allowDraft → 查同一格中的 project / publishedProject → 命中安全版本就激活。
+// 旧条目只有 project 时继续作为草稿保留：普通玩家不会被它覆盖，创作台仍可显式试玩。
+function 尝试加载浏览器项目(slug, { allowDraft = false } = {}) {
   if (typeof window === 'undefined') return false;
   try {
-    const 仓库 = JSON.parse(window.localStorage.getItem(浏览器草稿仓库键) ?? '{}');
+    const 仓库 = JSON.parse(window.localStorage.getItem(浏览器项目仓库键) ?? '{}');
     if (!仓库 || typeof 仓库 !== 'object' || Array.isArray(仓库)) return false;
-    const 草稿 = 仓库[slug]?.project?.story;
-    if (草稿) {
-      setActiveStory(草稿, slug);
-      return true;
+    const 条目 = 仓库[slug];
+    const 草稿项目 = 条目?.project;
+    const 已发布项目 = 条目?.publishedProject;
+    const 草稿 = !草稿项目?.slug || 草稿项目.slug === slug ? 草稿项目?.story : null;
+    const 已发布 = Number.isFinite(条目?.publishedAt) && 已发布项目?.slug === slug
+      ? 已发布项目.story
+      : null;
+    const 候选们 = allowDraft ? [草稿, 已发布] : [已发布];
+    for (const 剧情 of 候选们) {
+      if (!剧情) continue;
+      try {
+        setActiveStory(剧情, slug);
+        return true;
+      } catch {
+        // 坏草稿不能挡住合法已发布快照，坏快照也不能挡住同 slug 静态作品。
+      }
     }
     return false;
   } catch {

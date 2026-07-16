@@ -59,7 +59,7 @@ export function 页脚({ playHref }) {
         </div>
         <div className="hx-footer-bottom">
           <span>© 2026 衍境·心界</span>
-          <span>当前版本提供作者分支与结构化记忆；受约束的 AI 关系层将在后续阶段接入。</span>
+          <span>当前版本提供作者分支、结构化记忆与受约束关系回应；AI 未接入时明确使用作者预设回应。</span>
         </div>
       </div>
     </footer>
