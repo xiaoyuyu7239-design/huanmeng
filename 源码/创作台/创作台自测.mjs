@@ -6,6 +6,7 @@ class 本机存储模拟 {
     this.数据 = new Map();
     this.下次写失败键 = '';
     this.下次读失败键 = '';
+    this.下次删失败键 = '';
   }
 
   getItem(键) {
@@ -29,6 +30,12 @@ class 本机存储模拟 {
   }
 
   removeItem(键) {
+    if (this.下次删失败键 === 键) {
+      this.下次删失败键 = '';
+      const 错误 = new Error('mock remove failure');
+      错误.name = 'SecurityError';
+      throw 错误;
+    }
     this.数据.delete(键);
   }
 
@@ -36,6 +43,7 @@ class 本机存储模拟 {
     this.数据.clear();
     this.下次写失败键 = '';
     this.下次读失败键 = '';
+    this.下次删失败键 = '';
   }
 }
 
@@ -46,9 +54,11 @@ const {
   项目存储键,
   设置存储键,
   精选存储键,
+  选中项目键,
   语音已就绪,
   重算摘要,
   归一化项目,
+  清洗slug,
   新建本机项目,
   保存本机项目,
   发布本机项目,
@@ -61,6 +71,17 @@ const {
   写浏览器设置,
   补正健康状态,
 } = await import('./项目管理/本机项目存储.js');
+assert.equal(清洗slug('package_work'), 'package_work', '创作台清洗必须保留下划线 canonical slug');
+const {
+  创作包产品,
+  创作包架构版本,
+  构建创作包,
+  序列化创作包,
+  解析创作包,
+  读取当前创作包,
+  确认导入创作包,
+  下载创作包文件,
+} = await import('./项目管理/创作包.js');
 const { 运行校验, 生成QA报告, 解析QA明细 } = await import('./校验发布/校验规则.js');
 const { 新增节点, 拖拽重排 } = await import('./节点编辑/图操作.js');
 const { 加载示例项目, 由剧情构造项目 } = await import('./项目管理/示例项目加载.js');
@@ -169,6 +190,266 @@ assert.throws(
   (错) => 错?.name === 'CreatorPublishCompatibilityError' && /只能只读保留/.test(错.message),
 );
 assert.equal(存储.getItem(项目存储键), 未来发布前项目仓, '未来作者合同不得绕过底层边界覆盖玩家版本');
+
+// Level 9 创作包：v1 必须完整携带草稿、发布快照、精选和选中项；解析阶段绝不触碰存储。
+const 创作包时间 = '2026-07-17T08:00:00.000Z';
+const 创作包项目 = 新建本机项目('跨域迁移作品', 'package-work');
+const 合法创作包 = 构建创作包({
+  projects: {
+    'package-work': {
+      project: 创作包项目,
+      publishedProject: structuredClone(创作包项目),
+      updatedAt: 1_752_739_200_000,
+      publishedAt: 1_752_739_100_000,
+    },
+  },
+  showcase: {
+    default: 'package-work',
+    featured: ['package-work'],
+    entries: [{ slug: 'package-work', title: '跨域迁移作品', tagline: '完整创作包' }],
+  },
+  selectedSlug: 'package-work',
+  exportedAt: 创作包时间,
+});
+assert.equal(合法创作包.product, 创作包产品);
+assert.equal(合法创作包.schemaVersion, 创作包架构版本);
+assert.ok(合法创作包.projects['package-work'].publishedProject, 'v1 包必须包含已发布冻结快照');
+assert.deepEqual(合法创作包.showcase.featured, ['package-work']);
+assert.equal(合法创作包.selectedSlug, 'package-work');
+const 合法预检 = 解析创作包(序列化创作包(合法创作包));
+assert.deepEqual(
+  [合法预检.摘要.projectCount, 合法预检.摘要.draftCount, 合法预检.摘要.publishedCount, 合法预检.摘要.featuredCount],
+  [1, 1, 1, 1],
+);
+const 下划线创作包 = structuredClone(合法创作包);
+const 下划线条目 = 下划线创作包.projects['package-work'];
+delete 下划线创作包.projects['package-work'];
+下划线条目.project.slug = 'package_work';
+下划线条目.publishedProject.slug = 'package_work';
+下划线创作包.projects.package_work = 下划线条目;
+下划线创作包.showcase.default = 'package_work';
+下划线创作包.showcase.featured = ['package_work'];
+下划线创作包.showcase.entries[0].slug = 'package_work';
+下划线创作包.selectedSlug = 'package_work';
+const 下划线预检 = 解析创作包(JSON.stringify(下划线创作包));
+assert.equal(下划线预检.创作包.projects.package_work.project.slug, 'package_work', 'canonical slug 必须允许下划线');
+存储.下次读失败键 = 项目存储键;
+assert.equal(解析创作包(JSON.stringify(合法创作包)).摘要.projectCount, 1, 'dry-run 不得读取 localStorage');
+assert.equal(存储.下次读失败键, 项目存储键, '纯解析不能消耗存储读取失败桩');
+存储.下次读失败键 = '';
+
+function 断言创作包拒绝(改法, 代码, 文案) {
+  const 候选 = structuredClone(合法创作包);
+  改法(候选);
+  assert.throws(
+    () => 解析创作包(JSON.stringify(候选)),
+    (错) => 错?.name === 'CreatorPackageError' && 错?.code === 代码,
+    文案,
+  );
+}
+
+assert.throws(
+  () => 解析创作包('{broken-json'),
+  (错) => 错?.name === 'CreatorPackageError' && 错?.code === 'invalid-json',
+  '坏 JSON 必须在 dry-run 阶段拒绝',
+);
+断言创作包拒绝((包) => { 包.product = 'another-product'; }, 'wrong-product', '其他产品包必须拒绝');
+断言创作包拒绝((包) => { 包.schemaVersion = 2; }, 'future-schema-version', '未来包版本必须拒绝');
+断言创作包拒绝((包) => { 包.exportedAt = 'not-a-time'; }, 'invalid-time', '非法导出时间必须拒绝');
+断言创作包拒绝((包) => {
+  const 条目 = 包.projects['package-work'];
+  delete 包.projects['package-work'];
+  条目.project.slug = 'Bad Slug';
+  条目.publishedProject.slug = 'Bad Slug';
+  包.projects['Bad Slug'] = 条目;
+}, 'invalid-slug', '非法项目表 slug 必须拒绝');
+断言创作包拒绝((包) => { 包.projects['package-work'].project.slug = 'another-work'; }, 'slug-mismatch', '草稿 slug 错配必须拒绝');
+断言创作包拒绝((包) => { 包.projects['package-work'].publishedProject.slug = 'another-work'; }, 'slug-mismatch', '发布快照 slug 错配必须拒绝');
+断言创作包拒绝((包) => { 包.projects['package-work'].updatedAt = '昨天'; }, 'invalid-time', '非法草稿时间必须拒绝');
+断言创作包拒绝((包) => { 包.projects['package-work'].publishedAt = -1; }, 'invalid-time', '非法发布时间必须拒绝');
+断言创作包拒绝((包) => { 包.projects['package-work'].project.authoring = { schemaVersion: 2, future: true }; }, 'future-authoring-version', '未来草稿作者合同必须拒绝');
+断言创作包拒绝((包) => { 包.projects['package-work'].publishedProject.authoring = { schemaVersion: 2, future: true }; }, 'future-authoring-version', '未来发布作者合同必须拒绝');
+断言创作包拒绝((包) => { 包.projects['package-work'].publishedProject.story.startNodeId = 'missing-node'; }, 'published-validation-error', '发布快照有 QA error 必须拒绝');
+断言创作包拒绝((包) => { 包.selectedSlug = '../bad'; }, 'invalid-slug', '非法选中 slug 必须拒绝');
+断言创作包拒绝((包) => { 包.showcase.entries = []; }, 'invalid-showcase', '精选缺失对应卡片必须拒绝');
+
+const 旧仓项目 = 新建本机项目('导入前作品', 'before-import');
+const 导入前包 = 构建创作包({
+  projects: {
+    'before-import': {
+      project: 旧仓项目,
+      publishedProject: structuredClone(旧仓项目),
+      updatedAt: 1_752_739_000_000,
+      publishedAt: 1_752_739_000_000,
+    },
+  },
+  showcase: {
+    default: 'before-import',
+    featured: ['before-import'],
+    entries: [{ slug: 'before-import', title: '导入前作品' }],
+  },
+  selectedSlug: 'before-import',
+  exportedAt: '2026-07-17T07:00:00.000Z',
+});
+
+function 写入包到模拟仓(创作包) {
+  存储.setItem(项目存储键, JSON.stringify(创作包.projects));
+  存储.setItem(精选存储键, JSON.stringify(创作包.showcase));
+  if (创作包.selectedSlug == null) 存储.removeItem(选中项目键);
+  else 存储.setItem(选中项目键, 创作包.selectedSlug);
+}
+
+function 读取三键原文() {
+  return {
+    [项目存储键]: 存储.getItem(项目存储键),
+    [精选存储键]: 存储.getItem(精选存储键),
+    [选中项目键]: 存储.getItem(选中项目键),
+  };
+}
+
+// 导出/覆盖前备份必须先逐字带走当前仓，即使其中有只读保留的未来作者合同；
+// 这份文件再次导入当前旧版本时仍应被严格 dry-run 拒绝。
+存储.clear();
+const 未来当前仓 = structuredClone(导入前包);
+未来当前仓.projects['before-import'].project.authoring = { schemaVersion: 2, futureField: { keep: true } };
+写入包到模拟仓(未来当前仓);
+const 未来仓导出 = 读取当前创作包({ 存储, exportedAt: '2026-07-17T08:30:00.000Z' });
+assert.equal(未来仓导出.创作包.projects['before-import'].project.authoring.futureField.keep, true);
+assert.throws(
+  () => 解析创作包(未来仓导出.文本),
+  (错) => 错?.code === 'future-authoring-version',
+  '备份可保留未来合同，但当前版本仍不得把它当作可写入包',
+);
+
+存储.clear();
+写入包到模拟仓(导入前包);
+const 成功导入前原文 = 读取三键原文();
+let 备份回调次数 = 0;
+const 成功导入 = 确认导入创作包(合法创作包, {
+  存储,
+  备份时间: '2026-07-17T09:00:00.000Z',
+  on备份: (备份) => {
+    备份回调次数 += 1;
+    assert.deepEqual(读取三键原文(), 成功导入前原文, '备份回调必须发生在第一笔写入之前');
+    assert.equal(备份.创作包.projects['before-import'].publishedProject.slug, 'before-import');
+    assert.match(备份.文本, /"product": "yanjing-ai-game-creator"/);
+  },
+});
+assert.equal(备份回调次数, 1);
+assert.equal(成功导入.摘要.publishedCount, 1);
+assert.deepEqual(JSON.parse(存储.getItem(项目存储键)), 合法创作包.projects);
+assert.deepEqual(JSON.parse(存储.getItem(精选存储键)), 合法创作包.showcase);
+assert.equal(存储.getItem(选中项目键), 'package-work');
+const 当前仓导出 = 读取当前创作包({ 存储, exportedAt: '2026-07-17T10:00:00.000Z' });
+assert.equal(当前仓导出.创作包.product, 创作包产品);
+assert.equal(当前仓导出.摘要.projectCount, 1);
+assert.equal(当前仓导出.创作包.projects['package-work'].publishedProject.slug, 'package-work');
+const 下划线导入 = 确认导入创作包(下划线预检.创作包, { 存储 });
+assert.equal(下划线导入.摘要.projectCount, 1);
+assert.equal(JSON.parse(存储.getItem(项目存储键)).package_work.project.slug, 'package_work');
+assert.equal(存储.getItem(选中项目键), 'package_work', '含下划线的 canonical slug 必须能完成事务导入');
+
+// 下载必须走 Blob/Object URL 临时链接，且创建后立即撤销 URL。
+let 下载Blob = null;
+let 下载地址 = '';
+let 下载文件名 = '';
+let 下载已点击 = false;
+let 下载链接已移除 = false;
+let 下载地址已撤销 = false;
+class Blob模拟 {
+  constructor(片段, 选项) {
+    this.片段 = 片段;
+    this.type = 选项.type;
+  }
+}
+const 下载链接 = {
+  hidden: false,
+  click() { 下载已点击 = true; },
+  remove() { 下载链接已移除 = true; },
+};
+下载创作包文件('{"ok":true}', 'package.json', {
+  Blob构造器: Blob模拟,
+  URL接口: {
+    createObjectURL(Blob值) { 下载Blob = Blob值; 下载地址 = 'blob:creator-package'; return 下载地址; },
+    revokeObjectURL(地址) { 下载地址已撤销 = 地址 === 下载地址; },
+  },
+  文档: {
+    createElement(标签) { assert.equal(标签, 'a'); return 下载链接; },
+    body: { appendChild(链接) { 下载文件名 = 链接.download; } },
+  },
+});
+assert.deepEqual(下载Blob.片段, ['{"ok":true}']);
+assert.equal(下载Blob.type, 'application/json;charset=utf-8');
+assert.equal(下载文件名, 'package.json');
+assert.equal(下载链接.href, 'blob:creator-package');
+assert.equal(下载已点击 && 下载链接已移除 && 下载地址已撤销, true);
+const [创作包模块源码, 创作台应用源码, 导入弹窗源码] = await Promise.all([
+  readFile(new URL('./项目管理/创作包.js', import.meta.url), 'utf8'),
+  readFile(new URL('./创作台应用.jsx', import.meta.url), 'utf8'),
+  readFile(new URL('./项目管理/创作包导入弹窗.jsx', import.meta.url), 'utf8'),
+]);
+assert.match(创作包模块源码, /createObjectURL/);
+assert.match(创作包模块源码, /revokeObjectURL/);
+assert.doesNotMatch(创作包模块源码, /\bfetch\s*\(/, '创作包实现不得上传或请求网络');
+assert.match(创作台应用源码, /accept="application\/json,\.json"/, '创作台必须提供 JSON 文件选择');
+assert.match(创作台应用源码, /完整创作包已下载/);
+assert.match(导入弹窗源码, /整体覆盖当前浏览器中的项目、草稿、玩家版本、精选与选中项/);
+assert.match(导入弹窗源码, /先自动下载一份「导入前备份」/);
+assert.match(导入弹窗源码, /不会上传到服务器/);
+
+// 任一仓读取失败都必须在写入前终止；任一键写入失败都必须恢复三个键的逐字原值。
+for (const 失败键 of [项目存储键, 精选存储键, 选中项目键]) {
+  存储.clear();
+  写入包到模拟仓(导入前包);
+  const 导入前原文 = 读取三键原文();
+  存储.下次读失败键 = 失败键;
+  assert.throws(
+    () => 确认导入创作包(合法创作包, { 存储 }),
+    (错) => 错?.name === 'CreatorPackageStorageError' && 错?.code === 'storage-read-failed',
+    `${失败键} 读取失败必须 fail closed`,
+  );
+  assert.deepEqual(读取三键原文(), 导入前原文, `${失败键} 读取失败后不得改变仓`);
+}
+
+for (const 失败键 of [项目存储键, 精选存储键, 选中项目键]) {
+  存储.clear();
+  写入包到模拟仓(导入前包);
+  const 导入前原文 = 读取三键原文();
+  存储.下次写失败键 = 失败键;
+  assert.throws(
+    () => 确认导入创作包(合法创作包, { 存储 }),
+    (错) => 错?.name === 'CreatorPackageTransactionError' && 错?.code === 'import-write-failed-rolled-back',
+    `${失败键} 写入失败必须执行补偿回滚`,
+  );
+  assert.deepEqual(读取三键原文(), 导入前原文, `${失败键} 写入失败后必须逐字恢复三键`);
+}
+
+存储.clear();
+写入包到模拟仓(导入前包);
+const 删除选中前原文 = 读取三键原文();
+const 无选中创作包 = structuredClone(合法创作包);
+无选中创作包.selectedSlug = null;
+存储.下次删失败键 = 选中项目键;
+assert.throws(
+  () => 确认导入创作包(无选中创作包, { 存储 }),
+  (错) => 错?.name === 'CreatorPackageTransactionError' && 错?.code === 'import-write-failed-rolled-back',
+  '删除选中项失败也必须补偿回滚',
+);
+assert.deepEqual(读取三键原文(), 删除选中前原文);
+
+存储.clear();
+写入包到模拟仓(导入前包);
+const 备份失败前原文 = 读取三键原文();
+assert.throws(
+  () => 确认导入创作包(合法创作包, {
+    存储,
+    on备份: () => { throw new Error('mock backup download failure'); },
+  }),
+  /mock backup download failure/,
+  '备份下载失败时不得开始导入',
+);
+assert.deepEqual(读取三键原文(), 备份失败前原文, '备份前置步骤失败不得产生任何写入');
+
 存储.clear();
 const 视觉摘要 = 重算摘要({
   story: {
@@ -1028,4 +1309,4 @@ try {
   else globalThis.fetch = 原fetch;
 }
 
-console.log('创作台定向自测通过：语音、场景覆盖、机制结构、删除回滚、结局、女性向创作资产与一致性。');
+console.log('创作台定向自测通过：创作包 dry-run/备份/事务回滚、语音、场景覆盖、机制结构、结局与女性向创作资产。');

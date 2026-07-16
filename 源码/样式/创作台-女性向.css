@@ -2011,6 +2011,203 @@
   }
 }
 
+/* Level 9 · 跨域创作包 dry-run 与覆盖确认 */
+.studio-shell .creator-package-dialog {
+  width: min(720px, calc(100vw - 32px));
+  max-height: min(820px, calc(100dvh - 32px));
+  border-color: rgba(215, 167, 186, 0.28);
+  background:
+    radial-gradient(circle at 12% 0%, rgba(215, 167, 186, 0.11), transparent 34%),
+    linear-gradient(180deg, #151a22fa, #090d13fc);
+}
+
+.studio-shell .creator-package-body {
+  display: grid;
+  gap: 14px;
+  overflow: auto;
+}
+
+.creator-package-file-input {
+  display: none;
+}
+
+.studio-shell .creator-package-file,
+.studio-shell .creator-package-valid,
+.studio-shell .creator-package-selected,
+.studio-shell .creator-package-warning,
+.studio-shell .creator-package-error,
+.studio-shell .creator-package-local-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 13px 14px;
+  border: 1px solid var(--women-line);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.studio-shell .creator-package-file > svg,
+.studio-shell .creator-package-valid > svg,
+.studio-shell .creator-package-selected > svg,
+.studio-shell .creator-package-warning > svg,
+.studio-shell .creator-package-error > svg,
+.studio-shell .creator-package-local-note > svg {
+  flex: 0 0 auto;
+}
+
+.studio-shell .creator-package-file > svg {
+  color: var(--women-rose-strong);
+}
+
+.studio-shell .creator-package-file > div,
+.studio-shell .creator-package-valid > div,
+.studio-shell .creator-package-warning > div,
+.studio-shell .creator-package-error > div {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.studio-shell .creator-package-file span,
+.studio-shell .creator-package-valid span,
+.studio-shell .creator-package-selected span,
+.studio-shell .creator-package-local-note span,
+.studio-shell .creator-package-warning p,
+.studio-shell .creator-package-error p,
+.studio-shell .creator-package-error small {
+  margin: 0;
+  color: var(--women-muted);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.studio-shell .creator-package-file strong {
+  max-width: 100%;
+  overflow: hidden;
+  color: var(--women-text);
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.studio-shell .creator-package-valid {
+  border-color: rgba(88, 210, 131, 0.28);
+  background: rgba(88, 210, 131, 0.075);
+}
+
+.studio-shell .creator-package-valid > svg,
+.studio-shell .creator-package-local-note > svg {
+  color: #8bd8a7;
+}
+
+.studio-shell .creator-package-valid strong,
+.studio-shell .creator-package-warning strong,
+.studio-shell .creator-package-error strong {
+  color: var(--women-text);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.studio-shell .creator-package-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+}
+
+.studio-shell .creator-package-summary > div {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+  padding: 13px;
+  border: 1px solid var(--women-line);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.028);
+}
+
+.studio-shell .creator-package-summary dt,
+.studio-shell .creator-package-summary small {
+  color: var(--women-muted);
+  font-size: 10px;
+}
+
+.studio-shell .creator-package-summary dd {
+  margin: 0;
+  color: var(--women-rose-strong);
+  font-size: 24px;
+  font-weight: 730;
+  font-variant-numeric: tabular-nums;
+}
+
+.studio-shell .creator-package-selected {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.studio-shell .creator-package-selected strong {
+  max-width: 66%;
+  overflow: hidden;
+  color: var(--women-text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.studio-shell .creator-package-warning {
+  border-color: rgba(216, 180, 127, 0.36);
+  background: rgba(216, 180, 127, 0.085);
+}
+
+.studio-shell .creator-package-warning > svg {
+  color: var(--women-amber);
+}
+
+.studio-shell .creator-package-error {
+  border-color: rgba(242, 121, 121, 0.38);
+  background: rgba(242, 121, 121, 0.08);
+}
+
+.studio-shell .creator-package-error > svg {
+  color: #f29a9a;
+}
+
+.studio-shell .creator-package-local-note {
+  align-items: center;
+  padding-block: 10px;
+}
+
+.studio-shell .creator-package-actions {
+  justify-content: flex-end;
+}
+
+.studio-shell .creator-package-actions .creator-package-confirm {
+  border-color: rgba(215, 167, 186, 0.62);
+  color: #241720;
+  background: linear-gradient(135deg, var(--women-rose-strong), #c6b8dd);
+  font-weight: 720;
+}
+
+.studio-shell .creator-package-actions .creator-package-confirm:hover:not(:disabled) {
+  color: #241720;
+  background: linear-gradient(135deg, #f7cbdb, #d1c4e4);
+}
+
+@media (max-width: 680px) {
+  .studio-shell .creator-package-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .studio-shell .creator-package-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .studio-shell .creator-package-actions > button {
+    width: 100%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .quick-progress-card > i > b,
   .women-curve-svg polyline {

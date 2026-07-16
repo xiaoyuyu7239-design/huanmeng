@@ -21,7 +21,7 @@ import {
   RefreshCw, Sparkles, Settings, CircleHelp, Bot, Brain, LayoutTemplate, GitBranch,
   ImagePlus, Info, Send, Database, NotebookText, Workflow, LayoutGrid, Network,
   ListPlus, Circle, Lock, KeyRound, Music, Maximize, Expand,
-  Upload, Download, Save, RotateCcw, Activity, BookOpen, ShieldCheck,
+  Upload, Download, FileUp, Save, RotateCcw, Activity, BookOpen, ShieldCheck,
 } from 'lucide-react';
 import {
   读本机项目, 保存本机项目, 发布本机项目, 删除本机项目, 本机项目列表, 合并项目列表,
@@ -38,6 +38,14 @@ import 节点编辑弹窗 from './节点编辑/节点编辑弹窗.jsx';
 import 新建项目弹窗 from './项目管理/新建项目弹窗.jsx';
 import 精选弹窗 from './项目管理/精选弹窗.jsx';
 import 设置弹窗 from './项目管理/设置弹窗.jsx';
+import 创作包导入弹窗 from './项目管理/创作包导入弹窗.jsx';
+import {
+  下载创作包文件,
+  创作包文件名,
+  读取当前创作包,
+  解析创作包,
+  确认导入创作包,
+} from './项目管理/创作包.js';
 import 创作模式切换, { 读创作模式, 写创作模式 } from './女性向资产/创作模式切换.jsx';
 import 快速创作面板, {
   一致性资产面板,
@@ -450,6 +458,10 @@ export default function 应用() {
   const [精选候选, 设精选候选] = useState([]);
   const [精选slugs, 设精选slugs] = useState([]);
   const [默认Demo, 设默认Demo] = useState('');
+  const [导入弹窗开, 设导入弹窗开] = useState(false);
+  const [导入文件名, 设导入文件名] = useState('');
+  const [导入预检, 设导入预检] = useState(null);
+  const [导入预检错误, 设导入预检错误] = useState('');
   const [拖动节点id, 设拖动节点id] = useState('');
   const [悬停节点id, 设悬停节点id] = useState('');
   const [QA面板开, 设QA面板开] = useState(false);
@@ -460,6 +472,7 @@ export default function 应用() {
   const 示例列表ref = useRef([]);
   const 示例默认slugRef = useRef('');
   const 跳过离页确认ref = useRef(false);
+  const 导入文件ref = useRef(null);
 
   // ---- 派生数据 ----
   const 节点列表 = useMemo(() => Object.values(当前项目?.story?.nodes ?? {}), [当前项目]);
@@ -680,6 +693,93 @@ export default function 应用() {
   function 确认丢弃未保存修改(动作文案) {
     if (!有未保存修改) return true;
     return window.confirm(`当前项目有未保存修改，${动作文案}后将丢失。确认继续？`);
+  }
+
+  function 导出完整创作包() {
+    if (有未保存修改) {
+      设顶部错误('当前项目还有未保存修改；请先保存，再导出完整创作包。');
+      return;
+    }
+    设进行中动作('export-package');
+    设顶部错误(null);
+    try {
+      const 导出结果 = 读取当前创作包();
+      下载创作包文件(导出结果.文本, 创作包文件名());
+      追加消息(
+        'system',
+        `完整创作包已下载：${导出结果.摘要.projectCount} 个项目、${导出结果.摘要.publishedCount} 个玩家版本、${导出结果.摘要.featuredCount} 个首页精选。`,
+      );
+    } catch (错) {
+      const 文案 = 错误文案(错, '导出创作包失败。');
+      设顶部错误(文案);
+      追加消息('system', 文案);
+    } finally {
+      设进行中动作(null);
+    }
+  }
+
+  function 打开创作包文件选择() {
+    if (!确认丢弃未保存修改('导入创作包')) return;
+    设顶部错误(null);
+    导入文件ref.current?.click();
+  }
+
+  async function 读取待导入文件(事件) {
+    const 文件 = 事件.target.files?.[0];
+    // 重置 input，失败或取消后仍能再次选择同一个文件。
+    事件.target.value = '';
+    if (!文件) return;
+    设进行中动作('package-dry-run');
+    设顶部错误(null);
+    设导入文件名(文件.name || '未命名创作包.json');
+    设导入预检(null);
+    设导入预检错误('');
+    try {
+      if (文件.size > 20 * 1024 * 1024) {
+        throw new Error('创作包超过 20 MB，已停止解析；请确认文件是否为正确的 JSON 创作包。');
+      }
+      const 文本 = await 文件.text();
+      const 预检 = 解析创作包(文本);
+      设导入预检(预检);
+      设导入弹窗开(true);
+    } catch (错) {
+      const 文案 = 错误文案(错, '创作包预检失败。');
+      设导入预检错误(文案);
+      设导入弹窗开(true);
+      设顶部错误(`创作包未通过 dry-run：${文案}`);
+    } finally {
+      设进行中动作(null);
+    }
+  }
+
+  function 执行创作包导入() {
+    if (!导入预检?.创作包) return;
+    设进行中动作('import-package');
+    设顶部错误(null);
+    let 下一目标 = null;
+    try {
+      const 导入结果 = 确认导入创作包(导入预检.创作包, {
+        on备份: (备份) => {
+          下载创作包文件(备份.文本, 创作包文件名({ 备份: true }));
+        },
+      });
+      下一目标 = 导入结果.创作包.selectedSlug || '';
+      置脏(false);
+      设导入弹窗开(false);
+      设导入预检(null);
+      设导入预检错误('');
+      追加消息(
+        'system',
+        `创作包导入完成：已恢复 ${导入结果.摘要.projectCount} 个项目、${导入结果.摘要.publishedCount} 个玩家版本和 ${导入结果.摘要.featuredCount} 个首页精选。`,
+      );
+    } catch (错) {
+      const 文案 = 错误文案(错, '导入创作包失败。');
+      设顶部错误(文案);
+      追加消息('system', 文案);
+    } finally {
+      设进行中动作(null);
+    }
+    if (下一目标 !== null) void 加载全部(下一目标);
   }
 
   // 切换项目：有没保存的改动先拦一道确认(第二棒接入 Agent 草稿后，把草稿未应用也算进这个条件)
@@ -1268,10 +1368,33 @@ export default function 应用() {
             <span>发布</span>
           </button>
           <span className="studio-divider" />
-          <button className="studio-action is-muted is-compactable" disabled title="导出功能预留" type="button">
-            <Download size={17} />
+          <button
+            className="studio-action is-muted is-compactable"
+            disabled={忙碌}
+            onClick={导出完整创作包}
+            title={有未保存修改 ? '请先保存当前修改，再导出完整创作包' : '下载全部本机项目、玩家版本与精选配置'}
+            type="button"
+          >
+            {进行中动作 === 'export-package' ? <LoaderCircle className="spin" size={17} /> : <Download size={17} />}
             <span>导出</span>
-            <ChevronDown size={14} />
+          </button>
+          <input
+            ref={导入文件ref}
+            accept="application/json,.json"
+            aria-label="选择要导入的创作包 JSON 文件"
+            className="creator-package-file-input"
+            onChange={(事件) => void 读取待导入文件(事件)}
+            type="file"
+          />
+          <button
+            className="studio-action is-muted is-compactable"
+            disabled={忙碌}
+            onClick={打开创作包文件选择}
+            title="从本地 JSON 创作包恢复完整创作仓"
+            type="button"
+          >
+            {进行中动作 === 'package-dry-run' ? <LoaderCircle className="spin" size={17} /> : <FileUp size={17} />}
+            <span>导入</span>
           </button>
           <button
             aria-label="刷新项目"
@@ -1745,6 +1868,20 @@ export default function 应用() {
           on设默认={设默认Demo}
           on保存={保存精选}
           on关闭={() => 设精选弹窗开(false)}
+        />
+      )}
+      {导入弹窗开 && (
+        <创作包导入弹窗
+          文件名={导入文件名}
+          预检={导入预检}
+          错误={导入预检错误}
+          导入中={进行中动作 === 'import-package'}
+          on确认={执行创作包导入}
+          on关闭={() => {
+            设导入弹窗开(false);
+            设导入预检(null);
+            设导入预检错误('');
+          }}
         />
       )}
       {设置弹窗开 && (

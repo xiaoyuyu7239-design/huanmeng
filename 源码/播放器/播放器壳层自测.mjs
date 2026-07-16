@@ -331,12 +331,14 @@ try {
   } = await 服务.ssrLoadModule('/源码/创作台/创作台应用.jsx');
   if (
     解析创作项目入口('?project=work-b', 'work-a') !== 'work-b' ||
+    解析创作项目入口('?project=package_work', 'work-a') !== 'package_work' ||
     解析创作项目入口('?project=Work%20B', 'work-a') !== 'work-a' ||
     解析创作项目入口('?project=../work-b', 'work-a') !== 'work-a'
   ) throw new Error('返回创作台时未安全恢复显式 project 查询参数');
   if (
     构建创作试玩链接('work-b', true) !== '/play?game=work-b&preview=draft&from=creator' ||
     构建创作试玩链接('work-b', false) !== '/play?game=work-b' ||
+    构建创作试玩链接('package_work', true) !== '/play?game=package_work&preview=draft&from=creator' ||
     构建创作试玩链接('Work B', true) !== '/play'
   ) throw new Error('创作台没有区分本机草稿试玩与未保存内置示例的玩家版本');
   const 创作台html = 无告警渲染('创作台', React.createElement(创作台应用));

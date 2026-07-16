@@ -1,0 +1,65 @@
+name: Beta Release Gate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: beta-release-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      BETA_MODE: fallback
+      RELATIONSHIP_AI_COOKIE_SECURE: "true"
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use pinned Node and npm cache
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Verify tests and production build
+        run: npm run verify:release
+
+      - name: Verify changed lines
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          if [ -n "$BASE_SHA" ]; then
+            git diff --check "$BASE_SHA...HEAD"
+          else
+            git diff --check "HEAD^...HEAD"
+          fi
+
+      - name: Verify real network startup
+        env:
+          RELEASE_SMOKE_NETWORK: "1"
+        run: npm run test:release
+
+      - name: Audit high-risk runtime dependencies
+        run: npm audit --omit=dev --audit-level=high --registry=https://registry.npmjs.org
+
+      - name: Upload immutable Beta artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: yanjing-${{ github.sha }}
+          path: dist
+          if-no-files-found: error
+          retention-days: 30

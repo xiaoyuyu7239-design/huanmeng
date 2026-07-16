@@ -394,12 +394,12 @@ export function 默认slug() {
   return `project-${日期段}-${时间段}`;
 }
 
-// 输入随手打的 slug → 转小写、非法字符换成 - 、砍掉开头的 - 、截 48 字 → 吐出干净 slug
+// 输入随手打的 slug → 转小写、非法字符换成 - 、砍掉开头的 -/_、截 48 字 → 吐出干净 slug
 export function 清洗slug(原文) {
   return 原文
     .toLowerCase()
-    .replace(/[^a-z0-9-]+/g, '-')
-    .replace(/^-+/, '')
+    .replace(/[^a-z0-9_-]+/g, '-')
+    .replace(/^[-_]+/, '')
     .slice(0, 48);
 }
 
