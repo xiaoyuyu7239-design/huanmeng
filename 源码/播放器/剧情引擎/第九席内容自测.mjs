@@ -71,6 +71,7 @@ const 预期结局id = [
 // ---- 一、作品、主角与阵容 ----
 assert.equal(剧情.id, 'ninth-seat');
 assert.equal(剧情.title, '第九席');
+assert.equal(剧情.contentVersion, 2, 'Level 4 首页路线契约必须使用内容版本 2');
 assert.equal(剧情.content?.estimatedMinutes, '20-30', '第一章时长声明必须稳定为 20–30 分钟');
 assert.equal(剧情.content?.playerLayout, 'portrait-cinema', 'Level 3 必须默认使用竖屏轻电影布局');
 assert.equal(剧情.content?.theme, 'twilight', 'Level 3 必须使用暮色书页主题');
@@ -99,6 +100,14 @@ assert.deepEqual(
   女性同盟id,
   '林渺与乔雯是职业/女性同盟角色，不进入恋爱关系数值',
 );
+const 首页路线 = 剧情.content?.homepage?.routes ?? [];
+assert.deepEqual(首页路线.map((路线) => 路线.id), ['private', 'alliance', 'solo'], 'Level 4 首页必须声明三种等价同行方式');
+assert.deepEqual(首页路线[0]?.characterIds, 可发展男性id, '首页私人复盘名单必须与实际四条角色路线一致');
+assert.deepEqual(首页路线[1]?.characterIds, ['lin_miao'], '首页同盟复盘必须指向林渺');
+assert.deepEqual(首页路线[2]?.characterIds, [], '独立复盘不得伪造关系角色');
+for (const 路线 of 首页路线) {
+  assert.ok(路线.title?.trim() && 路线.description?.trim() && 路线.note?.trim(), `${路线.id} 缺少首页路线文案`);
+}
 
 for (const 角色 of 配角们) {
   const 初值维度 = Object.keys(角色.relationship?.initial ?? {});

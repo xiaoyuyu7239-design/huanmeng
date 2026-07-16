@@ -206,8 +206,13 @@ try {
 
   const { default: 落地页应用 } = await 服务.ssrLoadModule('/源码/落地页/落地页应用.jsx');
   const 落地页html = 无告警渲染('落地页', React.createElement(落地页应用));
-  if (!落地页html.includes('class="lp"')) throw new Error('落地页壳层渲染失败');
-  console.log('  ✓ 落地页壳层');
+  if (
+    !落地页html.includes('class="lp lp-heartscape"') ||
+    !落地页html.includes('<main') ||
+    !落地页html.includes('href="/play?game=ninth-seat"') ||
+    !落地页html.includes('这一次，故事会记住')
+  ) throw new Error('玩家优先落地页壳层渲染失败');
+  console.log('  ✓ 玩家优先落地页壳层');
 
   const { default: 创作台应用 } = await 服务.ssrLoadModule('/源码/创作台/创作台应用.jsx');
   const 创作台html = 无告警渲染('创作台', React.createElement(创作台应用));

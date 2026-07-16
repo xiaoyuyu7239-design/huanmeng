@@ -2,7 +2,7 @@
   "id": "ninth-seat",
   "title": "第九席",
   "subtitle": "零点直播 · AI内容事故调查",
-  "contentVersion": 1,
+  "contentVersion": 2,
   "startNodeId": "s00-blue-salon",
   "content": {
     "audience": "young-adult-women",
@@ -14,7 +14,32 @@
     "visualStatus": "level-3-cinematic-assets-investigation-beta",
     "expressionSet": ["neutral", "focused", "concerned", "guarded", "vulnerable", "resolute", "warm", "warning"],
     "themes": ["女性职业主体性", "同意与数据边界", "成人关系", "团队责任"],
-    "contentNotes": ["职场高压", "未经授权的数据训练", "合成影像事故"]
+    "contentNotes": ["职场高压", "未经授权的数据训练", "合成影像事故"],
+    "homepage": {
+      "routes": [
+        {
+          "id": "private",
+          "title": "与一位搭档对表",
+          "description": "选择陆沉舟、周衍、贺清野或沈确，谈清风险、职责与边界。",
+          "note": "私人复盘不是恋爱锁定",
+          "characterIds": ["lu_chenzhou", "zhou_yan", "he_qingye", "shen_que"]
+        },
+        {
+          "id": "alliance",
+          "title": "与林渺完成同盟复盘",
+          "description": "互相指出盲区，共同写下谁能否决、谁必须知情。",
+          "note": "女性同盟拥有完整主线",
+          "characterIds": ["lin_miao"]
+        },
+        {
+          "id": "solo",
+          "title": "独自保留十分钟",
+          "description": "保留决策理由，删除情绪推断；不进入任何关系路线。",
+          "note": "独立判断不会失去结局资格",
+          "characterIds": []
+        }
+      ]
+    }
   },
   "cast": {
     "protagonist": {

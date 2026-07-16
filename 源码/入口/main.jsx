@@ -1,6 +1,8 @@
 // 这个文件是"前台接待员"：看访客走进哪个门(网址路径)，就把他领到对应的大厅——
 //   /            → 落地页(产品介绍)
 //   /play /game  → 播放器(玩互动影游)，支持 ?game=作品slug 指定作品
+//   /creators     → 创作者二级介绍页(能力边界与 EvoMap)
+//   /worlds       → 历史互动实验归档(保留旧作品直达)
 //   /creator     → 创作台(编辑剧情、生成资产)
 // 和线上版行为完全一致：三个大厅按需加载，不进哪个门就不下载哪个门的代码。
 import React from 'react';
@@ -12,13 +14,19 @@ import '../样式/全局.css';
 const 路径 = window.location.pathname.replace(/\/+$/, '') || '/';
 const 是播放器 = 路径 === '/play' || 路径 === '/game';
 const 是创作台 = 路径 === '/creator';
+const 是创作者介绍 = 路径 === '/creators';
+const 是世界归档 = 路径 === '/worlds';
 
 // React.lazy = "用到再搬"：只有真正访问时才去加载那个模块的代码
 const 当前应用 = 是创作台
   ? React.lazy(() => import('../创作台/创作台应用.jsx'))
-  : 是播放器
-    ? React.lazy(() => import('../播放器/播放器应用.jsx'))
-    : React.lazy(() => import('../落地页/落地页应用.jsx'));
+  : 是创作者介绍
+    ? React.lazy(() => import('../落地页/创作者介绍应用.jsx'))
+    : 是世界归档
+      ? React.lazy(() => import('../落地页/世界归档应用.jsx'))
+      : 是播放器
+        ? React.lazy(() => import('../播放器/播放器应用.jsx'))
+        : React.lazy(() => import('../落地页/落地页应用.jsx'));
 
 const 挂载点 = createRoot(document.getElementById('root'));
 

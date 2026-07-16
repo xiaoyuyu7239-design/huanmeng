@@ -1,71 +1,65 @@
-// 这个文件是落地页的"门面和门牌"：导航栏像商场门口的指示牌，页脚像出口处的服务台，
-// 两头都挂着同一块"衍境"招牌（品牌标识），所以放在同一个文件里共用。
 import React from 'react';
 
-// 品牌标识：输入无 → 拼出 logo 方块 + "衍境"双行字 → 吐出一个跳回页顶的链接（导航和页脚各用一次）
 function 品牌标识() {
   return (
-    <a className="brand" href="#top">
-      <span className="mark" />
+    <a className="hx-brand" href="#top" aria-label="衍境·心界，返回页首">
+      <span className="hx-brand-mark" aria-hidden="true"><i /></span>
       <span>
-        <b>衍境</b>
-        <br />
-        <span className="en">Interactive Cinema Engine</span>
+        <b>衍境·心界</b>
+        <small>会记住选择的互动故事</small>
       </span>
     </a>
   );
 }
 
-// 导航栏：输入 navRef(让父组件在滚动时给 nav 加 .scrolled 类) → 渲染固定顶栏 → 吐出 <nav>
-export function 导航栏({ navRef }) {
+export function 导航栏({ navRef, playHref }) {
   return (
-    <nav ref={navRef}>
-      <div className="wrap nav-inner">
+    <nav className="hx-nav" ref={navRef} aria-label="主导航">
+      <div className="hx-wrap hx-nav-inner">
         <品牌标识 />
-        <div className="nav-links">
-          <a href="#experience">核心体验</a>
-          <a href="#models">命运模型</a>
-          <a href="#characters">人物生成</a>
-          <a href="#studio">创作台</a>
-          <a href="#evolve">自进化</a>
+        <div className="hx-nav-links">
+          <a href="#story">故事</a>
+          <a href="#memories">记忆</a>
+          <a href="#characters">角色</a>
+          <a href="#endings">结局</a>
         </div>
-        <a className="nav-cta" href="/creator">进入创作台</a>
+        <div className="hx-nav-actions">
+          <a className="hx-creator-link" href="/creators">创作者</a>
+          <a className="hx-nav-cta" href={playHref}>进入故事</a>
+        </div>
       </div>
     </nav>
   );
 }
 
-// 页脚：输入无 → 渲染三列链接和版权小字 → 吐出 <footer>
-export function 页脚() {
+export function 页脚({ playHref }) {
   return (
-    <footer>
-      <div className="wrap">
-        <div className="foot">
+    <footer className="hx-footer">
+      <div className="hx-wrap">
+        <div className="hx-footer-main">
           <品牌标识 />
-          <div className="cols">
+          <div className="hx-footer-links">
             <div>
-              <h6>产品</h6>
-              <a href="#experience">核心体验</a>
-              <a href="#models">命运模型</a>
-              <a href="#studio">创作台</a>
+              <h2>开始故事</h2>
+              <a href={playHref}>进入旗舰世界</a>
+              <a href="#worlds">更多实验世界</a>
             </div>
             <div>
-              <h6>系统</h6>
-              <a href="#evolve">自进化工作流</a>
-              <a href="#capability">机制闭环</a>
-              <a href="#audience">为谁而造</a>
+              <h2>了解心界</h2>
+              <a href="#memories">故事记忆</a>
+              <a href="#characters">现场人物</a>
+              <a href="#endings">阶段结果</a>
             </div>
             <div>
-              <h6>资源</h6>
-              <a href="/play">玩家端演示</a>
-              <a href="/creator">互动电影创作台</a>
-              <a href="#characters">人物生成</a>
+              <h2>创作工具</h2>
+              <a href="/creators">创作者能力介绍</a>
+              <a href="/creator">进入专业创作台</a>
             </div>
           </div>
         </div>
-        <div className="foot-bottom">
-          <span>© 2026 衍境 Interactive Cinema Engine · 互动影游智能体创作系统</span>
-          <span>当前演示 · 精选互动影游</span>
+        <div className="hx-footer-bottom">
+          <span>© 2026 衍境·心界</span>
+          <span>当前版本提供作者分支与结构化记忆；受约束的 AI 关系层将在后续阶段接入。</span>
         </div>
       </div>
     </footer>
