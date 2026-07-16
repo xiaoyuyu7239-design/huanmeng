@@ -1,6 +1,6 @@
 // ============================================================================
 // 这个文件是播放器的「片库管理员」：整个放映厅只有这一位管理员（模块级单例），
-// 他手里永远挂着一部"正在放映的片子"（默认是随包自带的《第十五封愿望》拷贝），
+// 他手里永远挂着一部"正在放映的片子"（默认是随包自带的《第九席》拷贝），
 // 谁来问"现在放哪部、从哪一幕开始、有哪些数值规则"，他都直接把手上的东西给你看；
 // 有人喊"换片"（loadStoryBySlug / setActiveStory），他先验片没坏，再整卷替换。
 // 对应线上打包产物 story-BDynpsCw.js（分析文档：剧情引擎分析.md）。
@@ -14,7 +14,7 @@
 //   storyCast                   object   当前剧情角色阵容（主角 + 角色列表）
 //   storyNodes                  object   节点字典 { [nodeId]: node }
 //   storyNodeList               array    节点数组（换片时同步重算）
-//   ACTIVE_GAME_ID              string   当前剧情 slug（清洗后），初始 "bundled"
+//   ACTIVE_GAME_ID              string   当前剧情 slug（清洗后），初始 "ninth-seat"
 //   setActiveStory(story, slug) void     校验后整体切换剧情，校验失败抛错
 //   loadStoryBySlug(slug)       async→boolean  localStorage草稿优先→fetch线上
 //   按slug加载剧情(slug)         async→boolean  同 loadStoryBySlug（main.jsx 的硬契约名）
@@ -26,7 +26,7 @@
 // 内置兜底剧情：线上版是把 56KB 的 JSON 字符串直接压进代码里；我们直接 import
 // 公共资源里的同一部作品（Vite 会在打包时把它内联成 JS 模块，效果一致）。
 // 这样即使断网/线上 story.json 拉不到，播放器也永远有片可放。
-import 兜底剧情 from '../../../公共资源/games/project-20260620-231058/story.json';
+import 兜底剧情 from '../../../公共资源/games/ninth-seat/story.json';
 
 // 创作端"浏览器草稿仓库"的 localStorage 键名——创作台没发布的草稿也能直接试玩
 const 浏览器草稿仓库键 = 'creator:browser-projects:v1';
@@ -114,7 +114,10 @@ function 校验剧情骨架(story) {
 
 // 模块一加载就先验自带的片子，坏了宁可 import 时就炸（和线上行为一致）
 校验剧情骨架(兜底剧情);
-const 已规范化兜底剧情 = 规范化剧情(兜底剧情, 'bundled');
+// 内置兜底也使用正式稳定 slug：在线、离线共用同一存档格，且不会误读旧默认作品的
+// interactive-cinema-save:bundled:v2。"bundled" 只保留为通用加载身份；存档归属以
+// 稳定 storyId 或当前正式 slug 判断，不再自动接收无法识别来源的旧 bundled 码。
+const 已规范化兜底剧情 = 规范化剧情(兜底剧情, 'ninth-seat');
 
 // ---- 模块级单例状态（ES module live binding：这里重新赋值，所有 import 方同步看到）----
 export let STORY_TITLE = 已规范化兜底剧情.title;
@@ -126,7 +129,7 @@ export let storyMechanics = 已规范化兜底剧情.mechanics;
 export let storyCast = 已规范化兜底剧情.cast;
 export let storyNodes = 已规范化兜底剧情.nodes;
 export let storyNodeList = Object.values(storyNodes);
-export let ACTIVE_GAME_ID = 'bundled';
+export let ACTIVE_GAME_ID = 'ninth-seat';
 
 // 输入(剧情对象, slug) → 校验、规范化后把模块级状态整卷替换 → 无返回值；
 // 校验失败抛错、状态不动。规范化集中发生在加载边界，消费方由此始终拿到稳定字段形状。

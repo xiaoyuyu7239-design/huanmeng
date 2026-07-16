@@ -47,6 +47,9 @@ if (typeof 精选数据.default !== 'string' || !精选数据.default.trim()) {
 } else if (!精选slug们.includes(精选数据.default)) {
   名录问题.push(`showcase.default 未包含在 featured 中：${精选数据.default}`);
 }
+if (精选数据.default !== 'ninth-seat') {
+  名录问题.push(`女性向默认作品必须为 ninth-seat，实际为：${精选数据.default}`);
+}
 const 名录slug们 = [
   typeof 精选数据.default === 'string' ? 精选数据.default : '',
   ...精选slug们,

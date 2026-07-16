@@ -51,6 +51,9 @@ const 加载 = await import('./剧情加载.js');
 const 引擎 = await import('./状态与结算.js');
 const 存档 = await import('./存档系统.js');
 const 音频 = await import('../音频系统/音频管理.js');
+const 静态精选 = JSON.parse(
+  readFileSync(new URL('../../../公共资源/showcase.json', import.meta.url), 'utf8'),
+);
 
 // ---- 迷你断言器：一条一勾，最后汇总 ----
 let 通过 = 0;
@@ -80,20 +83,25 @@ function 编码原始存档(原始) {
 // ============================ 一、剧情加载 ============================
 console.log('【一】剧情加载（单例 / 兜底 / loadStoryBySlug / 规范化）');
 
-检查('内置兜底剧情已激活（第十五封愿望 / s00 / 18节点 / bundled）', () => {
-  相等(加载.STORY_TITLE, '第十五封愿望');
-  相等(加载.START_NODE_ID, 's00-character-select');
-  相等(加载.ACTIVE_GAME_ID, 'bundled');
-  相等(加载.storyNodeList.length, 18);
-  为真(加载.storyNodes['s00-character-select'], '起始节点存在');
+检查('默认与离线兜底原子一致（第九席 / 25节点 / ninth-seat）', () => {
+  相等(加载.STORY_TITLE, '第九席');
+  相等(加载.STORY_ID, 'ninth-seat');
+  相等(加载.BUNDLED_STORY_ID, 'ninth-seat');
+  相等(加载.START_NODE_ID, 's00-blue-salon');
+  相等(加载.ACTIVE_GAME_ID, 'ninth-seat');
+  相等(静态精选.default, 'ninth-seat');
+  相等(存档.存档键(), 'interactive-cinema-save:ninth-seat:v2');
+  相等(加载.storyNodeList.length, 25);
+  为真(加载.storyNodes['s00-blue-salon'], '起始节点存在');
 });
 
-检查('兜底剧情的分数定义规范化（4个声明分 + pressure.min=-20）', () => {
+检查('兜底剧情的分数定义规范化（4个公开维度）', () => {
   const 定义 = 加载.getScoreDefinitions();
   const 压力 = 定义.find((d) => d.id === 'pressure');
-  为真(['truth', 'evidence', 'pressure', 'public_truth'].every((id) => 定义.some((d) => d.id === id)));
-  相等(压力.min, -20);
-  相等(压力.visibility, 'debug');
+  为真(['evidence', 'agency', 'pressure', 'public_truth'].every((id) => 定义.some((d) => d.id === id)));
+  相等(压力.min, 0);
+  相等(压力.visibility, 'public');
+  相等(压力.warnAt, 75);
 });
 
 检查('校验骨架：坏剧情抛错且状态不动', () => {
@@ -323,6 +331,9 @@ globalThis.fetch = async () => {
 // 两部已发布作品的真实兼容回归：防止以后只让合成测试通过、却再次破坏线上数据。
 const 第十五封愿望 = JSON.parse(
   readFileSync(new URL('../../../公共资源/games/project-20260620-231058/story.json', import.meta.url), 'utf8'),
+);
+const 第九席 = JSON.parse(
+  readFileSync(new URL('../../../公共资源/games/ninth-seat/story.json', import.meta.url), 'utf8'),
 );
 const 七仙女下凡 = JSON.parse(
   readFileSync(new URL('../../../公共资源/games/project-20260620-201739/story.json', import.meta.url), 'utf8'),
@@ -871,15 +882,17 @@ console.log('【三】存档系统（键名 / 自动存档 / 消毒 / 存档码 
   相等(存档.导入存档码(btoa('{"currentNodeId":')), null, '半截JSON也返回null');
 });
 
-检查('存档码：内置 bundled 与正式 slug 使用稳定 storyId 互认', () => {
-  加载.setActiveStory(第十五封愿望, 'bundled');
+检查('存档码：稳定 storyId 跨 bundled/正式 slug 互认，歧义旧码拒绝', () => {
+  加载.setActiveStory(第九席, 'bundled');
   const 内置状态 = 引擎.创建初始状态();
   const 新码 = 存档.导出存档码(内置状态);
   const { storyId: _忽略, ...旧码状态 } = 内置状态;
-  const 旧码 = 编码原始存档({ ...旧码状态, gameId: 'bundled' });
-  加载.setActiveStory(第十五封愿望, 'project-20260620-231058');
-  相等(存档.导入存档码(新码).storyId, 'project-20260620-231058');
-  相等(存档.导入存档码(旧码).storyId, 'project-20260620-231058');
+  const 歧义旧码 = 编码原始存档({ ...旧码状态, gameId: 'bundled' });
+  const 正式旧码 = 编码原始存档({ ...旧码状态, gameId: 'ninth-seat' });
+  加载.setActiveStory(第九席, 'ninth-seat');
+  相等(存档.导入存档码(新码).storyId, 'ninth-seat');
+  相等(存档.导入存档码(正式旧码).storyId, 'ninth-seat');
+  相等(存档.导入存档码(歧义旧码), null, '无 storyId 的 bundled 码来源不明，必须拒绝');
   加载.setActiveStory(测试剧情, 'engine-test');
 });
 

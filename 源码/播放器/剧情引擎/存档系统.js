@@ -22,7 +22,6 @@
 import {
   ACTIVE_GAME_ID,
   STORY_ID,
-  BUNDLED_STORY_ID,
   START_NODE_ID,
   storyNodes,
   getScoreDefinition,
@@ -158,16 +157,16 @@ export function 消毒存档(原始) {
   };
 }
 
-// 新存档码使用稳定 storyId；旧码只有 gameId 时，仍兼容同一内置故事的
-// bundled ↔ 正式 slug 两种身份，同时拒绝真正的跨作品导入。
+// 新存档码使用稳定 storyId；旧码只有 gameId 时仅接受当前正式 slug。
+// 没有 storyId 的 "bundled" 码在更换内置默认后无法判断原属哪部作品，必须拒绝，
+// 避免把《第十五封愿望》等旧默认的记忆与决策错误消毒进《第九席》。
 function 存档归属当前作品(原始) {
   if (!原始 || typeof 原始 !== 'object') return true;
   if (typeof 原始.storyId === 'string') return 原始.storyId === STORY_ID;
   if (typeof 原始.gameId !== 'string') return true;
   return (
     原始.gameId === ACTIVE_GAME_ID ||
-    原始.gameId === STORY_ID ||
-    (原始.gameId === 'bundled' && STORY_ID === BUNDLED_STORY_ID)
+    原始.gameId === STORY_ID
   );
 }
 
