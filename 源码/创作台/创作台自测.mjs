@@ -35,6 +35,7 @@ globalThis.window = { localStorage: 存储 };
 
 const {
   项目存储键,
+  设置存储键,
   精选存储键,
   语音已就绪,
   重算摘要,
@@ -42,9 +43,36 @@ const {
   保存本机项目,
   删除本机项目,
   读本机项目,
+  读浏览器设置,
+  写浏览器设置,
+  补正健康状态,
 } = await import('./项目管理/本机项目存储.js');
 const { 运行校验 } = await import('./校验发布/校验规则.js');
 const { 新增节点, 拖拽重排 } = await import('./节点编辑/图操作.js');
+
+// Level 5 安全迁移：旧浏览器密钥必须自动删除，且任何写入都不能再把 secret/token 存回 localStorage。
+存储.setItem(设置存储键, JSON.stringify({
+  DEEPSEEK_API_KEY: 'legacy-secret',
+  YUNWU_API_KEY: 'legacy-image-secret',
+  MINIMAX_API_KEY: 'legacy-voice-secret',
+  DEEPSEEK_MODEL: 'safe-display-model',
+  UNKNOWN_TOKEN: 'must-remove',
+}));
+assert.deepEqual(读浏览器设置(), { DEEPSEEK_MODEL: 'safe-display-model' });
+assert.deepEqual(JSON.parse(存储.getItem(设置存储键)), { DEEPSEEK_MODEL: 'safe-display-model' });
+写浏览器设置({ DEEPSEEK_API_KEY: 'new-secret', IMAGE_MODEL: 'safe-image-label', AUTH_TOKEN: 'bad' });
+assert.deepEqual(JSON.parse(存储.getItem(设置存储键)), { IMAGE_MODEL: 'safe-image-label' });
+const 未连接健康 = 补正健康状态({
+  deepseekConfigured: false,
+  imageConfigured: false,
+  ttsConfigured: false,
+  musicConfigured: false,
+  imageModel: '',
+});
+assert.equal(未连接健康.deepseekConfigured, false, '浏览器偏好不得伪造 Agent 在线');
+assert.equal(未连接健康.imageConfigured, false, '浏览器偏好不得伪造图片服务在线');
+assert.equal(未连接健康.imageModel, 'safe-image-label', '非敏感显示偏好仍可兼容保留');
+存储.clear();
 
 // 语音：明确非 ready 的新状态不能被残留 voiceSrc 误计；无状态旧数据仍兼容。
 assert.equal(语音已就绪({ voiceStatus: 'ready' }), true);

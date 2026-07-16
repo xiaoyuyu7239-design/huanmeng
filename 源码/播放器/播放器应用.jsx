@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   BookOpen,
   Download,
+  MessageCircle,
   RotateCcw,
   Save,
   Upload,
@@ -17,7 +18,9 @@ import 顶部栏 from './界面组件/顶部栏.jsx';
 import 状态栏 from './界面组件/状态栏.jsx';
 import 对白区 from './界面组件/对白区.jsx';
 import 对白历史面板 from './界面组件/对白历史面板.jsx';
+import 关系私聊面板 from './界面组件/关系私聊面板.jsx';
 import {
+  STORY_ID,
   STORY_TITLE,
   getVisibleScoreDefinitions,
   storyContent,
@@ -58,6 +61,7 @@ import {
   清空重开,
   进入下一轮,
 } from './剧情引擎/存档系统.js';
+import { 取关系私聊配置 } from './关系AI/关系私聊客户端.js';
 import {
   播放界面音效,
   销毁音频,
@@ -85,6 +89,9 @@ export default function 播放器应用() {
   const [语音状态, set语音状态] = useState('idle');
   const [调查中, set调查中] = useState(false);
   const [页面可见, set页面可见] = useState(true);
+  // 临时私聊与剧情 state 完全分离：不触发自动存档，不进入存档码，也不参与条件或结局。
+  const [关系私聊记录, set关系私聊记录] = useState([]);
+  const [关系私聊已用轮数, set关系私聊已用轮数] = useState(0);
 
   const 语音ref = useRef(null);
   const 语音版本ref = useRef(0);
@@ -113,6 +120,9 @@ export default function 播放器应用() {
     !!voiceSrc && 可播放语音 && (声音模式 === 'voice' || 声音模式 === 'mix' || !平面视频src);
   const 到最后一行 = 已到最后一行(state);
   const 已达成结局 = 结局已达成(state);
+  const 关系私聊配置 = 取关系私聊配置(STORY_ID, storyContent, 节点);
+  const 关系私聊角色 = 关系私聊配置 ? 取角色档案(关系私聊配置.characterId) : null;
+  const 可打开关系私聊 = 到最后一行 && !已达成结局 && !!关系私聊配置 && !!关系私聊角色;
   const 启用轻电影 = storyContent?.playerLayout === 'portrait-cinema' && Boolean(节点.backdrop);
   const 线索总数 = Array.isArray(节点.hotspots) ? 节点.hotspots.length : 0;
   const 已查看线索数 = (Array.isArray(节点.hotspots) ? 节点.hotspots : []).filter((热点) =>
@@ -152,6 +162,12 @@ export default function 播放器应用() {
       };
     });
   }, [state.dialogueLog, state.lineIndex, state.loopCount, 节点, 行]);
+
+  useEffect(() => {
+    set关系私聊记录([]);
+    set关系私聊已用轮数(0);
+    set当前面板((旧) => (旧 === 'chapter-chat' ? null : 旧));
+  }, [节点.id, state.loopCount]);
 
   const 播音效 = useCallback(
     (名字) => 播放界面音效(名字, state.settings.audio),
@@ -396,6 +412,9 @@ export default function 播放器应用() {
     set引导热点(null);
     待恢复调查焦点ref.current = false;
     set调查中(false);
+    set当前面板(null);
+    set关系私聊记录([]);
+    set关系私聊已用轮数(0);
     const 反馈 = 生成叙事选择反馈(选项);
     set选择反馈({
       ...反馈,
@@ -449,6 +468,8 @@ export default function 播放器应用() {
     setState((旧) => 清空重开(旧.settings));
     set当前面板(null);
     set选择反馈(null);
+    set关系私聊记录([]);
+    set关系私聊已用轮数(0);
     set提示({ title: '已重新开始', body: '故事又回到了第一帧。' });
   };
 
@@ -457,6 +478,8 @@ export default function 播放器应用() {
     setState((旧) => 进入下一轮(旧));
     set当前面板(null);
     set选择反馈(null);
+    set关系私聊记录([]);
+    set关系私聊已用轮数(0);
     set提示({ title: '下一轮已开启', body: '已保留结局记录与跨周目记忆。' });
   };
 
@@ -485,6 +508,8 @@ export default function 播放器应用() {
     setState(新状态);
     set当前面板(null);
     set选择反馈(null);
+    set关系私聊记录([]);
+    set关系私聊已用轮数(0);
     set提示({ title: '导入成功', body: '已载入外部存档。' });
   };
 
@@ -602,6 +627,22 @@ export default function 播放器应用() {
           切换自动推进={启用轻电影 ? 切换自动推进 : undefined}
         />
 
+        {可打开关系私聊 && (
+          <button
+            aria-controls="relationship-chat-panel"
+            aria-expanded={当前面板 === 'chapter-chat'}
+            className={当前面板 === 'chapter-chat' ? 'relationship-chat-entry is-active' : 'relationship-chat-entry'}
+            onClick={() => 切换面板('chapter-chat')}
+            type="button"
+          >
+            <MessageCircle aria-hidden="true" size={17} />
+            <span>
+              <strong>{关系私聊配置.mode === 'peer-alliance' ? `与${关系私聊角色.name}自由对表` : `再对${关系私聊角色.name}说一句`}</strong>
+              <small>可选 · 回应不会改变剧情选择、关系值或结局</small>
+            </span>
+          </button>
+        )}
+
         {选择反馈 && !已达成结局 && (
           <选择反馈板
             feedback={选择反馈}
@@ -670,8 +711,29 @@ export default function 播放器应用() {
       )}
 
       {当前面板 && 当前面板 !== 'history' && (
-        <侧面板 title={{ memories: '回忆', save: '存档', settings: '设置' }[当前面板]} onClose={关闭面板}>
+        <侧面板
+          id={当前面板 === 'chapter-chat' ? 'relationship-chat-panel' : undefined}
+          title={{
+            memories: '回忆',
+            save: '存档',
+            settings: '设置',
+            'chapter-chat': 关系私聊配置?.mode === 'peer-alliance'
+              ? `同盟对表 · ${关系私聊角色?.name ?? ''}`
+              : `章节私聊 · ${关系私聊角色?.name ?? ''}`,
+          }[当前面板]}
+          onClose={关闭面板}
+        >
           {当前面板 === 'memories' && <回忆面板 currentNode={节点} state={state} />}
+          {当前面板 === 'chapter-chat' && 关系私聊配置 && 关系私聊角色 && (
+            <关系私聊面板
+              character={关系私聊角色}
+              config={关系私聊配置}
+              entries={关系私聊记录}
+              setEntries={set关系私聊记录}
+              setUsedTurns={set关系私聊已用轮数}
+              usedTurns={关系私聊已用轮数}
+            />
+          )}
           {当前面板 === 'settings' && (
             <设置面板
               settings={state.settings}
@@ -763,9 +825,9 @@ function 结局板({ 节点, 回放, onExport, onNextLoop, onReset }) {
   );
 }
 
-function 侧面板({ title, onClose, children }) {
+function 侧面板({ id, title, onClose, children }) {
   return (
-    <aside aria-label={title} className="side-panel">
+    <aside aria-label={title} className="side-panel" id={id}>
       <div className="panel-head">
         <strong>{title}</strong>
         <button aria-label="关闭" onClick={onClose} title="关闭" type="button"><X size={18} /></button>

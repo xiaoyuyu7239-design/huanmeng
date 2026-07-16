@@ -107,6 +107,14 @@ try {
           throw new Error('第九席首节点未渲染竖屏轻电影、自动播放或按需调查入口');
         }
       }
+      const 关系AI节点 = new Set(['s12-lu-private', 's13-zhou-private', 's14-he-private', 's15-shen-private', 's16-lin-alliance']);
+      if (slug === 'ninth-seat' && 关系AI节点.has(节点.id)) {
+        if (!html.includes('relationship-chat-entry') || !html.includes('回应不会改变剧情选择、关系值或结局')) {
+          throw new Error(`${slug}/${节点.id} 未在作者对白之后渲染受约束自由表达入口`);
+        }
+      } else if (html.includes('relationship-chat-entry')) {
+        throw new Error(`${slug}/${节点.id} 不在正式关系白名单却出现了自由表达入口`);
+      }
       节点通过 += 1;
     }
     if (slug === 'project-20260620-231058') {

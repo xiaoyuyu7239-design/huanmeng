@@ -3,13 +3,19 @@
 // 柜子上的钥匙编号(localStorage 键名)和线上产品一字不差，
 // 所以播放器(/play)、落地页(首页精选)读同一把钥匙就能天然打通。
 //
-// 【给第二棒的接口】浏览器直连 Agent/生图/TTS 需要的密钥设置也存在这里：
-//   读浏览器设置() / 写浏览器设置(设置) → localStorage "creator:browser-settings:v1"
-//   补正健康状态(健康) → 用本机密钥把 deepseekConfigured 等布尔位补成 true
+// 【安全迁移】旧版曾允许浏览器保存 Agent/生图/TTS 密钥；Level 5 起只保留非敏感显示偏好：
+//   读浏览器设置() / 写浏览器设置(设置) → 只保留非敏感显示偏好；旧浏览器密钥会在读取时删除
+//   补正健康状态(健康) → 只补模型显示名，不得用浏览器值伪造服务已连接
+
+import {
+  浏览器设置存储键,
+  清洗非敏感浏览器设置,
+  清除浏览器生产密钥,
+} from '../../公共工具/浏览器密钥迁移.js';
 
 // ---- 存储键(照抄线上源码，一个字符都不能差) ----
 export const 项目存储键 = 'creator:browser-projects:v1';   // 本机项目柜
-export const 设置存储键 = 'creator:browser-settings:v1';   // 模型/密钥设置柜
+export const 设置存储键 = 浏览器设置存储键;                // 兼容旧版的非敏感显示偏好柜
 export const 精选存储键 = 'creator:browser-showcase:v1';   // 落地页精选 Demo 柜
 export const 选中项目键 = 'creator:selected-slug';          // 记住上次打开哪个项目
 
@@ -353,34 +359,21 @@ export function 写选中slug(slug) {
   写存储项(选中项目键, slug, '记住上次打开的项目');
 }
 
-// ---- 浏览器设置(模型/密钥) ----
+// ---- 浏览器设置（仅非敏感显示偏好）----
 
-// 无输入 → 读设置柜 → 吐出 { 键: 非空字符串值 }，坏数据一律当空
+// 无输入 → 读设置柜并清除历史 API_KEY/TOKEN/SECRET 等敏感项 → 吐出非敏感显示偏好。
 export function 读浏览器设置() {
-  try {
-    const 原始 = JSON.parse(读存储项(设置存储键) ?? '{}');
-    if (!原始 || typeof 原始 !== 'object' || Array.isArray(原始)) return {};
-    return Object.fromEntries(
-      Object.entries(原始).filter(([, 值]) => typeof 值 === 'string' && 值.trim().length > 0)
-    );
-  } catch {
-    return {};
-  }
+  return 清除浏览器生产密钥(typeof window === 'undefined' ? undefined : window.localStorage);
 }
 
 export function 写浏览器设置(设置) {
-  写存储项(设置存储键, JSON.stringify(设置), '保存模型与密钥设置');
+  写存储项(设置存储键, JSON.stringify(清洗非敏感浏览器设置(设置)), '保存非敏感模型显示偏好');
 }
 
-// 输入基础健康状态 → 拿本机密钥把"已配置"开关和模型名补上 → 吐出补正后的健康状态
-// (静态部署没有服务端 health 接口，这里等价于线上的"浏览器设置覆盖 health"逻辑)
+// 输入服务端健康状态 → 浏览器只能补显示名，绝不能把 configured 从 false 翻成 true。
 export function 补正健康状态(健康, 设置 = 读浏览器设置()) {
   return {
     ...健康,
-    deepseekConfigured: 健康.deepseekConfigured || !!设置.DEEPSEEK_API_KEY,
-    imageConfigured: 健康.imageConfigured || !!设置.YUNWU_API_KEY,
-    ttsConfigured: 健康.ttsConfigured || !!设置.MINIMAX_API_KEY,
-    musicConfigured: 健康.musicConfigured || !!设置.YUNWU_API_KEY,
     deepseekModel: 设置.DEEPSEEK_MODEL || 健康.deepseekModel,
     imageModel: 设置.IMAGE_MODEL || 健康.imageModel,
     ttsModel: 设置.MINIMAX_TTS_MODEL || 健康.ttsModel,

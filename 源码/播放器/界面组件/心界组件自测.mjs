@@ -79,6 +79,8 @@ try {
 
   const { default: 轻电影场景 } = await 服务.ssrLoadModule('/源码/播放器/全景渲染/轻电影场景.jsx');
   const { default: 对白历史面板 } = await 服务.ssrLoadModule('/源码/播放器/界面组件/对白历史面板.jsx');
+  const { default: 关系私聊面板, 关系回应标签 } = await 服务.ssrLoadModule('/源码/播放器/界面组件/关系私聊面板.jsx');
+  const 关系客户端 = await 服务.ssrLoadModule('/源码/播放器/关系AI/关系私聊客户端.js');
   const 节点 = 剧情模块.storyNodes.opening;
 
   const 舞台html = 无告警渲染(
@@ -140,6 +142,134 @@ try {
   断言(空历史html.includes('对白会从这里留下痕迹'), '历史空状态缺失');
   断言(空历史html.includes('role="status"'), '历史空状态缺少状态语义');
 
+  const 正式第九席 = JSON.parse(await readFile(resolve(项目根, '公共资源/games/ninth-seat/story.json'), 'utf8'));
+  const 私聊节点id们 = ['s12-lu-private', 's13-zhou-private', 's14-he-private', 's15-shen-private', 's16-lin-alliance'];
+  const 私聊配置们 = 私聊节点id们.map((id) =>
+    关系客户端.取关系私聊配置('ninth-seat', 正式第九席.content, 正式第九席.nodes[id]),
+  );
+  断言(私聊配置们.every(Boolean), '五个正式关系场景必须生成合法客户端配置');
+  断言(关系客户端.取关系私聊配置('ninth-seat', 正式第九席.content, 正式第九席.nodes['s17-solo-review']) === null, '独立复盘不能被模型替玩家生成内心');
+  断言(关系客户端.取关系私聊配置('other-story', 正式第九席.content, 正式第九席.nodes['s12-lu-private']) === null, '非正式作品不能复用第九席关系契约');
+
+  const 陆配置 = 私聊配置们[0];
+  const 陆角色 = 正式第九席.cast.characters.find((角色) => 角色.id === 陆配置.characterId);
+  const 私聊空态html = 无告警渲染(
+    React.createElement(关系私聊面板, {
+      character: 陆角色,
+      config: 陆配置,
+      entries: [],
+      setEntries: () => {},
+      usedTurns: 0,
+      setUsedTurns: () => {},
+    }),
+  );
+  断言(['章节后私聊', '陆沉舟', '这段对话还没有开始', '不会改变心动、信任、边界、路线或结局'].every((值) => 私聊空态html.includes(值)), '关系私聊空态或边界说明不完整');
+  断言(new RegExp(`maxlength="${关系客户端.关系私聊输入上限}"`, 'i').test(私聊空态html), '私聊输入框没有浏览器长度限制');
+
+  const 私聊记录html = 无告警渲染(
+    React.createElement(关系私聊面板, {
+      character: 陆角色,
+      config: 陆配置,
+      entries: [
+        { id: 'p1', role: 'player', text: '我需要先说清边界。' },
+        {
+          id: 'c1', role: 'character', text: '我听清了。', source: 'fallback', serviceStatus: 'unconfigured',
+          memoryCandidate: '临时摘要，不进入剧情。',
+        },
+      ],
+      setEntries: () => {},
+      usedTurns: 1,
+      setUsedTurns: () => {},
+    }),
+  );
+  断言(私聊记录html.includes('作者预设回应 · AI 未接入'), '未接入状态必须明确标注预设回应');
+  断言(私聊记录html.includes('临时摘要，不进入剧情。'), '结构化临时摘要缺失');
+  断言(关系回应标签({ source: 'model-assisted', serviceStatus: 'connected' }) === 'AI 理解 · 作者定稿回应', '模型辅助成功态标签错误');
+  断言(关系回应标签({ source: 'safety', serviceStatus: 'guarded' }) === '安全支持信息', '现实安全态标签错误');
+
+  const 清空后达限html = 无告警渲染(
+    React.createElement(关系私聊面板, {
+      character: 陆角色,
+      config: 陆配置,
+      entries: [],
+      setEntries: () => {},
+      usedTurns: 陆配置.maxTurns,
+      setUsedTurns: () => {},
+    }),
+  );
+  断言(清空后达限html.includes(`${陆配置.maxTurns} / ${陆配置.maxTurns} 轮`), '清空正文后已用轮数不能归零');
+  断言(清空后达限html.includes('本次章节私聊已结束') && /<textarea[^>]*disabled=""/u.test(清空后达限html), '清空正文后达到三轮仍必须禁用输入');
+
+  let 浏览器请求 = null;
+  const 浏览器回应 = await 关系客户端.发送关系私聊({
+    config: 陆配置,
+    message: '请先听我把边界说完。',
+    turnId: 'turn_component_123456789',
+    fetchImpl: async (url, options) => {
+      浏览器请求 = { url, options, body: JSON.parse(options.body) };
+      return new Response(JSON.stringify({
+        ok: true,
+        source: 'model-assisted',
+        serviceStatus: 'connected',
+        intent: 'set_boundary',
+        intentLabel: '说明边界',
+        reply: '我会停在你确认的位置。',
+        memoryCandidate: '本轮章节私聊的表达标签：说明边界。不写入剧情状态。',
+      }), { status: 200, headers: { 'content-type': 'application/json' } });
+    },
+  });
+  断言(浏览器请求.url === '/api/relationship-chat', '客户端必须走同源关系代理');
+  断言(
+    Object.keys(浏览器请求.body).sort().join('|') === 'characterId|message|nodeId|schemaVersion|storyId|turnId',
+    '客户端请求夹带了模型、提示词或剧情状态字段',
+  );
+  断言(!JSON.stringify(浏览器请求.body).includes('API_KEY'), '客户端请求不能携带密钥');
+  断言(浏览器回应.source === 'model-assisted' && 浏览器回应.intent === 'set_boundary', '客户端没有保留合法模型辅助回应');
+
+  let 危机网络调用 = 0;
+  const 离线危机回应 = await 关系客户端.发送关系私聊({
+    config: 陆配置,
+    message: '我已经吞了很多安眠药。',
+    turnId: 'turn_crisis_local_123456',
+    fetchImpl: async () => { 危机网络调用 += 1; throw new Error('offline'); },
+  });
+  断言(离线危机回应.source === 'safety' && /急救服务/u.test(离线危机回应.reply), '离线时明确危机必须退出角色扮演并显示现实支持');
+  断言(危机网络调用 === 0, '浏览器识别到明确危机后不得向网络或角色模型外发');
+  断言(
+    关系客户端.生成本地备用回应(陆配置, '我现在想自杀。').source === 'safety',
+    '本地备用函数也必须保留现实危机安全边界',
+  );
+
+  await 断言拒绝(
+    关系客户端.发送关系私聊({
+      config: 陆配置,
+      message: '这次请求需要按时降级。',
+      turnId: 'turn_timeout_123456789',
+      timeoutMs: 5,
+      fetchImpl: async (_url, options) => new Promise((_resolve, reject) => {
+        options.signal.addEventListener('abort', () => reject(Object.assign(new Error('aborted'), { name: 'AbortError' })), { once: true });
+      }),
+    }),
+    /响应超时/u,
+    '浏览器请求必须有独立超时，不能永久停留在回应中',
+  );
+  await 断言拒绝(
+    关系客户端.发送关系私聊({
+      config: 陆配置,
+      message: '响应头到了，正文也不能无限等待。',
+      turnId: 'turn_slow_body_123456789',
+      timeoutMs: 5,
+      fetchImpl: async () => new Response(new ReadableStream({
+        start(controller) {
+          controller.enqueue(new TextEncoder().encode('{"ok":true'));
+          // 故意不 close，模拟代理只返回响应头和半截 JSON。
+        },
+      }), { headers: { 'content-type': 'application/json' } }),
+    }),
+    /响应超时/u,
+    '浏览器超时必须覆盖响应 JSON 正文读取',
+  );
+
   // 让 Vite 实际解析一遍独立 CSS，而不只是做字符串断言。
   await 服务.ssrLoadModule('/源码/样式/播放器-心界.css');
   const 样式 = await readFile(resolve(项目根, '源码/样式/播放器-心界.css'), 'utf8');
@@ -151,8 +281,21 @@ try {
   断言(样式.includes('min-height: 44px'), '小屏交互没有 44px 触控下限');
   断言(!样式.includes('-webkit-line-clamp'), '移动端对白不得按固定行数截断');
   断言(样式.includes('overflow-y: auto'), '长对白与选择区必须保留纵向滚动能力');
+  断言(样式.includes('.relationship-chat-entry'), '缺少关系私聊入口样式');
+  断言(样式.includes('.relationship-chat-service.is-fallback'), '缺少 AI 未接入/备用状态样式');
+  断言(样式.includes('.relationship-chat-log.is-empty'), '缺少私聊空状态样式');
 
-  console.log('心界 UI 自测：轻电影立绘回退、旁白、调查入口、对白历史、空状态与作用域样式全部通过');
+  console.log('心界 UI 自测：轻电影、对白历史、五场关系私聊、未接入/备用/成功/安全状态与响应式样式全部通过');
 } finally {
   await 服务.close();
+}
+
+async function 断言拒绝(promise, pattern, message) {
+  try {
+    await promise;
+  } catch (错误) {
+    断言(pattern.test(String(错误?.message ?? 错误)), message);
+    return;
+  }
+  throw new Error(message);
 }

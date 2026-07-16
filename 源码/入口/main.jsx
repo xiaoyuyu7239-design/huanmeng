@@ -7,8 +7,12 @@
 // 和线上版行为完全一致：三个大厅按需加载，不进哪个门就不下载哪个门的代码。
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { 清除浏览器生产密钥 } from '../公共工具/浏览器密钥迁移.js';
 // 全局样式：整文件收编自线上产品(index.css)，保证像素级还原，任何页面都要用
 import '../样式/全局.css';
+
+// Level 5 安全迁移在所有入口执行，不要求用户先打开创作台。
+清除浏览器生产密钥();
 
 // 末尾斜杠不应改变页面类型：/play/、/game/、/creator/ 与无斜杠地址等价。
 const 路径 = window.location.pathname.replace(/\/+$/, '') || '/';

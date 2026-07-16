@@ -14,7 +14,7 @@
 //    Agent 应用草稿 = 拿到新项目对象后调 工作台.应用本机写入(新项目, 系统消息文案)。
 // 3) 资产生成挂点：所有"生成图片/生成语音/局部重绘/上传"按钮现在都调 占位提示(功能名)
 //    冒一条系统消息；第二棒在 资产生成/ 实现真逻辑后，替换这些调用点(全文搜"占位提示(")。
-// 4) 密钥：读 项目管理/本机项目存储.js 的 读浏览器设置()，键名 DEEPSEEK_API_KEY 等与线上一致。
+// 4) 密钥：生产凭据只能由未来的服务端生成代理读取；浏览器设置只允许非敏感显示偏好。
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Film, Plus, Trash2, Check, Play, Image, LoaderCircle, WandSparkles, Mic, ChevronDown,
@@ -38,8 +38,7 @@ import 新建项目弹窗 from './项目管理/新建项目弹窗.jsx';
 import 精选弹窗 from './项目管理/精选弹窗.jsx';
 import 设置弹窗 from './项目管理/设置弹窗.jsx';
 
-// 静态部署的"体检单"底板：没有服务端 health 接口，全部按未配置起步，
-// 再由 补正健康状态() 用浏览器里存的密钥把开关翻成 true。mode 固定 readonly(=线上只读模式)。
+// 创作侧尚无服务端 health 接口，全部按未接入起步；浏览器值不得把开关伪造为 true。
 const 基础健康 = {
   mode: 'readonly',
   deepseekConfigured: false,
@@ -186,12 +185,12 @@ function 助手面板占位({ 工作台 }) {
           </div>
           <div>
             <strong>创作助手</strong>
-            <span>{健康状态?.deepseekConfigured ? '本地模型已连接' : '等待模型配置'}</span>
+            <span>{健康状态?.deepseekConfigured ? '服务端模型已连接' : '尚未接入服务端'}</span>
           </div>
         </div>
         <div className={健康状态?.deepseekConfigured ? 'studio-agent-status is-ready' : 'studio-agent-status'}>
           <i />
-          {健康状态?.deepseekConfigured ? '在线' : '未配置'}
+          {健康状态?.deepseekConfigured ? '在线' : '未接入'}
         </div>
         <div className="studio-side-tabs">
           <button className={左栏tab === 'agent' ? 'is-active' : ''} onClick={() => 设左栏tab('agent')} type="button">
@@ -282,7 +281,7 @@ function 助手面板占位({ 工作台 }) {
             <div className={输入文本.length > 0 ? 'studio-composer-shell is-populated' : 'studio-composer-shell'}>
               <textarea
                 onChange={(事件) => 设输入文本(事件.target.value)}
-                placeholder={健康状态?.deepseekConfigured ? '输入指令...' : '先在设置里保存 DeepSeek Key，再输入指令...'}
+                placeholder={健康状态?.deepseekConfigured ? '输入指令...' : '创作 Agent 尚未接入；可先把需求记在这里...'}
                 ref={输入框ref}
                 value={输入文本}
               />
@@ -300,7 +299,7 @@ function 助手面板占位({ 工作台 }) {
                 </div>
                 <div className="studio-composer-actions">
                   <div className="studio-model-row">
-                    <span>{健康状态?.deepseekConfigured ? 健康状态.deepseekModel : 'DeepSeek 未配置'}</span>
+                    <span>{健康状态?.deepseekConfigured ? 健康状态.deepseekModel : '服务端 Agent 未接入'}</span>
                     <ChevronDown size={13} />
                   </div>
                   <button className="studio-send-button" disabled={!输入文本.trim()} title="发送" type="submit">
@@ -368,8 +367,7 @@ export default function 应用() {
   const [进行中动作, 设进行中动作] = useState('load'); // 非 null = 有事在忙，按钮要转圈
   const [顶部错误, 设顶部错误] = useState(null);
   const [消息列表, 设消息列表] = useState([
-    // 线上初始欢迎语，一字不差
-    { role: 'agent', text: '创作台已连接本地生成包。你可以先校验、发布、继续生成资产，或让我基于当前项目提出下一步修改。' },
+    { role: 'agent', text: '创作台已载入本机项目工具。你可以校验、编辑与发布；AI 创作和资产生成服务尚未接入。' },
   ]);
   const [右栏tab, 设右栏tab] = useState('assets');
   const [中栏视图, 设中栏视图] = useState('flow');
@@ -1522,10 +1520,6 @@ export default function 应用() {
       )}
       {设置弹窗开 && (
         <设置弹窗
-          on保存完成={() => {
-            设健康状态(补正健康状态(基础健康));
-            追加消息('system', '模型、密钥和调用地址已保存到当前浏览器。换设备或清理浏览器数据后需要重新填写。');
-          }}
           on关闭={() => 设设置弹窗开(false)}
         />
       )}

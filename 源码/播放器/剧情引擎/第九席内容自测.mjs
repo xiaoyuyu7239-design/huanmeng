@@ -71,7 +71,7 @@ const 预期结局id = [
 // ---- 一、作品、主角与阵容 ----
 assert.equal(剧情.id, 'ninth-seat');
 assert.equal(剧情.title, '第九席');
-assert.equal(剧情.contentVersion, 2, 'Level 4 首页路线契约必须使用内容版本 2');
+assert.equal(剧情.contentVersion, 3, 'Level 5 关系 AI 契约必须使用内容版本 3');
 assert.equal(剧情.content?.estimatedMinutes, '20-30', '第一章时长声明必须稳定为 20–30 分钟');
 assert.equal(剧情.content?.playerLayout, 'portrait-cinema', 'Level 3 必须默认使用竖屏轻电影布局');
 assert.equal(剧情.content?.theme, 'twilight', 'Level 3 必须使用暮色书页主题');
@@ -108,6 +108,37 @@ assert.deepEqual(首页路线[2]?.characterIds, [], '独立复盘不得伪造关
 for (const 路线 of 首页路线) {
   assert.ok(路线.title?.trim() && 路线.description?.trim() && 路线.note?.trim(), `${路线.id} 缺少首页路线文案`);
 }
+
+const 关系AI = 剧情.content?.relationshipAI;
+const 关系AI意图id = ['share_feeling', 'seek_clarity', 'set_boundary', 'ask_support', 'challenge', 'pause'];
+const 关系AI会话预期 = new Map([
+  ['s12-lu-private', ['lu_chenzhou', 'private-debrief']],
+  ['s13-zhou-private', ['zhou_yan', 'private-debrief']],
+  ['s14-he-private', ['he_qingye', 'private-debrief']],
+  ['s15-shen-private', ['shen_que', 'private-debrief']],
+  ['s16-lin-alliance', ['lin_miao', 'peer-alliance']],
+]);
+assert.equal(关系AI?.version, 1, '关系 AI 公共契约版本必须固定');
+assert.equal(关系AI?.maxTurns, 3, '单节点最多三轮，避免无限陪伴与失控费用');
+assert.deepEqual(关系AI?.allowedIntents?.map((条) => 条.id), 关系AI意图id, '关系 AI 意图白名单发生漂移');
+assert.deepEqual(关系AI?.sessions?.map((条) => 条.nodeId), [...关系AI会话预期.keys()], '关系 AI 只能开放四个私聊与林渺同盟复盘');
+assert.match(关系AI?.notice ?? '', /不会.*改变.*(?:关系数值|路线|结局)/u, '关系 AI 缺少不改剧情状态的玩家说明');
+for (const 会话 of 关系AI?.sessions ?? []) {
+  const [角色id, mode] = 关系AI会话预期.get(会话.nodeId) ?? [];
+  assert.equal(会话.characterId, 角色id, `${会话.nodeId} 的可信角色白名单错误`);
+  assert.equal(会话.mode, mode, `${会话.nodeId} 的关系模式错误`);
+  assert.ok(配角们.some((角色) => 角色.id === 会话.characterId), `${会话.nodeId} 引用了阵容外角色`);
+  assert.ok(剧情.nodes[会话.nodeId]?.lines?.some((行) => 行.speaker === 会话.characterId), `${会话.nodeId} 的角色没有出现在当前场景`);
+  assert.equal(会话.suggestions?.length, 3, `${会话.nodeId} 必须提供三条可编辑建议表达`);
+  assert.ok(会话.opening?.trim() && 会话.voice?.style?.trim(), `${会话.nodeId} 缺少入口或角色口吻`);
+  assert.ok((会话.voice?.anchors ?? []).length >= 3, `${会话.nodeId} 缺少角色一致性锚点`);
+  assert.ok((会话.voice?.forbiddenPhrases ?? []).length >= 3, `${会话.nodeId} 缺少角色越界短语`);
+  for (const intent of [...关系AI意图id, 'safe_guard']) {
+    assert.ok(会话.fallbackReplies?.[intent]?.trim(), `${会话.nodeId} 缺少 ${intent} 作者备用回复`);
+  }
+  assert.ok(!/(?:effect|next|route|globals|relationships|flags)/u.test(Object.keys(会话).join('|')), `${会话.nodeId} 的生成配置不得携带剧情状态字段`);
+}
+assert.ok(!(关系AI?.sessions ?? []).some((条) => ['qiao_wen', 'you'].includes(条.characterId)), '乔雯与玩家内心没有正式一对一 AI 场景，不得越权开放');
 
 for (const 角色 of 配角们) {
   const 初值维度 = Object.keys(角色.relationship?.initial ?? {});
@@ -218,6 +249,7 @@ assert.deepEqual(
   { mode: 'on-demand', label: '调查现场' },
   '加载边界丢失或改坏了按需调查契约',
 );
+assert.equal(加载.storyContent?.relationshipAI?.sessions?.length, 5, '加载边界丢失了关系 AI 会话契约');
 assert.equal(加载.storyNodes['s00-blue-salon'].backdrop, '/scenes/ninth-seat/control-room.png');
 assert.equal(加载.storyNodes['s00-blue-salon'].choices[0].intent, '冻结外发信号，保留全部本地记录');
 assert.ok(表情集合.has(加载.storyNodes['s00-blue-salon'].lines[1].expression));
