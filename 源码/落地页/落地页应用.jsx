@@ -110,8 +110,8 @@ export default function 落地页应用() {
   return (
     <div className="lp lp-heartscape" ref={根ref}>
       <a className="hx-skip-link" href="#main-content">跳到主要内容</a>
-      <导航栏 navRef={导航ref} playHref={首页.playHref} />
-      <main id="main-content">
+      <导航栏 navRef={导航ref} playAction={首页.playAction} />
+      <main id="main-content" tabIndex={-1}>
         <玩家主视觉 首页={首页} />
         {首页.storyReady && (
           <>
@@ -126,8 +126,8 @@ export default function 落地页应用() {
         <创作者次入口 />
         <玩家结尾CTA 首页={首页} />
       </main>
-      <页脚 playHref={首页.playHref} />
-      <a className="hx-mobile-cta" href={首页.playHref}>进入《{首页.story?.title ?? 首页.catalogEntry?.title ?? '互动故事'}》</a>
+      <页脚 playAction={首页.playAction} />
+      <a className="hx-mobile-cta" href={首页.playAction.href}>{首页.playAction.label}</a>
     </div>
   );
 }

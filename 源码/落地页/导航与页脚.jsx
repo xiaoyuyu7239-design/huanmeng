@@ -12,7 +12,7 @@ function 品牌标识() {
   );
 }
 
-export function 导航栏({ navRef, playHref }) {
+export function 导航栏({ navRef, playAction }) {
   return (
     <nav className="hx-nav" ref={navRef} aria-label="主导航">
       <div className="hx-wrap hx-nav-inner">
@@ -25,14 +25,14 @@ export function 导航栏({ navRef, playHref }) {
         </div>
         <div className="hx-nav-actions">
           <a className="hx-creator-link" href="/creators">创作者</a>
-          <a className="hx-nav-cta" href={playHref}>进入故事</a>
+          <a className="hx-nav-cta" href={playAction.href}>{playAction.shortLabel}</a>
         </div>
       </div>
     </nav>
   );
 }
 
-export function 页脚({ playHref }) {
+export function 页脚({ playAction }) {
   return (
     <footer className="hx-footer">
       <div className="hx-wrap">
@@ -40,8 +40,8 @@ export function 页脚({ playHref }) {
           <品牌标识 />
           <div className="hx-footer-links">
             <div>
-              <h2>开始故事</h2>
-              <a href={playHref}>进入旗舰世界</a>
+              <h2>{playAction.shortLabel}</h2>
+              <a href={playAction.href}>{playAction.label}</a>
               <a href="#worlds">更多实验世界</a>
             </div>
             <div>

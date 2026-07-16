@@ -175,6 +175,13 @@ export function 解析创作项目入口(查询字符串 = '', 上次选择 = ''
   return 上次选择;
 }
 
+export function 构建创作试玩链接(slug, 是本机草稿 = false) {
+  const 作品 = typeof slug === 'string' && 清洗slug(slug) === slug ? slug : '';
+  if (!作品) return '/play';
+  const 玩家链接 = `/play?game=${encodeURIComponent(作品)}`;
+  return 是本机草稿 ? `${玩家链接}&preview=draft&from=creator` : 玩家链接;
+}
+
 // 占位表格组件(线上 Us)：左栏"记忆/模板"、右栏"属性/数值/事件"等预留 Tab 共用的小桌板
 export function 占位面板({ icon, title, rows }) {
   return (
@@ -469,10 +476,11 @@ export default function 应用() {
   const 已覆盖场景数 = 当前项目?.summary?.visualReadyCount ?? 0;
   const 视觉缺口数 = Math.max(视觉场景总数 - 已覆盖场景数, 0);
   const 当前节点序号 = 当前节点 ? Math.max(节点列表.findIndex((节) => 节.id === 当前节点.id), 0) : 0;
-  const 预览链接 = 当前项目?.slug
-    ? `/play?game=${encodeURIComponent(当前项目.slug)}&preview=draft&from=creator`
-    : '/play?preview=draft&from=creator';
-  const 发布链接 = 当前项目?.slug ? `/play?game=${encodeURIComponent(当前项目.slug)}` : '/play';
+  const 发布链接 = 构建创作试玩链接(当前项目?.slug, false);
+  const 草稿预览链接 = 构建创作试玩链接(当前项目?.slug, true);
+  // 内置示例尚未保存为本机 project 时没有“当前草稿”；此时试玩正式静态版本，
+  // 避免严格草稿入口诚实失败。首次保存后 source 会切为 browser，再使用草稿链接。
+  const 预览链接 = 构建创作试玩链接(当前项目?.slug, 是本机项目);
   const 有玩家版本 = !!当前项目 && (!是本机项目 || 当前条目?.hasPublished || 是内置示例);
   const 发布状态文案 = 是本机项目
     ? 当前条目?.hasPublished
@@ -840,7 +848,7 @@ export default function 应用() {
       if (动作 === 'publish' && 结果.errors.length === 0) {
         应用本机发布(
           新项目,
-          `发布成功：玩家版本 ${发布链接}；草稿试玩 ${预览链接}`,
+          `发布成功：玩家版本 ${发布链接}；草稿试玩 ${草稿预览链接}`,
         );
       } else {
         // 普通校验和失败发布都只更新草稿；publishedProject 始终保持上一次成功版本。
@@ -1197,7 +1205,10 @@ export default function 应用() {
           <p>
             {是本机项目 ? '本机浏览器项目' : '发布示例项目'}
             {' · '}
-            {有未保存修改 ? '有未保存修改' : '草稿已保存'} {更新时间文案}
+            {是本机项目
+              ? 有未保存修改 ? '有未保存修改' : '草稿已保存'
+              : 有未保存修改 ? '有未保存修改，保存后成为本机草稿' : '只读发布版本'}
+            {是本机项目 ? ` ${更新时间文案}` : ''}
             {' · '}{发布状态文案}
             <Check size={14} />
           </p>
@@ -1213,10 +1224,14 @@ export default function 应用() {
                 return;
               }
             }}
-            title={有未保存修改 ? '请先保存，再打开玩家试玩' : '打开当前游戏的草稿预览'}
+            title={有未保存修改
+              ? '请先保存，再打开玩家试玩'
+              : 是本机项目
+                ? '打开当前游戏的草稿预览'
+                : '打开内置示例的已发布版本'}
           >
             <Play size={17} />
-            <span>草稿试玩</span>
+            <span>{是本机项目 ? '草稿试玩' : '试玩示例'}</span>
           </a>
           {有玩家版本 && (
             <a className="studio-action is-secondary is-compactable" href={发布链接} title="打开上次成功发布的玩家版本">

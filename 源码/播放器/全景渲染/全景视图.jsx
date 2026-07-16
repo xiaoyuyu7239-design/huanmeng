@@ -339,17 +339,68 @@ export default function 全景视图({
     状态.lastInteraction = Date.now();
   }, []);
 
+  const 键盘调整视角 = useCallback((事件) => {
+    if (事件.target !== 事件.currentTarget) return;
+    const 状态 = 相机状态Ref.current;
+    const 新视角 = 应用键盘视角(状态, 事件.key, 解析入场视角(节点));
+    if (!新视角) return;
+    事件.preventDefault();
+    状态.lon = 新视角.lon;
+    状态.lat = 新视角.lat;
+    状态.fov = 新视角.fov;
+    set当前fov(新视角.fov);
+    状态.driftAnchorLon = 状态.lon;
+    状态.driftAnchorLat = 状态.lat;
+    状态.lastInteraction = Date.now();
+  }, [节点]);
+
+  const 线索索引 = 热点们.length > 0 && (
+    <details
+      className="panorama-clue-index"
+      onClick={(事件) => 事件.stopPropagation()}
+      onPointerDown={(事件) => 事件.stopPropagation()}
+    >
+      <summary>全部线索 · {热点们.length}</summary>
+      <div aria-label="全部调查线索" role="group">
+        {热点们.map((热点) => {
+          const 已看 = 已看集合.has(`${节点.id}:${热点.id}`);
+          return (
+            <button
+              className={已看 ? 'is-seen' : ''}
+              key={热点.id}
+              onClick={(事件) => {
+                事件.stopPropagation();
+                点热点(热点);
+              }}
+              type="button"
+            >
+              <strong>{热点.label}</strong>
+              <span>{已看 ? '已查看' : '查看线索'}</span>
+            </button>
+          );
+        })}
+      </div>
+    </details>
+  );
+
   // ---- 平面视频分支：不建球幕，直接一台铺满的电视 + 百分比定位的热点 ----
   if (平面视频src) {
     return (
       <div
+        aria-describedby="panorama-keyboard-help"
+        aria-label="调查场景"
         className="panorama is-flat-video"
+        role="region"
         style={{
           '--fallback-from': 节点.palette.from,
           '--fallback-via': 节点.palette.via,
           '--fallback-to': 节点.palette.to,
         }}
+        tabIndex={0}
       >
+        <span className="panorama-keyboard-help" id="panorama-keyboard-help">
+          使用“全部线索”列表可通过键盘查看场景中的每一项线索。
+        </span>
         <video
           autoPlay
           className="panorama-flat-video"
@@ -366,6 +417,7 @@ export default function 全景视图({
         {平面热点布局(节点, 热点们).map(({ hotspot: 热点, xPercent: x, yPercent: y }) =>
           渲染热点(热点, { left: `${x}%`, top: `${y}%` }),
         )}
+        {线索索引}
       </div>
     );
   }
@@ -373,19 +425,27 @@ export default function 全景视图({
   // ---- 360 全景分支 ----
   return (
     <div
+      aria-describedby="panorama-keyboard-help"
+      aria-label="360度调查场景"
       className="panorama"
+      onKeyDown={键盘调整视角}
       onPointerDown={按下}
       onPointerMove={移动}
       onPointerUp={松开}
       onPointerCancel={松开}
       onWheel={滚轮}
       ref={容器Ref}
+      role="region"
       style={{
         '--fallback-from': 节点.palette.from,
         '--fallback-via': 节点.palette.via,
         '--fallback-to': 节点.palette.to,
       }}
+      tabIndex={0}
     >
+      <span className="panorama-keyboard-help" id="panorama-keyboard-help">
+        使用方向键转动视角，加号或减号缩放，Home 键回到初始视角；也可打开“全部线索”列表直接查看。
+      </span>
       <div className="vignette" />
       <div className="horizon-glow" />
       {投影热点.map((投影) => {
@@ -394,6 +454,7 @@ export default function 全景视图({
       })}
       {纹理状态 === 'loading' && <div className="asset-state">载入全景</div>}
       {纹理状态 === 'fallback' && <div className="asset-state">临时全景</div>}
+      {线索索引}
       <div
         className="zoom-controller"
         onClick={(事件) => 事件.stopPropagation()}
@@ -458,6 +519,45 @@ function 规范化视图热点(原始列表) {
           pitch: Number.isFinite(Number(热点.pitch)) ? Number(热点.pitch) : 0,
         }))
     : [];
+}
+
+export function 应用键盘视角(当前状态, 按键, 入场视角 = { yaw: 0, pitch: 0, fov: 默认FOV }) {
+  const 当前 = 当前状态 && typeof 当前状态 === 'object' ? 当前状态 : {};
+  const 结果 = {
+    lon: Number.isFinite(Number(当前.lon)) ? Number(当前.lon) : 0,
+    lat: Number.isFinite(Number(当前.lat)) ? Number(当前.lat) : 0,
+    fov: Number.isFinite(Number(当前.fov)) ? Number(当前.fov) : 默认FOV,
+  };
+  switch (按键) {
+    case 'ArrowLeft':
+      结果.lon -= 12;
+      break;
+    case 'ArrowRight':
+      结果.lon += 12;
+      break;
+    case 'ArrowUp':
+      结果.lat = 钳制(结果.lat + 8, -72, 72);
+      break;
+    case 'ArrowDown':
+      结果.lat = 钳制(结果.lat - 8, -72, 72);
+      break;
+    case '+':
+    case '=':
+      结果.fov = 钳制(结果.fov - 8, 20, 130);
+      break;
+    case '-':
+    case '_':
+      结果.fov = 钳制(结果.fov + 8, 20, 130);
+      break;
+    case 'Home':
+      结果.lon = Number(入场视角?.yaw) || 0;
+      结果.lat = Number(入场视角?.pitch) || 0;
+      结果.fov = Number(入场视角?.fov) || 默认FOV;
+      break;
+    default:
+      return null;
+  }
+  return 结果;
 }
 
 function 安全颜色(值, 兜底) {

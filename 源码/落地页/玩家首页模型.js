@@ -2,7 +2,10 @@
 // 正式剧情决定“旗舰世界里真实存在什么”，存档只负责补回玩家已经亲自获得的内容。
 // 这样首页不会靠一组与剧情脱节的营销文案冒充可玩能力。
 
+import { 构建选择展示文案 } from '../公共工具/选择文案.js';
+
 const 存档键前缀 = 'interactive-cinema-save';
+const 首页存档来源 = Symbol('homepage-save-source');
 
 function 是普通对象(值) {
   return !!值 && typeof 值 === 'object' && !Array.isArray(值);
@@ -170,7 +173,9 @@ function 进度属于作品(进度, slug, storyId) {
   if (!是普通对象(进度)) return false;
   const 进度storyId = 非空文本(进度.storyId);
   const 进度gameId = 安全slug(进度.gameId);
-  if (!进度storyId && !进度gameId) return false;
+  // 无身份的早期存档只有在它确实由当前作品专属存档键读取时才兼容；
+  // 外部直接传入的无归属对象仍保持拒绝，避免首页模型误认跨作品数据。
+  if (!进度storyId && !进度gameId) return 进度[首页存档来源] === slug;
   // 稳定 storyId 是最高优先级归属，可跨 bundled / 正式运行身份使用。
   if (进度storyId) return 进度storyId === storyId;
   return 进度gameId !== 'bundled' && (进度gameId === slug || 进度gameId === storyId);
@@ -256,10 +261,7 @@ function 构建开场预览(剧情) {
         .slice(0, 3)
         .map((选择) => ({
           id: 非空文本(选择.id, 非空文本(选择.label)),
-          label: 非空文本(选择.label),
-          intent: 非空文本(选择.intent, 非空文本(选择.label)),
-          caption: 非空文本(选择.caption),
-          consequence: 非空文本(选择.consequence),
+          ...构建选择展示文案(选择),
         }))
     : [];
   if (!非空文本(节点.backdrop) || lines.length === 0 || choices.length === 0) return null;
@@ -272,6 +274,16 @@ function 构建开场预览(剧情) {
     backdrop: 非空文本(节点.backdrop),
     lines,
     choices,
+  };
+}
+
+function 构建主播放行动(href, title, hasSave) {
+  const 作品名 = 非空文本(title, '互动故事');
+  return {
+    href,
+    mode: hasSave ? 'resume' : 'start',
+    label: hasSave ? `继续《${作品名}》` : `进入《${作品名}》`,
+    shortLabel: hasSave ? '继续故事' : '开始故事',
   };
 }
 
@@ -306,16 +318,21 @@ export function 构建玩家首页模型(精选数据, 剧情, 原进度 = null)
   );
 
   if (!storyReady) {
+    const playHref = defaultSlug ? `/play?game=${encodeURIComponent(defaultSlug)}` : '/play';
     return {
       defaultSlug,
       catalogEntry,
       storyReady: false,
-      playHref: defaultSlug ? `/play?game=${encodeURIComponent(defaultSlug)}` : '/play',
+      playHref,
+      playAction: 构建主播放行动(playHref, catalogEntry?.title, false),
       moreWorlds: showcase.featured.filter((条目) => 条目.slug !== defaultSlug),
     };
   }
 
   const progress = 构建安全进度(原进度, 剧情, defaultSlug);
+  const playHref = `/play?game=${encodeURIComponent(defaultSlug)}`;
+  const 作品标题 = 非空文本(剧情.title, catalogEntry.title);
+  const playAction = 构建主播放行动(playHref, 作品标题, !!progress?.hasSave);
   const protagonist = 构建角色(剧情.cast?.protagonist);
   const characters = Array.isArray(剧情.cast?.characters)
     ? 剧情.cast.characters.map(构建角色).filter(Boolean)
@@ -327,10 +344,11 @@ export function 构建玩家首页模型(精选数据, 剧情, 原进度 = null)
     defaultSlug,
     catalogEntry,
     storyReady: true,
-    playHref: `/play?game=${encodeURIComponent(defaultSlug)}`,
+    playHref,
+    playAction,
     story: {
       id: storyId,
-      title: 非空文本(剧情.title, catalogEntry.title),
+      title: 作品标题,
       subtitle: 非空文本(剧情.subtitle),
       chapter: 非空文本(content.chapter, catalogEntry.chapters),
       estimatedMinutes: 非空文本(content.estimatedMinutes),
@@ -363,7 +381,9 @@ export function 读取首页存档(slug) {
     const 原始 = JSON.parse(
       window.localStorage.getItem(`${存档键前缀}:${slug}:v2`) ?? 'null',
     );
-    return 是普通对象(原始) ? 原始 : null;
+    if (!是普通对象(原始)) return null;
+    Object.defineProperty(原始, 首页存档来源, { value: slug });
+    return 原始;
   } catch {
     return null;
   }

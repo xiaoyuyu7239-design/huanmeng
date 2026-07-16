@@ -27,6 +27,7 @@
 // 公共资源里的同一部作品（Vite 会在打包时把它内联成 JS 模块，效果一致）。
 // 这样即使断网/线上 story.json 拉不到，播放器也永远有片可放。
 import 兜底剧情 from '../../../公共资源/games/ninth-seat/story.json';
+import { 是规范作品slug } from '../../入口/试玩来源.js';
 
 // 创作端本机仓库：project 是草稿，publishedProject 是玩家端默认读取的冻结快照。
 const 浏览器项目仓库键 = 'creator:browser-projects:v1';
@@ -182,11 +183,13 @@ export function getStoryCharacterIds() {
   return storyCast.characters.map((角色) => 角色.id);
 }
 
-// 输入 slug / 选项 → 默认先读本机已发布快照，再去线上拉 /games/<slug>/story.json。
-// 只有创作台显式传 allowDraft:true，才会把草稿放到已发布快照之前用于试玩。
-// 为什么所有错误都吞掉只回布尔值：加载失败时播放器要继续放手上那部片，不能黑屏。
+// 输入 slug / 选项 → 普通玩家先读本机已发布快照，再去线上拉同 slug 静态作品。
+// 创作台显式传 allowDraft:true 时则是严格草稿试玩：只读本机 project，缺失或损坏均返回
+// false，绝不暗中播放旧发布版或静态作品。显式入口会用返回值决定是否挂载播放器。
 export async function loadStoryBySlug(slug, 选项 = {}) {
-  if (尝试加载浏览器项目(slug, { allowDraft: 选项?.allowDraft === true })) return true;
+  if (!是规范作品slug(slug)) return false;
+  if (选项?.allowDraft === true) return 尝试加载浏览器项目(slug, { version: 'draft' });
+  if (尝试加载浏览器项目(slug, { version: 'published' })) return true;
   try {
     const 响应 = await fetch(`/games/${encodeURIComponent(slug)}/story.json`, {
       cache: 'no-cache',
@@ -205,31 +208,25 @@ export async function 按slug加载剧情(slug, 选项) {
   return loadStoryBySlug(slug, 选项);
 }
 
-// 输入 slug / allowDraft → 查同一格中的 project / publishedProject → 命中安全版本就激活。
-// 旧条目只有 project 时继续作为草稿保留：普通玩家不会被它覆盖，创作台仍可显式试玩。
-function 尝试加载浏览器项目(slug, { allowDraft = false } = {}) {
+// 输入 slug / version → 只查同一格中指定的 project 或 publishedProject。
+// 旧条目只有 project 时继续作为草稿保留；普通玩家始终只读带发布时间的冻结快照。
+function 尝试加载浏览器项目(slug, { version = 'published' } = {}) {
   if (typeof window === 'undefined') return false;
   try {
     const 仓库 = JSON.parse(window.localStorage.getItem(浏览器项目仓库键) ?? '{}');
     if (!仓库 || typeof 仓库 !== 'object' || Array.isArray(仓库)) return false;
+    if (!Object.prototype.hasOwnProperty.call(仓库, slug)) return false;
     const 条目 = 仓库[slug];
     const 草稿项目 = 条目?.project;
     const 已发布项目 = 条目?.publishedProject;
-    const 草稿 = !草稿项目?.slug || 草稿项目.slug === slug ? 草稿项目?.story : null;
+    const 草稿 = 草稿项目?.slug === slug ? 草稿项目.story : null;
     const 已发布 = Number.isFinite(条目?.publishedAt) && 已发布项目?.slug === slug
       ? 已发布项目.story
       : null;
-    const 候选们 = allowDraft ? [草稿, 已发布] : [已发布];
-    for (const 剧情 of 候选们) {
-      if (!剧情) continue;
-      try {
-        setActiveStory(剧情, slug);
-        return true;
-      } catch {
-        // 坏草稿不能挡住合法已发布快照，坏快照也不能挡住同 slug 静态作品。
-      }
-    }
-    return false;
+    const 剧情 = version === 'draft' ? 草稿 : 已发布;
+    if (!剧情) return false;
+    setActiveStory(剧情, slug);
+    return true;
   } catch {
     return false;
   }

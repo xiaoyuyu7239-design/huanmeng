@@ -4,7 +4,8 @@ import { fileURLToPath } from 'node:url';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { createServer } from 'vite';
-import { 合并首页精选, 构建玩家首页模型, 清洗精选数据, 核对本机精选覆盖 } from './玩家首页模型.js';
+import { 合并首页精选, 构建玩家首页模型, 清洗精选数据, 核对本机精选覆盖, 读取首页存档 } from './玩家首页模型.js';
+import { 构建选择展示文案 } from '../公共工具/选择文案.js';
 
 const 当前目录 = dirname(fileURLToPath(import.meta.url));
 const 项目根 = resolve(当前目录, '../..');
@@ -19,6 +20,12 @@ const 首页 = 构建玩家首页模型(精选, 剧情);
 断言(首页.storyReady, '正式旗舰剧情未生成可用首页模型');
 断言(首页.defaultSlug === 精选.default, '首页旗舰未跟随正式 showcase.default');
 断言(首页.playHref === '/play?game=ninth-seat', '玩家主 CTA 未精确指向旗舰作品');
+断言(
+  首页.playAction.mode === 'start' &&
+    首页.playAction.label === '进入《第九席》' &&
+    首页.playAction.shortLabel === '开始故事',
+  '无存档首页没有产出统一的开始 CTA',
+);
 断言(首页.preview?.nodeId === 剧情.startNodeId, '真实试玩预览没有从 startNodeId 构建');
 断言(首页.characters.length === 剧情.cast.characters.length, '角色区过滤了剧情声明的关键人物');
 断言(
@@ -29,7 +36,9 @@ const 首页 = 构建玩家首页模型(精选, 剧情);
 断言(首页.endings.every((结局) => !结局.secret), '无存档首页提前泄露隐藏结局');
 断言(首页.endings.length === 3, '公开阶段结果数量与正式剧情不一致');
 断言(!Object.hasOwn(首页, 'totalEndingCount'), '首页模型暴露了包含隐藏结果的总数');
-断言(首页.preview.choices[0].intent === 剧情.nodes[剧情.startNodeId].choices[0].intent, '开场预览丢失正式选择意图');
+断言(首页.preview.choices[0].label === 剧情.nodes[剧情.startNodeId].choices[0].label, '开场预览丢失正式主行动文案');
+断言(!首页.preview.choices[0].intent, '与 label 重复的 intent 仍进入开场预览');
+断言(!Object.hasOwn(首页.preview.choices[0], 'consequence'), '开场预览提前暴露了选择后果');
 断言(首页.routes.length === 3, '首页没有消费正式 homepage.routes 契约');
 const 正式私聊角色 = [...new Set(
   Object.values(剧情.nodes)
@@ -61,6 +70,12 @@ const 有效进度首页 = 构建玩家首页模型(精选, 剧情, {
 );
 断言(有效进度首页.progress.unlockedEndings.length === 1, '首页存档没有过滤伪造结局');
 断言(有效进度首页.endings.some((结局) => 结局.id === 隐藏结局.id && 结局.unlocked), '已解锁隐藏结局未被正确恢复');
+断言(
+  有效进度首页.playAction.mode === 'resume' &&
+    有效进度首页.playAction.label === '继续《第九席》' &&
+    有效进度首页.playAction.shortLabel === '继续故事',
+  '有效存档没有产出统一的续玩 CTA',
+);
 
 const 跨作品首页 = 构建玩家首页模型(精选, 剧情, {
   gameId: 'another-story',
@@ -69,11 +84,24 @@ const 跨作品首页 = 构建玩家首页模型(精选, 剧情, {
   unlockedEndings: [隐藏结局.id],
 });
 断言(!跨作品首页.progress.hasSave, '跨作品存档污染了旗舰首页');
+断言(跨作品首页.playAction.mode === 'start', '跨作品存档错把首页 CTA 变成续玩');
 const 无归属首页 = 构建玩家首页模型(精选, 剧情, {
   memories: [第一条合法记忆],
   unlockedEndings: [隐藏结局.id],
 });
 断言(!无归属首页.progress.hasSave, '无 storyId/gameId 的歧义存档进入了旗舰首页');
+globalThis.window = {
+  localStorage: {
+    getItem: (键) => 键 === 'interactive-cinema-save:ninth-seat:v2'
+      ? JSON.stringify({ memories: [第一条合法记忆], visitedNodes: [剧情.startNodeId] })
+      : null,
+  },
+};
+const 专属键旧档首页 = 构建玩家首页模型(精选, 剧情, 读取首页存档('ninth-seat'));
+断言(
+  专属键旧档首页.progress.hasSave && 专属键旧档首页.playAction.mode === 'resume',
+  '从当前作品专属 key 读取的无身份早期存档没有与播放器保持续玩语义一致',
+);
 const bundled旧档首页 = 构建玩家首页模型(精选, 剧情, {
   gameId: 'bundled',
   memories: [第一条合法记忆],
@@ -86,7 +114,32 @@ const 稳定归属首页 = 构建玩家首页模型(精选, 剧情, {
   memories: [第一条合法记忆],
 });
 断言(稳定归属首页.progress.hasSave, '带稳定 storyId 的跨运行身份存档被错误拒绝');
-console.log('  ✓ 首页存档：合法进度恢复，伪造与跨作品数据隔离');
+断言(稳定归属首页.playAction.mode === 'resume', '稳定 storyId 存档没有切换续玩 CTA');
+console.log('  ✓ 首页存档：合法进度恢复并续玩，跨作品数据隔离');
+
+const 完全重复文案 = 构建选择展示文案({
+  label: '保全原始证据',
+  intent: '保全原始证据。',
+  caption: ' 保全原始证据 ',
+  consequence: '这是选择后才应显示的后果。',
+});
+断言(
+  完全重复文案.label === '保全原始证据' && !完全重复文案.intent && !完全重复文案.caption,
+  '选择 helper 没有去除标点与空白差异造成的重复文案',
+);
+const 隐藏前缀文案 = 构建选择展示文案({
+  label: '【隐藏】恢复人的否决权',
+  intent: '恢复人的否决权',
+  caption: '只有先前保留边界时才会出现。',
+});
+断言(!隐藏前缀文案.intent && !!隐藏前缀文案.caption, '选择 helper 没有忽略展示前缀或误删新说明');
+const 信息不同文案 = 构建选择展示文案({
+  label: '暂停直播',
+  intent: '先保全证据',
+  caption: '你将承担延误的职业风险。',
+});
+断言(!!信息不同文案.intent && !!信息不同文案.caption, '选择 helper 误删了真正新增的意图或说明');
+console.log('  ✓ 选择文案：label 为主，intent / caption 按语义去重，后果不进预览');
 
 const 回退清单 = 清洗精选数据({
   default: 'missing',
@@ -173,9 +226,11 @@ try {
   const html = renderToString(React.createElement(落地页应用));
   断言(html.includes('class="lp lp-heartscape"'), '首页未渲染心界根壳层');
   断言((html.match(/<main/g) ?? []).length === 1, '首页必须且只能有一个 main');
+  断言(html.includes('<main id="main-content" tabindex="-1">'), 'skip link 目标 main 不可程序化获得焦点');
   断言((html.match(/<h1/g) ?? []).length === 1, '首页必须且只能有一个 h1');
   断言(html.includes('这一次，故事会记住'), 'SSR 首屏没有玩家价值承诺');
   断言(html.includes('href="/play?game=ninth-seat"'), 'SSR 首屏没有精确旗舰玩家入口');
+  断言(html.includes('进入《第九席》') && html.includes('开始故事'), 'SSR 无存档入口没有消费统一开始 CTA');
   断言(
     html.includes('AI 未接入时明确使用作者预设回应') && !html.includes('AI 关系层将在后续阶段接入'),
     '玩家首页页脚仍把已交付的受约束关系回应写成未来能力',
@@ -183,8 +238,15 @@ try {
   for (const 姓名 of [剧情.cast.protagonist.name, ...剧情.cast.characters.map((角色) => 角色.name)]) {
     断言(html.includes(姓名), `SSR 角色区缺少正式 cast：${姓名}`);
   }
-  for (const 玩家内容 of ['你的第一项决定', '故事记住的', '按你的方式同行', '结局不只回答']) {
+  for (const 玩家内容 of ['开场选择预览', '故事记住的', '按你的方式同行', '结局不只回答']) {
     断言(html.includes(玩家内容), `SSR 玩家路径缺少：${玩家内容}`);
+  }
+  断言((html.match(/class="hx-choice-card reveal"/g) ?? []).length === 3, '开场预览未渲染三张非交互选择卡');
+  断言(!html.includes('<a class="hx-choice-card reveal"'), '开场预览卡仍然是会伪提交选择的链接');
+  断言((html.match(/进入故事后亲自选择/g) ?? []).length === 1, '开场预览区没有收口为唯一的进入故事 CTA');
+  断言(!html.includes('行动意图 ·'), '开场 label 与 intent 相同时仍重复显示意图');
+  for (const 选择 of 剧情.nodes[剧情.startNodeId].choices) {
+    断言(!html.includes(选择.consequence), `开场预览提前剧透选择后果：${选择.id}`);
   }
   for (const 旧首页内容 of ['EvoMap', 'Flux.1 Dev', '智能体写剧本', '/landing/char-', 'experience-showcase.mp4']) {
     断言(!html.includes(旧首页内容), `玩家首页仍渲染旧创作者内容：${旧首页内容}`);
@@ -195,6 +257,33 @@ try {
   }
   断言(!html.includes(隐藏结局.ending.title), 'SSR 提前渲染隐藏结局标题');
   console.log('  ✓ 无浏览器 SSR：首页语义、旗舰 CTA、七名角色与玩家路径同步可见');
+
+  const {
+    玩家主视觉,
+    真实选择区,
+    多结局区,
+    玩家结尾CTA,
+  } = await 服务.ssrLoadModule('/源码/落地页/心界玩家区块.jsx');
+  const { 导航栏, 页脚 } = await 服务.ssrLoadModule('/源码/落地页/导航与页脚.jsx');
+  const 续玩html = renderToString(
+    React.createElement(
+      React.Fragment,
+      null,
+      React.createElement(导航栏, { playAction: 有效进度首页.playAction }),
+      React.createElement(玩家主视觉, { 首页: 有效进度首页 }),
+      React.createElement(真实选择区, { 首页: 有效进度首页 }),
+      React.createElement(多结局区, { 首页: 有效进度首页 }),
+      React.createElement(玩家结尾CTA, { 首页: 有效进度首页 }),
+      React.createElement(页脚, { playAction: 有效进度首页.playAction }),
+    ),
+  );
+  for (const 续玩文案 of ['继续《第九席》', '继续故事', '继续走向结果', '你的进度已被记住', '从上次保存的现场继续']) {
+    断言(续玩html.includes(续玩文案), `有存档入口缺少续玩语义：${续玩文案}`);
+  }
+  断言(!续玩html.includes('开始第一章') && !续玩html.includes('将在零点亮起'), '有存档末屏仍伪装成首次开始');
+  const 应用源码 = await readFile(resolve(当前目录, '落地页应用.jsx'), 'utf8');
+  断言(应用源码.includes('hx-mobile-cta') && 应用源码.includes('{首页.playAction.label}'), '移动固定入口没有消费统一 CTA');
+  console.log('  ✓ 续玩语义：首屏、导航、预览、结局区、末屏与页脚一致');
 
   const { default: 创作者介绍应用 } = await 服务.ssrLoadModule('/源码/落地页/创作者介绍应用.jsx');
   const 创作者html = renderToString(React.createElement(创作者介绍应用));

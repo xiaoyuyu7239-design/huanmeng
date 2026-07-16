@@ -56,13 +56,13 @@ export function 玩家主视觉({ 首页 }) {
           <span className="hx-eyebrow">衍境·心界</span>
           <h1>故事正在准备进入心界。</h1>
           <p>你仍然可以从世界列表选择一部已发布的互动故事。</p>
-          <播放按钮 href={首页.playHref}>查看可玩世界</播放按钮>
+          <播放按钮 href={首页.playAction.href}>查看可玩世界</播放按钮>
         </div>
       </section>
     );
   }
 
-  const { catalogEntry, protagonist, preview, story } = 首页;
+  const { catalogEntry, playAction, protagonist, preview, story } = 首页;
   const 主角台词 = preview?.lines.find((行) => 行.speaker === protagonist?.id)?.text;
   return (
     <section className="hx-hero" id="top">
@@ -79,7 +79,7 @@ export function 玩家主视觉({ 首页 }) {
             故事不是问你选谁，而是记住你保全了什么、拒绝了什么，以及决定权最终留在谁手里。
           </p>
           <div className="hx-actions">
-            <播放按钮 href={首页.playHref}>进入《{story.title}》</播放按钮>
+            <播放按钮 href={playAction.href}>{playAction.label}</播放按钮>
             <a className="hx-text-link" href="#characters">
               先认识他们 <span aria-hidden="true">↓</span>
             </a>
@@ -141,9 +141,9 @@ export function 真实选择区({ 首页 }) {
     <section className="hx-section hx-story" id="story">
       <div className="hx-wrap">
         <区块标题
-          description="调查线索、听完不同专业意见，再选择你愿意承担的代价。每个选项在点击前都会说明意图。"
-          eyebrow="你的第一项决定"
-          title="零点前二十分钟，先决定什么不能被系统替你决定。"
+          description="以下是开场会遇到的真实选项；此处只做预览，不会提交选择。进入故事、听完现场后再亲自决定。"
+          eyebrow="开场选择预览"
+          title="零点前二十分钟，你将决定什么不能被系统代替。"
         />
         <div className="hx-story-stage reveal">
           <img
@@ -170,17 +170,21 @@ export function 真实选择区({ 首页 }) {
           </div>
         </div>
 
-        <div className="hx-choice-grid" aria-label="开场真实选项">
+        <div className="hx-choice-grid" aria-label="开场选择预览">
           {预览.choices.map((选择, 索引) => (
-            <a className="hx-choice-card reveal" href={首页.playHref} key={选择.id}>
+            <article className="hx-choice-card reveal" key={选择.id}>
               <span className="hx-choice-index">0{索引 + 1}</span>
-              <strong>{选择.intent}</strong>
-              <p>{选择.caption}</p>
-              <span className="hx-choice-open">
-                从这里进入故事 <ArrowRight aria-hidden="true" size={15} />
-              </span>
-            </a>
+              <strong>{选择.label}</strong>
+              {选择.intent && <span className="hx-choice-intent">行动意图 · {选择.intent}</span>}
+              {选择.caption && <p>{选择.caption}</p>}
+              <span className="hx-choice-preview-note">预览不会提交这项选择</span>
+            </article>
           ))}
+        </div>
+        <div className="hx-choice-cta reveal">
+          <播放按钮 href={首页.playAction.href}>
+            {首页.playAction.mode === 'resume' ? 首页.playAction.label : '进入故事后亲自选择'}
+          </播放按钮>
         </div>
         <p className="hx-choice-foot reveal">
           <Fingerprint aria-hidden="true" size={18} />
@@ -391,7 +395,9 @@ export function 多结局区({ 首页 }) {
         </div>
         <div className="hx-ending-cta reveal">
           <p>页面不会提前剧透隐藏结果。女性同盟与独立复盘同样拥有完整的抵达资格。</p>
-          <播放按钮 href={首页.playHref} secondary>亲自走向结果</播放按钮>
+          <播放按钮 href={首页.playAction.href} secondary>
+            {首页.playAction.mode === 'resume' ? '继续走向结果' : '亲自走向结果'}
+          </播放按钮>
         </div>
       </div>
     </section>
@@ -417,6 +423,8 @@ export function 创作者次入口() {
 }
 
 export function 玩家结尾CTA({ 首页 }) {
+  const 是续玩 = 首页.playAction.mode === 'resume';
+  const 作品名 = 首页.story?.title ?? 首页.catalogEntry?.title ?? '这段故事';
   return (
     <section className="hx-final" id="cta">
       {首页.preview?.backdrop && (
@@ -431,10 +439,10 @@ export function 玩家结尾CTA({ 首页 }) {
       )}
       <div className="hx-final-shade" aria-hidden="true" />
       <div className="hx-wrap hx-final-copy reveal">
-        <span className="hx-eyebrow">决定权还在你手里</span>
-        <h2>《{首页.story?.title ?? 首页.catalogEntry?.title ?? '这段故事'}》将在零点亮起。</h2>
-        <p>它下一句说什么，由你决定是否允许。</p>
-        <播放按钮 href={首页.playHref}>开始第一章</播放按钮>
+        <span className="hx-eyebrow">{是续玩 ? '你的进度已被记住' : '决定权还在你手里'}</span>
+        <h2>{是续玩 ? `《${作品名}》正在等你继续。` : `《${作品名}》将在零点亮起。`}</h2>
+        <p>{是续玩 ? '从上次保存的现场继续，你做过的选择仍然有效。' : '它下一句说什么，由你决定是否允许。'}</p>
+        <播放按钮 href={首页.playAction.href}>{首页.playAction.label}</播放按钮>
       </div>
     </section>
   );

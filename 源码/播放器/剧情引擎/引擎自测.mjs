@@ -194,7 +194,7 @@ const 极简项目 = (slug, title) => {
 
 // 旧仓只有 project：它仍是可编辑草稿，普通播放器必须回落同 slug 静态作品。
 const 旧草稿剧情 = 极简项目('draftgame', '旧仓草稿片').story;
-假localStorage.setItem(仓库键, JSON.stringify({ draftgame: { project: { story: 旧草稿剧情 } } }));
+假localStorage.setItem(仓库键, JSON.stringify({ draftgame: { project: { slug: 'draftgame', story: 旧草稿剧情 } } }));
 let 旧仓静态请求数 = 0;
 globalThis.fetch = async () => {
   旧仓静态请求数 += 1;
@@ -287,18 +287,35 @@ globalThis.fetch = async () => {
   相等(假localStorage.getItem(仓库键), 失败前原文);
 });
 
-// 坏草稿不能阻断同格合法快照；坏快照则继续走静态回退。
+// 草稿试玩必须诚实：坏草稿不得暗中改播同格旧快照或静态版；
+// 普通玩家的坏发布快照仍可继续走同 slug 静态回退。
 const 坏草稿仓 = JSON.parse(假localStorage.getItem(仓库键));
 坏草稿仓['snapshot-game'].project.story = { title: '坏草稿' };
 假localStorage.setItem(仓库键, JSON.stringify(坏草稿仓));
+let 坏草稿静态请求数 = 0;
 globalThis.fetch = async () => {
-  throw new Error('坏草稿应回落合法已发布快照，不应发请求');
+  坏草稿静态请求数 += 1;
+  return { ok: true, json: async () => 极简项目('snapshot-game', '不应播放的静态片').story };
 };
 {
   const 成功 = await 加载.loadStoryBySlug('snapshot-game', { allowDraft: true });
-  检查('allowDraft 遇坏草稿时回落合法已发布快照', () => {
-    为真(成功);
-    相等(加载.STORY_TITLE, '已发布版本');
+  检查('allowDraft 遇坏草稿严格失败，不回落发布版或静态版', () => {
+    为真(!成功);
+    相等(坏草稿静态请求数, 0);
+    相等(加载.STORY_TITLE, '发布后草稿', '失败不得切换手上的剧情');
+  });
+}
+
+const 缺归属草稿仓 = JSON.parse(假localStorage.getItem(仓库键));
+缺归属草稿仓['snapshot-game'].project = {
+  story: 极简项目('snapshot-game', '缺少项目slug的草稿').story,
+};
+假localStorage.setItem(仓库键, JSON.stringify(缺归属草稿仓));
+{
+  const 成功 = await 加载.loadStoryBySlug('snapshot-game', { allowDraft: true });
+  检查('allowDraft 拒绝缺少同 slug 项目归属的伪草稿', () => {
+    为真(!成功);
+    相等(坏草稿静态请求数, 0);
   });
 }
 
@@ -324,11 +341,19 @@ globalThis.fetch = async () => {
   let 请求过的url = '';
   const 远端剧情 = { title: '远端片', startNodeId: 'r1', nodes: { r1: { id: 'r1', title: 'R1', lines: [], hotspots: [], choices: [] } } };
   globalThis.fetch = async (url) => ((请求过的url = url), { ok: true, json: async () => 远端剧情 });
-  const 成功 = await 加载.loadStoryBySlug('a/b');
-  检查('fetch 成功：URL 编码 + 切换 + slug 清洗', () => {
+  const 成功 = await 加载.loadStoryBySlug('a-b');
+  检查('fetch 成功：规范 slug 请求 + 切换', () => {
     为真(成功);
-    相等(请求过的url, '/games/a%2Fb/story.json');
+    相等(请求过的url, '/games/a-b/story.json');
     相等(加载.STORY_TITLE, '远端片');
+    相等(加载.ACTIVE_GAME_ID, 'a-b');
+  });
+
+  请求过的url = '';
+  const 非规范成功 = await 加载.loadStoryBySlug('a/b');
+  检查('非规范 slug 在请求前拒绝，不与 a-b 共用存档身份', () => {
+    为真(!非规范成功);
+    相等(请求过的url, '');
     相等(加载.ACTIVE_GAME_ID, 'a-b');
   });
 
@@ -930,11 +955,31 @@ console.log('【三】存档系统（键名 / 自动存档 / 消毒 / 存档码 
   相等(读回.route, 'su', '当前故事角色路线跨刷新保留');
 });
 
-检查('读档兜底：无存档 / 坏JSON → null', () => {
+检查('自动读档复核作品归属，稳定 storyId 兼容运行别名', () => {
+  const 键 = 存档.存档键();
+  const 样例 = globalThis.__s5;
+  假localStorage.setItem(键, JSON.stringify({ ...样例, gameId: 'other-game', storyId: 'other-game' }));
+  相等(存档.读取存档(), null, '放错格子的跨作品存档必须拒绝');
+
+  假localStorage.setItem(键, JSON.stringify({ ...样例, gameId: 'bundled', storyId: 'engine-test' }));
+  const 稳定归属档 = 存档.读取存档();
+  为真(稳定归属档);
+  相等([稳定归属档.gameId, 稳定归属档.storyId], ['engine-test', 'engine-test']);
+
+  const { gameId: _忽略game, storyId: _忽略story, ...无归属旧档 } = 样例;
+  假localStorage.setItem(键, JSON.stringify(无归属旧档));
+  为真(存档.读取存档(), '无作品标识的旧档继续按当前键兼容');
+});
+
+检查('读档兜底：无存档 / 坏JSON / 非对象 JSON → null', () => {
   存档.删除存档();
   相等(存档.读取存档(), null);
   假localStorage.setItem(存档.存档键(), '{烂掉的');
   相等(存档.读取存档(), null);
+  for (const 非状态 of [null, [], '伪存档', 7]) {
+    假localStorage.setItem(存档.存档键(), JSON.stringify(非状态));
+    相等(存档.读取存档(), null, `非对象 JSON 不得消毒成新档：${JSON.stringify(非状态)}`);
+  }
   存档.删除存档();
 });
 
@@ -1022,6 +1067,9 @@ console.log('【三】存档系统（键名 / 自动存档 / 消毒 / 存档码 
   );
   相等(存档.导入存档码('!!!不是码!!!'), null);
   相等(存档.导入存档码(btoa('{"currentNodeId":')), null, '半截JSON也返回null');
+  for (const 非状态 of [null, [], '伪存档', 7]) {
+    相等(存档.导入存档码(编码原始存档(非状态)), null, '合法 Base64 中的非对象 JSON 也必须拒绝');
+  }
 });
 
 检查('存档码：稳定 storyId 跨 bundled/正式 slug 互认，歧义旧码拒绝', () => {

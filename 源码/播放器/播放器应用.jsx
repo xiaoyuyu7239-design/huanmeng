@@ -81,6 +81,7 @@ import {
 } from './音频系统/音频管理.js';
 import { 取平面视频地址 } from './全景渲染/视觉模式.js';
 import { 构建试玩返回地址, 解析试玩来源 } from '../入口/试玩来源.js';
+import { 构建选择展示文案 } from '../公共工具/选择文案.js';
 import '../样式/播放器-心界.css';
 
 export default function 播放器应用() {
@@ -108,11 +109,21 @@ export default function 播放器应用() {
   const 调查入口ref = useRef(null);
   const 调查退出ref = useRef(null);
   const 待恢复调查焦点ref = useRef(false);
+  const 面板ref = useRef(null);
+  const 面板触发器ref = useRef(null);
+  const 待恢复面板焦点ref = useRef(false);
+  const 对白区ref = useRef(null);
+  const 选择区ref = useRef(null);
+  const 待聚焦选择ref = useRef(false);
+  const 结局ref = useRef(null);
+  const 待聚焦结局ref = useRef(false);
+  const 反馈关闭ref = useRef(null);
+  const 待恢复反馈焦点ref = useRef(false);
   const 试玩来源 = useMemo(
     () => 解析试玩来源(typeof window === 'undefined' ? '' : window.location?.search),
     [],
   );
-  const 返回地址 = 构建试玩返回地址(试玩来源, ACTIVE_GAME_ID);
+  const 返回地址 = 构建试玩返回地址(试玩来源, 试玩来源.gameId || ACTIVE_GAME_ID);
 
   const 节点 = 取当前节点(state);
   const 行 = 节点.lines[state.lineIndex] ?? 节点.lines[0] ?? { speaker: 'system', text: '当前节点没有对白。' };
@@ -174,7 +185,11 @@ export default function 播放器应用() {
   useEffect(() => {
     set关系私聊记录([]);
     set关系私聊已用轮数(0);
-    set当前面板((旧) => (旧 === 'chapter-chat' ? null : 旧));
+    set当前面板((旧) => {
+      if (旧 !== 'chapter-chat') return 旧;
+      待恢复面板焦点ref.current = true;
+      return null;
+    });
   }, [节点.id, state.loopCount]);
 
   const 播音效 = useCallback(
@@ -212,7 +227,13 @@ export default function 播放器应用() {
     const 按键 = (事件) => {
       if (事件.key !== 'Escape') return;
       if (当前面板) {
+        待恢复面板焦点ref.current = true;
         set当前面板(null);
+        return;
+      }
+      if (选择反馈) {
+        待恢复反馈焦点ref.current = true;
+        set选择反馈(null);
         return;
       }
       if (调查中) {
@@ -223,7 +244,57 @@ export default function 播放器应用() {
     };
     window.addEventListener('keydown', 按键);
     return () => window.removeEventListener('keydown', 按键);
-  }, [当前面板, 调查中]);
+  }, [当前面板, 调查中, 选择反馈]);
+
+  useEffect(() => {
+    const 帧 = window.requestAnimationFrame(() => {
+      if (当前面板) {
+        const 首控件 = 面板ref.current?.querySelector(
+          '[data-panel-initial-focus], button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        );
+        (首控件 ?? 面板ref.current)?.focus();
+        return;
+      }
+      if (!待恢复面板焦点ref.current) return;
+      待恢复面板焦点ref.current = false;
+      const 原触发器 = 面板触发器ref.current;
+      if (原触发器?.isConnected) 原触发器.focus();
+      else 对白区ref.current?.focus();
+    });
+    return () => window.cancelAnimationFrame(帧);
+  }, [当前面板]);
+
+  useEffect(() => {
+    if (!待聚焦选择ref.current || !到最后一行 || 已达成结局) return undefined;
+    const 帧 = window.requestAnimationFrame(() => {
+      待聚焦选择ref.current = false;
+      const 首选项 = 选择区ref.current?.querySelector('button:not([disabled])');
+      (首选项 ?? 选择区ref.current)?.focus();
+    });
+    return () => window.cancelAnimationFrame(帧);
+  }, [到最后一行, 已达成结局, 节点.id]);
+
+  useEffect(() => {
+    if (!待聚焦结局ref.current || !已达成结局) return undefined;
+    const 帧 = window.requestAnimationFrame(() => {
+      待聚焦结局ref.current = false;
+      结局ref.current?.focus();
+    });
+    return () => window.cancelAnimationFrame(帧);
+  }, [已达成结局, 节点.id]);
+
+  useEffect(() => {
+    const 帧 = window.requestAnimationFrame(() => {
+      if (选择反馈) {
+        反馈关闭ref.current?.focus();
+        return;
+      }
+      if (!待恢复反馈焦点ref.current) return;
+      待恢复反馈焦点ref.current = false;
+      对白区ref.current?.focus();
+    });
+    return () => window.cancelAnimationFrame(帧);
+  }, [选择反馈]);
 
   useEffect(() => {
     const 帧 = window.requestAnimationFrame(() => {
@@ -253,12 +324,6 @@ export default function 播放器应用() {
     const 定时器 = window.setTimeout(() => set提示(null), 3600);
     return () => window.clearTimeout(定时器);
   }, [提示]);
-
-  useEffect(() => {
-    if (!选择反馈) return undefined;
-    const 定时器 = window.setTimeout(() => set选择反馈(null), 5200);
-    return () => window.clearTimeout(定时器);
-  }, [选择反馈]);
 
   // 换行时销毁上一句语音；有语音且当前场景允许时自动播放。
   useEffect(() => {
@@ -396,6 +461,13 @@ export default function 播放器应用() {
     if (到最后一行) return;
     const 预期节点id = 节点.id;
     const 预期行索引 = state.lineIndex;
+    if (
+      Array.isArray(节点.choices) &&
+      节点.choices.length > 0 &&
+      预期行索引 + 1 >= Math.max((节点.lines?.length ?? 1) - 1, 0)
+    ) {
+      待聚焦选择ref.current = true;
+    }
     播音效('advance');
     setState((旧) => 安全推进对白(旧, 预期节点id, 预期行索引));
   };
@@ -416,6 +488,7 @@ export default function 播放器应用() {
   };
 
   const 选择 = (选项) => {
+    const 进入结局 = 选择通往结局(选项);
     播音效(选项.major ? 'choiceMajor' : 'choice');
     set引导热点(null);
     待恢复调查焦点ref.current = false;
@@ -423,11 +496,16 @@ export default function 播放器应用() {
     set当前面板(null);
     set关系私聊记录([]);
     set关系私聊已用轮数(0);
+    待聚焦结局ref.current = 进入结局;
     const 反馈 = 生成叙事选择反馈(选项);
-    set选择反馈({
-      ...反馈,
-      consequence: 玩家可见后果(反馈.consequence),
-    });
+    set选择反馈(
+      进入结局
+        ? null
+        : {
+            ...反馈,
+            consequence: 玩家可见后果(反馈.consequence),
+          },
+    );
     setState((旧) => 做出选择(记录当前对白(旧), 选项));
     set提示({
       title: 选项.major ? '路线发生变化' : '选择已记录',
@@ -474,21 +552,25 @@ export default function 播放器应用() {
       删除存档();
     } catch {}
     setState((旧) => 清空重开(旧.settings));
+    待恢复面板焦点ref.current = Boolean(当前面板);
     set当前面板(null);
     set选择反馈(null);
     set关系私聊记录([]);
     set关系私聊已用轮数(0);
     set提示({ title: '已重新开始', body: '故事又回到了第一帧。' });
+    if (!当前面板) window.requestAnimationFrame(() => 对白区ref.current?.focus());
   };
 
   const 下一轮 = () => {
     播音效('back');
     setState((旧) => 进入下一轮(旧));
+    待恢复面板焦点ref.current = Boolean(当前面板);
     set当前面板(null);
     set选择反馈(null);
     set关系私聊记录([]);
     set关系私聊已用轮数(0);
     set提示({ title: '下一轮已开启', body: '已保留结局记录与跨周目记忆。' });
+    window.requestAnimationFrame(() => 对白区ref.current?.focus());
   };
 
   const 导出 = async () => {
@@ -514,6 +596,7 @@ export default function 播放器应用() {
     }
     播音效('success');
     setState(新状态);
+    待恢复面板焦点ref.current = Boolean(当前面板);
     set当前面板(null);
     set选择反馈(null);
     set关系私聊记录([]);
@@ -521,15 +604,32 @@ export default function 播放器应用() {
     set提示({ title: '导入成功', body: '已载入外部存档。' });
   };
 
-  const 切换面板 = (面板) => {
+  const 切换面板 = (面板, 触发器) => {
     const 是关闭 = 当前面板 === 面板;
     播音效(是关闭 ? 'panelClose' : 'panelOpen');
+    if (是关闭) {
+      待恢复面板焦点ref.current = true;
+    } else {
+      if (选择反馈) {
+        待恢复反馈焦点ref.current = false;
+        set选择反馈(null);
+      }
+      面板触发器ref.current = 触发器 ?? document.activeElement;
+      待恢复面板焦点ref.current = false;
+    }
     set当前面板(是关闭 ? null : 面板);
   };
 
   const 关闭面板 = () => {
     播音效('panelClose');
+    待恢复面板焦点ref.current = true;
     set当前面板(null);
+  };
+
+  const 关闭选择反馈 = () => {
+    播音效('panelClose');
+    待恢复反馈焦点ref.current = true;
+    set选择反馈(null);
   };
 
   const 进入调查 = () => {
@@ -626,6 +726,7 @@ export default function 播放器应用() {
 
       <section className="dialogue-dock">
         <对白区
+          容器ref={对白区ref}
           行={行}
           语音状态={语音状态}
           语音禁用={!voiceSrc || !可播放语音}
@@ -638,10 +739,10 @@ export default function 播放器应用() {
 
         {可打开关系私聊 && (
           <button
-            aria-controls="relationship-chat-panel"
+            aria-controls="player-panel-chapter-chat"
             aria-expanded={当前面板 === 'chapter-chat'}
             className={当前面板 === 'chapter-chat' ? 'relationship-chat-entry is-active' : 'relationship-chat-entry'}
-            onClick={() => 切换面板('chapter-chat')}
+            onClick={(事件) => 切换面板('chapter-chat', 事件.currentTarget)}
             type="button"
           >
             <MessageCircle aria-hidden="true" size={17} />
@@ -655,46 +756,57 @@ export default function 播放器应用() {
         {选择反馈 && !已达成结局 && (
           <选择反馈板
             feedback={选择反馈}
-            onClose={() => {
-              播音效('panelClose');
-              set选择反馈(null);
-            }}
+            closeRef={反馈关闭ref}
+            onClose={关闭选择反馈}
           />
         )}
 
         {到最后一行 && !已达成结局 && (
-          <div className="choice-grid">
-            {可选项.map((选项) => (
-              <button
-                className={选项.major ? 'choice-card is-major' : 'choice-card'}
-                key={选项.id}
-                onClick={() => 选择(选项)}
-                type="button"
-              >
-                {(选项.intent || 选项.fateType) && (
-                  <i className={`fate-badge fate-${选项.fateType}`}>
-                    {选项.intent ? `意图 · ${选项.intent}` : 命运类型显示名(选项.fateType)}
-                  </i>
-                )}
-                <span>{选项.label}</span>
-                {选项.caption && <small>{选项.caption}</small>}
-              </button>
-            ))}
-            {锁定项.map((选项) => (
-              <button
-                aria-label={`${选项.label} 需要先发现线索`}
-                className="choice-card is-locked"
-                key={选项.id}
-                onClick={() => 点击锁定项(选项)}
-                type="button"
-              >
-                <span className={`lock-label fate-${选项.fateType ?? 'web'}`}>
-                  {选项.intent ? `意图 · ${选项.intent}` : 命运类型显示名(选项.fateType)}
-                </span>
-                <span>{选项.label}</span>
-                <small>{锁定提示(节点, 选项)}</small>
-              </button>
-            ))}
+          <div
+            aria-label="剧情选择"
+            aria-live="polite"
+            className="choice-grid"
+            ref={选择区ref}
+            role="group"
+            tabIndex={-1}
+          >
+            {可选项.map((选项) => {
+              const 文案 = 构建选择展示文案(选项);
+              return (
+                <button
+                  className={选项.major ? 'choice-card is-major' : 'choice-card'}
+                  key={选项.id}
+                  onClick={() => 选择(选项)}
+                  type="button"
+                >
+                  {(文案.intent || 选项.fateType) && (
+                    <i className={`fate-badge fate-${选项.fateType}`}>
+                      {文案.intent ? `意图 · ${文案.intent}` : 命运类型显示名(选项.fateType)}
+                    </i>
+                  )}
+                  <span>{文案.label}</span>
+                  {文案.caption && <small>{文案.caption}</small>}
+                </button>
+              );
+            })}
+            {锁定项.map((选项) => {
+              const 文案 = 构建选择展示文案(选项);
+              return (
+                <button
+                  aria-label={`${文案.label} 需要先发现线索`}
+                  className="choice-card is-locked"
+                  key={选项.id}
+                  onClick={() => 点击锁定项(选项)}
+                  type="button"
+                >
+                  <span className={`lock-label fate-${选项.fateType ?? 'web'}`}>
+                    {文案.intent ? `意图 · ${文案.intent}` : 命运类型显示名(选项.fateType)}
+                  </span>
+                  <span>{文案.label}</span>
+                  <small>{锁定提示(节点, 选项)}</small>
+                </button>
+              );
+            })}
             {可选项.length === 0 && 锁定项.length === 0 && (
               <div className="choice-empty">
                 <strong>暂无可前往的下一步</strong>
@@ -706,6 +818,7 @@ export default function 播放器应用() {
 
         {已达成结局 && (
           <结局板
+            panelRef={结局ref}
             节点={节点}
             回放={结局回放}
             onExport={导出}
@@ -718,7 +831,16 @@ export default function 播放器应用() {
       </section>
 
       {当前面板 === 'history' && (
-        <aside aria-label="对白记录" className="side-panel dialogue-history-side">
+        <aside
+          aria-label="对白记录"
+          aria-modal="true"
+          className="side-panel dialogue-history-side"
+          id="player-panel-history"
+          onKeyDown={限制焦点在面板}
+          ref={面板ref}
+          role="dialog"
+          tabIndex={-1}
+        >
           <对白历史面板
             当前条目id={`current-${state.loopCount}-${节点.id}-${state.lineIndex}`}
             关闭={关闭面板}
@@ -729,7 +851,8 @@ export default function 播放器应用() {
 
       {当前面板 && 当前面板 !== 'history' && (
         <侧面板
-          id={当前面板 === 'chapter-chat' ? 'relationship-chat-panel' : undefined}
+          id={`player-panel-${当前面板}`}
+          panelRef={面板ref}
           title={{
             memories: '回忆',
             save: '存档',
@@ -775,9 +898,15 @@ export default function 播放器应用() {
   );
 }
 
-function 选择反馈板({ feedback, onClose }) {
+function 选择反馈板({ feedback, onClose, closeRef }) {
   return (
-    <section className="choice-feedback-panel">
+    <section
+      aria-label="选择反馈"
+      aria-modal="true"
+      className="choice-feedback-panel"
+      onKeyDown={限制焦点在面板}
+      role="dialog"
+    >
       <div className="choice-feedback-copy">
         <i className={`fate-badge fate-${feedback.fateType ?? 'web'}`}>
           {命运类型显示名(feedback.fateType)}
@@ -789,7 +918,7 @@ function 选择反馈板({ feedback, onClose }) {
         <反馈列表 title="关系与局势" entries={feedback.changes} empty="这次行动没有改变当前关系或局势" />
         <反馈列表 title="留下的记录" entries={feedback.unlocks} empty="这次行动没有留下新的公开记录" />
       </div>
-      <button aria-label="关闭选择反馈" onClick={onClose} title="关闭选择反馈" type="button">
+      <button aria-label="关闭选择反馈" onClick={onClose} ref={closeRef} title="关闭选择反馈" type="button">
         <X size={16} />
       </button>
     </section>
@@ -826,9 +955,15 @@ function 结局回放({ entries }) {
   );
 }
 
-function 结局板({ 节点, 回放, onExport, onNextLoop, onReset, onReturn, returnLabel }) {
+function 结局板({ 节点, 回放, onExport, onNextLoop, onReset, onReturn, panelRef, returnLabel }) {
   return (
-    <div className={`ending-panel type-${节点.ending?.type ?? 'growth'}`}>
+    <div
+      aria-label={`结局：${节点.ending?.title ?? 节点.title}`}
+      className={`ending-panel type-${节点.ending?.type ?? 'growth'}`}
+      ref={panelRef}
+      role="region"
+      tabIndex={-1}
+    >
       <span>结局达成</span>
       <strong>{节点.ending?.title}</strong>
       <p>{节点.ending?.subtitle}</p>
@@ -843,16 +978,50 @@ function 结局板({ 节点, 回放, onExport, onNextLoop, onReset, onReturn, re
   );
 }
 
-function 侧面板({ id, title, onClose, children }) {
+function 侧面板({ id, title, onClose, panelRef, children }) {
+  const 标题id = `${id}-title`;
   return (
-    <aside aria-label={title} className="side-panel" id={id}>
+    <aside
+      aria-labelledby={标题id}
+      aria-modal="true"
+      className="side-panel"
+      id={id}
+      onKeyDown={限制焦点在面板}
+      ref={panelRef}
+      role="dialog"
+      tabIndex={-1}
+    >
       <div className="panel-head">
-        <strong>{title}</strong>
-        <button aria-label="关闭" onClick={onClose} title="关闭" type="button"><X size={18} /></button>
+        <strong id={标题id}>{title}</strong>
+        <button aria-label="关闭" data-panel-initial-focus onClick={onClose} title="关闭" type="button"><X size={18} /></button>
       </div>
       {children}
     </aside>
   );
+}
+
+export function 限制焦点在面板(事件) {
+  if (事件.key !== 'Tab') return;
+  const 面板 = 事件.currentTarget;
+  const 可聚焦项 = Array.from(
+    面板.querySelectorAll(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), summary, [tabindex]:not([tabindex="-1"])',
+    ),
+  ).filter((元素) => 元素.getAttribute('aria-hidden') !== 'true');
+  if (可聚焦项.length === 0) {
+    事件.preventDefault();
+    面板.focus();
+    return;
+  }
+  const 首项 = 可聚焦项[0];
+  const 末项 = 可聚焦项.at(-1);
+  if (事件.shiftKey && (document.activeElement === 首项 || document.activeElement === 面板)) {
+    事件.preventDefault();
+    末项.focus();
+  } else if (!事件.shiftKey && document.activeElement === 末项) {
+    事件.preventDefault();
+    首项.focus();
+  }
 }
 
 function 回忆面板({ currentNode, state }) {
@@ -902,6 +1071,10 @@ export function 玩家可见后果(原文, 兜底文案 = 默认可见后果) {
   if (文案 && !工程后果模式.test(文案)) return 文案;
   const 兜底 = typeof 兜底文案 === 'string' ? 兜底文案.trim() : '';
   return 兜底 && !工程后果模式.test(兜底) ? 兜底 : 默认可见后果;
+}
+
+export function 选择通往结局(选项) {
+  return Boolean(storyNodes[选项?.next]?.ending);
 }
 
 export function 关系手账({ state }) {

@@ -11,10 +11,11 @@
 import { House, Archive, History, Save, Settings } from 'lucide-react';
 
 // ({active, children, label, onClick}) → 一枚顶栏图标按钮（线上 Ae）→ JSX
-function 图标按钮({ 激活, children, 标签, 点击 }) {
+function 图标按钮({ 激活, children, 控制目标, 标签, 点击 }) {
   return (
     <button
-      aria-pressed={激活}
+      aria-controls={控制目标}
+      aria-expanded={激活}
       className={激活 ? 'icon-button is-active' : 'icon-button'}
       onClick={点击}
       title={标签}
@@ -54,17 +55,17 @@ export default function 顶部栏({
       </div>
       <div className="top-actions">
         {显示对白记录 && (
-          <图标按钮 激活={当前面板 === 'history'} 标签="对白" 点击={() => 切换面板('history')}>
+          <图标按钮 控制目标="player-panel-history" 激活={当前面板 === 'history'} 标签="对白" 点击={(事件) => 切换面板('history', 事件.currentTarget)}>
             <History size={18} />
           </图标按钮>
         )}
-        <图标按钮 激活={当前面板 === 'memories'} 标签="回忆" 点击={() => 切换面板('memories')}>
+        <图标按钮 控制目标="player-panel-memories" 激活={当前面板 === 'memories'} 标签="回忆" 点击={(事件) => 切换面板('memories', 事件.currentTarget)}>
           <Archive size={18} />
         </图标按钮>
-        <图标按钮 激活={当前面板 === 'save'} 标签="存档" 点击={() => 切换面板('save')}>
+        <图标按钮 控制目标="player-panel-save" 激活={当前面板 === 'save'} 标签="存档" 点击={(事件) => 切换面板('save', 事件.currentTarget)}>
           <Save size={18} />
         </图标按钮>
-        <图标按钮 激活={当前面板 === 'settings'} 标签="设置" 点击={() => 切换面板('settings')}>
+        <图标按钮 控制目标="player-panel-settings" 激活={当前面板 === 'settings'} 标签="设置" 点击={(事件) => 切换面板('settings', 事件.currentTarget)}>
           <Settings size={18} />
         </图标按钮>
       </div>

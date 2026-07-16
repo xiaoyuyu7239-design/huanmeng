@@ -35,27 +35,47 @@ const 当前应用 = 是创作台
 
 const 挂载点 = createRoot(document.getElementById('root'));
 
-function 渲染() {
+function 渲染(应用 = 当前应用, 属性 = {}) {
+  const 应用组件 = 应用;
   挂载点.render(
     <React.StrictMode>
       <React.Suspense fallback={<div className="app-loading">载入中</div>}>
-        <当前应用 />
+        <应用组件 {...属性} />
       </React.Suspense>
     </React.StrictMode>
   );
+}
+
+async function 渲染作品加载失败(来源, 原因) {
+  // 只有确定不会进入播放器后才下载错误壳；错误页不 import 剧情状态或存档系统。
+  const { default: 作品加载失败 } = await import('./作品加载失败.jsx');
+  渲染(作品加载失败, { 来源, 原因 });
 }
 
 async function 启动() {
   if (!是播放器) { 渲染(); return; }
 
   // 播放器需要先弄清楚"今天放哪部片"：
-  // 1) ?game= 明确指定；2) 创作台设置的本机默认；3) 静态 showcase 默认。
-  const 查询作品 = new URLSearchParams(window.location.search).get('game') ?? '';
+  // 1) ?game= 明确指定时必须原样加载成功，失败就显示独立错误态；
+  // 2) 只有根本没有 game 参数时，才允许本机默认 → 静态 showcase → 内置兜底。
   const 试玩来源 = 解析试玩来源(window.location.search);
+  if (试玩来源.hasExplicitGame && 试玩来源.invalidGame) {
+    await 渲染作品加载失败(试玩来源, 'invalid-slug');
+    return;
+  }
+
   const { 按slug加载剧情 } = await import('../播放器/剧情引擎/剧情加载.js');
-  if (查询作品) {
-    if (试玩来源.allowDraft) await 按slug加载剧情(查询作品, { allowDraft: true });
-    else await 按slug加载剧情(查询作品);
+  if (试玩来源.hasExplicitGame) {
+    const 加载成功 = 试玩来源.allowDraft
+      ? await 按slug加载剧情(试玩来源.gameId, { allowDraft: true })
+      : await 按slug加载剧情(试玩来源.gameId);
+    if (!加载成功) {
+      await 渲染作品加载失败(
+        试玩来源,
+        试玩来源.allowDraft ? 'draft-load-failed' : 'load-failed',
+      );
+      return;
+    }
     渲染();
     return;
   }

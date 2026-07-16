@@ -78,6 +78,10 @@ try {
   );
 
   const { default: 轻电影场景 } = await 服务.ssrLoadModule('/源码/播放器/全景渲染/轻电影场景.jsx');
+  const { default: 全景视图, 应用键盘视角 } = await 服务.ssrLoadModule('/源码/播放器/全景渲染/全景视图.jsx');
+  const { default: 顶部栏 } = await 服务.ssrLoadModule('/源码/播放器/界面组件/顶部栏.jsx');
+  const { default: 对白区 } = await 服务.ssrLoadModule('/源码/播放器/界面组件/对白区.jsx');
+  const { 限制焦点在面板 } = await 服务.ssrLoadModule('/源码/播放器/播放器应用.jsx');
   const { default: 对白历史面板 } = await 服务.ssrLoadModule('/源码/播放器/界面组件/对白历史面板.jsx');
   const { default: 关系私聊面板, 关系回应标签 } = await 服务.ssrLoadModule('/源码/播放器/界面组件/关系私聊面板.jsx');
   const 关系客户端 = await 服务.ssrLoadModule('/源码/播放器/关系AI/关系私聊客户端.js');
@@ -107,6 +111,80 @@ try {
   );
   断言(!旁白html.includes('cinema-character-portrait'), '旁白不应渲染人物立绘');
   断言(!旁白html.includes('cinema-character-caption'), '旁白不应渲染人物名牌');
+
+  const 全景html = 无告警渲染(
+    React.createElement(全景视图, {
+      node: {
+        id: 'keyboard-panorama',
+        panorama: '/panorama.jpg',
+        entryView: { yaw: 16, pitch: -4, fov: 92 },
+        hotspots: [
+          { id: 'front', label: '眼前线索', description: '在当前视野中', yaw: 12, pitch: 0 },
+          { id: 'behind', label: '身后线索', description: '初始视野之外', yaw: 176, pitch: 8 },
+        ],
+      },
+      seenHotspots: [],
+    }),
+  );
+  断言(全景html.includes('aria-label="360度调查场景"') && 全景html.includes('tabindex="0"'), '全景调查容器不可由键盘聚焦');
+  断言(['使用方向键转动视角', '全部线索 · 2', '眼前线索', '身后线索'].every((值) => 全景html.includes(值)), '全景键盘说明或视野外线索索引缺失');
+  const 左转 = 应用键盘视角({ lon: 10, lat: 70, fov: 100 }, 'ArrowLeft', { yaw: 16, pitch: -4, fov: 92 });
+  const 上转 = 应用键盘视角({ lon: 10, lat: 70, fov: 100 }, 'ArrowUp', { yaw: 16, pitch: -4, fov: 92 });
+  const 放大 = 应用键盘视角({ lon: 10, lat: 0, fov: 24 }, '+', { yaw: 16, pitch: -4, fov: 92 });
+  const 复位 = 应用键盘视角({ lon: -90, lat: 30, fov: 40 }, 'Home', { yaw: 16, pitch: -4, fov: 92 });
+  断言(左转.lon === -2 && 上转.lat === 72 && 放大.fov === 20, '方向键或加减号没有按安全边界调整视角');
+  断言(复位.lon === 16 && 复位.lat === -4 && 复位.fov === 92, 'Home 没有恢复节点入场视角');
+  断言(应用键盘视角({ lon: 0, lat: 0, fov: 100 }, 'Enter') === null, '非视角按键不应被全景容器吞掉');
+
+  const 顶栏html = 无告警渲染(
+    React.createElement(顶部栏, {
+      剧情标题: '第九席',
+      节点,
+      当前面板: 'history',
+      切换面板: () => {},
+      返回目标: () => {},
+      显示对白记录: true,
+    }),
+  );
+  断言(
+    顶栏html.includes('aria-controls="player-panel-history"') &&
+      顶栏html.includes('aria-expanded="true"') &&
+      顶栏html.includes('aria-controls="player-panel-settings"'),
+    '顶栏抽屉按钮没有暴露展开状态或稳定控制目标',
+  );
+  const 对白html = 无告警渲染(
+    React.createElement(对白区, {
+      行: { speaker: 'architect', text: '决定权在你。' },
+      语音状态: 'missing',
+      语音禁用: true,
+      点语音: () => {},
+      已到最后一行: false,
+      点继续: () => {},
+    }),
+  );
+  断言(
+    对白html.includes('aria-label="当前对白"') &&
+      对白html.includes('role="region"') &&
+      对白html.includes('tabindex="-1"'),
+    '剧情阶段切换后没有可编程聚焦的对白落点',
+  );
+
+  const 原document = globalThis.document;
+  const 首项 = { getAttribute: () => null, focus: () => { globalThis.document.activeElement = 首项; } };
+  const 末项 = { getAttribute: () => null, focus: () => { globalThis.document.activeElement = 末项; } };
+  const 假面板 = {
+    focus: () => { globalThis.document.activeElement = 假面板; },
+    querySelectorAll: () => [首项, 末项],
+  };
+  globalThis.document = { activeElement: 末项 };
+  let 已阻止 = false;
+  限制焦点在面板({ key: 'Tab', shiftKey: false, currentTarget: 假面板, preventDefault: () => { 已阻止 = true; } });
+  断言(已阻止 && globalThis.document.activeElement === 首项, '面板 Tab 没有从末项循环到首项');
+  已阻止 = false;
+  限制焦点在面板({ key: 'Tab', shiftKey: true, currentTarget: 假面板, preventDefault: () => { 已阻止 = true; } });
+  断言(已阻止 && globalThis.document.activeElement === 末项, '面板 Shift+Tab 没有从首项循环到末项');
+  if (原document === undefined) delete globalThis.document;
+  else globalThis.document = 原document;
 
   const 单图回退html = 无告警渲染(
     React.createElement(轻电影场景, {
@@ -284,8 +362,11 @@ try {
   断言(样式.includes('.relationship-chat-entry'), '缺少关系私聊入口样式');
   断言(样式.includes('.relationship-chat-service.is-fallback'), '缺少 AI 未接入/备用状态样式');
   断言(样式.includes('.relationship-chat-log.is-empty'), '缺少私聊空状态样式');
+  断言(样式.includes('.game-shell .choice-feedback-panel > button'), '小屏选择反馈关闭按钮没有 44px 触控保护');
+  断言(样式.includes('.ending-actions {\n    display: grid;'), '320×568 结局操作没有切为两列可滚动布局');
+  断言(样式.includes('.relationship-chat-panel {\n    display: block;'), '极矮屏私聊没有整层滚动兜底');
 
-  console.log('心界 UI 自测：轻电影、对白历史、五场关系私聊、未接入/备用/成功/安全状态与响应式样式全部通过');
+  console.log('心界 UI 自测：轻电影、全景键盘、焦点循环、对白历史、五场关系私聊与小屏滚动全部通过');
 } finally {
   await 服务.close();
 }

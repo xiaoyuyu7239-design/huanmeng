@@ -750,13 +750,6 @@ body:has(.lp-heartscape) {
   border: 1px solid var(--hx-line);
   border-radius: 15px;
   background: linear-gradient(145deg, rgba(136, 167, 159, 0.06), transparent 46%), var(--hx-panel-solid);
-  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
-}
-
-.hx-choice-card:hover {
-  border-color: rgba(136, 167, 159, 0.48);
-  background: linear-gradient(145deg, rgba(136, 167, 159, 0.11), transparent 50%), #201e25;
-  transform: translateY(-4px);
 }
 
 .hx-choice-index {
@@ -773,20 +766,33 @@ body:has(.lp-heartscape) {
   line-height: 1.45;
 }
 
+.hx-choice-intent {
+  margin-top: 10px;
+  color: var(--hx-celadon);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+}
+
 .hx-choice-card p {
   margin-top: 12px !important;
   color: var(--hx-paper-muted);
   font-size: 13px;
 }
 
-.hx-choice-open {
+.hx-choice-preview-note {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
   margin-top: auto;
   padding-top: 24px;
   color: var(--hx-paper-faint);
   font-size: 11px;
+}
+
+.hx-choice-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
 }
 
 .hx-choice-foot {
@@ -1710,7 +1716,7 @@ body:has(.lp-heartscape) {
     min-height: auto;
   }
 
-  .hx-choice-open,
+  .hx-choice-preview-note,
   .hx-route-card span {
     margin-top: 24px;
     padding-top: 0;

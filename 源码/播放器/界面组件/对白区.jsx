@@ -49,6 +49,7 @@ function 语音按钮({ 禁用, 点击, 状态 }) {
 }
 
 export default function 对白区({
+  容器ref,
   行,
   语音状态,
   语音禁用,
@@ -59,7 +60,15 @@ export default function 对白区({
   切换自动推进,
 }) {
   return (
-    <div aria-atomic="true" aria-live="polite" className="dialogue-main">
+    <div
+      aria-atomic="true"
+      aria-label="当前对白"
+      aria-live="polite"
+      className="dialogue-main"
+      ref={容器ref}
+      role="region"
+      tabIndex={-1}
+    >
       <说话人徽章 speaker={行?.speaker} />
       <p>{行?.text}</p>
       <语音按钮 禁用={语音禁用} 点击={点语音} 状态={语音状态} />

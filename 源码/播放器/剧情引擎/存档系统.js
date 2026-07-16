@@ -68,13 +68,16 @@ export function 保存存档(state) {
   }
 }
 
-// () → 从保险柜取出账本：没有 → null；解析或消毒路上出任何岔子 → null。
+// () → 从保险柜取出账本：没有、归属其他作品、解析或消毒失败 → null。
 // 为什么吞错误：读档失败就当没存过，回初始状态重新玩，绝不能让播放器崩掉。
 export function 读取存档() {
   try {
     const 文本 = localStorage.getItem(存档键());
     if (!文本) return null;
     const 原始 = JSON.parse(文本);
+    // 存档键是第一层隔离，内部 gameId/storyId 是第二层：旧迁移、手工恢复或
+    // 历史 bug 若把别的作品放错格子，不能用“消毒”强行改成当前作品后继续读。
+    if (!存档归属当前作品(原始)) return null;
     return 消毒存档(原始);
   } catch {
     return null;
@@ -161,7 +164,9 @@ export function 消毒存档(原始) {
 // 没有 storyId 的 "bundled" 码在更换内置默认后无法判断原属哪部作品，必须拒绝，
 // 避免把《第十五封愿望》等旧默认的记忆与决策错误消毒进《第九席》。
 function 存档归属当前作品(原始) {
-  if (!原始 || typeof 原始 !== 'object') return true;
+  // 只兼容从当前作品专属 key 读出的“无身份普通对象”旧档；null、原始值与数组
+  // 从来不是合法 GameState，不能被消毒成一份看似成功的新档。
+  if (!原始 || typeof 原始 !== 'object' || Array.isArray(原始)) return false;
   if (typeof 原始.storyId === 'string') return 原始.storyId === STORY_ID;
   if (typeof 原始.gameId !== 'string') return true;
   return (

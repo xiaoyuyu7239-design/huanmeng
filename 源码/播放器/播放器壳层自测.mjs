@@ -5,7 +5,8 @@ import { fileURLToPath } from 'node:url';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { createServer } from 'vite';
-import { 构建试玩返回地址, 解析试玩来源 } from '../入口/试玩来源.js';
+import { 构建试玩返回地址, 解析试玩来源, 是规范作品slug } from '../入口/试玩来源.js';
+import { 构建选择展示文案 } from '../公共工具/选择文案.js';
 
 const 当前目录 = dirname(fileURLToPath(import.meta.url));
 const 项目根 = resolve(当前目录, '../..');
@@ -37,13 +38,25 @@ let 作品总数 = 0;
 
 const 普通玩家来源 = 解析试玩来源('?game=ninth-seat');
 const 创作草稿来源 = 解析试玩来源('?game=work-b&preview=draft&from=creator');
+const 无效作品来源 = 解析试玩来源('?game=Work%20B&preview=draft&from=creator');
 if (
   普通玩家来源.allowDraft ||
+  !普通玩家来源.hasExplicitGame ||
+  普通玩家来源.gameId !== 'ninth-seat' ||
   普通玩家来源.returnLabel !== '返回玩家首页' ||
   构建试玩返回地址(普通玩家来源, 'ninth-seat') !== '/' ||
   !创作草稿来源.allowDraft ||
   创作草稿来源.returnLabel !== '返回创作项目' ||
-  构建试玩返回地址(创作草稿来源, 'work b') !== '/creator?project=work%20b' ||
+  构建试玩返回地址(创作草稿来源, 'work-b') !== '/creator?project=work-b' ||
+  !无效作品来源.hasExplicitGame ||
+  !无效作品来源.invalidGame ||
+  无效作品来源.allowDraft ||
+  无效作品来源.gameId !== '' ||
+  !解析试玩来源('?game=').invalidGame ||
+  解析试玩来源('').hasExplicitGame ||
+  !是规范作品slug('story_01') ||
+  是规范作品slug('Story-01') ||
+  是规范作品slug('story/01') ||
   解析试玩来源('?game=work-b&preview=draft').allowDraft ||
   解析试玩来源('?game=work-b&from=creator').allowDraft ||
   解析试玩来源('?preview=draft&from=creator').allowDraft
@@ -67,7 +80,7 @@ function 无告警渲染(名字, 元素) {
 try {
   const 剧情模块 = await 服务.ssrLoadModule('/源码/播放器/剧情引擎/剧情加载.js');
   const 状态模块 = await 服务.ssrLoadModule('/源码/播放器/剧情引擎/状态与结算.js');
-  const { default: 播放器应用, 关系手账, 玩家可见后果 } = await 服务.ssrLoadModule('/源码/播放器/播放器应用.jsx');
+  const { default: 播放器应用, 关系手账, 玩家可见后果, 选择通往结局 } = await 服务.ssrLoadModule('/源码/播放器/播放器应用.jsx');
   const 安全文案 = '这个选择已被故事记住。';
   for (const 原始工程文案 of ['+8', 'trust +8', 'career +8', '真相 +8', 'score=8', '因果标记：audit_ready', '{"boundary":-2}']) {
     if (玩家可见后果(原始工程文案, 安全文案) !== 安全文案) {
@@ -118,11 +131,21 @@ try {
         throw new Error(`${slug}/${节点.id} 结局板没有返回玩家首页入口`);
       }
       if (节点.choices?.length > 0) {
-        if (slug === 'ninth-seat' && !html.includes('意图 ·')) {
-          throw new Error(`${slug}/${节点.id} 未渲染作者配置的选择意图`);
+        for (const 选项 of 节点.choices) {
+          if (选择通往结局(选项) !== Boolean(剧情.nodes[选项.next]?.ending)) {
+            throw new Error(`${slug}/${节点.id} 没有按 choice.next 识别结局选择`);
+          }
         }
         if (slug !== 'ninth-seat' && html.includes('意图 ·')) {
           throw new Error(`${slug}/${节点.id} 把旧作品选择文案重复显示成了意图标签`);
+        }
+        if (slug === 'ninth-seat') {
+          for (const 选项 of 节点.choices) {
+            const 文案 = 构建选择展示文案(选项);
+            if (!文案.intent && 选项.intent && html.includes(`意图 · ${选项.intent}`)) {
+              throw new Error(`${slug}/${节点.id} 重复显示了与 label 等价的意图：${选项.intent}`);
+            }
+          }
         }
       }
       if (slug === 'ninth-seat' && 节点.id === 剧情.startNodeId) {
@@ -209,11 +232,41 @@ try {
 
   const 入口源码 = await readFile(resolve(项目根, '源码/入口/main.jsx'), 'utf8');
   if (
-    !入口源码.includes('试玩来源.allowDraft') ||
-    !入口源码.includes('按slug加载剧情(查询作品, { allowDraft: true })')
+    !入口源码.includes('试玩来源.hasExplicitGame') ||
+    !入口源码.includes('试玩来源.invalidGame') ||
+    !入口源码.includes('按slug加载剧情(试玩来源.gameId, { allowDraft: true })') ||
+    !入口源码.includes('if (!加载成功)') ||
+    !入口源码.includes('渲染作品加载失败')
   ) {
-    throw new Error('播放器入口没有只为显式创作来源开启草稿读取');
+    throw new Error('播放器入口未在挂载播放器前拦截无效或加载失败的显式作品');
   }
+
+  const { default: 作品加载失败 } = await 服务.ssrLoadModule('/源码/入口/作品加载失败.jsx');
+  const 普通失败html = 无告警渲染(
+    '普通玩家作品失败',
+    React.createElement(作品加载失败, { 来源: 普通玩家来源, 原因: 'load-failed' }),
+  );
+  const 草稿失败html = 无告警渲染(
+    '创作草稿作品失败',
+    React.createElement(作品加载失败, { 来源: 创作草稿来源, 原因: 'draft-load-failed' }),
+  );
+  const 无效地址html = 无告警渲染(
+    '无效作品地址',
+    React.createElement(作品加载失败, { 来源: 无效作品来源, 原因: 'invalid-slug' }),
+  );
+  if (
+    !普通失败html.includes('class="player-load-error"') ||
+    !普通失败html.includes('href="/"') ||
+    !普通失败html.includes('没有用其他故事代替它') ||
+    普通失败html.includes('game-shell') ||
+    !草稿失败html.includes('href="/creator?project=work-b"') ||
+    !草稿失败html.includes('有效本机草稿') ||
+    草稿失败html.includes('game-shell') ||
+    !无效地址html.includes('作品地址无效') ||
+    !无效地址html.includes('href="/"') ||
+    无效地址html.includes('重新尝试')
+  ) throw new Error('作品加载失败页未严格区分玩家、创作草稿与无效地址返回目标');
+  console.log('  ✓ 显式作品失败：独立错误壳、来源返回与无播放器兜底');
   const 播放器样式 = await readFile(resolve(项目根, '源码/样式/播放器-心界.css'), 'utf8');
   if (!播放器样式.includes('.game-shell .brand-button') || !播放器样式.includes('display: inline-flex')) {
     throw new Error('窄屏播放器仍可能隐藏唯一返回入口');
@@ -236,7 +289,7 @@ try {
   };
   存储.set(
     'creator:browser-projects:v1',
-    JSON.stringify({ [本机slug]: { project: { story: 本机剧情 } } }),
+    JSON.stringify({ [本机slug]: { project: { slug: 本机slug, story: 本机剧情 } } }),
   );
   if (!(await 剧情模块.loadStoryBySlug(本机slug, { allowDraft: true }))) {
     throw new Error('显式草稿试玩未能从本机草稿仓库加载');
@@ -272,6 +325,7 @@ try {
 
   const {
     default: 创作台应用,
+    构建创作试玩链接,
     解析创作项目入口,
     标记剧情规则待复核,
   } = await 服务.ssrLoadModule('/源码/创作台/创作台应用.jsx');
@@ -280,6 +334,11 @@ try {
     解析创作项目入口('?project=Work%20B', 'work-a') !== 'work-a' ||
     解析创作项目入口('?project=../work-b', 'work-a') !== 'work-a'
   ) throw new Error('返回创作台时未安全恢复显式 project 查询参数');
+  if (
+    构建创作试玩链接('work-b', true) !== '/play?game=work-b&preview=draft&from=creator' ||
+    构建创作试玩链接('work-b', false) !== '/play?game=work-b' ||
+    构建创作试玩链接('Work B', true) !== '/play'
+  ) throw new Error('创作台没有区分本机草稿试玩与未保存内置示例的玩家版本');
   const 创作台html = 无告警渲染('创作台', React.createElement(创作台应用));
   if (
     !创作台html.includes('studio-shell') ||
