@@ -17,14 +17,14 @@ export default function 精选弹窗({
   on关闭,
 }) {
   return (
-    <section aria-modal="true" className="creator-editor-overlay" role="dialog">
+    <section aria-label="落地页精选作品设置" aria-modal="true" className="creator-editor-overlay" onKeyDown={(事件) => { if (事件.key === 'Escape') on关闭(); }} role="dialog">
       <div className="creator-settings-dialog">
         <div className="creator-editor-head">
           <div>
             <span>落地页精选 Demo</span>
             <strong>挑选作品推送到首页</strong>
           </div>
-          <button onClick={on关闭} title="关闭" type="button">
+          <button autoFocus onClick={on关闭} title="关闭" type="button">
             <X size={18} />
           </button>
         </div>

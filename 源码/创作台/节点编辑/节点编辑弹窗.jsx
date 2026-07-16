@@ -97,7 +97,7 @@ export default function 节点编辑弹窗({
   const 选择们 = 节点.choices ?? [];
 
   return (
-    <section aria-modal="true" className="creator-editor-overlay" role="dialog">
+    <section aria-label={`编辑剧情节点：${节点?.title || 节点?.id || '未命名节点'}`} aria-modal="true" className="creator-editor-overlay" onKeyDown={(事件) => { if (事件.key === 'Escape') on关闭(); }} role="dialog">
       <div className="creator-editor-dialog">
         <div className="creator-editor-head">
           <div className="creator-editor-title">
@@ -110,7 +110,7 @@ export default function 节点编辑弹窗({
               {绑定资产 && <em>绑定资产 {绑定资产.id}</em>}
             </div>
           </div>
-          <button onClick={on关闭} title="关闭" type="button">
+          <button autoFocus onClick={on关闭} title="关闭" type="button">
             <X size={18} />
           </button>
         </div>
@@ -238,7 +238,7 @@ export default function 节点编辑弹窗({
                   <Save size={15} />
                   保存节点音色
                 </button>
-                <button disabled={忙碌 || !对白们.length} onClick={() => 占位提示('生成当前节点语音')} type="button">
+                <button disabled={忙碌 || !对白们.length || !健康状态?.ttsConfigured} onClick={() => 占位提示('生成当前节点语音')} title={健康状态?.ttsConfigured ? '生成当前节点语音' : '语音生成服务尚未接入'} type="button">
                   <Mic size={15} />
                   生成当前节点语音
                 </button>
@@ -250,7 +250,7 @@ export default function 节点编辑弹窗({
                 <label key={角.id}>
                   <input
                     checked={语音范围.includes(角.id)}
-                    disabled={忙碌}
+                    disabled={忙碌 || !健康状态?.ttsConfigured}
                     onChange={() =>
                       设语音范围((旧) => {
                         const 新 = 旧.includes(角.id) ? 旧.filter((id) => id !== 角.id) : [...旧, 角.id];
@@ -335,7 +335,7 @@ export default function 节点编辑弹窗({
                       )}
                     </div>
                     <em className={`voice-status status-${语音状态类(句)}`}>{语音状态文案(句)}</em>
-                    <button className="creator-inline-action" disabled={忙碌} onClick={() => 占位提示('生成当前句语音')} type="button">
+                    <button className="creator-inline-action" disabled={忙碌 || !健康状态?.ttsConfigured} onClick={() => 占位提示('生成当前句语音')} title={健康状态?.ttsConfigured ? '生成当前句语音' : '语音生成服务尚未接入'} type="button">
                       <Mic size={14} />
                       生成当前句语音
                     </button>
@@ -471,11 +471,11 @@ export default function 节点编辑弹窗({
               <span className="creator-bound-asset-label">
                 绑定资产 <b>{绑定资产.id}</b>
               </span>
-              <button disabled={忙碌} onClick={() => 占位提示('生成图片')} title="生成绑定资产图片" type="button">
+              <button disabled={忙碌 || !健康状态?.imageConfigured} onClick={() => 占位提示('生成图片')} title={健康状态?.imageConfigured ? '生成绑定资产图片' : '图片生成服务尚未接入'} type="button">
                 <Image size={16} />
                 生成图片
               </button>
-              <button disabled={忙碌} onClick={() => 占位提示('局部重绘')} title="局部重绘绑定资产" type="button">
+              <button disabled={忙碌 || !健康状态?.imageConfigured} onClick={() => 占位提示('局部重绘')} title={健康状态?.imageConfigured ? '局部重绘绑定资产' : '图片编辑服务尚未接入'} type="button">
                 <ImagePlus size={16} />
                 局部重绘
               </button>

@@ -4,6 +4,8 @@
 // 每一条规则和英文文案都照抄线上源码，播放器和创作台对报告的解析都依赖这些原文。
 
 // 全景图提示词的硬性基线：校验会检查每条 prompt 必须原样包含这一串(线上常量 vs)
+import { 校验创作资产 } from '../女性向资产/创作资产模型.js';
+
 export const 全景基线 =
   '360 degree equirectangular panorama, seamless 2:1, 4096x2048, viewer standing at center, first-person perspective, no text, no logo, no watermark';
 
@@ -399,6 +401,9 @@ export function 运行校验(项目) {
       }
     }
   }
+  const 创作资产报告 = 校验创作资产(项目);
+  结果.errors.push(...创作资产报告.errors);
+  结果.warnings.push(...创作资产报告.warnings);
   return 结果;
 }
 

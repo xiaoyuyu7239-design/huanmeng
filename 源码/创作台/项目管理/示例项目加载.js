@@ -46,11 +46,29 @@ export async function 加载示例项目(slug) {
   const 响应 = await fetch(`/games/${encodeURIComponent(slug)}/story.json`, { cache: 'no-cache' });
   if (!响应.ok) throw new Error(`Request failed with ${响应.status}`);
   const 剧情 = await 响应.json();
-  return 由剧情构造项目(slug, 剧情);
+  let 创作资料 = null;
+  try {
+    const 创作响应 = await fetch(`/games/${encodeURIComponent(slug)}/creator.json`, { cache: 'no-cache' });
+    if (创作响应.ok) {
+      const 候选 = await 创作响应.json();
+      // companion 只在明确绑定当前作品时合并；404、坏 JSON 或错绑都安全回退空白作者骨架。
+      if (
+        候选?.storyId === slug &&
+        Number.isInteger(候选?.schemaVersion) && 候选.schemaVersion >= 1 &&
+        候选?.authoring && typeof 候选.authoring === 'object' && !Array.isArray(候选.authoring) &&
+        Number.isInteger(候选.authoring.schemaVersion) && 候选.authoring.schemaVersion >= 1
+      ) {
+        创作资料 = 候选;
+      }
+    }
+  } catch {
+    创作资料 = null;
+  }
+  return 由剧情构造项目(slug, 剧情, 创作资料);
 }
 
 // 输入(slug, story) → 按每个节点的真实 panorama 路径推导 prompts/manifest → 吐出项目对象
-function 由剧情构造项目(slug, 剧情) {
+export function 由剧情构造项目(slug, 剧情, 创作资料 = null) {
   const 节点们 = Object.values(剧情.nodes ?? {});
   const 提示词们 = [];
   const 资产们 = [];
@@ -83,7 +101,8 @@ function 由剧情构造项目(slug, 剧情) {
     story: 剧情,
     prompts: { prompts: 提示词们 },
     manifest: { assets: 资产们 },
-    storyBible: '',
+    storyBible: typeof 创作资料?.storyBible === 'string' ? 创作资料.storyBible : '',
+    ...(创作资料?.authoring ? { authoring: 创作资料.authoring } : {}),
     qaReport: '',                            // 还没跑过校验，底部状态条会显示"待校验"
     voiceCasting: { provider: 'minimax', model: 'speech-2.8-turbo', updatedAt: '', profiles: {} },
     musicDesign: {

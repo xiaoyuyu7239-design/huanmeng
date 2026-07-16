@@ -12,6 +12,11 @@ import {
   清洗非敏感浏览器设置,
   清除浏览器生产密钥,
 } from '../../公共工具/浏览器密钥迁移.js';
+import {
+  归一化创作资产,
+  计算创作资产完成度,
+  校验创作资产,
+} from '../女性向资产/创作资产模型.js';
 
 // ---- 存储键(照抄线上源码，一个字符都不能差) ----
 export const 项目存储键 = 'creator:browser-projects:v1';   // 本机项目柜
@@ -106,6 +111,8 @@ export function 重算摘要(项目) {
   const 提示词们 = 项目.prompts?.prompts ?? [];
   const 对白们 = 节点们.flatMap((节点) => 节点.lines ?? []);
   const 音轨们 = Object.values(项目.musicDesign?.tracks ?? {});
+  const 创作资产 = 归一化创作资产(项目);
+  const 创作完成度 = 计算创作资产完成度({ ...项目, authoring: 创作资产 });
   return {
     nodeCount: 节点们.length,
     choiceCount: 节点们.reduce((和, 节点) => 和 + (节点.choices?.length ?? 0), 0),
@@ -124,22 +131,41 @@ export function 重算摘要(项目) {
     musicTrackCount: 音轨们.length,
     musicReadyCount: 音轨们.filter((轨) => 轨.status === 'ready').length,
     musicSelectedCount: 音轨们.filter((轨) => 轨.selected).length,
+    bibleCount: 创作资产.characterBibles.length,
+    relationshipCount: 创作资产.relationshipEdges.length,
+    emotionCount: 创作资产.emotionPoints.length,
+    reviewedCount: 创作完成度.reviewed,
   };
 }
 
 // 输入项目对象 → 把缺胳膊少腿的字段补齐、摘要重算 → 吐出规整的项目对象
 // (线上的归一化函数 me：存柜子之前、从柜子取出之后都要过一遍这个"整形")
 export function 归一化项目(项目) {
-  return {
+  const 原作者资产 = 项目?.authoring;
+  const 原作者是对象 = !!原作者资产 && typeof 原作者资产 === 'object' && !Array.isArray(原作者资产);
+  const 是未来作者版本 = 原作者是对象 && Number.isInteger(原作者资产.schemaVersion) && 原作者资产.schemaVersion > 1;
+  const 作者报告 = 校验创作资产(项目);
+  const 作者合同有错误 = 作者报告.items.some(
+    (项) => 项.severity === 'error' && (项.path === 'authoring' || 项.path.startsWith('authoring.')),
+  );
+  // 无效或未来合同必须逐字保留，供校验定位并避免旧客户端覆盖；只有安全 v1/旧空项目才补骨架。
+  const 作者资产 = (是未来作者版本 || 作者合同有错误) && 原作者资产 !== undefined && Object.prototype.hasOwnProperty.call(项目 ?? {}, 'authoring')
+    ? 深拷贝(原作者资产)
+    : 归一化创作资产(项目);
+  const 作者资产发生迁移 = JSON.stringify(原作者资产) !== JSON.stringify(作者资产);
+  const 规整项目 = {
     ...项目,
     title: 项目.title || 项目.story?.title || 项目.slug,
     prompts: 项目.prompts ?? { prompts: [] },
     manifest: 项目.manifest ?? { assets: [] },
+    authoring: 作者资产,
+    // 自动注入/补正作者合同后，旧报告不再能证明当前项目，必须要求重新校验。
+    qaReport: 作者资产发生迁移 || 作者合同有错误 || 是未来作者版本 ? '' : (项目.qaReport ?? ''),
     activeImageJobs: 项目.activeImageJobs ?? [],
     activeVoiceJobs: 项目.activeVoiceJobs ?? [],
     activeMusicTasks: 项目.activeMusicTasks ?? [],
-    summary: 重算摘要(项目),
   };
+  return { ...规整项目, summary: 重算摘要(规整项目) };
 }
 
 // ---- 本机项目柜的四个基本动作：读表 / 存一件 / 取一件 / 删一件 ----

@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 
 class 本机存储模拟 {
   constructor() {
@@ -39,6 +40,7 @@ const {
   精选存储键,
   语音已就绪,
   重算摘要,
+  归一化项目,
   新建本机项目,
   保存本机项目,
   删除本机项目,
@@ -49,6 +51,16 @@ const {
 } = await import('./项目管理/本机项目存储.js');
 const { 运行校验 } = await import('./校验发布/校验规则.js');
 const { 新增节点, 拖拽重排 } = await import('./节点编辑/图操作.js');
+const { 加载示例项目, 由剧情构造项目 } = await import('./项目管理/示例项目加载.js');
+const {
+  归一化创作资产,
+  构建创作角色列表,
+  构建叙事关系图,
+  计算创作资产完成度,
+  校验创作资产,
+  情绪强度文案,
+  清理节点创作引用,
+} = await import('./女性向资产/创作资产模型.js');
 
 // Level 5 安全迁移：旧浏览器密钥必须自动删除，且任何写入都不能再把 secret/token 存回 localStorage。
 存储.setItem(设置存储键, JSON.stringify({
@@ -396,4 +408,505 @@ const 有出口循环 = 校验故事({
 assert.equal(有出口循环.errors.some((条) => 条.includes('cannot reach any ending')), false);
 assert.equal(有出口循环.errors.includes('story must contain at least one ending node.'), false);
 
-console.log('创作台定向自测通过：语音、场景覆盖、机制结构、删除回滚、结局与陷阱环。');
+// Level 6 女性向创作资产：cast 仍是人物基础信息的唯一权威源，authoring 只存 id 关联的作者注释。
+const 女性向资产项目 = {
+  slug: 'authoring-contract',
+  story: {
+    cast: {
+      protagonist: {
+        id: 'you',
+        name: '许澄',
+        role: 'AI 直播总导演',
+        portrait: '/portraits/xu-cheng.png',
+      },
+      characters: [
+        {
+          id: 'lu_chenzhou',
+          name: '陆沉舟',
+          role: '实时系统架构师',
+          romanceable: true,
+          relationship: { enabled: true, initial: { spark: 18, trust: 32, boundary: 68 } },
+        },
+        {
+          id: 'lin_miao',
+          name: '林渺',
+          role: '数据审计师·副导演',
+          theme: '证据与姐妹同盟',
+          portrait: '/portraits/lin-miao.png',
+          romanceable: false,
+          relationship: { enabled: false, initial: { spark: 0, trust: 48, boundary: 78 } },
+        },
+        {
+          id: 'qiao_wen',
+          name: '乔雯',
+          role: '项目出品人',
+          romanceable: false,
+          relationship: { enabled: false, initial: { spark: 0, trust: 34, boundary: 82 } },
+        },
+      ],
+    },
+    startNodeId: 'start',
+    nodes: {
+      start: {
+        id: 'start',
+        title: '事故现场',
+        lines: [{ speaker: 'lin_miao', text: '我支持你，但结论必须可复核。' }],
+        choices: [
+          {
+            id: 'to-end',
+            label: '共同签字',
+            next: 'end',
+            effect: { relationships: { lu_chenzhou: { trust: 2, boundary: 1 } } },
+          },
+        ],
+      },
+      end: { id: 'end', title: '阶段结果', lines: [], choices: [], ending: { title: '完成' } },
+    },
+  },
+  authoring: {
+    schemaVersion: 1,
+    characterBibles: [
+      {
+        characterId: 'you',
+        desire: '建立可追溯的决策程序',
+        fear: '把人简化为指标',
+        boundary: '任何人不得代替她同意',
+        growth: '从独自承担走向共同负责',
+        voice: '句子短，优先使用动词与可验证对象',
+        reviewed: true,
+      },
+      {
+        characterId: 'lin_miao',
+        desire: '让审计结论可复核',
+        fear: '工作再次被当作技术备注',
+        boundary: '不为恋爱路线让位',
+        growth: '要求审计署名与常设机制',
+        voice: '精确、节制，允许干燥幽默',
+        reviewed: true,
+      },
+    ],
+    relationshipEdges: [
+      {
+        id: 'you-lin-alliance',
+        from: 'you',
+        to: 'lin_miao',
+        type: 'ally',
+        label: '平级调查同盟',
+        dynamic: '支持彼此，也保留纠错权',
+        boundary: '证据优先，不要求无条件站队',
+        reviewed: true,
+      },
+    ],
+    emotionPoints: [
+      { nodeId: 'start', intensity: 72, agency: 88, intimacy: 18, note: '事故压力下由玩家首先冻结外发。', reviewed: true },
+    ],
+    consistencyRules: [
+      {
+        id: 'player-agency',
+        label: '玩家主导权',
+        scope: 'story',
+        targetId: '',
+        rule: '关键决定必须由玩家执行或明确授权。',
+        severity: 'error',
+        enabled: true,
+        reviewed: true,
+      },
+    ],
+    consistencyAssets: [
+      {
+        id: 'portrait-you',
+        kind: 'portrait-reference',
+        title: '许澄角色立绘',
+        status: 'approved',
+        characterIds: ['you'],
+        nodeIds: [],
+        sourcePath: '/portraits/xu-cheng.png',
+        notes: '以职业操作与目光表现权力位置。',
+        reviewed: true,
+      },
+    ],
+  },
+  manifest: { assets: [{ id: 'panorama-only', type: 'panorama-image' }] },
+};
+
+const 归一化前快照 = structuredClone(女性向资产项目);
+const 归一化资产 = 归一化创作资产(女性向资产项目);
+assert.deepEqual(女性向资产项目, 归一化前快照, '归一化不得修改输入项目');
+assert.deepEqual(Object.keys(归一化资产), [
+  'schemaVersion',
+  'characterBibles',
+  'relationshipEdges',
+  'emotionPoints',
+  'consistencyRules',
+  'consistencyAssets',
+]);
+assert.equal(归一化资产.schemaVersion, 1);
+assert.deepEqual(归一化资产.characterBibles.map((项) => 项.characterId), ['you', 'lu_chenzhou', 'lin_miao', 'qiao_wen']);
+assert.equal(归一化资产.characterBibles.find((项) => 项.characterId === 'qiao_wen').reviewed, false);
+assert.equal('name' in 归一化资产.characterBibles[0], false, 'authoring 不得复制 cast 姓名');
+assert.deepEqual(归一化资产.emotionPoints.map((项) => 项.nodeId), ['start', 'end']);
+assert.equal(归一化资产.emotionPoints.find((项) => 项.nodeId === 'end').reviewed, false);
+assert.equal(归一化资产.emotionPoints.find((项) => 项.nodeId === 'end').intensity, null);
+assert.deepEqual(
+  归一化资产.relationshipEdges.filter((项) => 项.id.startsWith('you--')).map((项) => 项.id),
+  ['you--lu_chenzhou', 'you--qiao_wen'],
+);
+assert.equal(归一化资产.relationshipEdges.find((项) => 项.id === 'you--lu_chenzhou').type, 'potential-romance');
+assert.equal(归一化资产.relationshipEdges.find((项) => 项.id === 'you-lin-alliance').type, 'ally');
+assert.equal(归一化资产.relationshipEdges.find((项) => 项.id === 'you--qiao_wen').type, 'professional');
+assert.equal(归一化资产.relationshipEdges.find((项) => 项.id === 'you--qiao_wen').reviewed, false);
+assert.equal(归一化资产.relationshipEdges.filter((项) => new Set([项.from, 项.to]).has('lin_miao')).length, 1, '已有角色对不得再生成重复默认边');
+assert.deepEqual(归一化资产.consistencyRules.map((项) => 项.id), [
+  'player-agency',
+  'explicit-consent-boundary',
+  'non-romance-equivalence',
+  'female-alliance-correction',
+]);
+assert.equal(归一化资产.consistencyRules.find((项) => 项.id === 'player-agency').reviewed, true, '已有默认规则应保留作者审阅结果');
+assert.equal(归一化资产.consistencyRules.find((项) => 项.id === 'female-alliance-correction').reviewed, false);
+assert.ok(归一化资产.consistencyAssets.some((项) => 项.id === 'portrait-you' && 项.reviewed));
+assert.ok(归一化资产.consistencyAssets.some((项) => 项.id === 'portrait-lin_miao' && !项.reviewed));
+assert.deepEqual(女性向资产项目.manifest, 归一化前快照.manifest, '人物一致性引用不得塞进 manifest');
+
+const 已审核默认边项目 = structuredClone(女性向资产项目);
+已审核默认边项目.authoring.relationshipEdges.push({
+  id: 'you--qiao_wen',
+  from: 'you',
+  to: 'qiao_wen',
+  type: 'rival',
+  label: '职业权力镜像',
+  dynamic: '彼此都要项目活下去，但对责任窗口判断不同。',
+  boundary: '不将野心与错误简化为性别刻板印象。',
+  reviewed: true,
+});
+const 保留默认边 = 归一化创作资产(已审核默认边项目).relationshipEdges.filter((项) => 项.id === 'you--qiao_wen');
+assert.equal(保留默认边.length, 1);
+assert.equal(保留默认边[0].type, 'rival');
+assert.equal(保留默认边[0].reviewed, true, '作者已编辑的默认边不得被推导值覆盖');
+
+// 界面模式是独立偏好：即使旧数据误写进 authoring，规范结果也必须丢弃它并报错。
+const 误写模式项目 = structuredClone(女性向资产项目);
+误写模式项目.authoring.mode = 'professional';
+assert.equal('mode' in 归一化创作资产(误写模式项目), false);
+assert.ok(校验创作资产(误写模式项目).items.some((项) => 项.code === 'authoring-mode-forbidden'));
+
+const 未来版本项目 = structuredClone(女性向资产项目);
+未来版本项目.authoring = {
+  ...未来版本项目.authoring,
+  schemaVersion: 2,
+  futureField: { valuable: true },
+  characterBibles: [{ ...未来版本项目.authoring.characterBibles[0], futureNote: '必须保留' }],
+};
+const 未来作者原文 = structuredClone(未来版本项目.authoring);
+const 未来版本规整 = 归一化项目(未来版本项目);
+assert.deepEqual(未来版本规整.authoring, 未来作者原文, '未来版本已知数组与未知字段必须逐字保留，不得补默认项或去重');
+assert.equal(未来版本规整.authoring.schemaVersion, 2);
+assert.deepEqual(未来版本规整.authoring.futureField, { valuable: true });
+assert.equal(未来版本规整.authoring.characterBibles[0].futureNote, '必须保留');
+assert.ok(校验创作资产(未来版本规整).items.some((项) => 项.code === 'authoring-version-future'));
+assert.equal(校验创作资产(未来版本规整).items.some((项) => 项.code === 'authoring-version'), false);
+存储.clear();
+保存本机项目(未来版本规整);
+assert.deepEqual(
+  JSON.parse(存储.getItem(项目存储键))[未来版本规整.slug].project.authoring,
+  未来作者原文,
+  '即使经过本机存储边界，未来作者合同也不得被 v1 逻辑改写',
+);
+存储.clear();
+
+// 旧项目与畸形 authoring 可安全打开；节点仅生成未审阅、未伪造数值的空情绪点。
+const 旧项目 = {
+  story: {
+    startNodeId: 'legacy-start',
+    nodes: { 'legacy-start': { id: 'legacy-start', title: '旧式开场', lines: [], choices: [] } },
+  },
+};
+const 旧资产 = 归一化创作资产(旧项目);
+assert.deepEqual(旧资产.characterBibles, []);
+assert.deepEqual(旧资产.emotionPoints, [
+  { nodeId: 'legacy-start', intensity: null, agency: null, intimacy: null, note: '', reviewed: false },
+]);
+assert.equal(校验创作资产(旧项目).errors.length, 0);
+assert.ok(校验创作资产(旧项目).warnings.some((条) => 条.includes('兼容打开')));
+assert.doesNotThrow(() => 归一化创作资产({ ...旧项目, authoring: '损坏的旧数据' }));
+const 真实旧项目链 = 归一化项目({ ...旧项目, prompts: { prompts: [] }, manifest: { assets: [] } });
+assert.equal(
+  运行校验(真实旧项目链).errors.some((条) => 条.includes('情绪点')),
+  false,
+  '归一化生成的 null 情绪草稿不得在真实发布链中变成阻塞错误',
+);
+const 带旧报告项目 = 归一化项目({ ...旧项目, qaReport: '# QA PASSED · old contract' });
+assert.equal(带旧报告项目.qaReport, '', '自动注入 authoring 后必须让旧 QA 报告失效');
+
+// 关系图节点来自全量 cast，relationship.disabled 只禁止数值关系，不得让女性角色消失。
+const 创作角色 = 构建创作角色列表(女性向资产项目);
+assert.deepEqual(创作角色.map((角色) => 角色.id), ['you', 'lu_chenzhou', 'lin_miao', 'qiao_wen']);
+assert.equal(创作角色.find((角色) => 角色.id === 'lin_miao').relationshipEnabled, false);
+assert.equal(创作角色.find((角色) => 角色.id === 'qiao_wen').relationshipEnabled, false);
+const 叙事关系图 = 构建叙事关系图(女性向资产项目);
+assert.deepEqual(叙事关系图.nodes.map((节点) => 节点.id), ['you', 'lu_chenzhou', 'lin_miao', 'qiao_wen']);
+assert.equal(叙事关系图.edges[0].valid, true);
+
+const 资产完成度 = 计算创作资产完成度(女性向资产项目);
+assert.equal(资产完成度.sections.characterBibles.total, 4);
+assert.equal(资产完成度.sections.characterBibles.completed, 2);
+assert.equal(资产完成度.sections.emotionPoints.total, 2);
+assert.equal(资产完成度.sections.emotionPoints.completed, 1);
+assert.ok(资产完成度.percentage > 0 && 资产完成度.percentage < 100);
+assert.deepEqual([null, 0, 21, 41, 61, 81].map(情绪强度文案), ['待标注', '平静', '克制', '起伏', '高张力', '峰值']);
+
+// 删除节点必须原子清理所有作者态引用；资源路径若绑定该节点，需要重新人工确认。
+const 待清理资产 = structuredClone(女性向资产项目.authoring);
+待清理资产.consistencyRules.push({
+  id: 'start-only',
+  label: '开场专用规则',
+  scope: 'node',
+  targetId: 'start',
+  rule: '开场必须保留玩家冻结外发的动作。',
+  severity: 'error',
+  enabled: true,
+  reviewed: true,
+});
+待清理资产.consistencyAssets.push({
+  id: 'start-board',
+  kind: 'location-reference',
+  title: '开场分镜',
+  status: 'approved',
+  characterIds: ['you'],
+  nodeIds: ['start', 'end'],
+  sourcePath: '/references/start-board.webp',
+  notes: '',
+  reviewed: true,
+});
+const 清理后资产 = 清理节点创作引用(待清理资产, 'start');
+assert.deepEqual(待清理资产.emotionPoints.map((项) => 项.nodeId), ['start'], '清理函数不得修改输入数据');
+assert.equal(清理后资产.emotionPoints.some((项) => 项.nodeId === 'start'), false);
+assert.equal(清理后资产.consistencyRules.some((项) => 项.id === 'start-only'), false);
+assert.deepEqual(清理后资产.consistencyAssets.find((项) => 项.id === 'start-board').nodeIds, ['end']);
+assert.equal(清理后资产.consistencyAssets.find((项) => 项.id === 'start-board').reviewed, false);
+
+// 高确定性一致性问题：孤儿引用、非法数值、affection / 单值好感与危险 URL 都必须可定位。
+const 坏创作项目 = structuredClone(女性向资产项目);
+坏创作项目.story.cast.characters[0].relationship.initial.affection = 30;
+坏创作项目.story.nodes.start.lines.push({ speaker: 'you', text: '系统显示：好感度 +8。' });
+坏创作项目.story.nodes.start.choices[0].effect.relationships = {
+  lu_chenzhou: 5,
+  lin_miao: { affection: 2 },
+};
+坏创作项目.authoring.characterBibles.push({
+  characterId: 'ghost',
+  desire: '未知',
+  fear: '未知',
+  boundary: '未知',
+  growth: '未知',
+  voice: '未知',
+  name: '不得复制的姓名',
+  reviewed: true,
+});
+坏创作项目.authoring.relationshipEdges.push({
+  id: 'ghost-edge',
+  from: 'ghost',
+  to: 'lin_miao',
+  type: 'unknown',
+  label: '孤儿边',
+  dynamic: '无',
+  boundary: '无',
+  reviewed: true,
+});
+坏创作项目.authoring.emotionPoints[0] = {
+  nodeId: 'missing-node',
+  intensity: 101,
+  agency: '很高',
+  intimacy: -1,
+  note: '非法节点',
+  reviewed: true,
+};
+坏创作项目.authoring.consistencyRules.push({
+  id: 'ghost-rule',
+  label: '孤儿规则',
+  scope: 'character',
+  targetId: 'ghost',
+  rule: '不得代替角色同意。',
+  severity: 'error',
+  enabled: true,
+  reviewed: true,
+});
+坏创作项目.authoring.consistencyRules.push({
+  id: 'invalid-rule-contract',
+  label: '非法规则合同',
+  scope: 'node',
+  targetId: '',
+  rule: '非 story 范围必须指定目标。',
+  severity: 'critical',
+  enabled: 'yes',
+  reviewed: true,
+});
+坏创作项目.authoring.consistencyAssets.push(
+  {
+    id: 'danger-data',
+    kind: 'reference',
+    title: '危险 data',
+    status: 'reference',
+    characterIds: ['ghost'],
+    nodeIds: ['missing-node'],
+    sourcePath: 'data:text/html,<script>alert(1)</script>',
+    notes: '',
+    reviewed: true,
+  },
+  {
+    id: 'danger-blob',
+    kind: 'reference',
+    title: '危险 blob',
+    status: 'reference',
+    characterIds: [],
+    nodeIds: [],
+    sourcePath: 'blob:https://example.invalid/id',
+    notes: '',
+    reviewed: true,
+  },
+  {
+    id: 'danger-js',
+    kind: 'reference',
+    title: '危险 javascript',
+    status: 'reference',
+    characterIds: [],
+    nodeIds: [],
+    sourcePath: ' javascript:alert(1)',
+    notes: '',
+    reviewed: true,
+  },
+);
+const 坏项目快照 = structuredClone(坏创作项目);
+const 坏项目报告 = 校验创作资产(坏创作项目);
+assert.deepEqual(坏创作项目, 坏项目快照, '一致性校验不得修改输入项目');
+for (const code of [
+  'character-bible-orphan',
+  'character-bible-duplicates-cast',
+  'relationship-from-orphan',
+  'relationship-type-invalid',
+  'emotion-node-orphan',
+  'emotion-value-invalid',
+  'consistency-rule-orphan',
+  'consistency-rule-severity-invalid',
+  'consistency-rule-enabled-invalid',
+  'consistency-asset-dangerous-url',
+  'consistency-asset-kind-invalid',
+  'consistency-asset-character-orphan',
+  'consistency-asset-node-orphan',
+  'relationship-metric-unsupported',
+  'relationship-scalar-affection',
+  'affection-copy-forbidden',
+]) {
+  assert.ok(坏项目报告.items.some((项) => 项.code === code), `缺少 Level 6 一致性问题：${code}`);
+}
+assert.equal(坏项目报告.items.filter((项) => 项.code === 'consistency-asset-dangerous-url').length, 3);
+const 安全化坏资产 = 归一化创作资产(坏创作项目);
+for (const id of ['danger-data', 'danger-blob', 'danger-js']) {
+  assert.match(安全化坏资产.consistencyAssets.find((项) => 项.id === id).sourcePath, /^(?:data|blob|javascript)/iu);
+}
+const 真实坏项目报告 = 运行校验(归一化项目({ ...坏创作项目, prompts: { prompts: [] }, manifest: { assets: [] } }));
+assert.ok(真实坏项目报告.errors.some((条) => 条.includes('不得使用 data/blob/javascript URL')), '真实发布链不得吞掉危险资源协议');
+
+// 真实链的项目归一化不得吞掉重复项、非对象项或非法值；原 authoring 保留后仍可定位全部错误。
+const 畸形作者合同项目 = structuredClone(女性向资产项目);
+畸形作者合同项目.authoring.characterBibles.push(structuredClone(畸形作者合同项目.authoring.characterBibles[0]), 'not-an-object');
+畸形作者合同项目.authoring.emotionPoints[0] = {
+  nodeId: 'start', intensity: 999, agency: '高', intimacy: -3, note: '非法值必须保留', reviewed: true,
+};
+畸形作者合同项目.authoring.consistencyAssets[0].characterIds = 'you';
+畸形作者合同项目.authoring.consistencyAssets[0].nodeIds = [42, null];
+const 畸形作者原文 = structuredClone(畸形作者合同项目.authoring);
+const 畸形规整项目 = 归一化项目(畸形作者合同项目);
+assert.deepEqual(畸形规整项目.authoring, 畸形作者原文, '归一化项目不得用安全视图覆盖畸形作者原文');
+const 畸形规整报告 = 校验创作资产(畸形规整项目);
+for (const code of [
+  'character-bible-id-duplicate',
+  'authoring-item-shape',
+  'emotion-value-invalid',
+  'consistency-asset-reference-array-shape',
+  'consistency-asset-reference-item-shape',
+]) {
+  assert.ok(畸形规整报告.items.some((项) => 项.code === code), `真实归一化链吞掉了 ${code}`);
+}
+assert.ok(运行校验(畸形规整项目).errors.some((条) => 条.includes('重复 id')), '发布链必须继续阻断重复作者条目');
+
+// 默认旗舰必须带一套可实际展示的作者资产，不能让最终链接只剩 0% 空壳。
+const 第九席剧情 = JSON.parse(await readFile(new URL('../../公共资源/games/ninth-seat/story.json', import.meta.url), 'utf8'));
+const 第九席创作资料 = JSON.parse(await readFile(new URL('../../公共资源/games/ninth-seat/creator.json', import.meta.url), 'utf8'));
+assert.equal(第九席创作资料.storyId, 'ninth-seat');
+assert.deepEqual(
+  [
+    第九席创作资料.authoring.characterBibles.length,
+    第九席创作资料.authoring.relationshipEdges.length,
+    第九席创作资料.authoring.emotionPoints.length,
+    第九席创作资料.authoring.consistencyRules.length,
+    第九席创作资料.authoring.consistencyAssets.length,
+  ],
+  [7, 6, 25, 4, 7],
+);
+const 第九席作者项目 = { story: 第九席剧情, authoring: 第九席创作资料.authoring };
+assert.equal(校验创作资产(第九席作者项目).errors.length, 0);
+assert.equal(计算创作资产完成度(第九席作者项目).percentage, 100);
+
+// 六部正式示例逐部经过创作台真实构造与发布校验；无 cast 旧作的标量关系只能提示迁移，不能阻断。
+const 正式名录 = JSON.parse(await readFile(new URL('../../公共资源/showcase.json', import.meta.url), 'utf8'));
+for (const 条目 of 正式名录.featured) {
+  const 剧情 = JSON.parse(await readFile(new URL(`../../公共资源/games/${条目.slug}/story.json`, import.meta.url), 'utf8'));
+  const companion = 条目.slug === 'ninth-seat' ? 第九席创作资料 : null;
+  const 项目 = 由剧情构造项目(条目.slug, 剧情, companion);
+  const 报告 = 运行校验(项目);
+  assert.deepEqual(报告.errors, [], `正式示例 ${条目.slug} 不得被 Level 6 新合同阻断`);
+  if (条目.slug === 'project-20260620-201739') {
+    assert.ok(校验创作资产(项目).items.some((项) => 项.code === 'legacy-relationship-scalar' && 项.severity === 'warning'));
+  }
+}
+
+// 真实示例加载链必须读取同 slug companion；错绑资料则回退未审核骨架，不能串到另一部作品。
+const 原fetch = globalThis.fetch;
+const 请求路径们 = [];
+let companion绑定正确 = true;
+let companion未来版本 = false;
+globalThis.fetch = async (路径) => {
+  请求路径们.push(String(路径));
+  if (String(路径).endsWith('/story.json')) {
+    return { ok: true, status: 200, json: async () => structuredClone(第九席剧情) };
+  }
+  if (String(路径).endsWith('/creator.json')) {
+    return {
+      ok: true,
+      status: 200,
+      json: async () => structuredClone(
+        companion绑定正确
+          ? companion未来版本
+            ? { ...第九席创作资料, authoring: { ...第九席创作资料.authoring, schemaVersion: 2, futureField: 'keep-me' } }
+            : 第九席创作资料
+          : { ...第九席创作资料, storyId: 'wrong-story' },
+      ),
+    };
+  }
+  return { ok: false, status: 404, json: async () => ({}) };
+};
+try {
+  const 加载后旗舰 = await 加载示例项目('ninth-seat');
+  assert.deepEqual(请求路径们.slice(0, 2), ['/games/ninth-seat/story.json', '/games/ninth-seat/creator.json']);
+  assert.equal(加载后旗舰.storyBible, 第九席创作资料.storyBible);
+  assert.equal(计算创作资产完成度(加载后旗舰).percentage, 100);
+
+  companion未来版本 = true;
+  const 加载后未来资料 = await 加载示例项目('ninth-seat');
+  assert.equal(加载后未来资料.authoring.schemaVersion, 2);
+  assert.equal(加载后未来资料.authoring.futureField, 'keep-me');
+  assert.equal(加载后未来资料.authoring.characterBibles.length, 7, '未来 companion 不得被静默回退为空白 v1 骨架');
+
+  companion未来版本 = false;
+  companion绑定正确 = false;
+  const 错绑回退项目 = await 加载示例项目('ninth-seat');
+  assert.equal(错绑回退项目.storyBible, '');
+  assert.equal(计算创作资产完成度(错绑回退项目).percentage, 0);
+  assert.equal(错绑回退项目.authoring.characterBibles.every((项) => !项.reviewed), true);
+} finally {
+  if (原fetch === undefined) delete globalThis.fetch;
+  else globalThis.fetch = 原fetch;
+}
+
+console.log('创作台定向自测通过：语音、场景覆盖、机制结构、删除回滚、结局、女性向创作资产与一致性。');

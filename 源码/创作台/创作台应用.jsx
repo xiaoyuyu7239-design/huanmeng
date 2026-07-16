@@ -20,8 +20,8 @@ import {
   Film, Plus, Trash2, Check, Play, Image, LoaderCircle, WandSparkles, Mic, ChevronDown,
   RefreshCw, Sparkles, Settings, CircleHelp, Bot, Brain, LayoutTemplate, GitBranch,
   ImagePlus, Info, Send, Database, NotebookText, Workflow, LayoutGrid, Network,
-  ListPlus, Circle, Lock, KeyRound, Music, SlidersHorizontal, Zap, Maximize, Expand,
-  Upload, Download, Save, RotateCcw,
+  ListPlus, Circle, Lock, KeyRound, Music, Maximize, Expand,
+  Upload, Download, Save, RotateCcw, Activity, BookOpen, ShieldCheck,
 } from 'lucide-react';
 import {
   读本机项目, 保存本机项目, 删除本机项目, 本机项目列表, 合并项目列表,
@@ -37,6 +37,14 @@ import 节点编辑弹窗 from './节点编辑/节点编辑弹窗.jsx';
 import 新建项目弹窗 from './项目管理/新建项目弹窗.jsx';
 import 精选弹窗 from './项目管理/精选弹窗.jsx';
 import 设置弹窗 from './项目管理/设置弹窗.jsx';
+import 创作模式切换, { 读创作模式, 写创作模式 } from './女性向资产/创作模式切换.jsx';
+import 快速创作面板, {
+  一致性资产面板,
+  关系图面板,
+  情绪曲线面板,
+  角色圣经面板,
+} from './女性向资产/创作资产面板.jsx';
+import { 校验创作资产, 清理节点创作引用 } from './女性向资产/创作资产模型.js';
 
 // 创作侧尚无服务端 health 接口，全部按未接入起步；浏览器值不得把开关伪造为 true。
 const 基础健康 = {
@@ -51,6 +59,29 @@ const 基础健康 = {
   musicModel: '',
   musicMv: 'chirp-v5',
 };
+
+const 不可安全编辑的作者合同代码 = new Set([
+  'authoring-shape',
+  'authoring-version',
+  'authoring-array-shape',
+  'authoring-item-shape',
+  'authoring-field-shape',
+  'authoring-field-too-long',
+  'authoring-mode-forbidden',
+  'character-bible-id-missing',
+  'character-bible-id-duplicate',
+  'relationship-edge-id-missing',
+  'relationship-edge-id-duplicate',
+  'emotion-node-id-missing',
+  'emotion-node-id-duplicate',
+  'consistency-rule-id-missing',
+  'consistency-rule-id-duplicate',
+  'consistency-asset-id-missing',
+  'consistency-asset-id-duplicate',
+  'consistency-asset-reference-array-shape',
+  'consistency-asset-reference-item-shape',
+  'consistency-asset-reference-item-duplicate',
+]);
 
 // 输入毫秒时间戳 → 转成"HH:mm" → 吐出字符串(拿不到时间的地方显示 "--:--")
 function 格式化时间(毫秒) {
@@ -163,7 +194,7 @@ function 助手面板占位({ 工作台 }) {
   // 占位版发送：把话记进聊天记录，然后老实承认助手还没接入(第二棒替换成真 Agent 调用)
   function 发送(事件) {
     事件.preventDefault();
-    if (!输入文本.trim()) return;
+    if (!健康状态?.deepseekConfigured || !输入文本.trim()) return;
     追加消息('user', 输入文本.trim());
     设输入文本('');
     追加消息('system', '创作助手尚未接入。');
@@ -232,7 +263,7 @@ function 助手面板占位({ 工作台 }) {
             </section>
             <div className="studio-agent-quick-actions">
               <button
-                disabled={!项目 || 忙碌}
+                disabled={!项目 || 忙碌 || !健康状态?.deepseekConfigured}
                 onClick={() => 填入指令('请基于当前项目校验剧情连贯性、死路、隐藏路线和结局覆盖，并按优先级列出要修改的节点。')}
                 type="button"
               >
@@ -240,7 +271,7 @@ function 助手面板占位({ 工作台 }) {
                 校验剧情
               </button>
               <button
-                disabled={!项目 || 忙碌}
+                disabled={!项目 || 忙碌 || !健康状态?.deepseekConfigured}
                 onClick={() =>
                   填入指令(
                     当前节点
@@ -254,7 +285,7 @@ function 助手面板占位({ 工作台 }) {
                 下一幕
               </button>
               <button
-                disabled={!项目 || 忙碌}
+                disabled={!项目 || 忙碌 || !健康状态?.deepseekConfigured}
                 onClick={() => 填入指令('请列出当前项目缺失或占位的视觉资产，并给出适合 360 全景图生成的精炼提示词。')}
                 type="button"
               >
@@ -280,20 +311,21 @@ function 助手面板占位({ 工作台 }) {
           <form className="studio-chat-input" onSubmit={发送}>
             <div className={输入文本.length > 0 ? 'studio-composer-shell is-populated' : 'studio-composer-shell'}>
               <textarea
+                disabled={!健康状态?.deepseekConfigured}
                 onChange={(事件) => 设输入文本(事件.target.value)}
-                placeholder={健康状态?.deepseekConfigured ? '输入指令...' : '创作 Agent 尚未接入；可先把需求记在这里...'}
+                placeholder={健康状态?.deepseekConfigured ? '输入指令...' : '创作 Agent 尚未接入，当前不可发送。'}
                 ref={输入框ref}
                 value={输入文本}
               />
               <div className="studio-composer-footer">
                 <div className="studio-input-tools">
-                  <button onClick={() => 填入指令('请基于当前项目提出 3 个最值得推进的创作任务。')} title="任务建议" type="button">
+                  <button disabled={!健康状态?.deepseekConfigured} onClick={() => 填入指令('请基于当前项目提出 3 个最值得推进的创作任务。')} title={健康状态?.deepseekConfigured ? '任务建议' : '创作 Agent 尚未接入'} type="button">
                     <Sparkles size={15} />
                   </button>
-                  <button onClick={() => 填入指令('请检查当前节点需要的图片资产，并生成适合 360 全景图的提示词。')} title="图片提示词" type="button">
+                  <button disabled={!健康状态?.deepseekConfigured} onClick={() => 填入指令('请检查当前节点需要的图片资产，并生成适合 360 全景图的提示词。')} title={健康状态?.deepseekConfigured ? '图片提示词' : '创作 Agent 尚未接入'} type="button">
                     <Image size={15} />
                   </button>
-                  <button onClick={() => 填入指令('请把当前项目整理成一组可复用的剧情生成提示词模板。')} title="提示词模板" type="button">
+                  <button disabled={!健康状态?.deepseekConfigured} onClick={() => 填入指令('请把当前项目整理成一组可复用的剧情生成提示词模板。')} title={健康状态?.deepseekConfigured ? '提示词模板' : '创作 Agent 尚未接入'} type="button">
                     <LayoutTemplate size={15} />
                   </button>
                 </div>
@@ -302,7 +334,7 @@ function 助手面板占位({ 工作台 }) {
                     <span>{健康状态?.deepseekConfigured ? 健康状态.deepseekModel : '服务端 Agent 未接入'}</span>
                     <ChevronDown size={13} />
                   </div>
-                  <button className="studio-send-button" disabled={!输入文本.trim()} title="发送" type="submit">
+                  <button className="studio-send-button" disabled={!健康状态?.deepseekConfigured || !输入文本.trim()} title="发送" type="submit">
                     <Send size={17} />
                   </button>
                 </div>
@@ -371,6 +403,7 @@ export default function 应用() {
   ]);
   const [右栏tab, 设右栏tab] = useState('assets');
   const [中栏视图, 设中栏视图] = useState('flow');
+  const [创作模式, 设创作模式] = useState('quick');
   const [编辑弹窗开, 设编辑弹窗开] = useState(false);
   const [新建弹窗开, 设新建弹窗开] = useState(false);
   const [新建标题, 设新建标题] = useState('新项目');
@@ -410,6 +443,25 @@ export default function 应用() {
   const 当前视觉预览 = 资产预览url(绑定资产) || 节点全景url(当前节点);
   const 当前有图 = !!当前视觉预览;
   const 当前有视频 = 节点有视频(当前节点);
+  const 创作资产报告 = useMemo(
+    () => (当前项目 ? 校验创作资产(当前项目) : { items: [] }),
+    [当前项目],
+  );
+  const 作者版本过新 = Number.isInteger(当前项目?.authoring?.schemaVersion) && 当前项目.authoring.schemaVersion > 1;
+  const 作者合同结构问题 = 创作资产报告.items.filter(
+    (项) => 项.severity === 'error' && 不可安全编辑的作者合同代码.has(项.code),
+  );
+  const 创作工作区只读 = 作者版本过新 || 作者合同结构问题.length > 0;
+
+  function 拦截只读创作合同() {
+    if (!创作工作区只读) return false;
+    设顶部错误(
+      作者版本过新
+        ? `该项目的创作资产来自更新版本 v${当前项目.authoring.schemaVersion}，当前版本只读保留，禁止保存、校验或发布覆盖。`
+        : '作者资料存在结构错误，当前版本已只读保留原数据；请先按下方路径修复原始合同。',
+    );
+    return true;
+  }
 
   // ---- 消息与项目的公共小动作 ----
 
@@ -426,6 +478,7 @@ export default function 应用() {
   // 输入(项目, 系统消息?) → 写进 localStorage → 若还是当前项目就同步内存 → 刷新列表清脏旗
   // 这是所有"落盘"操作的唯一出口(线上 de)，发布/保存/切主视觉都从这走。
   function 应用本机写入(项目, 消息文案) {
+    if (选中slugRef.current === 项目?.slug && 拦截只读创作合同()) return false;
     try {
       保存本机项目(项目);
       if (选中slugRef.current === 项目.slug) 设当前项目(归一化项目(项目));
@@ -516,6 +569,11 @@ export default function 应用() {
     void 加载全部(选中slugRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // 快速/专业只是当前浏览器的工作区偏好，不写进项目、剧情、发布包或玩家存档。
+  useEffect(() => {
+    if (选中slug) 设创作模式(读创作模式(选中slug));
+  }, [选中slug]);
 
   // 浏览器刷新/关页不会经过 React 按钮，必须使用 beforeunload 保住未落盘的剧情。
   useEffect(() => {
@@ -637,6 +695,7 @@ export default function 应用() {
 
   // 输入一个"怎么改"的函数 → 深拷贝 story 交给它改 → 换回项目并亮起"有未保存修改"(线上 ke)
   function 编辑剧情(改法) {
+    if (拦截只读创作合同()) return;
     设当前项目((旧) => {
       if (!旧?.story) return 旧;
       const 新剧情 = 深拷贝(旧.story);
@@ -647,14 +706,39 @@ export default function 应用() {
     置脏(true);
   }
 
+  // Level 6 作者资产和 story.cast 基础字段共用这条项目级编辑管道。
+  // 每次修改都会让旧 QA 报告失效，但不会自动落盘或冒充已保存。
+  function 编辑项目(改法) {
+    if (拦截只读创作合同()) return;
+    设当前项目((旧) => {
+      if (!旧?.story) return 旧;
+      const 草稿 = 深拷贝(旧);
+      改法(草稿);
+      草稿.qaReport = '';
+      return 归一化项目(草稿);
+    });
+    置脏(true);
+  }
+
+  function 切换创作模式(模式) {
+    const 新模式 = 模式 === 'professional' ? 'professional' : 'quick';
+    设创作模式(新模式);
+    写创作模式(选中slug, 新模式);
+  }
+
+  function 打开试玩() {
+    if (!当前项目?.slug || 有未保存修改) return;
+    window.open(预览链接, '_blank', 'noopener,noreferrer');
+  }
+
   // 保存修改(线上 Jr)：把内存里的项目落进浏览器柜子。
   // 示例项目也走这条路——静态部署没有服务器可写，保存即"另存为本机副本"(列表里会变成"标题（本机）")。
   function 保存修改() {
-    if (!当前项目?.story) return;
+    if (!当前项目?.story || 拦截只读创作合同()) return;
     设进行中动作('save-graph');
     设顶部错误(null);
     try {
-      应用本机写入(归一化项目({ ...当前项目 }), '节点、选择和对白修改已保存到当前浏览器。');
+      应用本机写入(归一化项目({ ...当前项目 }), '项目、剧情与创作资产已保存到当前浏览器。');
     } finally {
       设进行中动作(null);
     }
@@ -663,7 +747,7 @@ export default function 应用() {
   // 静默自动保存(线上 Ct)：生成语音等长任务开跑前，把没保存的剧情先落盘，防止白改。
   // 本棒没有长任务，先留给第二棒调用。
   function 静默保存() {
-    if (!当前项目?.story || !有未保存修改) return;
+    if (!当前项目?.story || !有未保存修改 || 拦截只读创作合同()) return;
     应用本机写入(归一化项目({ ...当前项目 }));
   }
 
@@ -671,7 +755,7 @@ export default function 应用() {
   // 输入 "validate" | "publish" → 跑本地规则 → 写 QA 报告 → 本机项目落盘/示例项目留内存
   // 发布拦截：有错误时亮顶栏错误条，只算校验不算发布。
   function 校验或发布(动作) {
-    if (!当前项目) return;
+    if (!当前项目 || 拦截只读创作合同()) return;
     设进行中动作(动作);
     设顶部错误(null);
     try {
@@ -716,6 +800,7 @@ export default function 应用() {
 
   // 输入算好的新 story → 换进当前项目并亮"有未保存修改" → 顺手选中指定节点
   function 应用剧情结果(新剧情, 选中id) {
+    if (拦截只读创作合同()) return;
     设当前项目((旧) => (旧?.story ? 归一化项目({ ...旧, story: 新剧情, qaReport: '' }) : 旧));
     置脏(true);
     if (选中id) 设选中节点id(选中id);
@@ -749,15 +834,18 @@ export default function 应用() {
 
   // 删除当前节点(线上 Kr)：只剩一个节点不许删；起点被删就换人；所有指向它的选择一并剪断
   function 动作删除节点() {
-    if (!当前节点 || !当前项目?.story || Object.keys(当前项目.story.nodes).length <= 1) return;
+    if (!当前节点 || !当前项目?.story || Object.keys(当前项目.story.nodes).length <= 1 || 拦截只读创作合同()) return;
     const 被删id = 当前节点.id;
+    if (!window.confirm(`确定删除节点「${当前节点.title || 被删id}」吗？\n\n对应情绪标注与节点级一致性引用会一并清理。`)) return;
     const 回落id = Object.keys(当前项目.story.nodes).find((id) => id !== 被删id) ?? 当前项目.story.startNodeId;
-    编辑剧情((剧情) => {
+    编辑项目((草稿) => {
+      const 剧情 = 草稿.story;
       delete 剧情.nodes[被删id];
       if (剧情.startNodeId === 被删id) 剧情.startNodeId = 回落id;
       for (const 节点 of Object.values(剧情.nodes)) {
         节点.choices = (节点.choices ?? []).filter((选择) => 选择.next !== 被删id);
       }
+      if (草稿.authoring) 草稿.authoring = 清理节点创作引用(草稿.authoring, 被删id);
     });
     设选中节点id(回落id);
   }
@@ -884,7 +972,7 @@ export default function 应用() {
 
   // 主视觉切换(线上 Bn)：点了立即保存，不走"有未保存修改"流程
   function 切换主视觉(类型) {
-    if (!当前项目?.story || !当前节点 || 忙碌) return;
+    if (!当前项目?.story || !当前节点 || 忙碌 || 拦截只读创作合同()) return;
     const 新剧情 = 深拷贝(当前项目.story);
     新剧情.nodes[当前节点.id] = { ...新剧情.nodes[当前节点.id], panoramaType: 类型 };
     const 新项目 = 归一化项目({ ...当前项目, story: 新剧情, qaReport: '' });
@@ -1018,7 +1106,7 @@ export default function 应用() {
           <p>
             {是本机项目 ? '本机浏览器项目' : '发布示例项目'}
             {' · '}
-            {有未保存修改 ? '有未保存修改' : '自动保存'} {更新时间文案}
+            {有未保存修改 ? '有未保存修改' : '已保存'} {更新时间文案}
             <Check size={14} />
           </p>
         </div>
@@ -1027,29 +1115,22 @@ export default function 应用() {
             className="studio-action is-secondary"
             href={预览链接}
             onClick={(事件) => {
-              if (!确认丢弃未保存修改('打开预览')) {
+              if (有未保存修改) {
                 事件.preventDefault();
+                设顶部错误('请先保存当前修改，再打开玩家试玩；试玩只读取已保存版本。');
                 return;
               }
-              // 用户已在页内明确确认，避免 beforeunload 再弹第二次。
-              // 新标签打开不会卸载当前页，下一轮任务要恢复保护，避免后续真正离页时漏拦。
-              if (有未保存修改) {
-                跳过离页确认ref.current = true;
-                window.setTimeout(() => {
-                  跳过离页确认ref.current = false;
-                }, 0);
-              }
             }}
-            title="打开当前游戏预览"
+            title={有未保存修改 ? '请先保存，再打开玩家试玩' : '打开当前游戏预览'}
           >
             <Play size={17} />
             <span>预览</span>
           </a>
           <button
             className="studio-action is-secondary is-compactable"
-            disabled={!当前项目 || 忙碌}
+            disabled={!当前项目 || 忙碌 || !健康状态?.imageConfigured}
             onClick={() => 占位提示('生成图片')}
-            title="一键生成全部缺失图片"
+            title={健康状态?.imageConfigured ? '一键生成全部缺失图片' : '图片生成服务尚未接入'}
             type="button"
           >
             <WandSparkles size={17} />
@@ -1057,19 +1138,19 @@ export default function 应用() {
           </button>
           <button
             className="studio-action is-secondary is-compactable"
-            disabled={!当前项目 || 忙碌}
+            disabled={!当前项目 || 忙碌 || !健康状态?.ttsConfigured}
             onClick={() => 占位提示('生成语音')}
-            title="一键生成全部缺失语音"
+            title={健康状态?.ttsConfigured ? '一键生成全部缺失语音' : '语音生成服务尚未接入'}
             type="button"
           >
             <Mic size={17} />
             <span>生成语音</span>
           </button>
-          <button className="studio-action is-secondary" disabled={!当前项目 || 忙碌} onClick={() => 校验或发布('validate')} type="button">
+          <button className="studio-action is-secondary" disabled={!当前项目 || 忙碌 || 创作工作区只读} onClick={() => 校验或发布('validate')} title={创作工作区只读 ? '作者合同已只读保护，不能用当前版本覆盖校验报告' : '校验当前项目'} type="button">
             {进行中动作 === 'validate' ? <LoaderCircle className="spin" size={17} /> : <Check size={17} />}
             <span>校验</span>
           </button>
-          <button className="studio-action is-primary" disabled={!当前项目 || 忙碌} onClick={() => 校验或发布('publish')} type="button">
+          <button className="studio-action is-primary" disabled={!当前项目 || 忙碌 || 创作工作区只读} onClick={() => 校验或发布('publish')} title={创作工作区只读 ? '作者合同已只读保护，不能发布覆盖' : '校验并发布到本机播放器'} type="button">
             {进行中动作 === 'publish' ? <LoaderCircle className="spin" size={17} /> : <Upload size={17} />}
             <span>发布</span>
           </button>
@@ -1118,9 +1199,45 @@ export default function 应用() {
           <div className="studio-avatar">K</div>
         </nav>
       </header>
-      {顶部错误 && <div className="studio-error">{顶部错误}</div>}
+      {顶部错误 && <div aria-live="assertive" className="studio-error" role="alert">{顶部错误}</div>}
+
+      <section className="creator-mode-bar" aria-label="创作工作区模式">
+        <div className="creator-mode-copy">
+          <strong>{创作工作区只读 ? '作者合同只读兼容模式' : 创作模式 === 'quick' ? '关系叙事快速工作区' : '完整节点与资产工作区'}</strong>
+          <span>{创作工作区只读 ? '原始作者资料保持不变，当前版本不会保存、校验或发布覆盖。' : '模式偏好只保存在当前浏览器，不会进入剧情数据或玩家存档。'}</span>
+        </div>
+        <创作模式切换 disabled={进行中动作 === 'load' || 创作工作区只读} 模式={创作模式} on切换={切换创作模式} />
+      </section>
 
       {/* ---- 三栏工作区 ---- */}
+      {创作工作区只读 ? (
+        <section className="creator-contract-readonly" role="status">
+          <ShieldCheck size={28} />
+          <div>
+            <span>READ-ONLY CONTRACT PROTECTION</span>
+            <h1>这份作者资料已按原样保护</h1>
+            <p>
+              {作者版本过新
+                ? `检测到 authoring v${当前项目.authoring.schemaVersion}，当前创作台只支持安全编辑 v1。请使用对应版本继续创作；玩家预览仍可读取 story。`
+                : '检测到会导致旧数据被静默丢弃的结构问题。下列路径修复前，创作台不会把规整结果写回本机项目。'}
+            </p>
+            {!!作者合同结构问题.length && (
+              <ul>{作者合同结构问题.map((问题) => <li key={`${问题.code}-${问题.path}`}><strong>{问题.path}</strong>{问题.message}</li>)}</ul>
+            )}
+          </div>
+        </section>
+      ) : 创作模式 === 'quick' ? (
+        <快速创作面板
+          项目={当前项目}
+          忙碌={忙碌}
+          有未保存修改={有未保存修改}
+          on更新={编辑项目}
+          on保存={保存修改}
+          on校验={() => 校验或发布('validate')}
+          on预览={打开试玩}
+          on进入专业模式={() => 切换创作模式('professional')}
+        />
+      ) : (
       <section className="studio-workspace">
         {/* 左栏：AI 创作助手(占位版，第二棒整体替换) */}
         <助手面板占位 工作台={工作台} />
@@ -1154,12 +1271,35 @@ export default function 应用() {
                 <button className={中栏视图 === 'grid' ? 'is-active' : ''} onClick={() => 设中栏视图('grid')} title="网格" type="button">
                   <LayoutGrid size={17} />
                 </button>
-                <button className="is-warm" disabled title="关系图预留" type="button">
+                <button
+                  className={中栏视图 === 'relationships' ? 'is-authoring is-active' : 'is-authoring'}
+                  onClick={() => 设中栏视图('relationships')}
+                  title="关系图"
+                  type="button"
+                >
                   <Network size={17} />
+                </button>
+                <button
+                  className={中栏视图 === 'emotion' ? 'is-authoring is-active' : 'is-authoring'}
+                  onClick={() => 设中栏视图('emotion')}
+                  title="情绪曲线"
+                  type="button"
+                >
+                  <Activity size={17} />
                 </button>
               </div>
             </div>
           </div>
+          {中栏视图 === 'relationships' ? (
+            <div className="studio-authoring-center">
+              <关系图面板 项目={当前项目} on更新={编辑项目} />
+            </div>
+          ) : 中栏视图 === 'emotion' ? (
+            <div className="studio-authoring-center">
+              <情绪曲线面板 项目={当前项目} on更新={编辑项目} />
+            </div>
+          ) : (
+          <>
           <div className="studio-flow-body">
             <aside className="studio-chapter-rail">
               {章节组.map((章) => (
@@ -1259,6 +1399,8 @@ export default function 应用() {
               </button>
             </div>
           </div>
+          </>
+          )}
         </section>
 
         {/* 右栏：资产/音乐/属性/数值/事件 */}
@@ -1276,13 +1418,13 @@ export default function 应用() {
               <NotebookText size={16} />
               属性
             </button>
-            <button className={右栏tab === 'numbers' ? 'is-active' : ''} onClick={() => 设右栏tab('numbers')} type="button">
-              <SlidersHorizontal size={16} />
-              数值
+            <button className={右栏tab === 'bible' ? 'is-active' : ''} onClick={() => 设右栏tab('bible')} type="button">
+              <BookOpen size={16} />
+              角色圣经
             </button>
-            <button className={右栏tab === 'events' ? 'is-active' : ''} onClick={() => 设右栏tab('events')} type="button">
-              <Zap size={16} />
-              事件
+            <button className={右栏tab === 'consistency' ? 'is-active' : ''} onClick={() => 设右栏tab('consistency')} type="button">
+              <ShieldCheck size={16} />
+              一致性
             </button>
           </div>
           {右栏tab === 'assets' ? (
@@ -1330,7 +1472,7 @@ export default function 应用() {
                 ) : (
                   <div className="studio-asset-placeholder">
                     <Image size={26} />
-                    <span>等待生成视觉资产</span>
+                    <span>{健康状态?.imageConfigured ? '当前场景尚无视觉资产' : '当前场景无视觉 · 图片服务未接入'}</span>
                   </div>
                 )}
                 <div className="studio-asset-badges">
@@ -1355,42 +1497,20 @@ export default function 应用() {
                 ))}
               </div>
               <div className="studio-asset-actions">
-                <label className={绑定资产 && !忙碌 ? '' : 'is-disabled'}>
+                <label className="is-disabled" title="视频上传尚未接入">
                   <Upload size={16} />
                   上传视频
-                  {绑定资产 && (
-                    <input
-                      accept="video/mp4,video/webm,video/quicktime"
-                      disabled={忙碌}
-                      onChange={(事件) => {
-                        占位提示('上传视频');
-                        事件.currentTarget.value = '';
-                      }}
-                      type="file"
-                    />
-                  )}
                 </label>
-                <label className={绑定资产 && !忙碌 ? '' : 'is-disabled'}>
+                <label className="is-disabled" title="图片替换尚未接入">
                   <Upload size={16} />
                   上传替换
-                  {绑定资产 && (
-                    <input
-                      accept="image/*"
-                      disabled={忙碌}
-                      onChange={(事件) => {
-                        占位提示('上传替换');
-                        事件.currentTarget.value = '';
-                      }}
-                      type="file"
-                    />
-                  )}
                 </label>
-                <button disabled={!绑定资产 || 忙碌} onClick={() => 占位提示('重新生成')} type="button">
+                <button disabled={!绑定资产 || 忙碌 || !健康状态?.imageConfigured} onClick={() => 占位提示('重新生成')} title={健康状态?.imageConfigured ? '重新生成当前资产' : '图片生成服务尚未接入'} type="button">
                   <RotateCcw size={16} />
                   重新生成
                 </button>
                 <button
-                  disabled={!绑定资产 || 绑定资产.status !== 'generated-image' || 忙碌}
+                  disabled={!绑定资产 || 绑定资产.status !== 'generated-image' || 忙碌 || !健康状态?.imageConfigured}
                   onClick={() => 占位提示('局部重绘')}
                   title="使用当前图片作为输入，调用图片编辑接口做局部重绘。"
                   type="button"
@@ -1416,8 +1536,8 @@ export default function 应用() {
                 icon={<Music size={18} />}
                 title="音乐设计"
                 rows={[
-                  ['状态', 当前项目?.musicDesign ? '等待选择节点' : '未初始化'],
-                  ['模型', 健康状态?.musicModel || 'suno_music_open'],
+                  ['状态', 健康状态?.musicConfigured ? (当前项目?.musicDesign ? '等待选择节点' : '未初始化') : '音乐生成服务尚未接入'],
+                  ['模型', 健康状态?.musicConfigured ? (健康状态?.musicModel || '服务端未返回模型名') : '未接入'],
                   ['当前节点', 当前节点?.id ?? '--'],
                 ]}
               />
@@ -1434,31 +1554,18 @@ export default function 应用() {
                 ['选择', String(当前节点?.choices?.length ?? 0)],
               ]}
             />
-          ) : 右栏tab === 'numbers' ? (
-            <占位面板
-              icon={<SlidersHorizontal size={18} />}
-              title="数值表预留"
-              rows={[
-                ['信任值', '待接入'],
-                ['风险值', '待接入'],
-                ['隐藏 boss 触发', '待接入'],
-                ['结局权重', `${当前项目?.summary?.endingCount ?? 0} 个结局`],
-              ]}
-            />
+          ) : 右栏tab === 'bible' ? (
+            <div className="studio-authoring-side">
+              <角色圣经面板 compact 项目={当前项目} on更新={编辑项目} />
+            </div>
           ) : (
-            <占位面板
-              icon={<Zap size={18} />}
-              title="事件表预留"
-              rows={[
-                ['进入节点', 当前节点?.id ?? '--'],
-                ['选择反馈', `${当前节点?.choices?.length ?? 0} 条`],
-                ['奖励事件', '待接入'],
-                ['延迟惩罚', '待接入'],
-              ]}
-            />
+            <div className="studio-authoring-side">
+              <一致性资产面板 compact 项目={当前项目} on更新={编辑项目} />
+            </div>
           )}
         </aside>
       </section>
+      )}
 
       {/* ---- 底部就绪状态条 ---- */}
       <就绪状态条

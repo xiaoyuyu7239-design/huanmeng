@@ -224,8 +224,99 @@ try {
 
   const { default: 创作台应用 } = await 服务.ssrLoadModule('/源码/创作台/创作台应用.jsx');
   const 创作台html = 无告警渲染('创作台', React.createElement(创作台应用));
-  if (!创作台html.includes('studio-shell')) throw new Error('创作台壳层渲染失败');
-  console.log('  ✓ 创作台壳层');
+  if (
+    !创作台html.includes('studio-shell') ||
+    !创作台html.includes('creator-mode-switch') ||
+    !创作台html.includes('quick-creator-shell') ||
+    !创作台html.includes('先把人写清楚，再让关系发生')
+  ) throw new Error('创作台双模式与快速工作区壳层渲染失败');
+
+  const { 新建本机项目, 归一化项目 } = await 服务.ssrLoadModule('/源码/创作台/项目管理/本机项目存储.js');
+  const 创作样例 = 新建本机项目('女性向创作测试', 'women-creator-test');
+  创作样例.story.cast.characters.push(
+    {
+      id: 'partner',
+      name: '沈遥',
+      role: '危机调查搭档',
+      theme: '信任与边界',
+      romanceable: true,
+      relationship: { enabled: true, initial: { spark: 20, trust: 30, boundary: 70 } },
+    },
+    {
+      id: 'ally',
+      name: '林嘉',
+      role: '平级数据同盟',
+      theme: '证据与姐妹同盟',
+      romanceable: false,
+      relationship: { enabled: false, initial: { spark: 0, trust: 48, boundary: 80 } },
+    },
+  );
+  const 规整样例 = 归一化项目(创作样例);
+  规整样例.authoring.relationshipEdges.push({
+    id: 'partner--ally',
+    from: 'partner',
+    to: 'ally',
+    type: 'professional',
+    label: '共同审计',
+    dynamic: '一人追进度，一人守证据。',
+    boundary: '不替对方承诺结论。',
+    reviewed: true,
+  });
+  规整样例.authoring.consistencyRules.push({
+    id: 'opening-agency',
+    label: '开场主导感',
+    scope: 'node',
+    targetId: 规整样例.story.startNodeId,
+    rule: '开场行动由玩家主角执行。',
+    severity: 'error',
+    enabled: true,
+    reviewed: true,
+  });
+  规整样例.story.cast.characters.find((角色) => 角色.id === 'partner').portrait = '  /portraits/ninth-seat/xu-cheng.png  ';
+  规整样例.authoring.consistencyAssets.push({
+    id: 'portrait-partner-shared-reference',
+    kind: 'portrait-reference',
+    title: '多人关联但由运行态立绘生成的参考',
+    status: 'approved',
+    characterIds: ['partner', 'ally'],
+    nodeIds: [],
+    sourcePath: '/portraits/ninth-seat/xu-cheng.png',
+    notes: '删除按钮必须说明先解除运行态立绘。',
+    reviewed: true,
+  });
+  const {
+    default: 快速创作面板,
+    一致性资产面板,
+    关系图面板,
+    情绪曲线面板,
+  } = await 服务.ssrLoadModule('/源码/创作台/女性向资产/创作资产面板.jsx');
+  const noop = () => {};
+  const 快速html = 无告警渲染('快速创作面板', React.createElement(快速创作面板, {
+    项目: 规整样例,
+    忙碌: false,
+    有未保存修改: false,
+    on更新: noop,
+    on保存: noop,
+    on校验: noop,
+    on预览: noop,
+    on进入专业模式: noop,
+  }));
+  if (!快速html.includes('角色主动目标') || !快速html.includes('关系设计') || !快速html.includes('一致性资产')) {
+    throw new Error('快速创作步骤或角色圣经字段缺失');
+  }
+  const 关系html = 无告警渲染('专业关系图', React.createElement(关系图面板, { 项目: 规整样例, on更新: noop }));
+  if (!关系html.includes('沈遥') || !关系html.includes('林嘉') || !关系html.includes('叙事关系') || !关系html.includes('心动 / 信任 / 边界') || !关系html.includes('连接两名非玩家角色')) {
+    throw new Error('专业关系图未同时覆盖可发展角色、非恋爱同盟和三维关系说明');
+  }
+  const 情绪html = 无告警渲染('专业情绪曲线', React.createElement(情绪曲线面板, { 项目: 规整样例, on更新: noop }));
+  if (!情绪html.includes('role="img"') || !情绪html.includes('主导感') || !情绪html.includes('不代表玩家只有一条路线')) {
+    throw new Error('情绪曲线缺少可访问图表、主导感或分支说明');
+  }
+  const 一致性html = 无告警渲染('一致性资产', React.createElement(一致性资产面板, { 项目: 规整样例, on更新: noop }));
+  if (!一致性html.includes('自动检查只覆盖引用') || !一致性html.includes('女性同盟保留纠错权') || !一致性html.includes('新增规则') || !一致性html.includes('阻塞发布') || !一致性html.includes('请选择明确目标') || !一致性html.includes('请先在角色圣经中更换或清空基准立绘')) {
+    throw new Error('一致性资产缺少诚实扫描说明，或规则新增/范围/目标/严重度编辑入口');
+  }
+  console.log('  ✓ 创作台壳层：快速/专业模式、角色、关系、情绪与一致性资产');
 } finally {
   await 服务.close();
 }

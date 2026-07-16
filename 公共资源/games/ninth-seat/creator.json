@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "storyId": "ninth-seat",
+  "storyBible": "一场由女性总导演亲自保全证据、划定边界并追问责任的零点直播事故。\n关系建立在共同工作、清晰同意和可验证承诺上；女性同盟与独立路线拥有同等叙事价值。",
+  "authoring": {
+    "schemaVersion": 1,
+    "characterBibles": [
+      {
+        "characterId": "you",
+        "desire": "保全原始证据与素材当事人的撤回权，并建立任何融资压力都不能绕过的人类否决机制。",
+        "fear": "为了证明自己能把事情做成，最终也像系统一样把人简化成指标和可调用素材。",
+        "boundary": "任何人不得替她同意、替她公开私人信息，或以保护为名夺走总导演权限。",
+        "growth": "从独自承担所有风险，走向定义程序、要求共同签字，并允许可信任的人承担其份内责任。",
+        "voice": "句子短，优先使用动词、负责人、时间戳和可验证对象；可以迟疑，但不会失去职业判断。",
+        "reviewed": true
+      },
+      {
+        "characterId": "lu_chenzhou",
+        "desire": "找出第九路信号如何绕过权限，并让故障安全机制真正受非技术负责人控制。",
+        "fear": "自己设计的系统伤害真实的人；失控时会本能收拢权限，重演事故逻辑。",
+        "boundary": "未经许澄确认不得恢复信号、安装追踪、读取私人通讯或替她触发否决。",
+        "growth": "从由自己锁死系统，走向让决定权可见、可撤回，并接受许澄否决技术方案。",
+        "voice": "克制、精确，给出可执行选项、时间与代价，不用术语压过对方。",
+        "reviewed": true
+      },
+      {
+        "characterId": "zhou_yan",
+        "desire": "证明事故不是偶发误触，而是一套把未经同意内容包装成真实的生产机制。",
+        "fear": "为了抢先公开制造无法撤回的二次伤害，也害怕因在意某个人而放弃公共责任。",
+        "boundary": "不得擅自发布未校验材料、泄露私人对话，或用相信我替代用途、时点和风险说明。",
+        "growth": "从证据一到就必须公开，走向承认公开方式本身也需要负责。",
+        "voice": "敏锐、话锋快，追问证据来源、受益者与代价承担者；允许对方沉默和修订。",
+        "reviewed": true
+      },
+      {
+        "characterId": "he_qingye",
+        "desire": "夺回对自身影像与表达的署名权，让观众知道顺畅表演不能证明素材经过同意。",
+        "fear": "一旦停止提供完美形象，团队和观众就不再需要真实的他。",
+        "boundary": "不得默认身体接触或用公开表白施压；镜头、复刻声音和私人表达均需明确授权。",
+        "growth": "从用完美表演保护自己，走向公开承认害怕、撤回授权并为真实表达署名。",
+        "voice": "会用舞台、镜头和观众视线作比喻，但谈到边界时直接且不暧昧回避。",
+        "reviewed": true
+      },
+      {
+        "characterId": "shen_que",
+        "desire": "让法律文件重新约束决策者，而不是成为事故发生后的免责布景。",
+        "fear": "再次用合法形式掩盖实质强迫，把流程完整误当成选择自由。",
+        "boundary": "不得隐瞒重大法律代价、诱导签署、把沉默解释为同意，或替许澄决定她承受不起真相。",
+        "growth": "从帮助组织降低损失，走向要求真正掌权的人签名并承认伦理责任。",
+        "voice": "稳定、少废话，严格区分可以做、应该做和谁签字负责。",
+        "reviewed": true
+      },
+      {
+        "characterId": "lin_miao",
+        "desire": "保全可复核的原始证据，让独立审计进入常设流程，并获得自己的审计署名。",
+        "fear": "审计再次被当成技术备注，工作成果被记到更有权力的人名下。",
+        "boundary": "不为男性路线让位，不替许澄完成所有审计，也不以姐妹情谊要求无条件站队。",
+        "growth": "从后台保全证据，走向共同制定公开、撤回和复核协议，并要求署名。",
+        "voice": "精确、节制，偶尔有干燥幽默；支持许澄，也保留平等纠错权。",
+        "reviewed": true
+      },
+      {
+        "characterId": "qiao_wen",
+        "desire": "让项目活过今晚，同时保住团队继续改革产品和组织流程的可能。",
+        "fear": "多年建立的公司因一次事故崩塌，也害怕承认自己默许的效率文化才是事故条件。",
+        "boundary": "不得把她写成嫉妒年轻女性的脸谱反派；错误必须来自可理解、可追责的权力选择。",
+        "growth": "从要求一个能继续开播的方案，走向亲自签署停播、披露或独立审计决定。",
+        "voice": "讲成本、时点、替代方案和责任窗口，不用性别羞辱或情绪化怒吼推进冲突。",
+        "reviewed": true
+      }
+    ],
+    "relationshipEdges": [
+      {
+        "id": "you--lu_chenzhou",
+        "from": "you",
+        "to": "lu_chenzhou",
+        "type": "potential-romance",
+        "label": "控制与托付",
+        "dynamic": "两人在技术协作中确认权限与代价；吸引力来自他愿意交还控制、她愿意理解技术限制。",
+        "boundary": "陆沉舟不得以保护或专业优势接管；许澄的技术否决不会降低主线收益。",
+        "reviewed": true
+      },
+      {
+        "id": "you--zhou_yan",
+        "from": "you",
+        "to": "zhou_yan",
+        "type": "potential-romance",
+        "label": "真相与伤害",
+        "dynamic": "双方都要追问事实，但必须协商公开时点、证据完整性与当事人代价。",
+        "boundary": "私人表达不能被转化为报道筹码；公共利益也不能免除校验与撤回空间。",
+        "reviewed": true
+      },
+      {
+        "id": "you--he_qingye",
+        "from": "you",
+        "to": "he_qingye",
+        "type": "potential-romance",
+        "label": "表演与自我",
+        "dynamic": "许澄把他当共同作者而非节目资产，他也允许她在镜头外不必表演勇敢。",
+        "boundary": "不以身体接触或公开暧昧建立亲密；拒绝镜头与亲近不会减少职业成果。",
+        "reviewed": true
+      },
+      {
+        "id": "you--shen_que",
+        "from": "you",
+        "to": "shen_que",
+        "type": "potential-romance",
+        "label": "规则与选择",
+        "dynamic": "关系建立在完整说明后果、保留撤回权，以及把个人承诺写进正式责任链。",
+        "boundary": "沈确不能用法律权威替许澄裁决；合法不等于正当，沉默也不等于同意。",
+        "reviewed": true
+      },
+      {
+        "id": "you--lin_miao",
+        "from": "you",
+        "to": "lin_miao",
+        "type": "ally",
+        "label": "证据与姐妹同盟",
+        "dynamic": "两位导演共同保全证据、互相纠正盲点，并让支持经得起反对者复核。",
+        "boundary": "不同意见不解释为背叛；林渺拥有独立目标、判断和审计署名。",
+        "reviewed": true
+      },
+      {
+        "id": "you--qiao_wen",
+        "from": "you",
+        "to": "qiao_wen",
+        "type": "rival",
+        "label": "野心与责任",
+        "dynamic": "两人都想让项目活下去，却对融资、公开窗口和谁该承担组织责任有不同判断。",
+        "boundary": "冲突来自权力选择而非雌竞；乔雯的资源和错误都必须由她本人签字承担。",
+        "reviewed": true
+      }
+    ],
+    "emotionPoints": [
+      { "nodeId": "s00-blue-salon", "intensity": 78, "agency": 72, "intimacy": 12, "note": "高压开场；许澄立即冻结外发并要求责任人，不以慌乱交出主导权。", "reviewed": true },
+      { "nodeId": "s01-ghost-frame", "intensity": 84, "agency": 76, "intimacy": 18, "note": "事故被拆成图像、声音、脚本与权限四条链，玩家决定先深挖哪一条。", "reviewed": true },
+      { "nodeId": "s02-signal-room", "intensity": 72, "agency": 78, "intimacy": 38, "note": "技术协作增加靠近感，但审计权限与交还控制保持在台面上。", "reviewed": true },
+      { "nodeId": "s03-media-booth", "intensity": 75, "agency": 76, "intimacy": 36, "note": "真相冲动与公开代价正面冲突，许澄仍保留材料发布条件。", "reviewed": true },
+      { "nodeId": "s04-dressing-corridor", "intensity": 65, "agency": 74, "intimacy": 46, "note": "节奏短暂放缓，让素材当事人亲自定义同意和署名范围。", "reviewed": true },
+      { "nodeId": "s05-legal-room", "intensity": 70, "agency": 80, "intimacy": 34, "note": "合法与正当被分开讨论，完整后果说明构成关系信任。", "reviewed": true },
+      { "nodeId": "s06-evidence-table", "intensity": 77, "agency": 82, "intimacy": 40, "note": "四条证据汇流，女性同盟通过交叉校验强化而非无条件附和。", "reviewed": true },
+      { "nodeId": "s07-data-vault", "intensity": 86, "agency": 84, "intimacy": 32, "note": "旧名字与训练清单抬高伦理压力，玩家获得可复核的关键事实。", "reviewed": true },
+      { "nodeId": "s08-producer-office", "intensity": 80, "agency": 86, "intimacy": 25, "note": "融资倒计时进入正面冲突，许澄提出能执行也能追责的职业方案。", "reviewed": true },
+      { "nodeId": "s09-blackout", "intensity": 95, "agency": 90, "intimacy": 28, "note": "系统失控达到第一峰值，人类否决权必须由玩家实际操作。", "reviewed": true },
+      { "nodeId": "s10-debrief-mode", "intensity": 56, "agency": 80, "intimacy": 50, "note": "危机后降压，玩家自由选择私聊、女性同盟或独立复核。", "reviewed": true },
+      { "nodeId": "s11-partner-select", "intensity": 48, "agency": 78, "intimacy": 56, "note": "关系选择是观察窗而非主线门票，拒绝恋爱不损失证据或结局。", "reviewed": true },
+      { "nodeId": "s12-lu-private", "intensity": 46, "agency": 76, "intimacy": 72, "note": "靠近来自共同复盘权限与代价，总开关仍放在两人都看得见的位置。", "reviewed": true },
+      { "nodeId": "s13-zhou-private", "intensity": 50, "agency": 75, "intimacy": 70, "note": "公开冲动被放进禁发线以内，允许保留和修订私人说法。", "reviewed": true },
+      { "nodeId": "s14-he-private", "intensity": 42, "agency": 76, "intimacy": 76, "note": "亲密来自不替对方表演勇敢，保持明确询问和可撤回空间。", "reviewed": true },
+      { "nodeId": "s15-shen-private", "intensity": 48, "agency": 78, "intimacy": 68, "note": "法律意见之外表达个人立场，但不利用权威缩小许澄选择。", "reviewed": true },
+      { "nodeId": "s16-lin-alliance", "intensity": 52, "agency": 86, "intimacy": 72, "note": "两位导演共同列反向清单，支持、纠错和署名同时成立。", "reviewed": true },
+      { "nodeId": "s17-solo-review", "intensity": 43, "agency": 92, "intimacy": 34, "note": "独立路线不以孤独惩罚玩家，以可复核记录兑现情感与职业完整性。", "reviewed": true },
+      { "nodeId": "s18-responsibility-signature", "intensity": 82, "agency": 93, "intimacy": 62, "note": "关系与职业线重新汇合，真正掌权的人必须把名字写在方案前。", "reviewed": true },
+      { "nodeId": "s19-broadcast-countdown", "intensity": 89, "agency": 95, "intimacy": 64, "note": "公开范围与撤回权在倒计时中同时受检验，团队开始共同承担。", "reviewed": true },
+      { "nodeId": "s20-live-crossroad", "intensity": 98, "agency": 97, "intimacy": 66, "note": "最终操作峰值由许澄执行；关系只能改变陪伴质感，不能替代事实与责任。", "reviewed": true },
+      { "nodeId": "e01-open-ledger", "intensity": 38, "agency": 94, "intimacy": 55, "note": "公开账本兑现真相与责任，同时保留公司和团队承担后果的余波。", "reviewed": true },
+      { "nodeId": "e02-earned-silence", "intensity": 32, "agency": 92, "intimacy": 52, "note": "主动延迟不是退缩，而是为撤回同意和二次校验承担成本。", "reviewed": true },
+      { "nodeId": "e03-shared-authorship", "intensity": 36, "agency": 91, "intimacy": 82, "note": "共同署名让当事人、审计者和决策者各自发言，不由完美主持人代言。", "reviewed": true },
+      { "nodeId": "e04-returned-ninth-seat", "intensity": 28, "agency": 98, "intimacy": 74, "note": "人类否决、可撤回与可追责机制同时成立，第九席被归还给真实的人。", "reviewed": true }
+    ],
+    "consistencyRules": [
+      { "id": "player-agency", "label": "主角主体性", "scope": "story", "targetId": "", "rule": "关键决定必须由许澄执行或明确授权，他人不得代替她作出结论。", "severity": "error", "enabled": true, "reviewed": true },
+      { "id": "explicit-consent-boundary", "label": "明确同意与边界", "scope": "story", "targetId": "", "rule": "亲密、公开、数据使用与越权行动都必须存在可识别的同意和撤回空间。", "severity": "error", "enabled": true, "reviewed": true },
+      { "id": "non-romance-equivalence", "label": "非恋爱关系等价", "scope": "story", "targetId": "", "rule": "女性同盟与独立路线在信息、行动权、职业成果和结局资格上不得降级。", "severity": "error", "enabled": true, "reviewed": true },
+      { "id": "female-alliance-correction", "label": "女性同盟保留纠错权", "scope": "story", "targetId": "", "rule": "林渺拥有独立目标、审计署名与平等纠错权，不能只做无条件附和者。", "severity": "warning", "enabled": true, "reviewed": true }
+    ],
+    "consistencyAssets": [
+      { "id": "portrait-you", "kind": "portrait-reference", "title": "许澄基准立绘", "status": "approved", "characterIds": ["you"], "nodeIds": [], "sourcePath": "/portraits/ninth-seat/xu-cheng.png", "notes": "职业化站位；以眼神、手部操作和权限界面表现主导权。", "reviewed": true },
+      { "id": "portrait-lu_chenzhou", "kind": "portrait-reference", "title": "陆沉舟基准立绘", "status": "approved", "characterIds": ["lu_chenzhou"], "nodeIds": [], "sourcePath": "/portraits/ninth-seat/lu-chenzhou.png", "notes": "克制、精确；吸引力来自交还控制而非压迫式姿态。", "reviewed": true },
+      { "id": "portrait-zhou_yan", "kind": "portrait-reference", "title": "周衍基准立绘", "status": "approved", "characterIds": ["zhou_yan"], "nodeIds": [], "sourcePath": "/portraits/ninth-seat/zhou-yan.png", "notes": "敏锐但不侵入；不使用偷拍、逼近或泄密威胁式构图。", "reviewed": true },
+      { "id": "portrait-he_qingye", "kind": "portrait-reference", "title": "贺清野基准立绘", "status": "approved", "characterIds": ["he_qingye"], "nodeIds": [], "sourcePath": "/portraits/ninth-seat/he-qingye.png", "notes": "舞台感服务于创作者身份，不以裸露和身体局部建立价值。", "reviewed": true },
+      { "id": "portrait-shen_que", "kind": "portrait-reference", "title": "沈确基准立绘", "status": "approved", "characterIds": ["shen_que"], "nodeIds": [], "sourcePath": "/portraits/ninth-seat/shen-que.png", "notes": "稳定、可接近；法律权威不通过居高临下的镜头表现。", "reviewed": true },
+      { "id": "portrait-lin_miao", "kind": "portrait-reference", "title": "林渺基准立绘", "status": "approved", "characterIds": ["lin_miao"], "nodeIds": [], "sourcePath": "/portraits/ninth-seat/lin-miao.png", "notes": "平级调查搭档；拥有操作位置、审计署名与纠错视线。", "reviewed": true },
+      { "id": "portrait-qiao_wen", "kind": "portrait-reference", "title": "乔雯基准立绘", "status": "approved", "characterIds": ["qiao_wen"], "nodeIds": [], "sourcePath": "/portraits/ninth-seat/qiao-wen.png", "notes": "有野心与组织权力，不做恶毒女上司或雌竞脸谱。", "reviewed": true }
+    ]
+  }
+}

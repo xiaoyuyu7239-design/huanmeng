@@ -87,15 +87,15 @@ export default function 创作者介绍应用() {
         <section className="hx-creator-hero">
           <div className="hx-wrap hx-creator-hero-grid">
             <div>
-              <span className="hx-eyebrow">For creators · 专业模式</span>
+              <span className="hx-eyebrow">For creators · 快速创作 / 专业模式</span>
               <h1>把灵感变成一部<br /><em>真的走得通</em>的故事。</h1>
               <p>
-                角色档案、关系状态、故事节点、素材和发布校验集中在同一套工作流里。
+                从角色目标、关系边界和情绪曲线开始，或进入完整节点、机制、素材和发布工作流。
                 玩家首页负责进入故事，这里负责把故事做出来。
               </p>
               <div className="hx-actions">
                 <a className="hx-button hx-button--primary" href="/creator">
-                  进入专业创作台 <ArrowRight aria-hidden="true" size={17} />
+                  开始快速创作 <ArrowRight aria-hidden="true" size={17} />
                 </a>
                 <a className="hx-text-link" href="#creator-capabilities">查看能力边界 ↓</a>
               </div>
@@ -123,7 +123,7 @@ export default function 创作者介绍应用() {
             <header className="hx-section-head">
               <span className="hx-eyebrow">创作台能力</span>
               <h2>从角色，到结局可达。</h2>
-              <p>专业模式保留原有创作能力，但不再占据玩家进入故事的第一条路径。</p>
+              <p>快速模式按角色、关系、节奏与一致性逐步推进；专业模式继续提供完整节点和资产能力，两者共用同一份项目数据。</p>
             </header>
             <div className="hx-creator-capability-grid">
               {创作能力.map(({ icon: Icon, title, description }) => (

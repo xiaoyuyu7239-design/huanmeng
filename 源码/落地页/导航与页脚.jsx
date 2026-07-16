@@ -53,7 +53,7 @@ export function 页脚({ playHref }) {
             <div>
               <h2>创作工具</h2>
               <a href="/creators">创作者能力介绍</a>
-              <a href="/creator">进入专业创作台</a>
+              <a href="/creator">进入创作台</a>
             </div>
           </div>
         </div>
