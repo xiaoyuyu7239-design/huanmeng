@@ -42,7 +42,7 @@ npm run verify:release
 npm start
 ```
 
-`npm test` 会运行剧情引擎、创作台、《第九席》内容路线、资源引用、玩家 UI、玩家首页数据/SSR 契约、关系 AI 安全测试和页面壳层回归；生产文件输出到 `dist/`。`npm run verify:release` 还会重建真实发布产物，检查版本清单、体积、疑似密钥、SPA/API、健康探针、缓存、Range，以及 Node 与 Sites 兼容 Worker 的作者备用关系回应。`npm start` 默认监听 `0.0.0.0:4173`，本机可从 `http://127.0.0.1:4173` 访问；`/livez` 表示进程存活，`/readyz` 表示当前不可变产物可接流量。
+`npm test` 会运行剧情引擎、创作台、《第九席》内容路线、全平台剧情体检（可达性/死锁门槛/黑话/恋爱承诺一致性）、资源引用、玩家 UI、玩家首页数据/SSR 契约、关系 AI 安全测试和页面壳层回归；生产文件输出到 `dist/`。`npm run verify:release` 还会重建真实发布产物，检查版本清单、体积、疑似密钥、SPA/API、健康探针、缓存、Range，以及 Node 与 Sites 兼容 Worker 的作者备用关系回应。`npm start` 默认监听 `0.0.0.0:4173`，本机可从 `http://127.0.0.1:4173` 访问；`/livez` 表示进程存活，`/readyz` 表示当前不可变产物可接流量。
 
 每次构建都会生成 `dist/release.json`，记录 `0.9.x-beta` 版本、完整 Git commit、源码是否清洁、构建时间、Beta/AI 模式与关键文件 SHA-256。脏工作树构建会明确标为不可发布；`npm run verify:release` 只接受清洁 HEAD，并重算关键产物哈希。缺少文件、摘要不一致或清单字段越界时，生产进程拒绝启动，`/readyz` 返回 503。
 

@@ -512,8 +512,8 @@ const 七仙女下凡 = JSON.parse(
   相等(加载.getStoryProtagonist().name, '沈知意');
   相等(引擎.说话人显示名('you'), '沈知意');
   相等(加载.getStoryCharacterList().map((角色) => 角色.id), ['wen_tianmo', 'lin_wanqing', 'hua_rongli']);
-  相等(开局.relationships.wen_tianmo, { spark: 20, trust: 30, boundary: 60 });
-  相等(开局.relationships.lin_wanqing, { spark: 20, trust: 30, boundary: 60 });
+  相等(开局.relationships.wen_tianmo, { spark: 0, trust: 30, boundary: 60 });
+  相等(开局.relationships.lin_wanqing, { spark: 0, trust: 30, boundary: 60 });
   相等(开局.relationships.hua_rongli, { spark: 25, trust: 30, boundary: 55 });
   const 选择 = 加载.storyNodes['s00-character-select'].choices.find((条) => 条.id === 'choice-tianmo');
   const 结算后 = 引擎.应用效果(开局, 选择.effect);

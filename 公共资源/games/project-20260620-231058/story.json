@@ -24,7 +24,7 @@
         "relationship": {
           "enabled": true,
           "initial": {
-            "spark": 20,
+            "spark": 0,
             "trust": 30,
             "boundary": 60
           }
@@ -42,7 +42,7 @@
         "relationship": {
           "enabled": true,
           "initial": {
-            "spark": 20,
+            "spark": 0,
             "trust": 30,
             "boundary": 60
           }

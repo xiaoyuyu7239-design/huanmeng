@@ -14,7 +14,7 @@
     "build": "vite build && node scripts/生成发布产物.mjs",
     "preview": "vite preview",
     "start": "node 服务端/生产服务器.js",
-    "test": "npm run test:engine && npm run test:creator && npm run test:content && npm run test:assets && npm run test:ui && npm run test:landing && npm run test:ai && npm run test:smoke",
+    "test": "npm run test:engine && npm run test:creator && npm run test:content && npm run test:story && npm run test:assets && npm run test:ui && npm run test:landing && npm run test:ai && npm run test:smoke",
     "test:engine": "node 源码/播放器/剧情引擎/引擎自测.mjs",
     "test:creator": "node 源码/创作台/创作台自测.mjs",
     "test:content": "node 源码/播放器/剧情引擎/第九席内容自测.mjs",
@@ -26,7 +26,8 @@
     "test:player": "npm run test:ui && npm run test:smoke",
     "test:release": "node scripts/发布产物自测.mjs",
     "verify:release": "npm test && npm run build && npm run test:release && git diff --check",
-    "素材爬取": "node 源码/公共工具/素材爬取.mjs"
+    "素材爬取": "node 源码/公共工具/素材爬取.mjs",
+    "test:story": "node 源码/公共工具/剧情体检.mjs"
   },
   "dependencies": {
     "lucide-react": "0.475.0",
