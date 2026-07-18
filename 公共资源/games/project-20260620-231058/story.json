@@ -1,7 +1,7 @@
 {
   "id": "project-20260620-231058",
   "title": "第十五封愿望",
-  "subtitle": "校园悬疑互动影游",
+  "subtitle": "会记住你选择的校园悬疑",
   "cast": {
     "protagonist": {
       "id": "you",
@@ -23,7 +23,11 @@
         "romanceable": false,
         "relationship": {
           "enabled": true,
-          "initial": { "spark": 20, "trust": 30, "boundary": 60 }
+          "initial": {
+            "spark": 20,
+            "trust": 30,
+            "boundary": 60
+          }
         }
       },
       {
@@ -37,7 +41,11 @@
         "romanceable": false,
         "relationship": {
           "enabled": true,
-          "initial": { "spark": 20, "trust": 30, "boundary": 60 }
+          "initial": {
+            "spark": 20,
+            "trust": 30,
+            "boundary": 60
+          }
         }
       },
       {
@@ -51,7 +59,11 @@
         "romanceable": true,
         "relationship": {
           "enabled": true,
-          "initial": { "spark": 25, "trust": 30, "boundary": 55 }
+          "initial": {
+            "spark": 25,
+            "trust": 30,
+            "boundary": 55
+          }
         }
       }
     ]
@@ -102,7 +114,7 @@
     "s00-character-select": {
       "id": "s00-character-select",
       "chapter": "序章",
-      "title": "角色选择：第十五封愿望",
+      "title": "雨夜初见：第十五封愿望",
       "location": "雨夜校园入口",
       "panorama": "/panoramas/s00-character-select.webp",
       "palette": {
@@ -110,7 +122,7 @@
         "via": "#334155",
         "to": "#d9b98f"
       },
-      "synopsis": "三位主角站在愿望箱前，玩家通过观察互动选择调查视角。",
+      "synopsis": "校庆前夜，第十五封匿名愿望出现。三个互相保护的人站在雨里，等你决定先听谁说。",
       "entryView": {
         "yaw": 0,
         "pitch": 0,
@@ -142,8 +154,16 @@
           "voiceGeneratedAt": "2026-06-20T23:40:03.357Z"
         },
         {
+          "speaker": "wen_tianmo",
+          "text": "你可算来了——伞分你一半！"
+        },
+        {
+          "speaker": "lin_wanqing",
+          "text": "先看清箱子，再决定听谁说。"
+        },
+        {
           "speaker": "hua_rongli",
-          "text": "选中我，真相会回应你。",
+          "text": "走近我一点，真相会回应你。",
           "voiceProfileId": "s00-character-select-hua-rongli-c25257c4",
           "voiceId": "male-qn-jingying",
           "voiceSrc": "/voices/project-20260620-231058/s00-character-select/line-002-bf3177d35237.mp3",
@@ -154,7 +174,7 @@
         },
         {
           "speaker": "narrator",
-          "text": "鼠标划过每个人时，他们用截然不同的方式打招呼：甜茉亲近，晚晴克制，花容离温柔而危险。",
+          "text": "三个人用截然不同的方式向你打招呼：甜茉亲近，晚晴克制，花容离温柔而危险。",
           "voiceProfileId": "s00-character-select-narrator-a69a206e",
           "voiceId": "female-yujie",
           "voiceSrc": "/voices/project-20260620-231058/s00-character-select/line-003-cdf5b486bfac.mp3",
@@ -257,14 +277,14 @@
         },
         {
           "id": "choice-huarongli",
-          "label": "选中中间的花容离",
+          "label": "迎上花容离的目光",
           "next": "s01-rain-gate",
           "fateType": "river",
-          "consequence": "镜头推进，其他人影淡去，花容离的旧书替你打开第一条线索。",
+          "consequence": "雨声忽然退远。你接过花容离递来的旧书，从潮湿的纸页间抖出第一条线索。",
           "effect": {
             "relationships": {
               "hua_rongli": {
-                "trust": 10
+                "trust": 8
               }
             },
             "flags": [
@@ -304,36 +324,45 @@
     "s14-new-node": {
       "id": "s14-new-node",
       "chapter": "序章",
-      "title": "选择",
+      "title": "天台夜语",
       "location": "天台",
-      "synopsis": "玩家在这里面对新的选择。",
+      "synopsis": "温甜茉把你引上天台。去年的事在这里结束，她不想让今年重演。",
       "panorama": "/panoramas/s14-new-node.jpg",
       "lines": [
         {
+          "speaker": "narrator",
+          "text": "雨丝斜过天台，你和甜茉的影子在积水里靠得很近。"
+        },
+        {
+          "speaker": "wen_tianmo",
+          "text": "去年的事，最后就是在这里烧成一小撮灰的。这次……我不想再看谁被推上来。"
+        },
+        {
           "speaker": "you",
-          "text": "今晚不该叫替别人选择。",
-          "voiceProfileId": "s14-new-node-you-22e5d654",
-          "voiceMode": "catalog",
-          "voiceId": "Chinese (Mandarin)_Male_Announcer",
-          "voiceSrc": "/voices/project-20260620-231058/s14-new-node/line-001-5b5b666210bd.mp3",
-          "voiceAssetPath": "assets/voices/s14-new-node/line-001-5b5b666210bd.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "5b5b666210bd",
-          "voiceGeneratedAt": "2026-06-21T00:25:42.871Z"
+          "text": "那就从今晚开始，不让任何人替另一个人选择。"
         }
       ],
       "choices": [
         {
           "id": "continue-s01-rain-gate",
-          "label": "继续前往「雨夜校门」",
+          "label": "把此刻的天台记进笔记，和她一起下楼",
           "caption": "插入节点后的原路线出口。",
           "next": "s01-rain-gate",
           "fateType": "river",
-          "consequence": "你从新增场景回到「雨夜校门」路线。",
+          "consequence": "你把天台此刻的样子记进心里。有些地方，总有一天要回来看第二眼。",
           "effect": {
             "globals": {
               "integrity": 1
-            }
+            },
+            "relationships": {
+              "wen_tianmo": {
+                "trust": 4,
+                "boundary": 2
+              }
+            },
+            "flags": [
+              "rooftop_foreshadow"
+            ]
           }
         }
       ],
@@ -424,7 +453,7 @@
         },
         {
           "speaker": "you",
-          "text": "第十五封愿望？校庆投稿不是只有十四封吗？",
+          "text": "第十五封。投稿箱明明只收了十四封愿望。",
           "voiceProfileId": "s01-rain-gate-you-1bb199d4"
         },
         {
@@ -478,10 +507,11 @@
           "label": "拆开信，确认里面写了什么",
           "next": "s02-orientation-room",
           "fateType": "river",
-          "consequence": "你读到“愿望箱会替胆小的人说话”，真相线提前开启。",
+          "consequence": "你读到“愿望箱会替胆小的人说话”——但封口拆开的那一刻，这封信就再也当不成完整的物证。",
           "effect": {
             "globals": {
-              "truth": 8
+              "truth": 8,
+              "evidence": -5
             },
             "flags": [
               "read_letter"
@@ -654,7 +684,7 @@
           "label": "接过温甜茉递来的糖",
           "next": "s03-old-library-wishbox",
           "fateType": "river",
-          "consequence": "她放松下来，愿意带你去甜品社看采购记录。",
+          "consequence": "她放松下来，愿意带你去甜品社看采购记录——但名单那边的缺口，今晚未必等你。",
           "effect": {
             "relationships": {
               "wen_tianmo": {
@@ -1051,6 +1081,12 @@
             ],
             "globals": {
               "pressure": -4
+            },
+            "relationships": {
+              "wen_tianmo": {
+                "trust": 3,
+                "boundary": -3
+              }
             }
           }
         }
@@ -1354,7 +1390,7 @@
         },
         {
           "id": "choice-talk-book",
-          "label": "谈《百年孤独》的边注",
+          "label": "把你从愿望箱旁带来的《百年孤独》推到他面前，聊起边注",
           "next": "s10-secret-archive",
           "fateType": "river",
           "consequence": "旧书让花容离放下防备，带你进入档案室。",
@@ -1371,7 +1407,8 @@
             ],
             "relationships": {
               "hua_rongli": {
-                "trust": 14
+                "trust": 14,
+                "spark": 8
               }
             }
           }
@@ -1388,7 +1425,8 @@
             ],
             "relationships": {
               "hua_rongli": {
-                "trust": 7
+                "trust": 7,
+                "spark": 5
               }
             }
           }
@@ -1456,7 +1494,7 @@
         },
         {
           "speaker": "narrator",
-          "text": "舞台灯缓慢亮起，线索卡从台侧递到你面前。",
+          "text": "舞台灯缓慢亮起，林晚晴借着递台本的动作，把一张折好的字条塞进你手心。",
           "voiceProfileId": "s07-rehearsal-hall-narrator-ac55aaca"
         },
         {
@@ -1586,7 +1624,7 @@
     "s08-tianmo-storage": {
       "id": "s08-tianmo-storage",
       "chapter": "第三章",
-      "title": "温甜茉支线：甜品社仓库",
+      "title": "甜品社仓库",
       "location": "甜品社仓库",
       "panorama": "/panoramas/s08-tianmo-storage.png",
       "palette": {
@@ -1621,7 +1659,7 @@
         },
         {
           "speaker": "you",
-          "text": "你害怕的不是被怀疑，是喜欢的人被一起拖下水。",
+          "text": "你害怕的不是被怀疑，是在乎的人被一起拖下水。",
           "voiceProfileId": "s08-tianmo-storage-you-0bb5f345"
         },
         {
@@ -1671,10 +1709,10 @@
       "choices": [
         {
           "id": "choice-protect-name",
-          "label": "保护她，不逼问喜欢的人是谁",
+          "label": "保护她，不逼问她在乎的人是谁",
           "next": "s09-wanqing-office",
           "fateType": "river",
-          "consequence": "她选择自己上台说明捡信经过。",
+          "consequence": "她选择自己上台说明捡信经过，并把采购单一起塞进你手里。",
           "effect": {
             "flags": [
               "route_tianmo",
@@ -1683,7 +1721,8 @@
             ],
             "relationships": {
               "wen_tianmo": {
-                "trust": 12
+                "trust": 12,
+                "boundary": 6
               }
             }
           }
@@ -1693,7 +1732,7 @@
           "label": "拿糖纸编号去查采购记录",
           "next": "s11-rooftop-confrontation",
           "fateType": "web",
-          "consequence": "你得到能公开展示的物证。",
+          "consequence": "糖纸编号对上了匿名墙立牌的采购单——买单的人，不在他们三个人之中。可甜茉看着你，知道你先相信了纸，而不是她。",
           "effect": {
             "flags": [
               "route_tianmo",
@@ -1747,7 +1786,7 @@
     "s09-wanqing-office": {
       "id": "s09-wanqing-office",
       "chapter": "第三章",
-      "title": "林晚晴支线：学生会办公室",
+      "title": "学生会办公室",
       "location": "学生会办公室",
       "panorama": "/panoramas/s09-wanqing-office.png",
       "palette": {
@@ -1865,7 +1904,7 @@
         },
         {
           "id": "choice-public-all-records",
-          "label": "要求她一起公开全部记录",
+          "label": "支持她把全部记录一起公开",
           "next": "s11-rooftop-confrontation",
           "fateType": "web",
           "consequence": "截图和日记压痕合在一起，她愿意承担删稿责任。",
@@ -1884,7 +1923,8 @@
             ],
             "relationships": {
               "lin_wanqing": {
-                "trust": 10
+                "trust": 10,
+                "boundary": 4
               }
             }
           }
@@ -1917,7 +1957,7 @@
     "s10-secret-archive": {
       "id": "s10-secret-archive",
       "chapter": "第三章",
-      "title": "花容离隐藏线：旧校刊档案室",
+      "title": "旧校刊档案室",
       "location": "旧校刊档案室",
       "panorama": "/panoramas/s10-secret-archive.png",
       "palette": {
@@ -2029,7 +2069,8 @@
             ],
             "relationships": {
               "hua_rongli": {
-                "trust": 12
+                "trust": 12,
+                "spark": 6
               }
             }
           }
@@ -2107,9 +2148,12 @@
       ],
       "lines": [
         {
+          "speaker": "you",
+          "text": "今晚到此为止——不再有人替别人选择。想说的话，自己开口，我来作证。"
+        },
+        {
           "speaker": "hua_rongli",
-          "text": "让他们一起说吧。今晚，不该再有人替别人选择。",
-          "voiceProfileId": "s11-rooftop-confrontation-hua-rongli-17c9b97a"
+          "text": "……好。这一次，我不抢在任何人前面。"
         },
         {
           "speaker": "wen_tianmo",
@@ -2166,7 +2210,7 @@
           "label": "让温甜茉先说捡信经过",
           "next": "s12-festival-stage-final-choice",
           "fateType": "river",
-          "consequence": "她不再逃避，甜茉线结局开启。",
+          "consequence": "她深吸一口气，决定把捡信的经过自己讲完。",
           "effect": {
             "flags": [
               "route_tianmo",
@@ -2184,7 +2228,7 @@
           "label": "让林晚晴先说名单流程",
           "next": "s12-festival-stage-final-choice",
           "fateType": "river",
-          "consequence": "她承认删稿和流程漏洞，晚晴线结局开启。",
+          "consequence": "她把删稿和流程漏洞一并认下，不再等别人替她收尾。",
           "effect": {
             "flags": [
               "route_wanqing",
@@ -2202,7 +2246,7 @@
           "label": "让花容离先公开旧报道",
           "next": "s12-festival-stage-final-choice",
           "fateType": "web",
-          "consequence": "他把选择还给当事人，花容离线结局开启。",
+          "consequence": "他合上旧报道，把话筒递还给当事人。",
           "effect": {
             "flags": [
               "route_huarongli",
@@ -2210,7 +2254,8 @@
             ],
             "relationships": {
               "hua_rongli": {
-                "trust": 6
+                "trust": 6,
+                "spark": 3
               }
             }
           }
@@ -2220,13 +2265,13 @@
           "label": "拿出三份证据，要求一起说",
           "next": "s12-festival-stage-final-choice",
           "fateType": "web",
-          "consequence": "三条支线同时闭合，真结局开启。",
+          "consequence": "三份证据在你手里合成完整的一晚——今晚可以让所有人一起开口。",
           "lockedHint": "此前还缺少「old report、list flow、purchase record」线索或状态，先完成相关场景调查。",
           "condition": {
             "flags": [
-              "old_report",
+              "purchase_record",
               "list_flow",
-              "purchase_record"
+              "old_report"
             ]
           },
           "effect": {
@@ -2278,7 +2323,7 @@
         "via": "#334155",
         "to": "#d9b98f"
       },
-      "synopsis": "纪录片开始播放，玩家决定公开哪一版真相。",
+      "synopsis": "纪录片即将上屏，你要决定先让哪一个真相被听见。",
       "entryView": {
         "yaw": 0,
         "pitch": 0,
@@ -2300,7 +2345,7 @@
       "lines": [
         {
           "speaker": "lin_wanqing",
-          "text": "纪录片开始播放。你选择公开哪一个真相？",
+          "text": "灯一亮，片子就上屏。放哪一版真相，最后由你来定。",
           "voiceProfileId": "s12-festival-stage-final-choice-lin-wanqing-8d2bad1e"
         },
         {
@@ -2352,7 +2397,7 @@
               "ended_tianmo"
             ],
             "globals": {
-              "public_truth": 30
+              "public_truth": 35
             }
           }
         },
@@ -2394,7 +2439,7 @@
               "ended_huarongli"
             ],
             "globals": {
-              "public_truth": 38
+              "public_truth": 35
             }
           }
         },
@@ -2407,8 +2452,7 @@
           "lockedHint": "此前还缺少「evidence bundle、first chose huarongli」线索或状态，先完成相关场景调查。",
           "condition": {
             "flags": [
-              "evidence_bundle",
-              "first_chose_huarongli"
+              "evidence_bundle"
             ]
           },
           "effect": {
@@ -2556,7 +2600,7 @@
         },
         {
           "speaker": "narrator",
-          "text": "镜面反光落在舞台上，像一份迟来的道歉。",
+          "text": "镜面反光扫过台下，坐着的人一个接一个直起了背。",
           "voiceProfileId": "e02-clear-mirror-narrator-85367b64"
         }
       ],
@@ -2594,7 +2638,7 @@
     "e03-prince-pages": {
       "id": "e03-prince-pages",
       "chapter": "结局",
-      "title": "皇子书页",
+      "title": "银白书签",
       "location": "校庆舞台",
       "panorama": "/panoramas/e03-prince-pages.png",
       "palette": {
@@ -2629,14 +2673,14 @@
         },
         {
           "speaker": "narrator",
-          "text": "银白羽毛落进书页，像一枚终于解除的封印。",
+          "text": "那枚银白书签从旧报道里滑出来，像一道终于解除的封印。",
           "voiceProfileId": "e03-prince-pages-narrator-e4ba5fa0"
         }
       ],
       "hotspots": [],
       "choices": [],
       "ending": {
-        "title": "皇子书页",
+        "title": "银白书签",
         "subtitle": "花容离把旧报道交给校刊，承认自己曾打开愿望箱。温柔不再是替别人决定，而是陪他们说完。",
         "type": "romance"
       },
@@ -2697,7 +2741,7 @@
       "lines": [
         {
           "speaker": "narrator",
-          "text": "第十五封愿望重新写下。真相，终于被所有人听见。",
+          "text": "匿名墙的后台账号被连夜注销，管理员的道歉第一次带上了名字。第十五封愿望被重新写下——这一次，落款不是匿名。",
           "voiceProfileId": "e04-fifteenth-wish-true-ending-narrator-a5165f2b"
         },
         {

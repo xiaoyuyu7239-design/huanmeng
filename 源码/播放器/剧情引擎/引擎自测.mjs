@@ -541,26 +541,72 @@ const 七仙女下凡 = JSON.parse(
   );
 });
 
-检查('真实回归·七仙女：董永旧标量关系迁移为 globals 并按路径正确解锁', () => {
-  加载.setActiveStory(七仙女下凡, 'project-20260620-201739');
+// 旧标量关系迁移的引擎能力用合成样例继续覆盖：
+// 正式作品《第七织女》翻新后已全部使用三维关系，不再包含旧格式。
+检查('旧标量关系迁移为 globals 并按路径正确解锁（合成样例）', () => {
+  const 旧式剧情 = {
+    title: '旧标量迁移样例',
+    startNodeId: 'a',
+    nodes: {
+      a: {
+        id: 'a',
+        choices: [
+          { id: 'ka', label: '结识', next: 'b', effect: { relationships: { 'dong-yong': 15 } } },
+          { id: 'kb', label: '路过', next: 'b', effect: {} },
+        ],
+      },
+      b: {
+        id: 'b',
+        choices: [
+          {
+            id: 'kc',
+            label: '求助',
+            next: 'a',
+            condition: { relationships: { 'dong-yong': { min: 10 } } },
+            effect: { relationships: { 'dong-yong': 20 } },
+          },
+        ],
+      },
+    },
+  };
+  加载.setActiveStory(旧式剧情, 'legacy-scalar-sample');
   const 所有选择 = 加载.storyNodeList.flatMap((节点) => 节点.choices);
-  const 接受帮助 = 所有选择.find((条) => 条.id === 'c01-1');
-  const 独自行动 = 所有选择.find((条) => 条.id === 'c01-2');
-  const 呼叫董永 = 所有选择.find((条) => 条.id === 'c05-3');
+  const 结识 = 所有选择.find((条) => 条.id === 'ka');
+  const 路过 = 所有选择.find((条) => 条.id === 'kb');
+  const 求助 = 所有选择.find((条) => 条.id === 'kc');
   const 开局 = 引擎.创建初始状态();
   相等(
     [加载.getScoreDefinition('dong_yong_affinity').initial, 加载.getScoreDefinition('dong_yong_affinity').visibility],
     [0, 'hidden'],
   );
   相等(开局.globals.dong_yong_affinity, 0);
-  相等(接受帮助.effect.globals.dong_yong_affinity, 15);
-  相等(呼叫董永.condition.minGlobal, [{ key: 'dong_yong_affinity', value: 10 }]);
-  为真(!引擎.选择可用(开局, 呼叫董永), '未建立信任时锁定');
-  const 信任路径 = 引擎.应用效果(开局, 接受帮助.effect);
+  相等(结识.effect.globals.dong_yong_affinity, 15);
+  相等(求助.condition.minGlobal, [{ key: 'dong_yong_affinity', value: 10 }]);
+  为真(!引擎.选择可用(开局, 求助), '未建立信任时锁定');
+  const 信任路径 = 引擎.应用效果(开局, 结识.effect);
+  const 独行路径 = 引擎.应用效果(开局, 路过.effect);
+  为真(引擎.选择可用(信任路径, 求助), '先选 ka 后解锁');
+  为真(!引擎.选择可用(独行路径, 求助), '另一条路径仍锁定');
+  相等(引擎.应用效果(信任路径, 求助.effect).globals.dong_yong_affinity, 35);
+});
+
+检查('真实回归·第七织女：三维关系初值与结盟 flag 按路径正确解锁', () => {
+  加载.setActiveStory(七仙女下凡, 'project-20260620-201739');
+  const 所有选择 = 加载.storyNodeList.flatMap((节点) => 节点.choices);
+  const 接受帮助 = 所有选择.find((条) => 条.id === 'c01-1');
+  const 独自行动 = 所有选择.find((条) => 条.id === 'c01-2');
+  const 请董野干扰 = 所有选择.find((条) => 条.id === 'c05-3');
+  const 开局 = 引擎.创建初始状态();
+  相等(加载.getStoryProtagonist().name, '云织');
+  相等(开局.relationships['dong-yong'], { spark: 10, trust: 20, boundary: 60 });
+  相等(接受帮助.effect.relationships['dong-yong'], { spark: 3, trust: 8 });
+  相等(请董野干扰.condition.flags, ['dongye_ally']);
+  为真(!引擎.选择可用(开局, 请董野干扰), '未结盟时锁定');
+  const 结盟路径 = 引擎.应用效果(开局, 接受帮助.effect);
   const 独行路径 = 引擎.应用效果(开局, 独自行动.effect);
-  为真(引擎.选择可用(信任路径, 呼叫董永), '先选 c01-1 后解锁');
-  为真(!引擎.选择可用(独行路径, 呼叫董永), '另一条路径仍锁定');
-  相等(引擎.应用效果(信任路径, 呼叫董永.effect).globals.dong_yong_affinity, 35);
+  为真(引擎.选择可用(结盟路径, 请董野干扰), '先选 c01-1 后解锁');
+  为真(!引擎.选择可用(独行路径, 请董野干扰), '另一条路径仍锁定');
+  相等(引擎.应用效果(结盟路径, 请董野干扰.effect).relationships['dong-yong'].trust, 36, '合作后信任累加');
 });
 
 // ============================ 二、状态与结算 ============================

@@ -53,7 +53,7 @@
       "chapter": "Opening",
       "title": "蓝厅入场",
       "location": "银蓝宫殿主沙龙",
-      "panorama": "/panoramas/s00-blue-salon.jpg",
+      "panorama": "/panoramas/e03-blue-hour-pact.jpg",
       "palette": {
         "from": "#d7e6fb",
         "via": "#7b93b8",
@@ -285,7 +285,7 @@
       "chapter": "Witnesses",
       "title": "左侧沙发",
       "location": "蓝灰绒面长沙发",
-      "panorama": "/panoramas/s02-left-sofa.jpg",
+      "panorama": "/panoramas/ninth-seat/dressing-room-360.jpg",
       "palette": {
         "from": "#e3ecfb",
         "via": "#758cb3",
@@ -410,7 +410,7 @@
       "chapter": "Image",
       "title": "王座剪辑",
       "location": "中央王座与后台控制台",
-      "panorama": "/panoramas/s03-throne-edit.jpg",
+      "panorama": "/panoramas/ninth-seat/control-room-360.jpg",
       "palette": {
         "from": "#d9e6f7",
         "via": "#526985",
@@ -534,7 +534,7 @@
       "chapter": "Evidence",
       "title": "水晶桌",
       "location": "中央水晶茶几",
-      "panorama": "/panoramas/s04-crystal-table.jpg",
+      "panorama": "/panoramas/ninth-seat/audit-vault-360.jpg",
       "palette": {
         "from": "#eef5ff",
         "via": "#7f92aa",
@@ -779,7 +779,7 @@
       "chapter": "Confession",
       "title": "地毯证词",
       "location": "前景绒毯与碎光区",
-      "panorama": "/panoramas/s06-carpet-confession.jpg",
+      "panorama": "/panoramas/ninth-seat/media-gallery-360.jpg",
       "palette": {
         "from": "#edf4ff",
         "via": "#7188aa",
@@ -1584,7 +1584,7 @@
       "chapter": "14-1 隐藏结局",
       "title": "第九席",
       "location": "镜厅与主舞台重叠的空间",
-      "panorama": "/panoramas/e04-ninth-seat.jpg",
+      "panorama": "/panoramas/ninth-seat/stage-replay-360.jpg",
       "palette": {
         "from": "#f7fbff",
         "via": "#455c7c",

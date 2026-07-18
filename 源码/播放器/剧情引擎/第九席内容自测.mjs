@@ -49,19 +49,19 @@ const 女性同盟id = ['lin_miao', 'qiao_wen'];
 const 表情枚举 = ['neutral', 'focused', 'concerned', 'guarded', 'vulnerable', 'resolute', 'warm', 'warning'];
 const 表情集合 = new Set(表情枚举);
 const 头像路径 = {
-  you: '/portraits/ninth-seat/xu-cheng.png',
-  lu_chenzhou: '/portraits/ninth-seat/lu-chenzhou.png',
-  zhou_yan: '/portraits/ninth-seat/zhou-yan.png',
-  he_qingye: '/portraits/ninth-seat/he-qingye.png',
-  shen_que: '/portraits/ninth-seat/shen-que.png',
-  lin_miao: '/portraits/ninth-seat/lin-miao.png',
-  qiao_wen: '/portraits/ninth-seat/qiao-wen.png',
+  you: '/portraits/ninth-seat/xu-cheng.webp',
+  lu_chenzhou: '/portraits/ninth-seat/lu-chenzhou.webp',
+  zhou_yan: '/portraits/ninth-seat/zhou-yan.webp',
+  he_qingye: '/portraits/ninth-seat/he-qingye.webp',
+  shen_que: '/portraits/ninth-seat/shen-que.webp',
+  lin_miao: '/portraits/ninth-seat/lin-miao.webp',
+  qiao_wen: '/portraits/ninth-seat/qiao-wen.webp',
 };
 function 是同角色头像(路径, 角色id) {
   const 基础 = 头像路径[角色id];
   if (typeof 路径 !== 'string' || !基础) return false;
-  const 前缀 = 基础.replace(/\.png$/, '');
-  return 路径 === 基础 || (路径.startsWith(`${前缀}-`) && 路径.endsWith('.png'));
+  const 前缀 = 基础.replace(/\.webp$/, '');
+  return 路径 === 基础 || (路径.startsWith(`${前缀}-`) && 路径.endsWith('.webp'));
 }
 const 预期结局id = [
   'e01-open-ledger',

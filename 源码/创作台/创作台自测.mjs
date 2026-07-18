@@ -1257,9 +1257,28 @@ for (const 条目 of 正式名录.featured) {
     );
   }
   if (条目.slug === 'project-20260620-201739') {
-    assert.ok(校验创作资产(项目).items.some((项) => 项.code === 'legacy-relationship-scalar' && 项.severity === 'warning'));
+    assert.ok(
+      !校验创作资产(项目).items.some((项) => 项.code === 'legacy-relationship-scalar'),
+      '翻新后的《第七织女》不得再包含旧标量关系',
+    );
   }
 }
+
+// 旧标量关系的创作台警告能力改用合成样例继续覆盖（正式作品已全部翻新为三维关系）。
+const 旧标量样例项目 = 由剧情构造项目('legacy-scalar-sample', {
+  title: '旧标量样例',
+  startNodeId: 'a',
+  nodes: {
+    a: {
+      id: 'a',
+      choices: [{ id: 'k', label: '结识', next: 'a', effect: { relationships: { 'dong-yong': 15 } } }],
+    },
+  },
+}, null);
+assert.ok(
+  校验创作资产(旧标量样例项目).items.some((项) => 项.code === 'legacy-relationship-scalar' && 项.severity === 'warning'),
+  '旧标量关系必须继续触发创作台警告',
+);
 
 // 真实示例加载链必须读取同 slug companion；错绑资料则回退未审核骨架，不能串到另一部作品。
 const 原fetch = globalThis.fetch;

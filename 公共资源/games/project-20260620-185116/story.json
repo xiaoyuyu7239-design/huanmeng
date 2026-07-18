@@ -1,11 +1,11 @@
 {
-  "title": "九尾狐仙下凡",
+  "title": "青丘异闻录",
   "startNodeId": "s00-meet-temple",
   "nodes": {
     "s00-meet-temple": {
       "id": "s00-meet-temple",
       "chapter": "第一幕",
-      "title": "古庙相遇",
+      "title": "古庙借宿",
       "location": "深山古庙",
       "panorama": "/panoramas/s00-meet-temple.jpg",
       "palette": {
@@ -13,47 +13,26 @@
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "暴雨之夜，你躲进一座破旧古庙。烛火摇曳中，一位白衣女子静坐角落，九尾隐现。",
+      "synopsis": "暴雨之夜，为修订《青丘异闻录》进山的典籍编修沈栖梧躲进古庙，遇见守庙的白衣女子。",
       "lines": [
         {
           "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "ready",
-          "text": "暴雨把山路冲成黑河，你推开古庙残门，烛火在狐仙神像前一盏盏颤动。",
-          "voiceSrc": "/voices/project-20260620-185116/s00-meet-temple/line-001-550e6326da06.mp3",
-          "voiceAssetPath": "assets/voices/s00-meet-temple/line-001-550e6326da06.mp3",
-          "voiceHash": "550e6326da06",
-          "voiceGeneratedAt": "2026-06-20T11:51:38.959Z"
+          "text": "暴雨把山路冲成黑河。你抱紧装书稿的木匣推开古庙残门，烛火在狐仙神像前一盏盏颤动。"
+        },
+        {
+          "speaker": "qing_li",
+          "text": "避雨可以。别碰供桌上的东西——那不是给人的。"
         },
         {
           "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "ready",
-          "text": "右侧的白衣女子静坐在阴影里，身后的九尾银光一闪即逝，像在等你认出她。",
-          "voiceSrc": "/voices/project-20260620-185116/s00-meet-temple/line-002-769a994206a4.mp3",
-          "voiceAssetPath": "assets/voices/s00-meet-temple/line-002-769a994206a4.mp3",
-          "voiceHash": "769a994206a4",
-          "voiceGeneratedAt": "2026-06-20T11:51:39.936Z"
-        },
-        {
-          "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "ready",
-          "text": "你能上前问清她的来意，也能转身逃向山下，但答案藏在她身后的光里。",
-          "voiceSrc": "/voices/project-20260620-185116/s00-meet-temple/line-003-80c8563628ec.mp3",
-          "voiceAssetPath": "assets/voices/s00-meet-temple/line-003-80c8563628ec.mp3",
-          "voiceHash": "80c8563628ec",
-          "voiceGeneratedAt": "2026-06-20T11:51:40.804Z"
+          "text": "你亮明来意：书阁典籍编修沈栖梧，奉命修订《青丘异闻录》。她抬眼的瞬间，你在神像与她的眉目之间，看出了同一张脸。"
         }
       ],
       "hotspots": [
         {
           "id": "hs00-1",
-          "label": "九尾银光",
-          "description": "看向右侧白衣女子身后的九尾狐影，尾尖在冷光里泛着银白。",
+          "label": "九道银痕",
+          "description": "神像背后的墙上有九道银白色旧痕，像尾影扫过百年的印记。",
           "yaw": 86,
           "pitch": -8,
           "effect": {
@@ -66,16 +45,15 @@
               "found-s01-escape-village"
             ],
             "memories": [
-              "发现线索：右侧白衣女子身后的九尾银光。",
-              "解锁线索：狐仙之路",
-              "解锁线索：逃向村庄"
+              "发现线索：神像背后九道银白旧痕。",
+              "银痕之下，你有了两个去处——随她入后山，或下山查村志。"
             ]
           }
         },
         {
           "id": "hs00-2",
           "label": "狐仙神像",
-          "description": "破旧的神像，似乎是一尊狐仙像，与女子面容相似。",
+          "description": "神像底座刻着两行小字，落款年号——正是姑祖母沈青蘅失踪的那一年。",
           "yaw": 0,
           "pitch": 12,
           "effect": {
@@ -86,7 +64,7 @@
               "hs00-2-found"
             ],
             "memories": [
-              "发现线索：破旧的神像，似乎是一尊狐仙像，与女子面容相似。"
+              "发现线索：神像落款年号与姑祖母失踪同年。"
             ]
           }
         }
@@ -94,20 +72,21 @@
       "choices": [
         {
           "id": "ch00-1",
-          "label": "上前搭话",
-          "caption": "1",
+          "label": "说出姑祖母的名字，请她带路",
           "next": "s01-follow-fox",
           "fateType": "river",
-          "consequence": "你选择了信任，跟随狐仙深入秘密。",
-          "lockedHint": "先点击右侧白衣女子身后的「九尾银光」，再决定是否上前搭话。",
+          "consequence": "你把家事与公务一起押上——她认得这个名字，也从此把你看作局内人，而不是过客。",
+          "lockedHint": "先环视殿内，查看神像与银痕，确认她与传说的关系，再决定开口。",
           "condition": {
             "flags": [
               "found-s01-follow-fox"
             ]
           },
           "effect": {
-            "globals": {
-              "trust": 10
+            "relationships": {
+              "qing_li": {
+                "trust": 8
+              }
             },
             "flags": [
               "chose_follow"
@@ -119,27 +98,27 @@
         },
         {
           "id": "ch00-2",
-          "label": "转身逃离",
-          "caption": "2",
+          "label": "暂不打草惊蛇，下山查村志",
           "next": "s01-escape-village",
           "fateType": "river",
-          "consequence": "你选择了恐惧，逃向未知的村庄。",
-          "lockedHint": "先点击右侧白衣女子身后的「九尾银光」，确认她的身份后再决定是否转身逃离。",
+          "consequence": "先取证、后接触，是编修的稳妥——但青梨会记得，你第一眼把她当成了传说，而不是人。",
+          "lockedHint": "先环视殿内，看清那九道银痕，再决定去留。",
           "condition": {
             "flags": [
               "found-s01-escape-village"
             ]
           },
           "effect": {
-            "globals": {
-              "trust": -10,
-              "fear": 15
+            "relationships": {
+              "qing_li": {
+                "trust": -4
+              }
             },
             "flags": [
               "chose_escape"
             ],
             "memories": [
-              "雨夜奔逃"
+              "雨夜下山"
             ]
           }
         }
@@ -153,7 +132,7 @@
     "s01-follow-fox": {
       "id": "s01-follow-fox",
       "chapter": "第一幕",
-      "title": "狐仙之路",
+      "title": "守契者的路",
       "location": "古庙后院",
       "panorama": "/panoramas/s01-follow-fox.jpg",
       "palette": {
@@ -161,47 +140,26 @@
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "你跟随狐仙穿过庭院，她带你走向后山。",
+      "synopsis": "青梨提灯领你穿过庙后浓雾。她说出的名字不是你的——是姑祖母沈青蘅的。",
       "lines": [
         {
           "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "ready",
-          "text": "你跟着她绕过古庙后墙，雨声被庭院里的雾吞没，只剩衣摆擦过石阶的轻响。",
-          "voiceSrc": "/voices/project-20260620-185116/s01-follow-fox/line-001-2f45ad172684.mp3",
-          "voiceAssetPath": "assets/voices/s01-follow-fox/line-001-2f45ad172684.mp3",
-          "voiceHash": "2f45ad172684",
-          "voiceGeneratedAt": "2026-06-20T11:51:41.928Z"
+          "text": "她提灯走在前面，雾把雨声滤成很轻的沙响。灯焰是冷的银白色，照不暖石阶。"
+        },
+        {
+          "speaker": "qing_li",
+          "text": "沈青蘅。百年前也是这样一个雨夜，她抱着一箱书稿站在庙门口。你抱书匣的姿势，和她一模一样。"
         },
         {
           "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "ready",
-          "text": "她没有回头，却准确说出你梦里反复出现的名字，仿佛这条路你们已经走过很多次。",
-          "voiceSrc": "/voices/project-20260620-185116/s01-follow-fox/line-002-40586ced384f.mp3",
-          "voiceAssetPath": "assets/voices/s01-follow-fox/line-002-40586ced384f.mp3",
-          "voiceHash": "40586ced384f",
-          "voiceGeneratedAt": "2026-06-20T11:51:43.193Z"
-        },
-        {
-          "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "ready",
-          "text": "后山洞口透出灵石微光，你可以继续跟她进去，也可以停下直接逼问她的身份。",
-          "voiceSrc": "/voices/project-20260620-185116/s01-follow-fox/line-003-cd96285e9a6b.mp3",
-          "voiceAssetPath": "assets/voices/s01-follow-fox/line-003-cd96285e9a6b.mp3",
-          "voiceHash": "cd96285e9a6b",
-          "voiceGeneratedAt": "2026-06-20T11:51:44.420Z"
+          "text": "洞口灵石微光浮动。青梨在洞口顿住，回头看你——她不催，也不解释。"
         }
       ],
       "hotspots": [
         {
           "id": "hs01-1",
-          "label": "线索",
-          "description": "她发间一支白玉发簪，刻着远古符文。",
+          "label": "白玉簪",
+          "description": "她袖口露出半截白玉簪——簪头刻纹，与族谱里姑祖母画像上那支一模一样。",
           "yaw": 20,
           "pitch": -5,
           "effect": {
@@ -212,7 +170,7 @@
               "hs01-1-found"
             ],
             "memories": [
-              "发现线索：她发间一支白玉发簪，刻着远古符文。"
+              "发现线索：青梨的白玉簪与姑祖母遗物同款。"
             ]
           }
         }
@@ -220,13 +178,15 @@
       "choices": [
         {
           "id": "ch01-1",
-          "label": "跟她进山洞",
+          "label": "随她进洞，看百年前的记录",
           "next": "s02-fox-cave",
           "fateType": "river",
-          "consequence": "你深入狐仙的巢穴，发现她的秘密。",
+          "consequence": "你走进狐族的记忆现场——从此你写下的每一个字，都有了见证者的分量。",
           "effect": {
-            "globals": {
-              "trust": 5
+            "relationships": {
+              "qing_li": {
+                "trust": 5
+              }
             },
             "flags": [
               "entered_cave"
@@ -238,16 +198,18 @@
         },
         {
           "id": "ch01-2",
-          "label": "直接问她身份",
+          "label": "停下：先问清她与姑祖母的关系",
           "next": "s03-revelation",
           "fateType": "web",
-          "consequence": "你开门见山，加速了真相的暴露。",
+          "consequence": "你用编修的方式提问——按时间、按地点、按证据。她答得也快，真相提前浮出水面。",
           "effect": {
-            "globals": {
-              "trust": 8
+            "relationships": {
+              "qing_li": {
+                "trust": 8
+              }
             },
             "memories": [
-              "直接质问"
+              "直接求证"
             ]
           }
         }
@@ -261,7 +223,7 @@
     "s01-escape-village": {
       "id": "s01-escape-village",
       "chapter": "第一幕",
-      "title": "逃向村庄",
+      "title": "青丘村",
       "location": "山间小路",
       "panorama": "/panoramas/s01-escape-village.jpg",
       "palette": {
@@ -269,47 +231,26 @@
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "你拼命跑下山，远处村庄灯火微明。",
+      "synopsis": "你连夜下山。村口牌坊上「青丘村」三个字，与姑祖母最后一封信里的地名对上了。",
       "lines": [
         {
           "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "ready",
-          "text": "你冲出古庙，山路泥水没过脚踝，身后的烛光像一只不肯闭上的眼。",
-          "voiceSrc": "/voices/project-20260620-185116/s01-escape-village/line-001-a82ed02e2ece.mp3",
-          "voiceAssetPath": "assets/voices/s01-escape-village/line-001-a82ed02e2ece.mp3",
-          "voiceHash": "a82ed02e2ece",
-          "voiceGeneratedAt": "2026-06-20T11:51:45.351Z"
+          "text": "山路泥水没过脚踝。你护着怀里的书稿匣，一步一滑地下了山。"
         },
         {
           "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "ready",
-          "text": "村庄的灯火在雨幕里忽明忽暗，远处传来更夫敲梆和低声议论。",
-          "voiceSrc": "/voices/project-20260620-185116/s01-escape-village/line-002-8403fd9967b5.mp3",
-          "voiceAssetPath": "assets/voices/s01-escape-village/line-002-8403fd9967b5.mp3",
-          "voiceHash": "8403fd9967b5",
-          "voiceGeneratedAt": "2026-06-20T11:51:46.175Z"
+          "text": "村庄灯火忽明忽暗，更夫的梆子声里混着议论：又有人在庙里见到那位「仙姑」了。"
         },
         {
-          "speaker": "narrator",
-          "text": "你可以求助村民，把恐惧交给人群，也可以独自查探，弄清那女子为何追进你的梦。",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-185116/s01-escape-village/line-003-fbb46dc33d74.mp3",
-          "voiceAssetPath": "assets/voices/s01-escape-village/line-003-fbb46dc33d74.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "fbb46dc33d74",
-          "voiceGeneratedAt": "2026-06-20T11:51:47.196Z"
+          "speaker": "you",
+          "text": "姑祖母的信里写过这个村子。她失踪前查的，就是这里的狐仙传说。"
         }
       ],
       "hotspots": [
         {
           "id": "hs01-2",
-          "label": "线索",
-          "description": "牌坊上刻着‘青丘村’三个字，古老而诡异。",
+          "label": "村口牌坊",
+          "description": "牌坊上「青丘村」三字笔锋清瘦——落款竟是「沈青蘅题」。",
           "yaw": 0,
           "pitch": 15,
           "effect": {
@@ -320,7 +261,7 @@
               "hs01-2-found"
             ],
             "memories": [
-              "发现线索：牌坊上刻着‘青丘村’三个字，古老而诡异。"
+              "发现线索：村口牌坊为姑祖母沈青蘅所题。"
             ]
           }
         }
@@ -328,31 +269,28 @@
       "choices": [
         {
           "id": "ch01-3",
-          "label": "向村民求助",
+          "label": "去村长家问姑祖母的旧事",
           "next": "s02-village-secrets",
           "fateType": "river",
-          "consequence": "你寻求村民庇护，却听到恐怖传说。",
+          "consequence": "老人愿意开口——但他讲的版本里狐仙是灾星，你得自己分辨恐惧与事实。",
           "effect": {
-            "globals": {
-              "fear": 10
-            },
             "flags": [
               "sought_help"
             ],
             "memories": [
-              "村民的警告"
+              "村长的说法"
             ]
           }
         },
         {
           "id": "ch01-4",
-          "label": "独自查探",
+          "label": "先独自查旧祠堂的村志",
           "next": "s03-hidden-library",
           "fateType": "web",
-          "consequence": "你选择独立调查，发现隐藏古籍。",
+          "consequence": "不惊动任何人。你相信纸上的记录，比口中的传说诚实。",
           "effect": {
             "memories": [
-              "夜探村庄"
+              "夜探祠堂"
             ]
           }
         }
@@ -366,7 +304,7 @@
     "s02-fox-cave": {
       "id": "s02-fox-cave",
       "chapter": "第二幕",
-      "title": "狐仙洞穴",
+      "title": "壁画洞窟",
       "location": "后山洞穴",
       "panorama": "/panoramas/s02-fox-cave.jpg",
       "palette": {
@@ -374,47 +312,26 @@
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "洞穴深处，灵石闪光，墙上壁画描绘着狐仙的过去。",
+      "synopsis": "壁画上，百年前的教书先生与一位抱书匣的女子一同为狐族立契——那女子，是沈青蘅。",
       "lines": [
         {
           "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "ready",
-          "text": "洞穴深处的灵石照亮湿冷岩壁，九尾狐影在壁画之间无声游动。",
-          "voiceSrc": "/voices/project-20260620-185116/s02-fox-cave/line-001-11a3a91ea945.mp3",
-          "voiceAssetPath": "assets/voices/s02-fox-cave/line-001-11a3a91ea945.mp3",
-          "voiceHash": "11a3a91ea945",
-          "voiceGeneratedAt": "2026-06-20T11:51:48.291Z"
+          "text": "灵石照亮湿冷岩壁，九尾狐影在壁画之间无声游动。"
         },
         {
           "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "ready",
-          "text": "画上反复出现一个救狐的人影，眉眼与你惊人相似，百年前的因果第一次露出轮廓。",
-          "voiceSrc": "/voices/project-20260620-185116/s02-fox-cave/line-002-d3726f41b215.mp3",
-          "voiceAssetPath": "assets/voices/s02-fox-cave/line-002-d3726f41b215.mp3",
-          "voiceHash": "d3726f41b215",
-          "voiceGeneratedAt": "2026-06-20T11:51:49.431Z"
+          "text": "画上有三个人：重伤的白狐、执笔的教书先生、还有一位把名字签在契尾的女子——她腰间挂着与你同款的书阁腰牌。"
         },
         {
-          "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "ready",
-          "text": "她递来的礼物像救赎也像锁链，你必须决定是接受这份牵连，还是立刻抽身离开。",
-          "voiceSrc": "/voices/project-20260620-185116/s02-fox-cave/line-003-e48f1a5de00e.mp3",
-          "voiceAssetPath": "assets/voices/s02-fox-cave/line-003-e48f1a5de00e.mp3",
-          "voiceHash": "e48f1a5de00e",
-          "voiceGeneratedAt": "2026-06-20T11:51:50.806Z"
+          "speaker": "qing_li",
+          "text": "那位先生把名字借给了契约，你姑祖母做了见证。后来天庭追责——一个被罚入轮回，一个被从所有册子里抹去。"
         }
       ],
       "hotspots": [
         {
           "id": "hs02-1",
-          "label": "线索",
-          "description": "壁画描绘白狐书生相遇场景，细节与古庙神像一致。",
+          "label": "契尾签名",
+          "description": "契尾的见证人签名被人凿去，只剩「沈」字的一角。",
           "yaw": -45,
           "pitch": 5,
           "effect": {
@@ -425,14 +342,14 @@
               "hs02-1-found"
             ],
             "memories": [
-              "发现线索：壁画描绘白狐书生相遇场景，细节与古庙神像一致。"
+              "发现线索：壁画契尾的见证人签名被凿，残存「沈」字。"
             ]
           }
         },
         {
           "id": "hs02-2",
-          "label": "线索",
-          "description": "发光的灵石，蕴含着狐仙的修为。",
+          "label": "封稿灵石",
+          "description": "灵石里封着半页手稿，字迹与姑祖母的一致。",
           "yaw": 30,
           "pitch": -10,
           "effect": {
@@ -443,7 +360,7 @@
               "hs02-2-found"
             ],
             "memories": [
-              "发现线索：发光的灵石，蕴含着狐仙的修为。"
+              "发现线索：灵石中封着姑祖母的半页手稿。"
             ]
           }
         }
@@ -451,31 +368,42 @@
       "choices": [
         {
           "id": "ch02-1",
-          "label": "接受她的礼物",
+          "label": "收下封着手稿的灵石",
           "next": "s03-revelation",
           "fateType": "river",
-          "consequence": "你接受灵石，进一步信任狐仙。",
+          "consequence": "你拿到了姑祖母的笔迹——但灵石凝着青梨的百年修为，收下它，她挡劫的力量就少一分。",
           "effect": {
-            "globals": {
-              "trust": 10
+            "relationships": {
+              "qing_li": {
+                "trust": 8
+              }
             },
             "flags": [
               "accepted_gift"
+            ],
+            "memories": [
+              "半页手稿"
             ]
           }
         },
         {
           "id": "ch02-2",
-          "label": "怀疑离开",
+          "label": "不收。去祠堂找完整的村志比对",
           "next": "s03-hidden-library",
           "fateType": "web",
-          "consequence": "你的怀疑将你引向古籍的线索。",
+          "consequence": "你拒绝让她折损修为。青梨沉默片刻，把祠堂暗格的位置告诉了你。",
           "effect": {
-            "globals": {
-              "trust": -5
+            "relationships": {
+              "qing_li": {
+                "trust": 3,
+                "boundary": 4
+              }
             },
             "flags": [
               "left_cave"
+            ],
+            "memories": [
+              "祠堂暗格的位置"
             ]
           }
         }
@@ -489,7 +417,7 @@
     "s02-village-secrets": {
       "id": "s02-village-secrets",
       "chapter": "第二幕",
-      "title": "村庄秘闻",
+      "title": "村长家",
       "location": "村长家",
       "panorama": "/panoramas/s02-village-secrets.jpg",
       "palette": {
@@ -497,47 +425,30 @@
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "村长告诉你关于狐仙的可怕传说。",
+      "synopsis": "村长顾长庚承认：百年来村里靠「送人上山」平息灾祸，你姑祖母就是不肯配合的那一个。",
       "lines": [
         {
           "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "ready",
-          "text": "村长家的木门紧闭，油灯把老人脸上的皱纹照得像一道道旧伤。",
-          "voiceSrc": "/voices/project-20260620-185116/s02-village-secrets/line-001-61b709d99d5d.mp3",
-          "voiceAssetPath": "assets/voices/s02-village-secrets/line-001-61b709d99d5d.mp3",
-          "voiceHash": "61b709d99d5d",
-          "voiceGeneratedAt": "2026-06-20T11:51:51.812Z"
+          "text": "油灯把老人脸上的皱纹照得像一道道旧伤。听到「沈青蘅」三个字，他握茶碗的手停了停。"
         },
         {
-          "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "ready",
-          "text": "他说狐仙不是报恩，而是在寻找能替她挡下天劫的人，村里的失踪者都与她有关。",
-          "voiceSrc": "/voices/project-20260620-185116/s02-village-secrets/line-002-f9d2e827c194.mp3",
-          "voiceAssetPath": "assets/voices/s02-village-secrets/line-002-f9d2e827c194.mp3",
-          "voiceHash": "f9d2e827c194",
-          "voiceGeneratedAt": "2026-06-20T11:51:52.900Z"
+          "speaker": "elder_gu",
+          "text": "她当年住的就是顾家老宅。烧她书稿的是我祖父——这事一辈传一辈，传到我这儿，成了不敢说出口的家训。"
         },
         {
-          "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "ready",
-          "text": "这些传说可能救你，也可能诱你背叛她；你要查古籍，还是去找她当面求证。",
-          "voiceSrc": "/voices/project-20260620-185116/s02-village-secrets/line-003-abee1ec06609.mp3",
-          "voiceAssetPath": "assets/voices/s02-village-secrets/line-003-abee1ec06609.mp3",
-          "voiceHash": "abee1ec06609",
-          "voiceGeneratedAt": "2026-06-20T11:51:53.857Z"
+          "speaker": "elder_gu",
+          "text": "你要写新册子？行。但你的字，要么替全村说话，要么替那只狐狸说话——两边都写，两边都容不下你。"
+        },
+        {
+          "speaker": "elder_gu",
+          "text": "村塾的洛先生也来问过青蘅的事。他家祖上，跟这桩案子脱不开干系。"
         }
       ],
       "hotspots": [
         {
           "id": "hs02-3",
-          "label": "线索",
-          "description": "黄纸朱砂，镇压狐妖的符咒。",
+          "label": "新镇狐符",
+          "description": "供桌下压着一沓镇狐符——纸是新的。村里至今还在防着她。",
           "yaw": 15,
           "pitch": 10,
           "effect": {
@@ -548,7 +459,7 @@
               "hs02-3-found"
             ],
             "memories": [
-              "发现线索：黄纸朱砂，镇压狐妖的符咒。"
+              "发现线索：村里仍在批量新制镇狐符。"
             ]
           }
         }
@@ -556,31 +467,33 @@
       "choices": [
         {
           "id": "ch02-3",
-          "label": "相信村长，去查古籍",
+          "label": "答应看村志原本，先取证再表态",
           "next": "s03-hidden-library",
           "fateType": "river",
-          "consequence": "你选择相信村民，寻找镇压之法。",
+          "consequence": "老人交出祠堂钥匙——但他默认你站在村这边；你若反悔，庇护随时收回。",
           "effect": {
-            "globals": {
-              "fear": 10
-            },
             "flags": [
               "believed_village"
+            ],
+            "memories": [
+              "祠堂钥匙"
             ]
           }
         },
         {
           "id": "ch02-4",
-          "label": "寻找狐仙求证",
+          "label": "把烧稿的事当面告诉青梨",
           "next": "s03-revelation",
           "fateType": "web",
-          "consequence": "你决定直接问狐仙，让真相更早浮现。",
+          "consequence": "你选择对当事人诚实——代价是从此村里的门，不再为你开。",
           "effect": {
-            "globals": {
-              "trust": -3
+            "relationships": {
+              "qing_li": {
+                "trust": 6
+              }
             },
             "memories": [
-              "求助狐仙"
+              "对她坦白"
             ]
           }
         }
@@ -594,7 +507,7 @@
     "s03-revelation": {
       "id": "s03-revelation",
       "chapter": "第二幕",
-      "title": "真相浮现",
+      "title": "守契百年",
       "location": "狐仙居所",
       "panorama": "/panoramas/s03-revelation.jpg",
       "palette": {
@@ -602,47 +515,30 @@
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "狐仙坦白一切：百年前你救过她，她下凡报恩，但天条不容。",
+      "synopsis": "青梨说出全部：执雷官玄岐私改劫册救下狐族，她与见证人沈青蘅一同被连坐。她守契百年，等一个敢把真相写回册子的人。",
       "lines": [
         {
           "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "ready",
-          "text": "狐仙居所里月光如水，她终于卸下伪装，九尾在身后缓缓展开。",
-          "voiceSrc": "/voices/project-20260620-185116/s03-revelation/line-001-940d5a085ef9.mp3",
-          "voiceAssetPath": "assets/voices/s03-revelation/line-001-940d5a085ef9.mp3",
-          "voiceHash": "940d5a085ef9",
-          "voiceGeneratedAt": "2026-06-20T11:51:54.955Z"
+          "text": "居所里月光如水。青梨不再遮掩，九尾在身后缓缓展开——那不是炫耀，是把弱点亮给你看。"
         },
         {
-          "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "ready",
-          "text": "她承认百年前你曾救她一命，她下凡报恩，却让你一次次卷入天条的惩罚。",
-          "voiceSrc": "/voices/project-20260620-185116/s03-revelation/line-002-b0e227089098.mp3",
-          "voiceAssetPath": "assets/voices/s03-revelation/line-002-b0e227089098.mp3",
-          "voiceHash": "b0e227089098",
-          "voiceGeneratedAt": "2026-06-20T11:51:55.902Z"
+          "speaker": "qing_li",
+          "text": "百年前我重伤垂死，是那位先生以自身名姓作保救下我，你姑祖母落笔为证。后来执雷官玄岐偷改劫册保全我族——天庭不能罚神，就罚了签字的人。"
         },
         {
-          "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "ready",
-          "text": "天劫已经临近，你可以为她承担代价，也可以劝她放弃执念，和你留在人间。",
-          "voiceSrc": "/voices/project-20260620-185116/s03-revelation/line-003-01cec8d899cd.mp3",
-          "voiceAssetPath": "assets/voices/s03-revelation/line-003-01cec8d899cd.mp3",
-          "voiceHash": "01cec8d899cd",
-          "voiceGeneratedAt": "2026-06-20T11:51:56.833Z"
+          "speaker": "qing_li",
+          "text": "这契百年一续。续契之夜无人落名，守契者替全契受劫——限期，就是这个月圆。借名先生的后人还在村里教书，半份契书，应当还在他家。"
+        },
+        {
+          "speaker": "qing_li",
+          "text": "我不要你可怜我。我要你把这件事一个字一个字写清楚——你敢写，我就敢作证。"
         }
       ],
       "hotspots": [
         {
           "id": "hs03-1",
-          "label": "线索",
-          "description": "她眼角滑落的泪珠，落地化为珍珠。",
+          "label": "风干的珍珠",
+          "description": "案上摆着一枚早已风干的珍珠，压着一张写了一半的状纸。传说狐仙落泪成珠——她没有再哭过第二次。",
           "yaw": 0,
           "pitch": -5,
           "effect": {
@@ -653,7 +549,7 @@
               "hs03-1-found"
             ],
             "memories": [
-              "发现线索：她眼角滑落的泪珠，落地化为珍珠。"
+              "发现线索：一枚旧珍珠压着写了一半的状纸。"
             ]
           }
         }
@@ -661,29 +557,34 @@
       "choices": [
         {
           "id": "ch03-1",
-          "label": "愿意牺牲自己救她",
+          "label": "接下状纸：替她写，署自己的名",
           "next": "s04-choice-sacrifice",
           "fateType": "river",
-          "consequence": "你决定付出生命来换取她的存续。",
+          "consequence": "编修署名，意味着一切后果由你承担——上一个这么做的人，是你姑祖母。",
           "effect": {
-            "globals": {
-              "self_sacrifice": 1
+            "relationships": {
+              "qing_li": {
+                "trust": 10
+              }
             },
             "flags": [
               "willing_sacrifice"
+            ],
+            "memories": [
+              "署名之诺"
             ]
           }
         },
         {
           "id": "ch03-2",
-          "label": "劝说她放弃，与你共度余生",
+          "label": "先见玄岐：让改册的人自己出面",
           "next": "s04-confront",
           "fateType": "web",
-          "consequence": "你想找到两全之法，却可能引发对抗。",
+          "consequence": "你要去山巅祭坛请一位天官对质——他若不认，你连人证都保不住。",
           "effect": {
-            "globals": {
-              "persuade": 1
-            }
+            "memories": [
+              "请神对质"
+            ]
           }
         }
       ],
@@ -696,7 +597,7 @@
     "s03-hidden-library": {
       "id": "s03-hidden-library",
       "chapter": "第二幕",
-      "title": "古籍密藏",
+      "title": "祠堂密藏",
       "location": "村庄旧祠堂",
       "panorama": "/panoramas/s03-hidden-library.jpg",
       "palette": {
@@ -704,47 +605,26 @@
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "你在祠堂暗格中发现一本古籍，记载着轮回契约和破解诅咒之法。",
+      "synopsis": "祠堂暗格里是姑祖母没写完的手稿：轮回契原文、被凿去的名字，以及补契之法——以见证人之笔，重录被抹之名。",
       "lines": [
         {
           "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "ready",
-          "text": "旧祠堂的香灰被风吹开，暗格里露出一本被红线缠住的古籍。",
-          "voiceSrc": "/voices/project-20260620-185116/s03-hidden-library/line-001-955372749b68.mp3",
-          "voiceAssetPath": "assets/voices/s03-hidden-library/line-001-955372749b68.mp3",
-          "voiceHash": "955372749b68",
-          "voiceGeneratedAt": "2026-06-20T11:51:57.600Z"
+          "text": "你按修志的老规矩敲遍供墙——第三块砖是空的。暗格里露出被红线缠住的手稿，封皮上是你熟悉的瘦金小楷。"
         },
         {
           "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "ready",
-          "text": "书页记载轮回契约：每一世相遇都不是偶然，而是有人故意把你们推回原点。",
-          "voiceSrc": "/voices/project-20260620-185116/s03-hidden-library/line-002-7b83890d9b39.mp3",
-          "voiceAssetPath": "assets/voices/s03-hidden-library/line-002-7b83890d9b39.mp3",
-          "voiceHash": "7b83890d9b39",
-          "voiceGeneratedAt": "2026-06-20T11:51:58.494Z"
+          "text": "手稿写道：「契可改，册可补。洛氏借名，沈氏见证。以见证人之笔，重录被抹之名，轮回自解。」最后一页，只有半个「沈」字。"
         },
         {
-          "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "ready",
-          "text": "你可以留下研究破解方法，也可以带着古籍去见狐仙，让她面对这个真相。",
-          "voiceSrc": "/voices/project-20260620-185116/s03-hidden-library/line-003-dde9d0a24459.mp3",
-          "voiceAssetPath": "assets/voices/s03-hidden-library/line-003-dde9d0a24459.mp3",
-          "voiceHash": "dde9d0a24459",
-          "voiceGeneratedAt": "2026-06-20T11:51:59.924Z"
+          "speaker": "you",
+          "text": "她没有失踪。她是写到一半，被人从自己的书里抹掉了。"
         }
       ],
       "hotspots": [
         {
           "id": "hs03-2",
-          "label": "线索",
-          "description": "翻开的一页，详细描述了轮回契的解法。",
+          "label": "补契笔顺",
+          "description": "手稿夹页里画着补契的笔顺——需要当事三方到场：狐、神、执笔人。",
           "yaw": 0,
           "pitch": -10,
           "effect": {
@@ -755,14 +635,14 @@
               "hs03-2-found"
             ],
             "memories": [
-              "发现线索：翻开的一页，详细描述了轮回契的解法。"
+              "发现线索：补契需狐、神、执笔人三方到场。"
             ]
           }
         },
         {
           "id": "hs03-3",
-          "label": "线索",
-          "description": "墙上的古符文，与书中所画相同。",
+          "label": "祠堂符文",
+          "description": "墙上的符文与手稿末页的印鉴相同——这座祠堂，就是当年立契的地方。",
           "yaw": 45,
           "pitch": 10,
           "effect": {
@@ -773,7 +653,7 @@
               "hs03-3-found"
             ],
             "memories": [
-              "发现线索：墙上的古符文，与书中所画相同。"
+              "发现线索：祠堂正是百年前立契之地。"
             ]
           }
         }
@@ -781,14 +661,11 @@
       "choices": [
         {
           "id": "ch03-3",
-          "label": "研究古籍，寻找破解方法",
+          "label": "连夜誊清手稿，补全名册草稿",
           "next": "s04-choice-sacrifice",
           "fateType": "web",
-          "consequence": "你发现了轮回真相，但需要牺牲来打破。",
+          "consequence": "你有了破契的凭据——但誊录耗尽一夜，你将来不及登坛请神对质。",
           "effect": {
-            "globals": {
-              "knowledge": 1
-            },
             "flags": [
               "found_ancient_book",
               "know_reincarnation"
@@ -800,17 +677,18 @@
         },
         {
           "id": "ch03-4",
-          "label": "带着古籍去见狐仙",
+          "label": "带手稿上山，请青梨引神对质",
           "next": "s04-confront",
           "fateType": "web",
-          "consequence": "你决定直接对质，也许能找出出路。",
+          "consequence": "孤证不立。你需要当事人逐条确认，才能把册子做成翻不了的铁案。",
           "effect": {
             "flags": [
               "took_book",
-              "found_ancient_book"
+              "found_ancient_book",
+              "know_reincarnation"
             ],
             "memories": [
-              "对质古籍"
+              "对质手稿"
             ]
           }
         }
@@ -824,55 +702,38 @@
     "s04-choice-sacrifice": {
       "id": "s04-choice-sacrifice",
       "chapter": "第三幕",
-      "title": "牺牲抉择",
+      "title": "名册三难",
       "location": "狐仙居所内",
-      "panorama": "/panoramas/s04-choice-sacrifice.jpg",
+      "panorama": "/panoramas/project-20260620-002835-s16-final-core.jpg",
       "palette": {
         "from": "#10151f",
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "月圆之夜，天劫降临。你必须做出最终选择。",
+      "synopsis": "月圆之夜，青梨寻到了你。名册摊开在案上——三种落笔，三种代价，没有干净的写法。",
       "lines": [
         {
           "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "ready",
-          "text": "月圆之夜，狐仙居所被雷光照成白昼，天劫正从云层深处压下来。",
-          "voiceSrc": "/voices/project-20260620-185116/s04-choice-sacrifice/line-001-0e81d070aa9f.mp3",
-          "voiceAssetPath": "assets/voices/s04-choice-sacrifice/line-001-0e81d070aa9f.mp3",
-          "voiceHash": "0e81d070aa9f",
-          "voiceGeneratedAt": "2026-06-20T11:52:00.973Z"
+          "text": "月圆之夜，雷光把居所照成白昼。青梨从契匣里请出名册正本——笔，还搁在你姑祖母当年停笔的位置。"
+        },
+        {
+          "speaker": "qing_li",
+          "text": "写谁的名字，谁就替这份契站到天雷底下。沈栖梧，这一笔，没有干净的写法。"
+        },
+        {
+          "speaker": "qing_li",
+          "text": "三方不齐，神不在场——今晚落进册里的名字，只能钉进契里替劫；钉进去，就再取不出来。"
         },
         {
           "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "ready",
-          "text": "她望着你，像是在求你离开，又像早已知道你不会离开。",
-          "voiceSrc": "/voices/project-20260620-185116/s04-choice-sacrifice/line-002-af06119b398f.mp3",
-          "voiceAssetPath": "assets/voices/s04-choice-sacrifice/line-002-af06119b398f.mp3",
-          "voiceHash": "af06119b398f",
-          "voiceGeneratedAt": "2026-06-20T11:52:02.061Z"
-        },
-        {
-          "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "ready",
-          "text": "献祭能换她活下去，夺取内丹也许能保住你自己；这一刻没有干净的答案。",
-          "voiceSrc": "/voices/project-20260620-185116/s04-choice-sacrifice/line-003-5396491b30c9.mp3",
-          "voiceAssetPath": "assets/voices/s04-choice-sacrifice/line-003-5396491b30c9.mp3",
-          "voiceHash": "5396491b30c9",
-          "voiceGeneratedAt": "2026-06-20T11:52:03.454Z"
+          "text": "你握笔的手很稳。稳，不代表你知道该写谁。"
         }
       ],
       "hotspots": [
         {
           "id": "hs04-1",
-          "label": "线索",
-          "description": "她胸口浮现的发光内丹，是她千年修为所聚。",
+          "label": "名册空行",
+          "description": "名册末页的空行边缘有一道指甲掐出的旧痕——像百年前有人想把自己的名字抠回来。",
           "yaw": 0,
           "pitch": -10,
           "effect": {
@@ -883,7 +744,7 @@
               "hs04-1-found"
             ],
             "memories": [
-              "发现线索：她胸口浮现的发光内丹，是她千年修为所聚。"
+              "发现线索：名册空行上的百年指痕。"
             ]
           }
         }
@@ -891,46 +752,51 @@
       "choices": [
         {
           "id": "ch04-1",
-          "label": "献祭自己，救她",
+          "label": "写自己的名字，接下见证人之责",
           "next": "e01-together",
           "fateType": "river",
-          "consequence": "你选择牺牲，灵魂与她融为一体，共赴天庭。",
+          "consequence": "契成劫解——但你的名字从此入了劫册，天庭随时可以追责；而姑祖母的名字，仍留在被抹去的地方。",
           "effect": {
-            "globals": {
-              "sacrifice": 1
-            },
             "flags": [
-              "sacrificed_self"
+              "wrote_own_name"
             ],
+            "relationships": {
+              "qing_li": {
+                "trust": 8
+              }
+            },
             "memories": [
-              "最后的拥抱"
+              "落笔署名"
             ]
           }
         },
         {
           "id": "ch04-2",
-          "label": "假意答应，偷袭夺取内丹",
-          "next": "s04-confront",
-          "fateType": "web",
-          "consequence": "你欺骗了她，但内心挣扎，走向对峙。",
-          "lockedHint": "她必须仍对你保留一点信任，才会给你靠近内丹的机会。",
-          "condition": {
-            "minGlobal": [
-              {
-                "key": "trust",
-                "value": 10
-              }
-            ]
-          },
+          "label": "写回姑祖母的名字，让功责归于原主",
+          "next": "e01-together",
+          "fateType": "river",
+          "consequence": "她的名字重见天日，旧案得雪——但名归册上，她将永镇契中，再不能转世。",
           "effect": {
-            "globals": {
-              "deceit": 1
-            },
             "flags": [
-              "betrayed"
+              "wrote_qingheng"
             ],
             "memories": [
-              "虚假的承诺"
+              "名字归位"
+            ]
+          }
+        },
+        {
+          "id": "ch04-3",
+          "label": "搁笔：名册空置，谁的名字都不写",
+          "next": "e02-devoured",
+          "fateType": "web",
+          "consequence": "你不肯让任何人顶名——但空册意味着，青梨要独自站到天雷底下。",
+          "effect": {
+            "flags": [
+              "left_blank"
+            ],
+            "memories": [
+              "搁笔"
             ]
           }
         }
@@ -944,7 +810,7 @@
     "s04-confront": {
       "id": "s04-confront",
       "chapter": "第三幕",
-      "title": "最后对峙",
+      "title": "祭坛对质",
       "location": "山巅祭坛",
       "panorama": "/panoramas/s04-confront.jpg",
       "palette": {
@@ -952,47 +818,30 @@
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "天雷滚滚，你和狐仙在祭坛上对峙，一切都将在此终结。",
+      "synopsis": "山巅祭坛。守契者以百年之权请动执雷官玄岐——人、狐、神三方，百年来第一次站在同一份契约面前。",
       "lines": [
         {
           "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "ready",
-          "text": "山巅祭坛上天雷滚滚，狐火和雨水在石阶间交织成一张发亮的网。",
-          "voiceSrc": "/voices/project-20260620-185116/s04-confront/line-001-f636ff7e3666.mp3",
-          "voiceAssetPath": "assets/voices/s04-confront/line-001-f636ff7e3666.mp3",
-          "voiceHash": "f636ff7e3666",
-          "voiceGeneratedAt": "2026-06-20T11:52:04.359Z"
+          "text": "祭坛上天雷滚滚。紫电深处立着一道执戟的剪影——执雷官玄岐，只闻其声，不见其面。"
         },
         {
-          "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceStatus": "ready",
-          "text": "你手里的古籍、她体内的内丹、以及你们之间残存的信任，都在决定最后的走向。",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-185116/s04-confront/line-002-2c98116f70fa.mp3",
-          "voiceAssetPath": "assets/voices/s04-confront/line-002-2c98116f70fa.mp3",
-          "voiceHash": "2c98116f70fa",
-          "voiceGeneratedAt": "2026-06-20T11:52:05.661Z"
+          "speaker": "xuan_qi",
+          "text": "我改册救族，自认无错。但连坐见证人，不是我的本意。你若执笔，我供出当年原委——只是从此，你的名字天庭也会记得。"
         },
         {
-          "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceStatus": "ready",
-          "text": "战斗、拥抱或揭开轮回真相，每一个动作都会把故事推向不可逆的结局。",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-185116/s04-confront/line-003-1bc3903e72db.mp3",
-          "voiceAssetPath": "assets/voices/s04-confront/line-003-1bc3903e72db.mp3",
-          "voiceHash": "1bc3903e72db",
-          "voiceGeneratedAt": "2026-06-20T11:52:06.623Z"
+          "speaker": "xuan_qi",
+          "text": "天庭的册，我改得；人间的名，得由人间的笔写回。这规矩压了一百年，我等的是有人来破，不是来求。"
+        },
+        {
+          "speaker": "luo_yan",
+          "text": "——等等，把我也算上。我曾祖把名字借给了这份契，半卷契书在我家藏了一百年。沈编修，把它写完吧。"
         }
       ],
       "hotspots": [
         {
           "id": "hs04-2",
-          "label": "线索",
-          "description": "天空中的紫色雷劫，正在凝聚。",
+          "label": "劫册虚影",
+          "description": "雷云中央悬着一页劫册虚影——被改过的那一行，至今仍渗着金光。",
           "yaw": 60,
           "pitch": 30,
           "effect": {
@@ -1003,7 +852,7 @@
               "hs04-2-found"
             ],
             "memories": [
-              "发现线索：天空中的紫色雷劫，正在凝聚。"
+              "发现线索：劫册被改的那一行仍在渗光。"
             ]
           }
         }
@@ -1011,56 +860,79 @@
       "choices": [
         {
           "id": "ch04-3",
-          "label": "与她战斗，夺取内丹",
+          "label": "逼玄岐当场毁掉劫册",
           "next": "e02-devoured",
           "fateType": "river",
-          "consequence": "你攻击她，但被她的力量反噬，魂飞魄散。",
+          "consequence": "毁册能了结一切——也会把册上每个被他救过的名字一并抹去；你在赌一位天官肯向凡人低头。",
           "effect": {
+            "relationships": {
+              "xuan_qi": {
+                "trust": -10,
+                "boundary": -6
+              }
+            },
             "memories": [
-              "最后的天雷"
+              "毁册之念"
             ]
           }
         },
         {
           "id": "ch04-4",
-          "label": "放下武器，拥抱她",
+          "label": "三方画押：以半契、供词与你的笔重立新契",
           "next": "e01-together",
           "fateType": "river",
-          "consequence": "你选择爱与原谅，天劫被你们的真心化解，一同飞升。",
+          "consequence": "人、狐、神各担其责——新契立成，天劫化作落在纸页上的一场小雨。",
           "effect": {
-            "globals": {
-              "love": 1
-            },
             "flags": [
               "embraced"
             ],
+            "relationships": {
+              "qing_li": {
+                "trust": 6
+              },
+              "xuan_qi": {
+                "trust": 6,
+                "spark": 4
+              },
+              "luo_yan": {
+                "trust": 6,
+                "spark": 4
+              }
+            },
             "memories": [
-              "月下拥吻"
+              "三方画押"
             ]
           }
         },
         {
           "id": "ch04-5",
-          "label": "展示古籍，揭露轮回真相",
+          "label": "呈出姑祖母手稿：连百年前的旧案一并翻案",
           "next": "e03-eternal",
           "fateType": "wheel",
-          "consequence": "你揭示了百年前的真实契约，打破了轮回诅咒，获得永恒。",
-          "lockedHint": "你需要古籍、轮回真相，以及此前仍未断绝的信任，才能揭示隐藏真相。",
+          "consequence": "你把手稿、半契与供词并成一案——不止破今晚的劫，还要把百年前被抹去的名字审回来。",
+          "lockedHint": "空口翻不了百年旧案——祠堂暗格里那份没写完的手稿，才是呈堂的凭据。",
           "condition": {
             "flags": [
               "found_ancient_book",
               "know_reincarnation"
-            ],
-            "minGlobal": [
-              {
-                "key": "trust",
-                "value": 10
-              }
             ]
           },
           "effect": {
             "flags": [
               "revealed_truth"
+            ],
+            "relationships": {
+              "xuan_qi": {
+                "trust": 8,
+                "spark": 3
+              },
+              "luo_yan": {
+                "trust": 6,
+                "spark": 3
+              }
+            },
+            "memories": [
+              "翻案"
             ]
           }
         }
@@ -1074,48 +946,27 @@
     "e01-together": {
       "id": "e01-together",
       "chapter": "结局",
-      "title": "飞升",
-      "location": "天国",
+      "title": "名字归位",
+      "location": "古庙·破晓",
       "panorama": "/panoramas/e01-together.jpg",
       "palette": {
         "from": "#10151f",
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "你和狐仙的灵魂融为一体，共赴天庭，从此长相厮守。",
+      "synopsis": "新契立成，天劫止息。《青丘异闻录》刊行，把名字写回它该在的地方。",
       "lines": [
         {
           "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceStatus": "ready",
-          "text": "天劫的雷光被你们交缠的魂火劈开，古庙上空第一次出现清亮的晨色。",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-185116/e01-together/line-001-d8014911085f.mp3",
-          "voiceAssetPath": "assets/voices/e01-together/line-001-d8014911085f.mp3",
-          "voiceHash": "d8014911085f",
-          "voiceGeneratedAt": "2026-06-20T11:52:07.362Z"
+          "text": "天雷散去，晨色第一次落进古庙。名册上的新墨迹干得很慢，像百年才等来的一口呼吸。"
+        },
+        {
+          "speaker": "qing_li",
+          "text": "册子写完了？那就轮到你了，沈栖梧——把它刊出去。我守了一百年的不是契，是这句话能被人读到的那一天。"
         },
         {
           "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceStatus": "ready",
-          "text": "她握住你的手，九尾化作漫天银光，你们的灵魂一同升向天庭。",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-185116/e01-together/line-002-4f66de097452.mp3",
-          "voiceAssetPath": "assets/voices/e01-together/line-002-4f66de097452.mp3",
-          "voiceHash": "4f66de097452",
-          "voiceGeneratedAt": "2026-06-20T11:52:08.195Z"
-        },
-        {
-          "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceStatus": "ready",
-          "text": "人间只剩狐仙报恩的传说，而你们终于不必再在轮回里错过。",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-185116/e01-together/line-003-1fa4a1bac91a.mp3",
-          "voiceAssetPath": "assets/voices/e01-together/line-003-1fa4a1bac91a.mp3",
-          "voiceHash": "1fa4a1bac91a",
-          "voiceGeneratedAt": "2026-06-20T11:52:09.019Z"
+          "text": "次年春，《青丘异闻录》刊行。你把见证人一页留在卷首——无论册上钉住的是谁的名字，书里都写清了它为什么在那里。有人说付梓那夜，山上有九道银光，朝书阁的方向俯身一拜。"
         }
       ],
       "hotspots": [],
@@ -1126,44 +977,34 @@
         "fov": 100
       },
       "ending": {
-        "title": "飞升",
-        "subtitle": "你和狐仙的灵魂融为一体，共赴天庭，从此长相厮守。"
+        "title": "名字归位",
+        "subtitle": "新契立成，天劫止息；《青丘异闻录》刊行，把名字写回它该在的地方。"
       }
     },
     "e02-devoured": {
       "id": "e02-devoured",
       "chapter": "结局",
-      "title": "吞噬",
-      "location": "山巅",
+      "title": "空册",
+      "location": "古庙·劫后",
       "panorama": "/panoramas/e02-devoured.jpg",
       "palette": {
         "from": "#10151f",
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "你被狐仙的力量反噬，灵魂被吞噬，永世不得解脱。",
+      "synopsis": "名册空置，劫火照旧落下。你保住了所有人的名字，却没能保住她本人。",
       "lines": [
         {
           "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceStatus": "failed",
-          "text": "你夺向内丹的一瞬，狐火反噬而来，山巅祭坛被暗红光芒吞没。",
-          "voiceError": "insufficient balance"
+          "text": "劫火落下的那一刻，名册仍是空的。青梨没有躲——守契者的最后一步，是替空白顶罪。"
         },
         {
           "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceStatus": "failed",
-          "text": "她的力量没有成为你的生路，反而把你的灵魂锁进永不醒来的梦里。",
-          "voiceError": "insufficient balance"
+          "text": "火光散尽，庙里只剩半页焦纸。你保住了所有人的名字，却没保住她本人。"
         },
         {
           "speaker": "narrator",
-          "text": "从此每逢雨夜，古庙深处都会响起一个人后悔的呼吸声。",
-          "voiceProfileId": "narrator",
-          "voiceStatus": "failed",
-          "voiceError": "insufficient balance"
+          "text": "后来每逢雨夜，你都会把写好的册子摊在案上晾着——像在等谁回来核对。"
         }
       ],
       "hotspots": [],
@@ -1174,43 +1015,34 @@
         "fov": 100
       },
       "ending": {
-        "title": "吞噬",
-        "subtitle": "你被狐仙的力量反噬，灵魂被吞噬，永世不得解脱。"
+        "title": "空册",
+        "subtitle": "你拒绝让任何名字顶罪，青梨独自受劫；《青丘异闻录》最终刊行，唯独缺了最后一章。"
       }
     },
     "e03-eternal": {
       "id": "e03-eternal",
       "chapter": "隐藏结局",
-      "title": "永恒轮回",
-      "location": "时空裂隙",
+      "title": "续录者",
+      "location": "山巅祭坛·破晓",
       "panorama": "/panoramas/e03-eternal.jpg",
       "palette": {
         "from": "#10151f",
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "你揭示百年前的契约，打破诅咒，与狐仙进入永恒的轮回之中，每一世都相遇。",
+      "synopsis": "手稿与半契拼合，旧案翻案，被凿去的名字重回两册。",
       "lines": [
         {
           "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceStatus": "failed",
-          "text": "古籍上的契约在时空裂隙中亮起，百年前的名字一个接一个浮现。",
-          "voiceError": "insufficient balance"
+          "text": "手稿与半契在祭坛上拼合，被凿去的名字逐字浮起——天庭的劫册与人间的县志，第一次写下了同一句话。"
         },
         {
           "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceStatus": "failed",
-          "text": "你揭开真正的诅咒：不是相遇让你们受罚，而是遗忘让你们反复重来。",
-          "voiceError": "insufficient balance"
+          "text": "真正的诅咒从来不是天雷，是遗忘。名字写回去的那一刻，轮回不再是刑罚，成了可以自由来去的门。"
         },
         {
-          "speaker": "narrator",
-          "voiceProfileId": "narrator",
-          "voiceStatus": "failed",
-          "text": "当狐仙牵住你的手，轮回不再是牢笼，而成为你们每一世重新相认的约定。",
-          "voiceError": "insufficient balance"
+          "speaker": "qing_li",
+          "text": "以后每一世，我都不用再等人认出我了。书阁的架上有你的书——翻开第一页，我们就算重新见过。"
         }
       ],
       "hotspots": [],
@@ -1221,9 +1053,89 @@
         "fov": 100
       },
       "ending": {
-        "title": "永恒轮回",
-        "subtitle": "你揭示百年前的契约，打破诅咒，与狐仙进入永恒的轮回之中，每一世都相遇。"
+        "title": "续录者",
+        "subtitle": "姑祖母旧案翻案，轮回契改写为自由之门；此后每一世，翻开第一页，就算重新见过。"
       }
     }
+  },
+  "subtitle": "会记住你落笔的志怪调查",
+  "cast": {
+    "protagonist": {
+      "id": "you",
+      "name": "沈栖梧",
+      "role": "书阁典籍编修",
+      "pronouns": "她",
+      "color": "#d9c2a6",
+      "accent": "#4a3a2c"
+    },
+    "characters": [
+      {
+        "id": "qing_li",
+        "name": "青梨",
+        "shortName": "青梨",
+        "role": "青丘守契者",
+        "theme": "守约与自由",
+        "color": "#cfd8e3",
+        "accent": "#2e3a4a",
+        "romanceable": false,
+        "relationship": {
+          "enabled": true,
+          "initial": {
+            "spark": 0,
+            "trust": 20,
+            "boundary": 70
+          }
+        }
+      },
+      {
+        "id": "xuan_qi",
+        "name": "玄岐",
+        "shortName": "玄岐",
+        "role": "天庭执雷官",
+        "theme": "律法与私心",
+        "color": "#a99bd6",
+        "accent": "#35304d",
+        "romanceable": true,
+        "relationship": {
+          "enabled": true,
+          "initial": {
+            "spark": 10,
+            "trust": 15,
+            "boundary": 65
+          }
+        }
+      },
+      {
+        "id": "luo_yan",
+        "name": "洛砚",
+        "shortName": "洛砚",
+        "role": "村塾师·医者",
+        "theme": "记录与守护",
+        "color": "#9db8a4",
+        "accent": "#2f4036",
+        "romanceable": true,
+        "relationship": {
+          "enabled": true,
+          "initial": {
+            "spark": 10,
+            "trust": 25,
+            "boundary": 55
+          }
+        }
+      },
+      {
+        "id": "elder_gu",
+        "name": "顾长庚",
+        "shortName": "顾老",
+        "role": "青丘村村长",
+        "theme": "保全与代价",
+        "color": "#b8a98f",
+        "accent": "#3d3428",
+        "romanceable": false,
+        "relationship": {
+          "enabled": false
+        }
+      }
+    ]
   }
 }

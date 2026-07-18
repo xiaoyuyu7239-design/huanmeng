@@ -1,108 +1,90 @@
 {
-  "title": "七仙女下凡",
+  "title": "第七织女",
   "startNodeId": "s00-opening",
   "nodes": {
     "s00-opening": {
       "id": "s00-opening",
-      "chapter": "Opening",
-      "title": "七仙女下凡",
-      "location": "现代都市上空",
-      "panorama": "/panoramas/s00-opening.jpg",
+      "chapter": "序幕",
+      "title": "织机崩裂",
+      "location": "天界·云锦织坊上空",
+      "panorama": "/panoramas/project-20260620-002835-s00-arrival.jpg",
       "palette": {
         "from": "#10151f",
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "七仙女从云端坠落，落在城市霓虹灯之间。手机屏幕闪烁，她看到了凡间的第一个画面。",
+      "synopsis": "云锦织机崩裂，三块梭核坠入人间。织女星宿第七位云织，主动请命下凡。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "现代都市上空里，七仙女从云端坠落，落在城市霓虹灯之间。手机屏幕闪烁，她看到了凡间的第一个画面。",
-          "voiceProfileId": "s00-opening-narrator-947057e1",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s00-opening/line-001-4f13801fd422.mp3",
-          "voiceAssetPath": "assets/voices/s00-opening/line-001-4f13801fd422.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "4f13801fd422",
-          "voiceGeneratedAt": "2026-06-20T14:01:34.202Z"
+          "text": "云锦织机崩裂的那一夜，三块梭核拖着银线坠入人间。天界的告示只有一句：坠核者，不追。"
+        },
+        {
+          "speaker": "you",
+          "text": "三姐坠落那年，你们也是这么写的。这一次，我自己去。"
         },
         {
           "speaker": "narrator",
-          "text": "你注意到「线索」：手机屏幕显示一条来自‘A Qing’的消息，背景是粉色霓虹。",
-          "voiceProfileId": "s00-opening-narrator-947057e1",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s00-opening/line-002-5c24767c284b.mp3",
-          "voiceAssetPath": "assets/voices/s00-opening/line-002-5c24767c284b.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "5c24767c284b",
-          "voiceGeneratedAt": "2026-06-20T14:01:35.345Z"
-        },
-        {
-          "speaker": "narrator",
-          "text": "接下来，你必须在「前往时代广场」和「先探索周围环境」之间做出选择。",
-          "voiceProfileId": "s00-opening-narrator-947057e1",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s00-opening/line-003-0f2653027efa.mp3",
-          "voiceAssetPath": "assets/voices/s00-opening/line-003-0f2653027efa.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "0f2653027efa",
-          "voiceGeneratedAt": "2026-06-20T13:56:45.383Z"
+          "text": "你踩着断线跃下云端。霓虹涨上来时，掌心织纹忽然一烫——有人用织语递来半句暗码，落款只有一个「绛」字。"
         }
       ],
       "hotspots": [
         {
           "id": "hotspot-phone",
-          "label": "线索",
-          "description": "手机屏幕显示一条来自‘A Qing’的消息，背景是粉色霓虹。",
+          "label": "掌心织纹",
+          "description": "掌心的织纹微微发烫——离得最近的一块梭核，在城中心的方向。",
           "yaw": 45,
           "pitch": -10,
           "effect": {
             "globals": {
-              "integrity": 3
+              "integrity": 3,
+              "fairy_power": 8
             },
             "flags": [
               "hotspot-phone-found"
             ],
             "memories": [
-              "发现线索：手机屏幕显示一条来自‘A Qing’的消息，背景"
+              "发现线索：掌心织纹指向城中心。"
             ]
           }
         },
         {
           "id": "hotspot-city",
-          "label": "线索",
-          "description": "远处的高楼大厦，其中一栋有巨大的LED屏幕播放着网红直播。",
+          "label": "巨幕直播",
+          "description": "远处高楼的巨幕上滚着一场直播——画面里的光效，分明掺着仙织的银线。",
           "yaw": -30,
           "pitch": 5,
           "effect": {
             "globals": {
-              "integrity": 3
+              "integrity": 3,
+              "fairy_power": 8
             },
             "flags": [
               "hotspot-city-found"
             ],
             "memories": [
-              "发现线索：远处的高楼大厦，其中一栋有巨大的LED屏幕播放着"
+              "发现线索：直播画面里掺着仙织银线。"
             ]
           }
         },
         {
           "id": "clue-c00-2",
-          "label": "关键线索",
-          "description": "解锁「先探索周围环境」所需的现场线索。",
+          "label": "断线残迹",
+          "description": "一缕跟着你落下来的断线绕向街巷深处——顺着它，能把这一带看得更清楚。",
           "yaw": 0,
           "pitch": 0,
           "effect": {
             "globals": {
-              "integrity": 3
+              "integrity": 3,
+              "fairy_power": 8
             },
             "flags": [
               "clue-c00-2-found",
               "seen_city"
             ],
             "memories": [
-              "发现线索：解锁「先探索周围环境」所需的现场线索。",
-              "解锁线索：先探索周围环境"
+              "发现线索：断线残迹绕向街巷深处。",
+              "顺着断线，你把暗巷与出口都记在了心里。"
             ]
           }
         }
@@ -110,14 +92,11 @@
       "choices": [
         {
           "id": "c00-1",
-          "label": "前往时代广场",
+          "label": "往城中心去，先找最近的梭核",
           "next": "s01-first-choice",
           "fateType": "river",
-          "consequence": "你选择直接面对神秘人，走向明亮的城市中心。",
+          "consequence": "直取目标最快——但你会一头撞进人最多、镜头也最多的地方。",
           "effect": {
-            "globals": {
-              "curiosity": 10
-            },
             "flags": [
               "go_times_square"
             ]
@@ -125,37 +104,34 @@
         },
         {
           "id": "c00-2",
-          "label": "先探索周围环境",
+          "label": "顺着断线摸清周围再动身",
           "next": "s01-first-choice",
           "fateType": "web",
-          "consequence": "你谨慎地观察四周，发现了隐藏的线索。",
-          "lockedHint": "先调查「关键线索」，再尝试「先探索周围环境」。",
+          "consequence": "你把暗巷与出口都记在心里——稳，但巨幕上的那场直播不会等你。",
+          "lockedHint": "先找到那缕断线残迹，再决定要不要按它的指向走。",
           "condition": {
             "flags": [
               "seen_city"
             ]
           },
           "effect": {
-            "globals": {
-              "caution": 10
-            },
             "memories": [
-              "first_glance"
+              "初落人间的第一眼"
             ]
           }
         },
         {
           "id": "c00-3",
-          "label": "回复消息试探",
+          "label": "用织语回信试探",
           "next": "s02-hidden-clue",
           "fateType": "wheel",
-          "consequence": "你试图用天界的法术隐藏身份，却无意中触发了碎片共鸣。",
+          "consequence": "织语一出，梭核共鸣把你引向地下通道——但你的位置，对方也知道了。",
           "effect": {
             "flags": [
               "replied_mystery"
             ],
             "memories": [
-              "first_contact"
+              "第一次织语回信"
             ]
           }
         }
@@ -165,48 +141,29 @@
         "pitch": 0,
         "fov": 100
       },
-      "cinematics": [
-        {
-          "id": "s00-opening-flat-video",
-          "type": "flat-video",
-          "trigger": "beforeEnter",
-          "title": "场景平面视频",
-          "src": "/videos/project-20260620-201739/s00-opening-e53a50f1d3.mov",
-          "assetPath": "assets/videos/s00-opening-e53a50f1d3.mov",
-          "skippable": false,
-          "loop": false,
-          "uploadedAt": "2026-06-20T15:49:51.634Z"
-        }
-      ],
-      "panoramaType": "video",
+      "panoramaType": "image",
       "musicLayers": {
         "generated": {
           "cueId": "bgm-s00-opening",
           "source": "generated",
           "src": "https://cdn1.suno.ai/ec6fecc9-a0d2-4d32-b477-594b3461fb12.mp3",
           "title": "云落霓虹"
-        },
-        "uploaded": {
-          "cueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
-          "source": "uploaded",
-          "src": "/music/project-20260620-201739/20260510-bgm-crush-datin-eb5463a02a.mp3",
-          "title": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
         }
       },
       "musicPlayback": {
-        "mode": "uploaded-first",
+        "mode": "generated-first",
         "generatedVolume": 1,
         "uploadedVolume": 1,
         "loop": true
       },
-      "musicCueId": "upload-20260510-bgm-crush-datin-eb5463a02a",
-      "musicSrc": "/music/project-20260620-201739/20260510-bgm-crush-datin-eb5463a02a.mp3",
-      "musicTitle": "20260510-这首宝藏BGM 太适合和Crush自驾Datin"
+      "musicCueId": "bgm-s00-opening",
+      "musicSrc": "https://cdn1.suno.ai/ec6fecc9-a0d2-4d32-b477-594b3461fb12.mp3",
+      "musicTitle": "云落霓虹"
     },
     "s01-first-choice": {
       "id": "s01-first-choice",
-      "chapter": "Opening",
-      "title": "初遇董永",
+      "chapter": "序幕",
+      "title": "镜头里的银线",
       "location": "时代广场",
       "panorama": "/panoramas/s01-first-choice.jpg",
       "palette": {
@@ -214,58 +171,38 @@
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "在时代广场，你遇到了董永，他正在拍摄街景。他注意到你的异常。",
+      "synopsis": "时代广场人流如织。一个背旧相机的男人蹲在路边，镜头对着的不是人群，是你落脚处的银线残迹。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "时代广场里，在时代广场，你遇到了董永，他正在拍摄街景。他注意到你的异常。",
-          "voiceProfileId": "s01-first-choice-narrator-05868d07",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s01-first-choice/line-001-c9569d2a5860.mp3",
-          "voiceAssetPath": "assets/voices/s01-first-choice/line-001-c9569d2a5860.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "c9569d2a5860",
-          "voiceGeneratedAt": "2026-06-20T14:01:36.283Z"
+          "text": "广场的巨幕把夜照成白昼。你先注意到他的镜头——那台旧相机对着的不是人群，是你落脚点上还没散尽的银线。"
+        },
+        {
+          "speaker": "dong-yong",
+          "text": "别紧张，我拍的是光，不是你。这种光，我小时候在爷爷的织机上见过。要看吗？照片可以给你。"
         },
         {
           "speaker": "narrator",
-          "text": "你注意到「线索」：相机上有一个古老的符文，与天界文字相似。",
-          "voiceProfileId": "s01-first-choice-narrator-05868d07",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s01-first-choice/line-002-dc56cee733ac.mp3",
-          "voiceAssetPath": "assets/voices/s01-first-choice/line-002-dc56cee733ac.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "dc56cee733ac",
-          "voiceGeneratedAt": "2026-06-20T14:01:37.018Z"
-        },
-        {
-          "speaker": "narrator",
-          "text": "接下来，你必须在「接受帮助，询问碎片」和「拒绝并独自行动」之间做出选择。",
-          "voiceProfileId": "s01-first-choice-narrator-05868d07",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s01-first-choice/line-003-e8dcc78392f1.mp3",
-          "voiceAssetPath": "assets/voices/s01-first-choice/line-003-e8dcc78392f1.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "e8dcc78392f1",
-          "voiceGeneratedAt": "2026-06-20T14:01:37.889Z"
+          "text": "他叫董野，拍「正在消失的东西」的纪录片摄影师。相机侧面刻着一枚旧符文——和织坊的护机纹，同源。"
         }
       ],
       "hotspots": [
         {
           "id": "hotspot-camera",
-          "label": "线索",
-          "description": "相机上有一个古老的符文，与天界文字相似。",
+          "label": "护机符文",
+          "description": "相机侧面刻着一枚旧符文——织坊护机纹的简写。凡人不该认得这个。",
           "yaw": 20,
           "pitch": -5,
           "effect": {
             "globals": {
-              "integrity": 3
+              "integrity": 3,
+              "fairy_power": 8
             },
             "flags": [
               "hotspot-camera-found"
             ],
             "memories": [
-              "发现线索：相机上有一个古老的符文，与天界文字相似。"
+              "发现线索：董野的相机刻着织坊护机纹。"
             ]
           }
         }
@@ -273,29 +210,29 @@
       "choices": [
         {
           "id": "c01-1",
-          "label": "接受帮助，询问碎片",
+          "label": "看他的照片，问银线的去向",
           "next": "s03-market",
           "fateType": "river",
-          "consequence": "你信任了凡人，获得了关于碎片位置的情报。",
+          "consequence": "他把三个月里拍到的银线残迹都给了你——从此你的行踪，也进了他的镜头故事。",
           "effect": {
-            "globals": {
-              "trust": 10
-            },
             "relationships": {
-              "dong-yong": 15
-            }
+              "dong-yong": {
+                "trust": 8,
+                "spark": 3
+              }
+            },
+            "flags": [
+              "dongye_ally"
+            ]
           }
         },
         {
           "id": "c01-2",
-          "label": "拒绝并独自行动",
+          "label": "谢过他，独自跟着织纹走",
           "next": "s02-hidden-clue",
           "fateType": "web",
-          "consequence": "你独自跟踪碎片信号，发现了隐藏线索。",
+          "consequence": "你不欠任何人情——但暗巷里的路，要一个人认。",
           "effect": {
-            "globals": {
-              "independence": 10
-            },
             "flags": [
               "alone_mode"
             ]
@@ -310,8 +247,8 @@
     },
     "s02-hidden-clue": {
       "id": "s02-hidden-clue",
-      "chapter": "Clue",
-      "title": "霓虹密语",
+      "chapter": "第一章",
+      "title": "仙文路标",
       "location": "地下通道",
       "panorama": "/panoramas/s02-hidden-clue.jpg",
       "palette": {
@@ -319,58 +256,38 @@
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "你走进一条地下通道，墙壁上的涂鸦闪烁着微弱的仙力。这里藏有第一块碎片的线索。",
+      "synopsis": "地下通道的涂鸦在你眼里亮起来——那不是涂鸦，是仙文路标；落款与织语暗码同一个字：绛。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "地下通道里，你走进一条地下通道，墙壁上的涂鸦闪烁着微弱的仙力。这里藏有第一块碎片的线索。",
-          "voiceProfileId": "s02-hidden-clue-narrator-6abed30b",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s02-hidden-clue/line-001-ec7a4f93779c.mp3",
-          "voiceAssetPath": "assets/voices/s02-hidden-clue/line-001-ec7a4f93779c.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "ec7a4f93779c",
-          "voiceGeneratedAt": "2026-06-20T14:01:38.839Z"
+          "text": "通道顶灯坏了一半。墙上的涂鸦在凡人眼里是颜料，在你眼里是发光的仙文——笔画生涩，像用不趁手的工具写的。"
         },
         {
           "speaker": "narrator",
-          "text": "你注意到「线索」：涂鸦中隐藏着碎片的位置坐标。",
-          "voiceProfileId": "s02-hidden-clue-narrator-6abed30b",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s02-hidden-clue/line-002-eceda1d613e8.mp3",
-          "voiceAssetPath": "assets/voices/s02-hidden-clue/line-002-eceda1d613e8.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "eceda1d613e8",
-          "voiceGeneratedAt": "2026-06-20T14:01:39.489Z"
+          "text": "路标只有一句：「后来的妹妹，往有玉的地方去。别信管账的，别把织纹给人看。——绛」"
         },
         {
-          "speaker": "narrator",
-          "text": "接下来，你必须在「仔细研究涂鸦」和「追踪声音来源」之间做出选择。",
-          "voiceProfileId": "s02-hidden-clue-narrator-6abed30b",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s02-hidden-clue/line-003-c681d9f98eab.mp3",
-          "voiceAssetPath": "assets/voices/s02-hidden-clue/line-003-c681d9f98eab.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "c681d9f98eab",
-          "voiceGeneratedAt": "2026-06-20T14:01:40.267Z"
+          "speaker": "you",
+          "text": "三姐。你到底把自己过成了什么样？"
         }
       ],
       "hotspots": [
         {
           "id": "hotspot-graffiti",
-          "label": "线索",
-          "description": "涂鸦中隐藏着碎片的位置坐标。",
+          "label": "仙文落款",
+          "description": "落款的「绛」字被反复描过很多遍——像写的人怕它被雨水冲掉。",
           "yaw": 0,
           "pitch": 10,
           "effect": {
             "globals": {
-              "integrity": 3
+              "integrity": 3,
+              "fairy_power": 8
             },
             "flags": [
               "hotspot-graffiti-found"
             ],
             "memories": [
-              "发现线索：涂鸦中隐藏着碎片的位置坐标。"
+              "发现线索：仙文路标的落款被反复描摹。"
             ]
           }
         }
@@ -378,14 +295,11 @@
       "choices": [
         {
           "id": "c02-1",
-          "label": "仔细研究涂鸦",
+          "label": "按路标去古玩市场",
           "next": "s03-market",
           "fateType": "web",
-          "consequence": "你破译了涂鸦，发现碎片在古玩市场。",
+          "consequence": "「有玉的地方」——城隍庙古玩市场。这是三姐给后来者留的路。",
           "effect": {
-            "globals": {
-              "knowledge": 10
-            },
             "flags": [
               "decoded_graffiti"
             ]
@@ -393,16 +307,13 @@
         },
         {
           "id": "c02-2",
-          "label": "追踪声音来源",
+          "label": "循着直播声浪直接找她",
           "next": "s05-web-fame",
           "fateType": "river",
-          "consequence": "你追寻三姐的声音，提前进入了网络世界。",
+          "consequence": "你跳过路标直奔源头——快，但等着你的，是她的主场。",
           "effect": {
-            "globals": {
-              "risk": 15
-            },
             "memories": [
-              "chased_sister_voice"
+              "循着她的声音而去"
             ]
           }
         }
@@ -415,8 +326,8 @@
     },
     "s03-market": {
       "id": "s03-market",
-      "chapter": "Act2",
-      "title": "古玩市场",
+      "chapter": "第一章",
+      "title": "司契的柜台",
       "location": "城隍庙古玩市场",
       "panorama": "/panoramas/s03-market.jpg",
       "palette": {
@@ -424,58 +335,38 @@
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "古玩市场里琳琅满目，你感受到碎片就在附近。",
+      "synopsis": "玉镯里封着一块梭核。柜台后的年轻修复师看你的眼神，比看玉还仔细。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "城隍庙古玩市场里，古玩市场里琳琅满目，你感受到碎片就在附近。",
-          "voiceProfileId": "s03-market-narrator-b6043e9f",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s03-market/line-001-1342c9531fd3.mp3",
-          "voiceAssetPath": "assets/voices/s03-market/line-001-1342c9531fd3.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "1342c9531fd3",
-          "voiceGeneratedAt": "2026-06-20T14:01:41.029Z"
+          "text": "市场里人声与铜锈味混在一起。你一眼认出角落的玉镯——梭核的银光在玉芯里一收一放，像睡着的心跳。"
+        },
+        {
+          "speaker": "wen_jia",
+          "text": "客人眼力很好。这镯子三天前收的，来路干净，账在这里——不过我劝你想清楚再买。它晚上会发光，正常人会害怕的。"
         },
         {
           "speaker": "narrator",
-          "text": "你注意到「线索」：玉镯中封存着第二块碎片，需要仙力激活。",
-          "voiceProfileId": "s03-market-narrator-b6043e9f",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s03-market/line-002-1d80b41ffe41.mp3",
-          "voiceAssetPath": "assets/voices/s03-market/line-002-1d80b41ffe41.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "1d80b41ffe41",
-          "voiceGeneratedAt": "2026-06-20T14:01:41.746Z"
-        },
-        {
-          "speaker": "narrator",
-          "text": "接下来，你必须在「用仙力买下玉镯」和「用凡人的方法交换」之间做出选择。",
-          "voiceProfileId": "s03-market-narrator-b6043e9f",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s03-market/line-003-943078d55754.mp3",
-          "voiceAssetPath": "assets/voices/s03-market/line-003-943078d55754.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "943078d55754",
-          "voiceGeneratedAt": "2026-06-20T14:01:42.741Z"
+          "text": "他叫闻迦，老摊主的关门弟子，管这条街所有的账。他说「正常人」三个字的时候，眼睛一直看着你的掌心。"
         }
       ],
       "hotspots": [
         {
           "id": "hotspot-jade",
-          "label": "线索",
-          "description": "玉镯中封存着第二块碎片，需要仙力激活。",
+          "label": "玉芯银光",
+          "description": "玉芯里的梭核银光一收一放——只有织女能看见的频率。",
           "yaw": -15,
           "pitch": -20,
           "effect": {
             "globals": {
-              "integrity": 3
+              "integrity": 3,
+              "fairy_power": 8
             },
             "flags": [
               "hotspot-jade-found"
             ],
             "memories": [
-              "发现线索：玉镯中封存着第二块碎片，需要仙力激活。"
+              "发现线索：玉芯里的梭核只对织女显光。"
             ]
           }
         }
@@ -483,11 +374,11 @@
       "choices": [
         {
           "id": "c03-1",
-          "label": "用仙力买下玉镯",
+          "label": "以织力引核出玉，按行价付钱",
           "next": "s04-temple",
           "fateType": "river",
-          "consequence": "你消耗仙力换取玉镯，碎片被激活。",
-          "lockedHint": "你的仙力不足，先去其他地方补充灵力？",
+          "consequence": "银线出玉的瞬间你耗了三成织力——而闻迦全程没有眨一下眼。",
+          "lockedHint": "织力不足——先凑近看看玉芯的银光回一口气，或按凡人的规矩成交。",
           "condition": {
             "minGlobal": [
               {
@@ -505,23 +396,34 @@
               "clue2"
             ],
             "memories": [
-              "bought_jade"
-            ]
+              "引核出玉"
+            ],
+            "relationships": {
+              "wen_jia": {
+                "trust": 3,
+                "boundary": 3
+              }
+            }
           }
         },
         {
           "id": "c03-2",
-          "label": "用凡人的方法交换",
+          "label": "用手机支付，按凡人的规矩成交",
           "next": "s04-temple",
           "fateType": "web",
-          "consequence": "你用手机支付买下玉镯，但被三姐的监控系统记录。",
+          "consequence": "交易入账的一瞬，一行你看不懂的小字跳进了系统——这笔账，被「司契」备了案。",
           "effect": {
-            "globals": {
-              "exposure": 10
-            },
             "flags": [
               "used_mobile_pay"
-            ]
+            ],
+            "relationships": {
+              "wen_jia": {
+                "trust": 5
+              }
+            },
+            "globals": {
+              "fragments": 1
+            }
           }
         }
       ],
@@ -533,8 +435,8 @@
     },
     "s04-temple": {
       "id": "s04-temple",
-      "chapter": "Act2",
-      "title": "废弃神庙",
+      "chapter": "第一章",
+      "title": "仙女像下",
       "location": "郊外废弃神庙",
       "panorama": "/panoramas/s04-temple.jpg",
       "palette": {
@@ -542,47 +444,26 @@
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "神庙内供奉着古老的仙女像，第二块碎片藏于神像之下。",
+      "synopsis": "神庙里供着七位仙女像——第七尊的脸被人擦得最干净。玉佩里封着梭核，和一段不属于你的记忆。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "郊外废弃神庙里，神庙内供奉着古老的仙女像，第二块碎片藏于神像之下。",
-          "voiceProfileId": "s04-temple-narrator-08d50ce5",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s04-temple/line-001-fa9c3252cb82.mp3",
-          "voiceAssetPath": "assets/voices/s04-temple/line-001-fa9c3252cb82.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "fa9c3252cb82",
-          "voiceGeneratedAt": "2026-06-20T14:01:43.492Z"
+          "text": "庙残了，香案上却没有灰。七尊仙女像里，第七尊的脸被人擦得最干净——擦拭的布纹，是织坊的手法。"
         },
         {
           "speaker": "narrator",
-          "text": "你注意到「线索」：玉佩中封存着第二块碎片，还有一段记忆。",
-          "voiceProfileId": "s04-temple-narrator-08d50ce5",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s04-temple/line-002-39a393069c02.mp3",
-          "voiceAssetPath": "assets/voices/s04-temple/line-002-39a393069c02.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "39a393069c02",
-          "voiceGeneratedAt": "2026-06-20T14:01:44.239Z"
+          "text": "神像座下压着一枚玉佩，梭核在里面沉睡。触到它的一瞬，一段不属于你的记忆涌进来：有人在这里跪了一夜，求神像「让凡人也能看见锦」。"
         },
         {
-          "speaker": "narrator",
-          "text": "接下来，你必须在「融合玉佩」和「搜索神庙其他角落」之间做出选择。",
-          "voiceProfileId": "s04-temple-narrator-08d50ce5",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s04-temple/line-003-7288346aaeac.mp3",
-          "voiceAssetPath": "assets/voices/s04-temple/line-003-7288346aaeac.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "7288346aaeac",
-          "voiceGeneratedAt": "2026-06-20T14:01:45.053Z"
+          "speaker": "you",
+          "text": "三姐来过。她不是来偷东西——她是来求过路的。"
         }
       ],
       "hotspots": [
         {
           "id": "hotspot-pendant",
-          "label": "线索",
-          "description": "玉佩中封存着第二块碎片，还有一段记忆。",
+          "label": "座下玉佩",
+          "description": "玉佩里除了梭核，还封着一段执念很深的旧记忆。",
           "yaw": 0,
           "pitch": -30,
           "effect": {
@@ -593,7 +474,7 @@
               "hotspot-pendant-found"
             ],
             "memories": [
-              "发现线索：玉佩中封存着第二块碎片，还有一段记忆。"
+              "发现线索：玉佩里封着一段旧记忆。"
             ]
           }
         }
@@ -601,35 +482,35 @@
       "choices": [
         {
           "id": "c04-1",
-          "label": "融合玉佩",
+          "label": "收下梭核，也收下那段记忆",
           "next": "s06-bottleneck",
           "fateType": "river",
-          "consequence": "你吸收第二块碎片，仙力增强，但也引起三姐注意。",
+          "consequence": "织力大涨——但那段记忆会一直贴着你：你从此分得清她的错，也躲不开她的疼。",
           "effect": {
             "globals": {
               "fairy_power": 15,
-              "fragments": 2
+              "fragments": 1
             },
             "flags": [
               "clue2"
             ],
             "memories": [
-              "fused_pendant"
+              "收下玉佩与旧忆"
             ]
           }
         },
         {
           "id": "c04-2",
-          "label": "搜索神庙其他角落",
+          "label": "先搜庙里其他角落",
           "next": "s05-web-fame",
           "fateType": "web",
-          "consequence": "你发现三姐留下的一封警告信，提前了解她的计划。",
+          "consequence": "你找到一封公开信——云绛写给「所有还打算下来的妹妹」，她把自己的立场讲得明明白白。",
           "effect": {
             "flags": [
               "found_warning_letter"
             ],
             "memories": [
-              "read_warning"
+              "读到她的公开信"
             ]
           }
         }
@@ -642,56 +523,35 @@
     },
     "s05-web-fame": {
       "id": "s05-web-fame",
-      "chapter": "Act2",
-      "title": "网红陷阱",
-      "location": "网红直播间",
-      "panorama": "/panoramas/s05-web-fame.jpg",
+      "chapter": "第二章",
+      "title": "梭核直播间",
+      "location": "直播中心",
+      "panorama": "/panoramas/s07-broadcast-countdown.jpg",
       "palette": {
         "from": "#10151f",
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "你误入三姐设置的网络迷阵，她通过直播控制凡人精神。",
+      "synopsis": "直播间没有主播——只有悬在中央的梭核，把观众的注意力一寸一寸抽进数据流。三姐的声音从每一个音响里出来。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "网红直播间里，你误入三姐设置的网络迷阵，她通过直播控制凡人精神。",
-          "voiceProfileId": "s05-web-fame-narrator-9b1fadc3",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s05-web-fame/line-001-f42eaf7a675c.mp3",
-          "voiceAssetPath": "assets/voices/s05-web-fame/line-001-f42eaf7a675c.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "f42eaf7a675c",
-          "voiceGeneratedAt": "2026-06-20T14:01:45.814Z"
+          "text": "千万人在线的直播间里没有真人——台上立着八具机模，是她做给凡人看的「偶像团」；真正的主播位上，只悬着一块梭核。弹幕划过的速度在变慢——观众们不是在看，是在被抽走「看」的力气。"
+        },
+        {
+          "speaker": "yun_jiang",
+          "text": "小七？真的是你。别用那种眼神看我——他们抢着把注意力给我，我只是收下了而已。你要的第三块梭核在我这儿，来天台拿。"
         },
         {
           "speaker": "narrator",
-          "text": "你注意到「线索」：屏幕上有念力陷阱，点击可尝试破坏。",
-          "voiceProfileId": "s05-web-fame-narrator-9b1fadc3",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s05-web-fame/line-002-4983f7e9848c.mp3",
-          "voiceAssetPath": "assets/voices/s05-web-fame/line-002-4983f7e9848c.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "4983f7e9848c",
-          "voiceGeneratedAt": "2026-06-20T14:01:46.569Z"
-        },
-        {
-          "speaker": "narrator",
-          "text": "接下来，你必须在「用仙力黑掉直播间」和「假装迎合，获取情报」之间做出选择。",
-          "voiceProfileId": "s05-web-fame-narrator-9b1fadc3",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s05-web-fame/line-003-0719f75613f3.mp3",
-          "voiceAssetPath": "assets/voices/s05-web-fame/line-003-0719f75613f3.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "0719f75613f3",
-          "voiceGeneratedAt": "2026-06-20T14:01:47.525Z"
+          "text": "声音从四面八方压过来：温柔，疲惫，理直气壮。你认得这个声音——一百年没听过，还是会疼。"
         }
       ],
       "hotspots": [
         {
           "id": "hotspot-screen",
-          "label": "线索",
-          "description": "屏幕上有念力陷阱，点击可尝试破坏。",
+          "label": "弹幕迟滞",
+          "description": "弹幕的速度肉眼可见地慢下去——被抽走注意力的人，连惊叹号都打不完整。",
           "yaw": 0,
           "pitch": 0,
           "effect": {
@@ -702,7 +562,7 @@
               "hotspot-screen-found"
             ],
             "memories": [
-              "发现线索：屏幕上有念力陷阱，点击可尝试破坏。"
+              "发现线索：观众的注意力正被直播间抽走。"
             ]
           }
         }
@@ -710,14 +570,13 @@
       "choices": [
         {
           "id": "c05-1",
-          "label": "用仙力黑掉直播间",
+          "label": "以织力解开数据流，放观众离开",
           "next": "s06-bottleneck",
           "fateType": "wheel",
-          "consequence": "你干扰了直播信号，暂时摆脱三姐控制，但消耗大量法力。",
+          "consequence": "你把被缠住的注意力一缕缕解回去——耗掉两成织力，也当着千万人暴露了织纹。",
           "effect": {
             "globals": {
-              "fairy_power": -20,
-              "tech_skill": 10
+              "fairy_power": -20
             },
             "flags": [
               "hacked_stream"
@@ -726,98 +585,75 @@
         },
         {
           "id": "c05-2",
-          "label": "假装迎合，获取情报",
+          "label": "顺着她的话接住直播，摸清梭核下落",
           "next": "s06-bottleneck",
           "fateType": "web",
-          "consequence": "你假装参加挑战，三姐放松警惕，透露了碎片所在地。",
+          "consequence": "你陪她演了一场姐妹重逢，她放松了警惕——只是这段录像，会永远留在网上。",
           "effect": {
-            "globals": {
-              "deception": 10
-            },
             "memories": [
-              "pretended_to_join"
+              "陪她演完重逢"
             ]
           }
         },
         {
           "id": "c05-3",
-          "label": "呼叫董永帮助",
+          "label": "请董野以镜头干扰，趁乱撤出",
           "next": "s06-bottleneck",
           "fateType": "river",
-          "consequence": "董永用摄像器材制造干扰，你趁机逃脱。",
-          "lockedHint": "你还没有和董永建立足够的信任，他可能不会回应。",
+          "consequence": "他的镜头符文闪了三次，直播信号错乱——你脱身了，但「懂符文的摄影师」从此进了司契的名单。",
+          "lockedHint": "你和董野只有一面之缘——他不欠你一次冒险。",
           "condition": {
-            "relationships": {
-              "dong-yong": {
-                "min": 10
-              }
-            }
+            "flags": [
+              "dongye_ally"
+            ]
           },
           "effect": {
             "relationships": {
-              "dong-yong": 20
+              "dong-yong": {
+                "trust": 8,
+                "spark": 4
+              }
             }
           }
         }
       ],
       "entryView": {
         "yaw": 0,
-        "pitch": 0,
-        "fov": 100
+        "pitch": -20,
+        "fov": 92
       }
     },
     "s06-bottleneck": {
       "id": "s06-bottleneck",
-      "chapter": "Bottleneck",
-      "title": "瓶颈抉择",
+      "chapter": "第二章",
+      "title": "天台对峙",
       "location": "城市天台",
-      "panorama": "/panoramas/s06-bottleneck.jpg",
+      "panorama": "/panoramas/s11-rooftop-confrontation.png",
       "palette": {
         "from": "#10151f",
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "三块碎片已集齐两块，第三块悬浮在天台中央，但三姐出现。",
+      "synopsis": "第三块梭核悬在天台中央。云绛以数据流显形——一百年来，你们第一次面对面。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "城市天台里，三块碎片已集齐两块，第三块悬浮在天台中央，但三姐出现。",
-          "voiceProfileId": "s06-bottleneck-narrator-6f659be3",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s06-bottleneck/line-001-2442b1767b19.mp3",
-          "voiceAssetPath": "assets/voices/s06-bottleneck/line-001-2442b1767b19.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "2442b1767b19",
-          "voiceGeneratedAt": "2026-06-20T14:01:48.429Z"
+          "text": "天台的风把霓虹吹得摇晃。第三块梭核悬在半空，银线绕成一个小小的旋涡；云绛的身影从数据流里一寸一寸拼出来。"
         },
         {
-          "speaker": "narrator",
-          "text": "你注意到「线索」：碎片中封印着天界真相，触碰即可吸收。",
-          "voiceProfileId": "s06-bottleneck-narrator-6f659be3",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s06-bottleneck/line-002-1cef76a8dafe.mp3",
-          "voiceAssetPath": "assets/voices/s06-bottleneck/line-002-1cef76a8dafe.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "1cef76a8dafe",
-          "voiceGeneratedAt": "2026-06-20T14:01:49.198Z"
+          "speaker": "yun_jiang",
+          "text": "律法说，我们织的锦尽归天庭，落款不得留名。我用直播让千万人看见仙织——错的是我拿注意力换力气，不是「想被看见」这件事。小七，你要证词，我要流量，我们要的，都是让她们被看见。"
         },
         {
-          "speaker": "narrator",
-          "text": "接下来，你必须在「抢夺碎片并战斗」和「试图说服三姐」之间做出选择。",
-          "voiceProfileId": "s06-bottleneck-narrator-6f659be3",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s06-bottleneck/line-003-971ac2ab3f21.mp3",
-          "voiceAssetPath": "assets/voices/s06-bottleneck/line-003-971ac2ab3f21.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "971ac2ab3f21",
-          "voiceGeneratedAt": "2026-06-20T14:01:50.044Z"
+          "speaker": "you",
+          "text": "不一样，姐。你把「看见」变成了收割。我要的是他们看完之后，还记得自己是谁。"
         }
       ],
       "hotspots": [
         {
           "id": "hotspot-fragment",
-          "label": "线索",
-          "description": "碎片中封印着天界真相，触碰即可吸收。",
+          "label": "梭核旋涡",
+          "description": "第三块梭核的银线绕成旋涡——里面封着天界律法的原文。",
           "yaw": 0,
           "pitch": 10,
           "effect": {
@@ -828,7 +664,7 @@
               "hotspot-fragment-found"
             ],
             "memories": [
-              "发现线索：碎片中封印着天界真相，触碰即可吸收。"
+              "发现线索：第三块梭核里封着律法原文。"
             ]
           }
         }
@@ -836,57 +672,65 @@
       "choices": [
         {
           "id": "c06-1",
-          "label": "抢夺碎片并战斗",
+          "label": "不再多言，出手夺回梭核",
           "next": "s07-hidden-boss-unlock",
           "fateType": "river",
-          "consequence": "你强行夺取碎片，进入与三姐的正面冲突。",
+          "consequence": "强取最快——但你出手的那一刻，就把「谈」这条路亲手关上了。",
           "effect": {
-            "globals": {
-              "conflict": 20
-            },
             "flags": [
               "fight_route"
-            ]
+            ],
+            "relationships": {
+              "yun_jiang": {
+                "trust": -6
+              }
+            }
           }
         },
         {
           "id": "c06-2",
-          "label": "试图说服三姐",
+          "label": "先听完她的一百年，再谈梭核",
           "next": "s07-hidden-boss-unlock",
           "fateType": "wheel",
-          "consequence": "你用姐妹情谊劝说，三姐犹豫，隐藏路线开启。",
+          "consequence": "你放下手，先当妹妹、后当织女——她的防备松了一线。",
           "effect": {
-            "globals": {
-              "compassion": 10
-            },
             "flags": [
               "persuasion_route"
-            ]
+            ],
+            "relationships": {
+              "yun_jiang": {
+                "trust": 8,
+                "boundary": 3
+              }
+            }
           }
         },
         {
           "id": "c06-3",
-          "label": "用计谋调虎离山",
+          "label": "引开她，直接取核走人",
           "next": "s09-final-choice",
           "fateType": "web",
-          "consequence": "你制造假象让三姐离开，直接拿到碎片，但错过隐藏真相。",
+          "consequence": "你拿到了梭核，省下了眼泪——也错过了她藏在数据流最深处的那句话。",
           "effect": {
             "flags": [
               "tricked_sister"
-            ]
+            ],
+            "globals": {
+              "fragments": 1
+            }
           }
         }
       ],
       "entryView": {
-        "yaw": 0,
-        "pitch": 0,
-        "fov": 100
+        "yaw": 160,
+        "pitch": 2,
+        "fov": 96
       }
     },
     "s07-hidden-boss-unlock": {
       "id": "s07-hidden-boss-unlock",
-      "chapter": "Secret",
-      "title": "三姐的真相",
+      "chapter": "隐章",
+      "title": "云绛的一百年",
       "location": "意识空间",
       "panorama": "/panoramas/s07-hidden-boss-unlock.jpg",
       "palette": {
@@ -894,47 +738,30 @@
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "你打开三姐的记忆之门，看见她堕落的真正原因。",
+      "synopsis": "数据流深处是她的记忆：她「堕落」的起点，是发现自己织了三百年的锦，落款处全是别人的名字。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "意识空间里，你打开三姐的记忆之门，看见她堕落的真正原因。",
-          "voiceProfileId": "s07-hidden-boss-unlock-narrator-99461933",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s07-hidden-boss-unlock/line-001-4c020994cee8.mp3",
-          "voiceAssetPath": "assets/voices/s07-hidden-boss-unlock/line-001-4c020994cee8.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "4c020994cee8",
-          "voiceGeneratedAt": "2026-06-20T14:01:51.116Z"
+          "text": "数据流最深处不是武器，是记忆。你看见年轻的云绛捧着自己织的锦入库——落款处，被内府的印章一个个盖掉。"
+        },
+        {
+          "speaker": "yun_jiang",
+          "text": "三百年，七十二匹锦，没有一匹写我的名字。坠落那天我就想通了：既然天上不许署名，我就下来，让凡人替我记住。"
         },
         {
           "speaker": "narrator",
-          "text": "你注意到「线索」：碎片的背面刻着天界禁令：仙子不得贪恋凡尘。",
-          "voiceProfileId": "s07-hidden-boss-unlock-narrator-99461933",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s07-hidden-boss-unlock/line-002-d754c5cae637.mp3",
-          "voiceAssetPath": "assets/voices/s07-hidden-boss-unlock/line-002-d754c5cae637.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "d754c5cae637",
-          "voiceGeneratedAt": "2026-06-20T14:01:52.032Z"
+          "text": "梭核背面刻着那条律法的原文：「仙织尽归天庭，织者不留名，下凡者删忆。」"
         },
         {
-          "speaker": "narrator",
-          "text": "接下来，你必须在「原谅三姐」和「责备三姐并夺取碎片」之间做出选择。",
-          "voiceProfileId": "s07-hidden-boss-unlock-narrator-99461933",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s07-hidden-boss-unlock/line-003-0a2e2434f7d6.mp3",
-          "voiceAssetPath": "assets/voices/s07-hidden-boss-unlock/line-003-0a2e2434f7d6.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "0a2e2434f7d6",
-          "voiceGeneratedAt": "2026-06-20T14:01:52.978Z"
+          "speaker": "yun_jiang",
+          "text": "我知道形状错了。可天上，连让我错的地方都没有。"
         }
       ],
       "hotspots": [
         {
           "id": "hotspot-memory",
-          "label": "线索",
-          "description": "碎片的背面刻着天界禁令：仙子不得贪恋凡尘。",
+          "label": "律法原文",
+          "description": "梭核背面的律法原文——「织者不留名，下凡者删忆」。",
           "yaw": 0,
           "pitch": -15,
           "effect": {
@@ -945,7 +772,7 @@
               "hotspot-memory-found"
             ],
             "memories": [
-              "发现线索：碎片的背面刻着天界禁令：仙子不得贪恋凡尘。"
+              "发现线索：律法原文——织者不留名，下凡者删忆。"
             ]
           }
         }
@@ -953,32 +780,37 @@
       "choices": [
         {
           "id": "c07-1",
-          "label": "原谅三姐",
+          "label": "抱住她：先是姐妹，再谈对错",
           "next": "s08-hidden-boss",
           "fateType": "river",
-          "consequence": "你选择理解，三姐放下心防，但碎片力量失衡。",
+          "consequence": "她在你怀里散开又聚拢——心防落了。可她透支的注意力还悬在数据流里，总要有人收拾。",
           "effect": {
-            "globals": {
-              "forgiveness": 20
-            },
             "flags": [
               "forgave_sister"
-            ]
+            ],
+            "relationships": {
+              "yun_jiang": {
+                "trust": 10
+              }
+            }
           }
         },
         {
           "id": "c07-2",
-          "label": "责备三姐并夺取碎片",
+          "label": "先算错账：透支凡人，不可原谅",
           "next": "s08-hidden-boss",
           "fateType": "web",
-          "consequence": "你强行收回碎片，三姐暴走，进入Boss战。",
+          "consequence": "你把她的错一条条摆开——她笑着认了，然后把自己织进了数据流更深处。",
           "effect": {
-            "globals": {
-              "anger": 20
-            },
             "flags": [
               "blamed_sister"
-            ]
+            ],
+            "relationships": {
+              "yun_jiang": {
+                "trust": -5,
+                "boundary": 3
+              }
+            }
           }
         }
       ],
@@ -990,8 +822,8 @@
     },
     "s08-hidden-boss": {
       "id": "s08-hidden-boss",
-      "chapter": "Secret",
-      "title": "隐藏Boss：堕落三姐",
+      "chapter": "隐章",
+      "title": "虚空织网",
       "location": "网络虚空",
       "panorama": "/panoramas/s08-hidden-boss.jpg",
       "palette": {
@@ -999,47 +831,26 @@
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "三姐完全释放堕落力量，以网红形态与你对决。",
+      "synopsis": "她把自己织进了数据流。虚空中央的粉色晶核，吊着她透支来的全部注意力——解开它，或者陪她一起沉下去。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "网络虚空里，三姐完全释放堕落力量，以网红形态与你对决。",
-          "voiceProfileId": "s08-hidden-boss-narrator-ddc0e95f",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s08-hidden-boss/line-001-49f967699667.mp3",
-          "voiceAssetPath": "assets/voices/s08-hidden-boss/line-001-49f967699667.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "49f967699667",
-          "voiceGeneratedAt": "2026-06-20T14:01:53.748Z"
+          "text": "虚空里全是被抽走的注意力，织成一张发光的网。云绛在网的中心——她已经分不清哪些线是她自己，哪些线是猎物。"
         },
         {
-          "speaker": "narrator",
-          "text": "你注意到「线索」：一块巨大的粉色水晶，是她力量的来源。",
-          "voiceProfileId": "s08-hidden-boss-narrator-ddc0e95f",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s08-hidden-boss/line-002-81a7c5c24cb9.mp3",
-          "voiceAssetPath": "assets/voices/s08-hidden-boss/line-002-81a7c5c24cb9.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "81a7c5c24cb9",
-          "voiceGeneratedAt": "2026-06-20T14:01:54.494Z"
+          "speaker": "yun_jiang",
+          "text": "别过来。这张网撑着我——拆了它，我这一百年就什么都不剩了。"
         },
         {
-          "speaker": "narrator",
-          "text": "接下来，你必须在「用仙力净化水晶」和「拥抱三姐」之间做出选择。",
-          "voiceProfileId": "s08-hidden-boss-narrator-ddc0e95f",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s08-hidden-boss/line-003-8d8cc72840b9.mp3",
-          "voiceAssetPath": "assets/voices/s08-hidden-boss/line-003-8d8cc72840b9.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "8d8cc72840b9",
-          "voiceGeneratedAt": "2026-06-20T14:01:55.319Z"
+          "speaker": "you",
+          "text": "不。拆了它，剩下的才是你。"
         }
       ],
       "hotspots": [
         {
           "id": "hotspot-core",
-          "label": "线索",
-          "description": "一块巨大的粉色水晶，是她力量的来源。",
+          "label": "粉色晶核",
+          "description": "晶核里压缩着她透支来的全部注意力——也是整张网唯一的承重点。",
           "yaw": 0,
           "pitch": -5,
           "effect": {
@@ -1050,14 +861,14 @@
               "hotspot-core-found"
             ],
             "memories": [
-              "发现线索：一块巨大的粉色水晶，是她力量的来源。"
+              "发现线索：粉色晶核是虚空之网唯一的承重点。"
             ]
           }
         },
         {
           "id": "clue-c08-1",
-          "label": "关键线索",
-          "description": "解锁「用仙力净化水晶」所需的现场线索。",
+          "label": "网的织法",
+          "description": "你贴近看清了这张网的织法——是织坊的基础纹，倒着织的。顺着倒纹，你知道每一根线该从哪里抽。",
           "yaw": 0,
           "pitch": 0,
           "effect": {
@@ -1070,8 +881,8 @@
               "clue3"
             ],
             "memories": [
-              "发现线索：解锁「用仙力净化水晶」所需的现场线索。",
-              "解锁线索：用仙力净化水晶"
+              "发现线索：虚空之网是倒织的坊纹。",
+              "看懂织法之后，你知道该从哪一根线开始解。"
             ]
           }
         }
@@ -1079,60 +890,67 @@
       "choices": [
         {
           "id": "c08-1",
-          "label": "用仙力净化水晶",
-          "next": "e03-secret",
+          "label": "以三块梭核对位，把网一寸寸解回去",
+          "next": "s09-final-choice",
           "fateType": "river",
-          "consequence": "你净化了三姐的堕落之源，她恢复理智，天界之门重开。",
-          "lockedHint": "此前还缺少「clue2」线索或状态；同时先调查「关键线索」。",
+          "consequence": "你把注意力一缕缕还给它们的主人——织力耗到见底，但她终于从网里露出了人形。",
+          "lockedHint": "两块梭核在身、看懂这张网的织法，才能与她核中的第三块对位。",
           "condition": {
+            "minGlobal": [
+              {
+                "key": "fragments",
+                "value": 2
+              }
+            ],
             "flags": [
-              "clue1",
-              "clue2",
-              "clue3"
+              "clue-c08-1-found"
             ]
           },
           "effect": {
             "globals": {
-              "fairy_power": -30,
-              "fragments": 3
+              "fairy_power": -30
             },
             "flags": [
               "purified_sister"
-            ]
+            ],
+            "relationships": {
+              "yun_jiang": {
+                "trust": 8
+              }
+            }
           }
         },
         {
           "id": "c08-2",
-          "label": "拥抱三姐",
-          "next": "e01-growth",
+          "label": "不解网，只抱住网中央的她",
+          "next": "s09-final-choice",
           "fateType": "wheel",
-          "consequence": "你放弃战斗，用亲情打动三姐，最终她自愿交出碎片。",
-          "lockedHint": "此前还缺少「forgave sister」线索或状态，先完成相关场景调查。",
+          "consequence": "你抱住她，网随着她的呼吸慢慢松开——她自愿交出梭核，跟你回到裂缝前。",
+          "lockedHint": "她还没有把心防交给你——先走进她的一百年，再来抱她。",
           "condition": {
             "flags": [
               "forgave_sister"
             ]
           },
           "effect": {
-            "globals": {
-              "love": 30
-            },
             "memories": [
-              "final_hug"
-            ]
+              "网中央的拥抱"
+            ],
+            "relationships": {
+              "yun_jiang": {
+                "trust": 8,
+                "boundary": 4
+              }
+            }
           }
         },
         {
           "id": "c08-3",
-          "label": "逃离虚空",
+          "label": "暂时撤出虚空，保住自己",
           "next": "e02-regret",
           "fateType": "web",
-          "consequence": "你无法战胜她，逃回人间，但裂缝扩大。",
-          "effect": {
-            "globals": {
-              "cowardice": 30
-            }
-          }
+          "consequence": "网太深了。你退出来的时候，天界裂缝又扩大了一寸——有些账，晚还要付利息。",
+          "effect": {}
         }
       ],
       "entryView": {
@@ -1143,8 +961,8 @@
     },
     "s09-final-choice": {
       "id": "s09-final-choice",
-      "chapter": "Final",
-      "title": "最终抉择",
+      "chapter": "终章",
+      "title": "织政谒见",
       "location": "天界裂缝前",
       "panorama": "/panoramas/s09-final-choice.jpg",
       "palette": {
@@ -1152,39 +970,26 @@
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "收集到所有碎片后，王母娘娘出现，给你最后的考验。",
+      "synopsis": "梭核归位，裂缝前立着机杼星君。旧律给出两个去处——但律法是织出来的。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "天界裂缝前里，收集到所有碎片后，王母娘娘出现，给你最后的考验。",
-          "voiceProfileId": "s09-final-choice-narrator-7da34f67",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/s09-final-choice/line-001-2474ddd972a7.mp3",
-          "voiceAssetPath": "assets/voices/s09-final-choice/line-001-2474ddd972a7.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "2474ddd972a7",
-          "voiceGeneratedAt": "2026-06-20T14:01:56.191Z"
+          "text": "裂缝前的光落成一道门。机杼星君立在门内，手里是那卷律法——「织者不留名，下凡者删忆」。"
         },
         {
-          "speaker": "narrator",
-          "text": "你注意到「线索」：门中透出温暖的光芒，但会吞噬记忆。",
-          "voiceProfileId": "s09-final-choice-narrator-7da34f67",
-          "voiceStatus": "failed",
-          "voiceError": "rate limit exceeded(RPM)"
+          "speaker": "ji_zhu",
+          "text": "梭核归位，织机可修。按律：归位者删忆返庭，抗命者革籍留凡。第七织女，你选。"
         },
         {
-          "speaker": "narrator",
-          "text": "接下来，你必须在「选择忘记，返回天庭」和「拒绝忘记，留在人间」之间做出选择。",
-          "voiceProfileId": "s09-final-choice-narrator-7da34f67",
-          "voiceStatus": "failed",
-          "voiceError": "rate limit exceeded(RPM)"
+          "speaker": "you",
+          "text": "星君，律法是织出来的——织出来的东西，就能拆线重织。"
         }
       ],
       "hotspots": [
         {
           "id": "hotspot-gate",
-          "label": "线索",
-          "description": "门中透出温暖的光芒，但会吞噬记忆。",
+          "label": "裂缝之门",
+          "description": "门里的光很暖——暖得像要把你在人间的这一年整个融掉。",
           "yaw": 0,
           "pitch": 15,
           "effect": {
@@ -1195,14 +1000,14 @@
               "hotspot-gate-found"
             ],
             "memories": [
-              "发现线索：门中透出温暖的光芒，但会吞噬记忆。"
+              "发现线索：门里的暖光会融掉人间记忆。"
             ]
           }
         },
         {
           "id": "clue-c09-3",
-          "label": "关键线索",
-          "description": "解锁「质疑天界律法」所需的现场线索。",
+          "label": "人间锦",
+          "description": "你腰间那匹随手织了一路的锦——霓虹、雨夜、直播间的光、相机的闪、姐姐的声音，全都在里面。它自己就是证词。",
           "yaw": 0,
           "pitch": 0,
           "effect": {
@@ -1214,8 +1019,8 @@
               "understood_sister"
             ],
             "memories": [
-              "发现线索：解锁「质疑天界律法」所需的现场线索。",
-              "解锁线索：质疑天界律法"
+              "发现线索：织了一路的人间锦，本身就是证词。",
+              "把人间锦捧在手里，你有了开口的底气。"
             ]
           }
         }
@@ -1223,14 +1028,13 @@
       "choices": [
         {
           "id": "c09-1",
-          "label": "选择忘记，返回天庭",
+          "label": "按旧律返庭：交出记忆，赢回织机",
           "next": "e01-growth",
           "fateType": "river",
-          "consequence": "你斩断尘缘，回到天庭但失去人间记忆。",
+          "consequence": "你拿回织机与七织的位份——代价是人间这一年：董野的镜头、闻迦的账本、姐姐的声音，全数上缴。",
           "effect": {
             "globals": {
-              "fairy_power": 50,
-              "fragments": 3
+              "fairy_power": 50
             },
             "flags": [
               "returned_to_heaven"
@@ -1239,14 +1043,11 @@
         },
         {
           "id": "c09-2",
-          "label": "拒绝忘记，留在人间",
+          "label": "弃籍留凡：以凡人之身，织补裂缝",
           "next": "e02-regret",
           "fateType": "web",
-          "consequence": "你放弃仙籍，成为凡人，但天界裂缝永闭。",
+          "consequence": "仙籍革除，织力十不存一——往后十年，裂缝要靠你一针一线地补。",
           "effect": {
-            "globals": {
-              "humanity": 50
-            },
             "flags": [
               "stayed_on_earth"
             ]
@@ -1254,20 +1055,17 @@
         },
         {
           "id": "c09-3",
-          "label": "质疑天界律法",
+          "label": "呈上人间锦：请星君重审律法",
           "next": "e03-secret",
           "fateType": "wheel",
-          "consequence": "你提出挑战，王母沉默，隐藏的第三条路出现。",
-          "lockedHint": "先调查「关键线索」，再尝试「质疑天界律法」。",
+          "consequence": "你把一年的人间织进锦里递上去——星君沉默了很久，久到裂缝的风都停了。",
+          "lockedHint": "天条不认眼泪，只认证物——把你织了一路的锦呈上去。",
           "condition": {
             "flags": [
               "understood_sister"
             ]
           },
           "effect": {
-            "globals": {
-              "rebellion": 30
-            },
             "flags": [
               "challenged_heaven"
             ]
@@ -1282,8 +1080,8 @@
     },
     "e01-growth": {
       "id": "e01-growth",
-      "chapter": "Ending",
-      "title": "成长结局",
+      "chapter": "结局",
+      "title": "锦归天庭",
       "location": "天庭云端",
       "panorama": "/panoramas/e01-growth.jpg",
       "palette": {
@@ -1291,32 +1089,19 @@
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "你回到天庭，但记忆空白。王母赐予你新的职责。",
+      "synopsis": "你赢回织机与位份，人间一年却被收走。有人托司契送来一枚你想不起来历的梭形发簪。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "成长结局成为这条命运线的终点，你回到天庭，但记忆空白。王母赐予你新的职责。",
-          "voiceProfileId": "e01-growth-narrator-173213e0",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/e01-growth/line-001-9dd2f32271cb.mp3",
-          "voiceAssetPath": "assets/voices/e01-growth/line-001-9dd2f32271cb.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "9dd2f32271cb",
-          "voiceGeneratedAt": "2026-06-20T14:10:34.685Z"
+          "text": "织机修好那天，第一匹下机的锦照旧没有落款——你盯着那处空白看了很久，不明白自己为什么难受。"
         },
         {
           "speaker": "narrator",
-          "text": "天庭云端里的最后一幕落下，玩家此前的选择在此显出代价。",
-          "voiceProfileId": "e01-growth-narrator-173213e0",
-          "voiceStatus": "failed",
-          "voiceError": "rate limit exceeded(RPM)"
+          "text": "只是你总觉得袖中少了什么。有人托司契送来一枚梭形发簪，说是你在人间遗落的——你握着它看了很久，想不起递簪那只手的样子。"
         },
         {
           "speaker": "narrator",
-          "text": "这条路线以「成长结局」收束，留下无法回头的回响。",
-          "voiceProfileId": "e01-growth-narrator-173213e0",
-          "voiceStatus": "failed",
-          "voiceError": "rate limit exceeded(RPM)"
+          "text": "云端的风把锦吹得猎猎作响。每一个名字都在。只有那一年，不在。"
         }
       ],
       "hotspots": [],
@@ -1327,47 +1112,38 @@
         "fov": 100
       },
       "ending": {
-        "title": "成长结局",
-        "subtitle": "你回到天庭，但记忆空白。王母赐予你新的职责。"
+        "title": "锦归天庭",
+        "subtitle": "你赢回织机与七织的位份，人间一年按旧律上缴——落款处照旧空白，递簪的手想不起来了。"
       }
     },
     "e02-regret": {
       "id": "e02-regret",
-      "chapter": "Ending",
-      "title": "遗憾结局",
-      "location": "人间公寓",
+      "chapter": "结局",
+      "title": "第七工作室",
+      "location": "人间·织造工作室",
       "panorama": "/panoramas/e02-regret.jpg",
       "palette": {
         "from": "#10151f",
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "你成为凡人，与董永在一起，但天界裂缝让灵气泄露，人间开始出现异常。",
+      "synopsis": "你以凡人之身留在人间。雨夜里，云绛循着银线找了来——姐妹合开「第七织造」，每匹锦都有署名。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "遗憾结局成为这条命运线的终点，你成为凡人，与董永在一起，但天界裂缝让灵气泄露，人间开始出现异常。",
-          "voiceProfileId": "e02-regret-narrator-657a19a8",
-          "voiceId": "Chinese (Mandarin)_Radio_Host",
-          "voiceSrc": "/voices/project-20260620-201739/e02-regret/line-001-ac8199278e75.mp3",
-          "voiceAssetPath": "assets/voices/e02-regret/line-001-ac8199278e75.mp3",
-          "voiceStatus": "ready",
-          "voiceHash": "ac8199278e75",
-          "voiceGeneratedAt": "2026-06-20T14:01:58.348Z"
+          "text": "工作室的招牌是你自己挂的：「第七织造」。白天接旗袍与戏服的单子，夜里，你去补天界的裂缝。"
         },
         {
           "speaker": "narrator",
-          "text": "人间公寓里的最后一幕落下，玩家此前的选择在此显出代价。",
-          "voiceProfileId": "e02-regret-narrator-657a19a8",
-          "voiceStatus": "failed",
-          "voiceError": "rate limit exceeded(RPM)"
+          "text": "开张那个雨夜，云绛循着你补缝的银线找了来——没提天上，也没提直播间，只把袖子挽了起来。"
+        },
+        {
+          "speaker": "yun_jiang",
+          "text": "客人总问，为什么我们的锦摸起来像有光。我说是祖传手艺——也不算骗人，对吧？"
         },
         {
           "speaker": "narrator",
-          "text": "这条路线以「遗憾结局」收束，留下无法回头的回响。",
-          "voiceProfileId": "e02-regret-narrator-657a19a8",
-          "voiceStatus": "failed",
-          "voiceError": "rate limit exceeded(RPM)"
+          "text": "开张那天，董野的纪录片在墙上循环放，片名叫《会发光的手艺》。织力十不存一，日子一寸一寸过——可每一匹出去的锦，落款处都端端正正，织着两个人的名字。"
         }
       ],
       "hotspots": [],
@@ -1378,43 +1154,34 @@
         "fov": 100
       },
       "ending": {
-        "title": "遗憾结局",
-        "subtitle": "你成为凡人，与董永在一起，但天界裂缝让灵气泄露，人间开始出现异常。"
+        "title": "第七工作室",
+        "subtitle": "你以凡人之身留下；雨夜里云绛找了来，姐妹合开织造工作室——织力微薄，但每一匹锦都有署名。"
       }
     },
     "e03-secret": {
       "id": "e03-secret",
-      "chapter": "Secret Ending",
-      "title": "真·重返天界",
+      "chapter": "隐藏结局",
+      "title": "天织新律",
       "location": "天界议会",
-      "panorama": "/panoramas/e03-secret.jpg",
+      "panorama": "/panoramas/e01-together.jpg",
       "palette": {
         "from": "#10151f",
         "via": "#31404f",
         "to": "#c78356"
       },
-      "synopsis": "你凭智慧和情感改变了天界律法，仙女下凡不再需要遗忘。",
+      "synopsis": "人间锦成为呈堂证词，律法修订通过：织者署名，下凡存忆。云绛的直播间转正为「天织频道」。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "真·重返天界成为这条命运线的终点，你凭智慧和情感改变了天界律法，仙女下凡不再需要遗忘。",
-          "voiceProfileId": "e03-secret-narrator-bb271106",
-          "voiceStatus": "failed",
-          "voiceError": "rate limit exceeded(RPM)"
+          "text": "机杼星君把人间锦在议会展开——霓虹、雨夜、镜头的闪光、姐姐的声音，凡人的一年在天庭的殿上流动。没有人说话，因为每个人都看见了。"
+        },
+        {
+          "speaker": "ji_zhu",
+          "text": "律法既是织物，便可拆线重织。自今日起：仙织署名，归织者；下凡存忆，归本人。——第七织女，这一条，以你的锦为凭。"
         },
         {
           "speaker": "narrator",
-          "text": "天界议会里的最后一幕落下，玩家此前的选择在此显出代价。",
-          "voiceProfileId": "e03-secret-narrator-bb271106",
-          "voiceStatus": "failed",
-          "voiceError": "rate limit exceeded(RPM)"
-        },
-        {
-          "speaker": "narrator",
-          "text": "这条路线以「真·重返天界」收束，留下无法回头的回响。",
-          "voiceProfileId": "e03-secret-narrator-bb271106",
-          "voiceStatus": "failed",
-          "voiceError": "rate limit exceeded(RPM)"
+          "text": "云绛的直播间转了正，挂牌「天织频道」，第一课教凡人认坊纹。你们在云海重逢相拥的那一幕被她设成了封面——这一次，落款写着你们两个人的名字。"
         }
       ],
       "hotspots": [],
@@ -1425,9 +1192,89 @@
         "fov": 100
       },
       "ending": {
-        "title": "真·重返天界",
-        "subtitle": "你凭智慧和情感改变了天界律法，仙女下凡不再需要遗忘。"
+        "title": "天织新律",
+        "subtitle": "人间锦成为证词，律法修订通过——织者署名，下凡存忆；姐妹在云海重逢。"
       }
     }
+  },
+  "subtitle": "会记住你织出的每一寸锦",
+  "cast": {
+    "protagonist": {
+      "id": "you",
+      "name": "云织",
+      "role": "织女星宿第七位·云锦织机操机人",
+      "pronouns": "她",
+      "color": "#d8cfe8",
+      "accent": "#3a3350"
+    },
+    "characters": [
+      {
+        "id": "yun_jiang",
+        "name": "云绛",
+        "shortName": "三姐",
+        "role": "织女星宿第三位·最早坠落者",
+        "theme": "署名与代价",
+        "color": "#d98c8c",
+        "accent": "#4a2f33",
+        "romanceable": false,
+        "relationship": {
+          "enabled": true,
+          "initial": {
+            "spark": 0,
+            "trust": 25,
+            "boundary": 50
+          }
+        }
+      },
+      {
+        "id": "dong-yong",
+        "name": "董野",
+        "shortName": "董野",
+        "role": "纪录片摄影师",
+        "theme": "记录与同意",
+        "color": "#9db8a4",
+        "accent": "#2f4036",
+        "romanceable": true,
+        "relationship": {
+          "enabled": true,
+          "initial": {
+            "spark": 10,
+            "trust": 20,
+            "boundary": 60
+          }
+        }
+      },
+      {
+        "id": "wen_jia",
+        "name": "闻迦",
+        "shortName": "闻迦",
+        "role": "古玩修复师·司契监察",
+        "theme": "规矩与真伪",
+        "color": "#b8ad8f",
+        "accent": "#3d3a28",
+        "romanceable": false,
+        "relationship": {
+          "enabled": true,
+          "initial": {
+            "spark": 8,
+            "trust": 15,
+            "boundary": 70
+          }
+        }
+      },
+      {
+        "id": "ji_zhu",
+        "name": "机杼星君",
+        "shortName": "星君",
+        "role": "天界织政执掌者",
+        "theme": "律法与修订",
+        "color": "#a99bd6",
+        "accent": "#35304d",
+        "romanceable": false,
+        "relationship": {
+          "enabled": false
+        }
+      }
+    ]
   }
 }

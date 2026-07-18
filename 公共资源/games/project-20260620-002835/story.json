@@ -1,5 +1,5 @@
 {
-  "title": "云巅仙阁·命运抉择",
+  "title": "云巅修缮录",
   "startNodeId": "s00-arrival",
   "mechanics": {
     "mode": "published",
@@ -28,7 +28,7 @@
       },
       {
         "id": "charm",
-        "label": "魅力",
+        "label": "斡旋",
         "description": "影响社交、说服和关系推进。",
         "initial": 35,
         "min": 0,
@@ -103,116 +103,6 @@
         "visibility": "debug",
         "tone": "truth",
         "format": "count"
-      },
-      {
-        "id": "aff_yunmoxuan",
-        "label": "云墨轩好感",
-        "description": "云墨轩独立好感度。",
-        "initial": 20,
-        "min": 0,
-        "max": 100,
-        "visibility": "hidden",
-        "tone": "affinity",
-        "format": "number"
-      },
-      {
-        "id": "aff_yueqinghan",
-        "label": "月清寒好感",
-        "description": "月清寒独立好感度。",
-        "initial": 20,
-        "min": 0,
-        "max": 100,
-        "visibility": "hidden",
-        "tone": "affinity",
-        "format": "number"
-      },
-      {
-        "id": "aff_zhuqingyan",
-        "label": "竹清晏好感",
-        "description": "竹清晏独立好感度。",
-        "initial": 20,
-        "min": 0,
-        "max": 100,
-        "visibility": "hidden",
-        "tone": "affinity",
-        "format": "number"
-      },
-      {
-        "id": "aff_ziyelan",
-        "label": "紫夜澜好感",
-        "description": "紫夜澜独立好感度。",
-        "initial": 20,
-        "min": 0,
-        "max": 100,
-        "visibility": "hidden",
-        "tone": "affinity",
-        "format": "number"
-      },
-      {
-        "id": "aff_meihanshuang",
-        "label": "梅寒霜好感",
-        "description": "梅寒霜独立好感度。",
-        "initial": 20,
-        "min": 0,
-        "max": 100,
-        "visibility": "hidden",
-        "tone": "affinity",
-        "format": "number"
-      },
-      {
-        "id": "aff_lanling",
-        "label": "兰灵好感",
-        "description": "兰灵独立好感度。",
-        "initial": 20,
-        "min": 0,
-        "max": 100,
-        "visibility": "hidden",
-        "tone": "affinity",
-        "format": "number"
-      },
-      {
-        "id": "aff_juaoqiu",
-        "label": "菊傲秋好感",
-        "description": "菊傲秋独立好感度。",
-        "initial": 20,
-        "min": 0,
-        "max": 100,
-        "visibility": "hidden",
-        "tone": "affinity",
-        "format": "number"
-      },
-      {
-        "id": "aff_mudanxian",
-        "label": "牡丹仙好感",
-        "description": "牡丹仙独立好感度。",
-        "initial": 20,
-        "min": 0,
-        "max": 100,
-        "visibility": "hidden",
-        "tone": "affinity",
-        "format": "number"
-      },
-      {
-        "id": "aff_manzhuxianji",
-        "label": "曼珠仙姬好感",
-        "description": "曼珠仙姬独立好感度。",
-        "initial": 20,
-        "min": 0,
-        "max": 100,
-        "visibility": "hidden",
-        "tone": "affinity",
-        "format": "number"
-      },
-      {
-        "id": "aff_linghuaxianzi",
-        "label": "灵花仙子好感",
-        "description": "灵花仙子独立好感度。",
-        "initial": 20,
-        "min": 0,
-        "max": 100,
-        "visibility": "hidden",
-        "tone": "affinity",
-        "format": "number"
       }
     ]
   },
@@ -220,7 +110,7 @@
     "s00-arrival": {
       "id": "s00-arrival",
       "chapter": "第一章",
-      "title": "云巅初会",
+      "title": "旧凭入阁",
       "location": "云巅仙阁大殿",
       "panorama": "/panoramas/project-20260620-002835-s00-arrival.jpg",
       "entryView": {
@@ -233,30 +123,34 @@
         "via": "#38506a",
         "to": "#d8c08c"
       },
-      "synopsis": "盛会开幕之夜，你以散修身份踏入云巅仙阁，十位传人依次向你投来目光。",
+      "synopsis": "盛会开幕之夜，沈青梧持师父留下的旧凭证踏入云巅仙阁。满殿的人都在看星海穹顶，只有她一眼看出：封印的纹路，接错了三处。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "云雾在脚下铺成玉阶，你走入云巅仙阁，大殿穹顶像一片倒悬星海。"
+          "text": "云雾在脚下铺成玉阶。沈青梧攥着袖中那枚旧凭证走进大殿——穹顶如倒悬星海，可她第一眼看的不是星，是星与星之间的阵线。有三处，走向不对。"
         },
         {
-          "speaker": "云墨轩",
-          "text": "散修也能走到这里，看来传闻并不全是夸大。"
+          "speaker": "you",
+          "text": "师父，上一回站在这里的人是你。你看见的，也是这三处么。"
         },
         {
-          "speaker": "月清寒",
-          "text": "云海试炼看重机缘，也看重心性。道友不必拘谨。"
+          "speaker": "yun_moxuan",
+          "text": "满殿的人都在看星，只有你在数星底下的阵眼。云渊，云墨轩。不问道友来历——只问一句，你看出了什么？"
         },
         {
-          "speaker": "曼珠仙姬",
-          "text": "小家伙，你身上的传承味道，比这场盛会更有趣。"
+          "speaker": "yue_qinghan",
+          "text": "云师兄，凭证验过，便是客。……只是道友这枚凭证的年份很旧，旧到上一次修缮。殿里有些东西经不起惊动，请慢行。"
+        },
+        {
+          "speaker": "manzhu",
+          "text": "以雾养纹，以息藏形——这是无名一脉的手法。别慌。这满殿的人里，如今还认得它的，只剩我一个。"
         }
       ],
       "hotspots": [
         {
           "id": "cloud-sigil",
           "label": "穹顶云纹",
-          "description": "穹顶云纹中藏着一枚逆转时空的细小符号。",
+          "description": "穹顶云纹深处藏着一枚细小的符记，笔画逆走——寻常阵法里，没有人会把时序刻反。",
           "yaw": 18,
           "pitch": 16,
           "effect": {
@@ -268,14 +162,14 @@
               "insight": 4
             },
             "memories": [
-              "云巅穹顶的逆纹"
+              "发现线索：穹顶云纹里一枚逆走的时之符"
             ]
           }
         },
         {
           "id": "ten-seats",
           "label": "十家席位",
-          "description": "十个席位并非按尊卑排列，而像某种封印阵位。",
+          "description": "十个席位并不按尊卑排列，而按方位落定——不像座次，倒像十枚压阵的镇石。",
           "yaw": -42,
           "pitch": -4,
           "effect": {
@@ -285,17 +179,20 @@
             "globals": {
               "alliance": 3,
               "wisdom": 2
-            }
+            },
+            "memories": [
+              "十家席位实为阵位，像十枚镇石"
+            ]
           }
         }
       ],
       "choices": [
         {
           "id": "observe-auras",
-          "label": "观察每个人的气质与修为",
+          "label": "逐一辨认十家传人的功法气息",
           "next": "s01-first-impression",
           "fateType": "river",
-          "consequence": "你以理性判断十位传人的气息，为后续阵法和真相路线埋下伏笔。",
+          "consequence": "你摸清了十家功法与阵位的对应，往后布阵心里有底——但盯人太久，云墨轩已经注意到你的视线。",
           "effect": {
             "globals": {
               "wisdom": 8,
@@ -305,17 +202,17 @@
               "impression_rational"
             ],
             "memories": [
-              "初会时选择先观察"
+              "入阁之夜，她先辨清了十家的气息"
             ]
           },
-          "caption": "你以理性判断十位传人的气息，为后续阵法和真相路线埋下伏笔。"
+          "caption": "你摸清了十家功法与阵位的对应，往后布阵心里有底——但盯人太久，云墨轩已经注意到你的视线。"
         },
         {
           "id": "answer-greetings",
-          "label": "坦然回应众人的问候",
+          "label": "以散修之礼从容回应众人",
           "next": "s01-first-impression",
           "fateType": "river",
-          "consequence": "你的友好让大殿气氛松动，十家对你的戒心稍稍下降。",
+          "consequence": "大殿的气氛因你而松动，十家戒心稍降——但站在所有人的注视里，查探封印的事，只能改到暗处去做。",
           "effect": {
             "globals": {
               "charm": 8,
@@ -325,17 +222,17 @@
               "impression_social"
             ],
             "memories": [
-              "初会时主动结交众人"
+              "入阁之夜，她以礼周旋于十家之间"
             ]
           },
-          "caption": "你的友好让大殿气氛松动，十家对你的戒心稍稍下降。"
+          "caption": "大殿的气氛因你而松动，十家戒心稍降——但站在所有人的注视里，查探封印的事，只能改到暗处去做。"
         },
         {
           "id": "keep-guard",
-          "label": "保持警惕并扫视四周",
+          "label": "沿殿壁巡看封印纹路",
           "next": "s01-first-impression",
           "fateType": "web",
-          "consequence": "你的谨慎发现仙阁防线异常，也让暗处的人记住了你。",
+          "consequence": "你确认了那三处错纹不是年久失修，是人为改动——但暗处也有人记下了这个不看热闹、只看阵的散修。",
           "effect": {
             "globals": {
               "insight": 8,
@@ -345,10 +242,10 @@
               "impression_cautious"
             ],
             "memories": [
-              "初会时先戒备仙阁"
+              "入阁之夜，她先看的是封印，不是人"
             ]
           },
-          "caption": "你的谨慎发现仙阁防线异常，也让暗处的人记住了你。"
+          "caption": "你确认了那三处错纹不是年久失修，是人为改动——但暗处也有人记下了这个不看热闹、只看阵的散修。"
         }
       ],
       "cinematics": [
@@ -368,9 +265,9 @@
     "s01-first-impression": {
       "id": "s01-first-impression",
       "chapter": "第一章",
-      "title": "第一印象",
+      "title": "钟声与断香",
       "location": "云巅仙阁大殿内环",
-      "panorama": "/panoramas/project-20260620-002835-s01-first-impression.jpg",
+      "panorama": "/panoramas/project-20260620-002835-s00-arrival.jpg",
       "entryView": {
         "yaw": 0,
         "pitch": 0,
@@ -381,30 +278,34 @@
         "via": "#38506a",
         "to": "#d8c08c"
       },
-      "synopsis": "十位传人的问候结束，仙阁钟声响起，盛会即将揭开真正目的。",
+      "synopsis": "钟声三响，盛会将揭开真正的目的。供案上那炷断香告诉沈青梧：封印不是将漏——是已经在漏。",
       "lines": [
         {
-          "speaker": "牡丹仙",
-          "text": "今夜不论出身，只论能否担起修仙界的命数。"
+          "speaker": "mudan",
+          "text": "今夜不论出身，只论一件事——谁担得起修仙界的命数。"
         },
         {
-          "speaker": "竹清晏",
-          "text": "若试炼伤及无辜灵物，我会退出。"
+          "speaker": "zhu_qingyan",
+          "text": "那我先把话放在明处。试炼若伤及无辜灵物，我即刻退出，谁的面子也不给。"
         },
         {
-          "speaker": "紫夜澜",
-          "text": "规则写给守规矩的人。真正的危险，从来不在明面上。"
+          "speaker": "narrator",
+          "text": "殿角的灯影里空无一人，却有个声音贴着地面浮了上来。"
+        },
+        {
+          "speaker": "zi_yelan",
+          "text": "规则是写给守规矩的人看的。真正的危险，从来不署名。"
         },
         {
           "speaker": "system",
-          "text": "你的第一印象已经被记录。它不会立刻定局，却会改变之后每个人听你说话的方式。"
+          "text": "司仪的声音随钟声铺开：「诸位今夜言行，十家长老俱已看在眼里。明日云海开试，各凭本事，各安天命。」"
         }
       ],
       "hotspots": [
         {
           "id": "broken-incense",
           "label": "断裂灵香",
-          "description": "供案上的灵香被无形力量切断，断口残留黑金色雾气。",
+          "description": "供案上的灵香被无形之力齐齐切断，断口凝着一缕黑金色的雾，久久不散——香是供给封印的，香断，说明有东西在里面收供。",
           "yaw": 72,
           "pitch": -10,
           "effect": {
@@ -414,17 +315,20 @@
             "globals": {
               "insight": 4,
               "hidden_clues": 1
-            }
+            },
+            "memories": [
+              "发现线索：断香口的黑金色雾气"
+            ]
           }
         }
       ],
       "choices": [
         {
           "id": "declare-origin",
-          "label": "以散修身份坦然见礼",
+          "label": "以散修之名坦然见礼",
           "next": "s02-partner-cluster",
           "fateType": "river",
-          "consequence": "你没有掩饰出身，几位重视骨气的人对你重新估量。",
+          "consequence": "你不掩出身，重骨气的人对你重新估量——但也有目光开始追问：一个散修，凭什么拿得出这样年份的旧凭。",
           "effect": {
             "globals": {
               "virtue": 8,
@@ -435,14 +339,14 @@
               "declared_origin"
             ]
           },
-          "caption": "你没有掩饰出身，几位重视骨气的人对你重新估量。"
+          "caption": "你不掩出身，重骨气的人对你重新估量——但也有目光开始追问：一个散修，凭什么拿得出这样年份的旧凭。"
         },
         {
           "id": "ask-trial-rules",
-          "label": "先问清云海试炼规则",
+          "label": "当众问清云海试炼的章程",
           "next": "s02-partner-cluster",
           "fateType": "river",
-          "consequence": "你把话题拉回规则，月清寒和菊傲秋听出了你的判断力。",
+          "consequence": "月清寒与菊傲秋听出你话里的条理——但牡丹仙也记下了：这个散修问规矩，是在找规矩的缝。",
           "effect": {
             "globals": {
               "wisdom": 8,
@@ -452,14 +356,14 @@
               "asked_trial_rules"
             ]
           },
-          "caption": "你把话题拉回规则，月清寒和菊傲秋听出了你的判断力。"
+          "caption": "月清寒与菊傲秋听出你话里的条理——但牡丹仙也记下了：这个散修问规矩，是在找规矩的缝。"
         },
         {
           "id": "inspect-defense",
-          "label": "留意仙阁防线异常",
+          "label": "借行礼之机细看殿中防线",
           "next": "s02-partner-cluster",
           "fateType": "web",
-          "consequence": "你发现盛会像试炼，也像一场早已准备好的封印仪式。",
+          "consequence": "你看清了：这不像选贤的试炼，更像一场早已备好的封印仪式——但你多看一眼阵眼，阵眼也可能看回你一眼。",
           "effect": {
             "globals": {
               "insight": 6,
@@ -469,16 +373,16 @@
               "noticed_seal_tension"
             ]
           },
-          "caption": "你发现盛会像试炼，也像一场早已准备好的封印仪式。"
+          "caption": "你看清了：这不像选贤的试炼，更像一场早已备好的封印仪式——但你多看一眼阵眼，阵眼也可能看回你一眼。"
         }
       ]
     },
     "s02-partner-cluster": {
       "id": "s02-partner-cluster",
       "chapter": "第二章",
-      "title": "试炼开启",
+      "title": "云海开试",
       "location": "云海试炼场入口",
-      "panorama": "/panoramas/project-20260620-002835-s01-first-impression.jpg",
+      "panorama": "/panoramas/project-20260620-002835-s00-arrival.jpg",
       "entryView": {
         "yaw": 0,
         "pitch": 0,
@@ -489,102 +393,94 @@
         "via": "#1f6b7a",
         "to": "#d9f2ff"
       },
-      "synopsis": "十大世家宣布云海试炼：智慧、实力、心性三关将决定谁能开启上古仙府。",
+      "synopsis": "云海裂开，剑潮、灵谷、暗潮、花台四处异象同时显形。试炼是幌子，异象才是封印漏气的病征——先查哪一处，由沈青梧自己定。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "云海向两侧裂开，浮岛、剑潮、星阵和灵植谷在雾中轮番显影。"
+          "text": "云海向两侧裂开。浮岛之上，剑潮的嗡鸣、灵植谷的低泣、暗潮裂隙里的黑气、花台上压低的人声，在同一息里一齐涌向她。"
         },
         {
-          "speaker": "灵花仙子",
-          "text": "传承不是奖励。它更像一声从很远处传来的求救。"
+          "speaker": "ling_hua",
+          "text": "孩子，传承不是奖励。它更像一声从很远的地方传来的求救。"
         },
         {
-          "speaker": "梅寒霜",
-          "text": "若你只会依赖旁人，最好现在就退出。"
+          "speaker": "mei_hanshuang",
+          "text": "试炼场上没人替你收剑。若你只会靠旁人，现在退出，还来得及。"
         },
         {
           "speaker": "system",
-          "text": "你可以选择一至两位试炼伙伴。不同组合将打开不同的情感与真相路径。"
+          "text": "掌中阵盘微微发烫，四处方位在盘面上依次亮起——剑潮、灵谷、暗潮、花台。四处漏气的节律，竟是同一个。"
         }
       ],
       "hotspots": [],
       "choices": [
         {
           "id": "seat-sword-moon",
-          "label": "靠近云剑与星月席",
+          "label": "循剑潮的异响而去",
           "next": "s03-sword-moon",
           "fateType": "river",
-          "consequence": "你向剑道与阵法路线靠拢，试炼将更重视理性与决断。",
+          "consequence": "剑潮的震频与封印缺口对得上号，云墨轩与月清寒都在那一侧——但剑潮无眼，想在剑下查案，先得在剑下站稳。",
           "effect": {
             "globals": {
               "wisdom": 3,
-              "aff_yunmoxuan": 10,
-              "aff_yueqinghan": 10
+              "insight": 3
             },
             "flags": [
               "cluster_sword_moon"
             ]
           },
-          "caption": "你向剑道与阵法路线靠拢，试炼将更重视理性与决断。"
+          "caption": "剑潮的震频与封印缺口对得上号，云墨轩与月清寒都在那一侧——但剑潮无眼，想在剑下查案，先得在剑下站稳。"
         },
         {
           "id": "seat-bamboo-orchid",
-          "label": "走向青竹幽兰席",
+          "label": "去灵植谷听那声哀鸣",
           "next": "s04-bamboo-orchid",
           "fateType": "river",
-          "consequence": "你选择更温和的同伴，和平与守护路线开始成形。",
+          "consequence": "灵植最先察觉地脉之变，竹清晏与兰灵可为同证——但草木的证词细微，你得慢下来听；慢一步，别处的裂口就多漏一分。",
           "effect": {
             "globals": {
               "virtue": 4,
-              "aff_zhuqingyan": 10,
-              "aff_lanling": 10
+              "insight": 2
             },
             "flags": [
               "cluster_bamboo_orchid"
             ]
           },
-          "caption": "你选择更温和的同伴，和平与守护路线开始成形。"
+          "caption": "灵植最先察觉地脉之变，竹清晏与兰灵可为同证——但草木的证词细微，你得慢下来听；慢一步，别处的裂口就多漏一分。"
         },
         {
           "id": "seat-shadow-beyond",
-          "label": "观察幽冥与彼岸席",
+          "label": "下探暗潮边的裂隙",
           "next": "s05-shadow-beyond",
           "fateType": "web",
-          "consequence": "你没有避开危险身份，幽冥与彼岸都因此看向你。",
+          "consequence": "裂隙最深，离真相也最近，幽冥的声音与曼珠的记性都在那里——但黑金雾侵蚀心神，你看得越深，被看回来的也越深。",
           "effect": {
             "globals": {
               "insight": 6,
-              "corruption": 5,
-              "aff_ziyelan": 10,
-              "aff_manzhuxianji": 10
+              "corruption": 5
             },
             "flags": [
               "cluster_shadow_beyond"
             ]
           },
-          "caption": "你没有避开危险身份，幽冥与彼岸都因此看向你。"
+          "caption": "裂隙最深，离真相也最近，幽冥的声音与曼珠的记性都在那里——但黑金雾侵蚀心神，你看得越深，被看回来的也越深。"
         },
         {
           "id": "seat-blooms-spirit",
-          "label": "向寒梅百花天灵席致意",
+          "label": "登花台看十家的棋局",
           "next": "s06-blooms-spirit",
           "fateType": "river",
-          "consequence": "你进入强者、权力与真理交错的一组试炼。",
+          "consequence": "封印终究要靠十家合力，花台上牡丹仙执棋、梅寒霜按剑——但入了局便有立场，你说出的每句话，都会被人折成筹码。",
           "effect": {
             "globals": {
               "charm": 4,
-              "alliance": 3,
-              "aff_meihanshuang": 5,
-              "aff_juaoqiu": 5,
-              "aff_mudanxian": 5,
-              "aff_linghuaxianzi": 5
+              "alliance": 3
             },
             "flags": [
               "cluster_blooms_spirit"
             ]
           },
-          "caption": "你进入强者、权力与真理交错的一组试炼。"
+          "caption": "封印终究要靠十家合力，花台上牡丹仙执棋、梅寒霜按剑——但入了局便有立场，你说出的每句话，都会被人折成筹码。"
         }
       ],
       "reusedPanoramaFrom": "s01-first-impression"
@@ -605,76 +501,99 @@
         "via": "#1f6b7a",
         "to": "#d9f2ff"
       },
-      "synopsis": "云墨轩的剑意与月清寒的星阵都能护你入阵，但两人的节奏截然不同。",
+      "synopsis": "剑潮回落时多出一声哑响，裂脉就藏在潮底。云墨轩的剑与月清寒的星阵，是两条截然不同的查法。",
       "lines": [
         {
-          "speaker": "云墨轩",
-          "text": "剑潮一开，没有人会替你后悔。"
+          "speaker": "narrator",
+          "text": "剑潮翻过云海，每一次回落都带着一声不该有的哑响——像琴上断了一根弦，其余的弦还在硬撑。"
         },
         {
-          "speaker": "月清寒",
-          "text": "阵眼不会拒绝勇者，但它会惩罚鲁莽。"
+          "speaker": "yun_moxuan",
+          "text": "剑潮一开，谁也替不了谁。我可以与你并肩，但不会替你挡剑——除非你开口。"
+        },
+        {
+          "speaker": "yue_qinghan",
+          "text": "星阵算得出裂在哪里，算不出它为什么裂。沈姑娘，你也听出那声哑响了，对吗？"
         },
         {
           "speaker": "narrator",
-          "text": "云海中传来剑鸣，星月阵图在你脚下亮起。"
+          "text": "星月阵图在你脚下亮起，潮声深处，那道裂脉正一下一下，敲在你修缮师的耳朵里。"
         }
       ],
       "hotspots": [],
       "choices": [
         {
           "id": "choose-yun",
-          "label": "邀云墨轩共破剑潮",
+          "label": "请云墨轩与你并肩入潮",
           "next": "r-yun",
           "fateType": "river",
-          "consequence": "你把第一场试炼交给剑意与胆魄，云墨轩开始认真看你。",
+          "consequence": "他的剑替你劈开潮头，你亲手验到了第一道裂脉——但走剑锋这条路，伤是记在自己身上的，云墨轩不会替你痛。",
           "effect": {
             "globals": {
-              "strength": 5,
-              "aff_yunmoxuan": 25
+              "strength": 5
+            },
+            "relationships": {
+              "yun_moxuan": {
+                "spark": 4,
+                "trust": 3,
+                "boundary": 2
+              }
             },
             "flags": [
               "partner_yun"
             ]
           },
-          "caption": "你把第一场试炼交给剑意与胆魄，云墨轩开始认真看你。"
+          "caption": "他的剑替你劈开潮头，你亲手验到了第一道裂脉——但走剑锋这条路，伤是记在自己身上的，云墨轩不会替你痛。"
         },
         {
           "id": "choose-yue",
-          "label": "请月清寒拆解星阵",
+          "label": "请月清寒同拆星阵推裂脉",
           "next": "r-yue",
           "fateType": "river",
-          "consequence": "你相信阵法胜过蛮力，月清寒愿意让你看见更多真相。",
+          "consequence": "你以阵法换阵法，他让你看见星图深处的暗痕——但他也认出了你手法的来历，从此你们各握着对方的一个秘密。",
           "effect": {
             "globals": {
-              "wisdom": 5,
-              "aff_yueqinghan": 25
+              "wisdom": 5
+            },
+            "relationships": {
+              "yue_qinghan": {
+                "spark": 4,
+                "trust": 3
+              }
             },
             "flags": [
               "partner_yue"
             ]
           },
-          "caption": "你相信阵法胜过蛮力，月清寒愿意让你看见更多真相。"
+          "caption": "你以阵法换阵法，他让你看见星图深处的暗痕——但他也认出了你手法的来历，从此你们各握着对方的一个秘密。"
         },
         {
           "id": "choose-yun-yue",
-          "label": "让云剑护住星月阵心",
+          "label": "剑开潮路，阵定裂位，两力并行",
           "next": "r-yun",
           "fateType": "web",
-          "consequence": "你尝试让两种力量并行，未来的十人联手路线更近了一步。",
+          "consequence": "剑护阵、阵引剑，这道裂脉你查得最全——但云渊与月华的目光也都落在了你身上，无名散修想再藏，藏不住了。",
           "effect": {
             "globals": {
-              "alliance": 8,
-              "aff_yunmoxuan": 15,
-              "aff_yueqinghan": 15
+              "alliance": 8
+            },
+            "relationships": {
+              "yun_moxuan": {
+                "spark": 3,
+                "trust": 2
+              },
+              "yue_qinghan": {
+                "spark": 3,
+                "trust": 2
+              }
             },
             "flags": [
-              "partner_yun",
               "partner_yue",
+              "partner_yun",
               "team_yun_yue"
             ]
           },
-          "caption": "你尝试让两种力量并行，未来的十人联手路线更近了一步。"
+          "caption": "剑护阵、阵引剑，这道裂脉你查得最全——但云渊与月华的目光也都落在了你身上，无名散修想再藏，藏不住了。"
         }
       ]
     },
@@ -694,77 +613,88 @@
         "via": "#526b3a",
         "to": "#e7c77c"
       },
-      "synopsis": "试炼场忽然生出大片灵植，竹清晏与兰灵都听见了谷底的痛声。",
+      "synopsis": "试炼场一夜生出满谷灵植，叶背齐齐蜷向仙府地脉。竹清晏守着药炉，兰灵听着谷底的哀鸣。",
       "lines": [
         {
-          "speaker": "竹清晏",
-          "text": "试炼若以摧折灵物为捷径，我宁愿慢一步。"
+          "speaker": "narrator",
+          "text": "满谷灵植的叶背全朝着同一个方向蜷缩——仙府地脉的方向。草木清气底下，压着一股被埋在地里的焦苦。"
         },
         {
-          "speaker": "兰灵",
-          "text": "它们在怕。不是怕我们，是怕仙府里醒来的东西。"
+          "speaker": "zhu_qingyan",
+          "text": "有人要连根拔了它们做药引，说是捷径。今日肯把灵物当药引的人，明日就敢把人当药引。"
+        },
+        {
+          "speaker": "lan_ling",
+          "text": "它们不是在喊疼，是在报信。地底下那一位……翻了个身。"
         },
         {
           "speaker": "narrator",
-          "text": "你闻到草木清气，也闻到被压在地下的焦苦。"
+          "text": "你俯身按住一株焦叶，根须传上来的灼意，与你在封印裂缝边闻到的气息，一模一样。"
         }
       ],
       "hotspots": [],
       "choices": [
         {
           "id": "choose-zhu",
-          "label": "请竹清晏稳住药炉",
+          "label": "陪竹清晏守炉，按老方子慢救",
           "next": "r-zhu",
           "fateType": "river",
-          "consequence": "你把原则放在速度之前，竹清晏对你多了一分认可。",
+          "consequence": "你把原则放在速度前面，整片谷底被药香救了回来——但慢就是慢，这一夜你守在炉边，别处的动静只能错过。",
           "effect": {
             "globals": {
-              "virtue": 5,
-              "aff_zhuqingyan": 25
+              "virtue": 5
+            },
+            "relationships": {
+              "zhu_qingyan": {
+                "trust": 5,
+                "boundary": 2
+              }
             },
             "flags": [
               "partner_zhu"
             ]
           },
-          "caption": "你把原则放在速度之前，竹清晏对你多了一分认可。"
+          "caption": "你把原则放在速度前面，整片谷底被药香救了回来——但慢就是慢，这一夜你守在炉边，别处的动静只能错过。"
         },
         {
           "id": "choose-lan",
-          "label": "与兰灵倾听万灵",
+          "label": "随兰灵俯身，听完整谷的报信",
           "next": "r-lan",
           "fateType": "river",
-          "consequence": "你选择先听见弱小者的声音，兰灵愿意与你同行。",
+          "consequence": "你听完了草木的证词，记下地脉受灼的每一处——但听得越真越割舍不下，从此万灵的痛，你再装不了听不见。",
           "effect": {
             "globals": {
               "insight": 4,
-              "virtue": 5,
-              "aff_lanling": 25
+              "virtue": 5
             },
             "flags": [
               "partner_lan"
             ]
           },
-          "caption": "你选择先听见弱小者的声音，兰灵愿意与你同行。"
+          "caption": "你听完了草木的证词，记下地脉受灼的每一处——但听得越真越割舍不下，从此万灵的痛，你再装不了听不见。"
         },
         {
           "id": "choose-zhu-lan",
-          "label": "让药香与治愈术并行",
+          "label": "药香稳根须，倾听找痛处，双管齐下",
           "next": "r-zhu",
           "fateType": "web",
-          "consequence": "你把原则与温柔缝合在一起，为和平路线留下余地。",
+          "consequence": "两条路并成一条，谷底的伤与地脉的病你都摸清了——但你在谷中耽搁到天明，其余三处试炼场出了什么事，你一无所知。",
           "effect": {
             "globals": {
-              "alliance": 8,
-              "aff_zhuqingyan": 15,
-              "aff_lanling": 15
+              "alliance": 8
+            },
+            "relationships": {
+              "zhu_qingyan": {
+                "trust": 3
+              }
             },
             "flags": [
-              "partner_zhu",
               "partner_lan",
+              "partner_zhu",
               "team_zhu_lan"
             ]
           },
-          "caption": "你把原则与温柔缝合在一起，为和平路线留下余地。"
+          "caption": "两条路并成一条，谷底的伤与地脉的病你都摸清了——但你在谷中耽搁到天明，其余三处试炼场出了什么事，你一无所知。"
         }
       ]
     },
@@ -773,7 +703,7 @@
       "chapter": "第二章",
       "title": "幽冥彼岸",
       "location": "暗潮幻廊",
-      "panorama": "/panoramas/project-20260620-002835-s05-shadow-beyond.jpg",
+      "panorama": "/panoramas/project-20260620-002835-g-romance-b.jpg",
       "entryView": {
         "yaw": 0,
         "pitch": 0,
@@ -784,79 +714,93 @@
         "via": "#45235f",
         "to": "#b36b8f"
       },
-      "synopsis": "紫夜澜的影子与曼珠仙姬的彼岸花同时铺开，危险和真相都近在咫尺。",
+      "synopsis": "暗潮在幻廊裂开一线。你看不见说话的人，只听见一道声音；而记得所有被遗忘者的曼珠，就站在红光那头。",
       "lines": [
         {
-          "speaker": "紫夜澜",
-          "text": "怕我吗？怕也没关系，怕还能往前走才算有趣。"
+          "speaker": "narrator",
+          "text": "幻廊里没有灯，暗潮贴着地面流。你看不见任何人，只看见自己的影子旁边，多出一道更深的影子。"
         },
         {
-          "speaker": "曼珠仙姬",
-          "text": "小家伙，你知道彼岸花还有另一层花语吗？"
+          "speaker": "zi_yelan",
+          "text": "怕吗？怕也没关系。怕还肯往前走的人，幽冥殿一百年只见过两个——上一个，也是修封印的。"
+        },
+        {
+          "speaker": "manzhu",
+          "text": "我记性好，专记别人忘掉的。无名一脉的手法，十年前我见过一回——那个人走进仙府，就再没出来。"
         },
         {
           "speaker": "narrator",
-          "text": "幻廊尽头有一扇门，门缝里同时透出黑雾与红光。"
+          "text": "幻廊尽头那扇门，门缝里黑雾与红光纠缠着，像两句都没说完的话。"
         }
       ],
       "hotspots": [],
       "choices": [
         {
           "id": "choose-zi",
-          "label": "与紫夜澜踏入暗潮",
+          "label": "循着那道声音踏入暗潮",
           "next": "r-zi",
           "fateType": "web",
-          "consequence": "你没有因幽冥殿之名退后，紫夜澜把你列入自己的棋局。",
+          "consequence": "你走到暗潮最深处，量到了封印背面的伤——但幽冥殿记住了你的胆子，这盘棋一旦落子，就不由你说收就收。",
           "effect": {
             "globals": {
               "corruption": 5,
-              "strength": 3,
-              "aff_ziyelan": 25
+              "strength": 3
+            },
+            "relationships": {
+              "zi_yelan": {
+                "spark": 4,
+                "trust": 2
+              }
             },
             "flags": [
               "partner_zi"
             ]
           },
-          "caption": "你没有因幽冥殿之名退后，紫夜澜把你列入自己的棋局。"
+          "caption": "你走到暗潮最深处，量到了封印背面的伤——但幽冥殿记住了你的胆子，这盘棋一旦落子，就不由你说收就收。"
         },
         {
           "id": "choose-manzhu",
-          "label": "直面曼珠仙姬的花语",
+          "label": "问曼珠：十年前那个人，叫什么",
           "next": "r-manzhu",
           "fateType": "web",
-          "consequence": "你绕过魅术问她真正想说什么，彼岸路线开始发芽。",
+          "consequence": "她把那一夜讲给你听，师父的踪迹第一次有了下落——但你也欠下她一句承诺：轮到她被忘掉的时候，得有人记得。",
           "effect": {
             "globals": {
               "insight": 5,
               "charm": 3,
-              "aff_manzhuxianji": 25
+              "hidden_clues": 1
             },
             "flags": [
+              "master_trace",
               "partner_manzhu"
             ]
           },
-          "caption": "你绕过魅术问她真正想说什么，彼岸路线开始发芽。"
+          "caption": "她把那一夜讲给你听，师父的踪迹第一次有了下落——但你也欠下她一句承诺：轮到她被忘掉的时候，得有人记得。"
         },
         {
           "id": "choose-shadow-boundary",
-          "label": "在两人之间先立底线",
+          "label": "先把话说清：可以同行，不许试探",
           "next": "r-zi",
           "fateType": "river",
-          "consequence": "你不逃避危险，也不放弃自己的边界。",
+          "consequence": "黑暗与彼岸都接了你的规矩，这一程走得安稳——但立了规矩就得守，往后暗潮里的捷径再诱人，你自己也不能破例。",
           "effect": {
             "globals": {
               "charm": 5,
-              "virtue": 3,
-              "aff_ziyelan": 15,
-              "aff_manzhuxianji": 15
+              "virtue": 3
+            },
+            "relationships": {
+              "zi_yelan": {
+                "spark": 2,
+                "boundary": 4
+              }
             },
             "flags": [
-              "partner_zi",
               "partner_manzhu",
+              "partner_zi",
               "shadow_boundary"
             ]
           },
-          "caption": "你不逃避危险，也不放弃自己的边界。"
+          "caption": "黑暗与彼岸都接了你的规矩，这一程走得安稳——但立了规矩就得守，往后暗潮里的捷径再诱人，你自己也不能破例。"
         }
       ]
     },
@@ -865,7 +809,7 @@
       "chapter": "第二章",
       "title": "傲雪百花",
       "location": "四时花台",
-      "panorama": "/panoramas/project-20260620-002835-s06-blooms-spirit.jpg",
+      "panorama": "/panoramas/project-20260620-002835-g-romance-a.jpg",
       "entryView": {
         "yaw": 0,
         "pitch": 0,
@@ -876,96 +820,115 @@
         "via": "#55748c",
         "to": "#f4fbff"
       },
-      "synopsis": "寒梅、金菊、百花与天灵四道气息在花台上交锋，试炼变成一场无声的选择。",
+      "synopsis": "花台上四方立场交锋：剑修只信手上功夫，学者只问封印修法，掌局者要统筹十家，天灵只以光与声追问真理。",
       "lines": [
         {
-          "speaker": "梅寒霜",
-          "text": "要同行，先让我知道你是否配得上并肩。"
+          "speaker": "narrator",
+          "text": "四时花台上，寒梅、金菊、牡丹各踞一方，第四方没有人形——只有一团缓缓呼吸的光。"
         },
         {
-          "speaker": "菊傲秋",
-          "text": "世人都爱热闹，我偏要看谁能提出不同答案。"
+          "speaker": "mei_hanshuang",
+          "text": "花台上人人都在结盟，我不结盟。要同行，先接我三剑，让我看看你的剑心干不干净。"
         },
         {
-          "speaker": "牡丹仙",
-          "text": "若你想活着离开仙府，就学会统筹所有人。"
+          "speaker": "ju_aoqiu",
+          "text": "他们吵的是谁来主祭，没有一个人问封印该怎么修。你若也只关心席位，就别浪费我的时间。"
         },
         {
-          "speaker": "灵花仙子",
-          "text": "真理不会偏爱任何世家，也不会偏爱你。"
+          "speaker": "mudan",
+          "text": "义愤救不了仙府。十家各怀心思，能把他们按在同一张桌上的人，才有资格说'不牺牲任何人'。"
+        },
+        {
+          "speaker": "ling_hua",
+          "text": "花台之下埋着旧誓。真理不偏爱世家，也不偏爱你——它只等一个肯往下挖的人。"
         }
       ],
       "hotspots": [],
       "choices": [
         {
           "id": "choose-mei",
-          "label": "接受梅寒霜的剑舞试探",
+          "label": "接下梅寒霜的三剑",
           "next": "r-mei",
           "fateType": "river",
-          "consequence": "你用强者姿态回应强者，寒霜路线被点亮。",
+          "consequence": "三剑过后，她认了你一句'剑心还算干净'——但你也接下她的规矩：往后并肩，伤各自记账。",
           "effect": {
             "globals": {
-              "strength": 5,
-              "aff_meihanshuang": 25
+              "strength": 5
+            },
+            "relationships": {
+              "mei_hanshuang": {
+                "trust": 4,
+                "boundary": 2
+              }
             },
             "flags": [
               "partner_mei"
             ]
           },
-          "caption": "你用强者姿态回应强者，寒霜路线被点亮。"
+          "caption": "三剑过后，她认了你一句'剑心还算干净'——但你也接下她的规矩：往后并肩，谁也不许替谁挡剑。"
         },
         {
           "id": "choose-ju",
-          "label": "向菊傲秋提出金阵新解",
+          "label": "向菊傲秋递上金阵新解",
           "next": "r-ju",
           "fateType": "river",
-          "consequence": "你以独特见解回应孤芳，菊傲秋第一次认真听完你说话。",
+          "consequence": "他头一回听一个外人把话说完，金菊的防御阵图向你摊开——但学者的时间金贵，下次你若带来敷衍，这扇门关得比谁都快。",
           "effect": {
             "globals": {
-              "wisdom": 5,
-              "aff_juaoqiu": 25
+              "wisdom": 5
+            },
+            "relationships": {
+              "ju_aoqiu": {
+                "spark": 4,
+                "trust": 3
+              }
             },
             "flags": [
               "partner_ju"
             ]
           },
-          "caption": "你以独特见解回应孤芳，菊傲秋第一次认真听完你说话。"
+          "caption": "他头一回听一个外人把话说完，金菊的防御阵图向你摊开——但学者的时间金贵，下次你若带来敷衍，这扇门关得比谁都快。"
         },
         {
           "id": "choose-mudan",
-          "label": "请牡丹仙共同统筹局面",
+          "label": "与牡丹仙同坐一张棋盘",
           "next": "r-mudan",
           "fateType": "river",
-          "consequence": "你把试炼看成大局，牡丹仙认可你的领导潜质。",
+          "consequence": "她教你把十家的心思摆上台面，权力场的水路你看清了大半——但与掌局者对弈没有白教的棋，这份人情她记在账上。",
           "effect": {
             "globals": {
               "charm": 5,
-              "alliance": 8,
-              "aff_mudanxian": 25
+              "alliance": 8
+            },
+            "relationships": {
+              "mudan": {
+                "trust": 4,
+                "boundary": 1
+              }
             },
             "flags": [
               "partner_mudan"
             ]
           },
-          "caption": "你把试炼看成大局，牡丹仙认可你的领导潜质。"
+          "caption": "她教你把十家的心思摆上台面，权力场的水路你看清了大半——但与掌局者对弈没有白教的棋，这份人情她记在账上。"
         },
         {
           "id": "choose-linghua",
-          "label": "随灵花仙子追问真理",
+          "label": "向那团光追问花台下的旧誓",
           "next": "r-linghua",
           "fateType": "web",
-          "consequence": "你没有急着求胜，而是追问传承为何选择你。",
+          "consequence": "光替你照亮了花台之下的第一层碑文，你离封印的来历更近了一步——但天灵不庇护提问的人，往下每一步，都得你自己走。",
           "effect": {
             "globals": {
               "insight": 6,
               "virtue": 3,
-              "aff_linghuaxianzi": 25
+              "hidden_clues": 1
             },
             "flags": [
               "partner_linghua"
             ]
           },
-          "caption": "你没有急着求胜，而是追问传承为何选择你。"
+          "caption": "光替你照亮了花台之下的第一层碑文，你离封印的来历更近了一步——但天灵不庇护提问的人，往下每一步，都得你自己走。"
         }
       ]
     },
@@ -985,77 +948,105 @@
         "via": "#1f6b7a",
         "to": "#d9f2ff"
       },
-      "synopsis": "强敌从剑潮里现身，云墨轩为护你硬接一剑，肩头染血。",
+      "synopsis": "剑潮深处混入了封印崩坏才有的浊气，潮心凝出一道剑魄。云墨轩横剑在侧，却把出手与否的决断，交到你手里。",
       "lines": [
         {
-          "speaker": "云墨轩",
+          "speaker": "narrator",
+          "text": "剑潮翻起千丈，你在潮声里听出一丝不对——万剑齐鸣之下，压着一缕浊响，和仙府封印裂缝里渗出的气息一模一样。"
+        },
+        {
+          "speaker": "yun_moxuan",
           "text": "别分神。剑潮认弱，一弱便死。"
         },
         {
           "speaker": "narrator",
-          "text": "他挡在你身前，云剑被震出细密裂纹。"
+          "text": "潮心凝出一道剑魄，森然逼近。云墨轩横剑在你侧前，脚下却钉在原地，没有抢上半步。"
+        },
+        {
+          "speaker": "yun_moxuan",
+          "text": "我出手，还是你来？——你说了算。"
         },
         {
           "speaker": "system",
-          "text": "这一刻，你的反应会决定他把你当成负担、同伴，还是能并肩的人。"
+          "text": "盛会阵盘急鸣示警：剑潮试炼有变，潮心浊气不在历届典录之内，请诸位传人自决进退。"
         }
       ],
       "hotspots": [],
       "choices": [
         {
           "id": "guard-yun",
-          "label": "拼死护住他",
+          "label": "上前与他背靠背，接下侧翼那一剑",
           "next": "s10-secret",
           "fateType": "river",
-          "consequence": "你用行动证明自己不是需要被保护的人，云墨轩的剑意因你而稳。",
+          "consequence": "你们背靠背截下潮心剑魄，他从此信你能托付后背——但你肩上这道剑伤，要疼到盛会结束。",
           "effect": {
             "globals": {
               "strength": 12,
               "virtue": 5,
-              "alliance": 5,
-              "aff_yunmoxuan": 35
+              "alliance": 5
+            },
+            "relationships": {
+              "yun_moxuan": {
+                "spark": 9,
+                "trust": 7,
+                "boundary": 2
+              }
             },
             "flags": [
+              "path_yun",
               "protected_yun"
             ]
           },
-          "caption": "你用行动证明自己不是需要被保护的人，云墨轩的剑意因你而稳。"
+          "caption": "你们背靠背截下潮心剑魄，他从此信你能托付后背——但你肩上这道剑伤，要疼到盛会结束。"
         },
         {
           "id": "solve-sword-tide",
-          "label": "冷静找出破敌剑隙",
+          "label": "冷静盯住潮势，找出剑潮回环的破绽",
           "next": "s10-secret",
           "fateType": "web",
-          "consequence": "你没有逞强，而是找到剑潮循环的破绽，云墨轩认可你的判断。",
+          "consequence": "你指出剑潮第七息的回环破绽，他一剑而收；剑修最敬懂剑之人——但潮心深处那缕浊气，也自此记住了你的气息。",
           "effect": {
             "globals": {
               "wisdom": 12,
               "insight": 5,
-              "alliance": 5,
-              "aff_yunmoxuan": 35
+              "alliance": 5
+            },
+            "relationships": {
+              "yun_moxuan": {
+                "spark": 11,
+                "trust": 8,
+                "boundary": 3
+              }
             },
             "flags": [
+              "path_yun",
               "solved_sword_tide"
             ]
           },
-          "caption": "你没有逞强，而是找到剑潮循环的破绽，云墨轩认可你的判断。"
+          "caption": "你指出剑潮第七息的回环破绽，他一剑而收；剑修最敬懂剑之人——但潮心深处那缕浊气，也自此记住了你的气息。"
         },
         {
           "id": "retreat-yun",
-          "label": "建议暂退保存实力",
+          "label": "叫他暂退，浊气来源改日再查",
           "next": "s10-secret",
           "fateType": "river",
-          "consequence": "你保住性命，却错过了让云墨轩真正托付后背的时刻。",
+          "consequence": "你们全身而退，性命与线索都保住了——但他收剑时那句『也好』，在你们之间隔出了一段客气的距离。",
           "effect": {
             "globals": {
-              "insight": 5,
-              "aff_yunmoxuan": 10
+              "insight": 5
+            },
+            "relationships": {
+              "yun_moxuan": {
+                "spark": 2,
+                "trust": 3,
+                "boundary": 2
+              }
             },
             "flags": [
               "conservative_yun"
             ]
           },
-          "caption": "你保住性命，却错过了让云墨轩真正托付后背的时刻。"
+          "caption": "你们全身而退，性命与线索都保住了——但他收剑时那句『也好』，在你们之间隔出了一段客气的距离。"
         }
       ]
     },
@@ -1075,77 +1066,104 @@
         "via": "#1f6b7a",
         "to": "#d9f2ff"
       },
-      "synopsis": "破解阵法时，你发现月清寒正在隐藏自己与上古仙府的血脉联系。",
+      "synopsis": "星月古阵的最后一道阵纹只认血脉。月清寒抬手开阵的一瞬，你看见了他与上古仙府之间不能说的联系——而你袖中，也藏着无名一脉不能说的凭证。",
       "lines": [
         {
-          "speaker": "月清寒",
+          "speaker": "narrator",
+          "text": "古阵在你手下层层退开，最后一道阵纹却拒绝了你——它不认手法，只认血。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "月清寒抬手。指尖月辉与仙府入口的古纹短暂重合，阵门无声开了一线。"
+        },
+        {
+          "speaker": "yue_qinghan",
           "text": "有些阵纹，不是看懂就该说出口。"
         },
         {
           "speaker": "narrator",
-          "text": "他指尖的月辉与仙府入口的古纹短暂重合。"
+          "text": "他垂下手，像什么都没发生。可你们都清楚：你看见了。而你袖中那枚旧凭证，忽然重得硌手——你身上，同样有见不得光的来历。"
         },
         {
           "speaker": "system",
-          "text": "秘密摆在你面前，你可以追问，也可以替他守住沉默。"
+          "text": "阵盘轻声通传：星月阵已启，请传人依序入内，勿扰阵眼。"
         }
       ],
       "hotspots": [],
       "choices": [
         {
           "id": "ask-yue-secret",
-          "label": "主动询问他的秘密",
+          "label": "开门见山，以秘密换秘密",
           "next": "s10-secret",
           "fateType": "river",
-          "consequence": "你给了他解释的机会，但也让信任必须立刻接受考验。",
+          "consequence": "你当面问他，也把『无名一脉』四个字押作抵——他得了坦诚，你们从此互执对方最要命的秘密，谁被揭出来，另一个也逃不掉。",
           "effect": {
             "globals": {
               "charm": 3,
-              "insight": 6,
-              "aff_yueqinghan": 25
+              "insight": 6
+            },
+            "relationships": {
+              "yue_qinghan": {
+                "spark": 8,
+                "trust": 6,
+                "boundary": 3
+              }
             },
             "flags": [
-              "asked_yue_secret"
+              "asked_yue_secret",
+              "path_yue"
             ]
           },
-          "caption": "你给了他解释的机会，但也让信任必须立刻接受考验。"
+          "caption": "你当面问他，也把『无名一脉』四个字押作抵——他得了坦诚，你们从此互执对方最要命的秘密，谁被揭出来，另一个也逃不掉。"
         },
         {
           "id": "respect-yue-silence",
-          "label": "装作不知并继续破阵",
+          "label": "装作未见，替他守住这份沉默",
           "next": "s10-secret",
           "fateType": "web",
-          "consequence": "你守住分寸，月清寒把未说出口的秘密记成一份信任。",
+          "consequence": "你守住分寸，他把这份未开口的体面记成信任——但仙府血脉的真相，你只能等到他愿意亲口说的那一天。",
           "effect": {
             "globals": {
               "virtue": 8,
               "wisdom": 4,
-              "alliance": 5,
-              "aff_yueqinghan": 35
+              "alliance": 5
+            },
+            "relationships": {
+              "yue_qinghan": {
+                "spark": 11,
+                "trust": 9,
+                "boundary": 4
+              }
             },
             "flags": [
+              "path_yue",
               "respected_yue_secret"
             ]
           },
-          "caption": "你守住分寸，月清寒把未说出口的秘密记成一份信任。"
+          "caption": "你守住分寸，他把这份未开口的体面记成信任——但仙府血脉的真相，你只能等到他愿意亲口说的那一天。"
         },
         {
           "id": "investigate-yue",
-          "label": "暗中推演他的血脉",
+          "label": "不动声色，暗中推演他的血脉来历",
           "next": "s10-secret",
           "fateType": "web",
-          "consequence": "你得到更多线索，却让月清寒察觉你在背后计算他。",
+          "consequence": "你多得了一分仙府的底细，却被他察觉你在背后计算——阵法师最恨被人当作阵来破，这道裂痕短时间补不回来。",
           "effect": {
             "globals": {
               "wisdom": 8,
-              "insight": 6,
-              "aff_yueqinghan": -10
+              "insight": 6
+            },
+            "relationships": {
+              "yue_qinghan": {
+                "trust": -6,
+                "boundary": -3
+              }
             },
             "flags": [
               "suspected_yue"
             ]
           },
-          "caption": "你得到更多线索，却让月清寒察觉你在背后计算他。"
+          "caption": "你多得了一分仙府的底细，却被他察觉你在背后计算——阵法师最恨被人当作阵来破，这道裂痕短时间补不回来。"
         }
       ]
     },
@@ -1165,84 +1183,96 @@
         "via": "#526b3a",
         "to": "#e7c77c"
       },
-      "synopsis": "古药炉需要一味稀有灵植入药，但那株灵植已经生出微弱灵识。",
+      "synopsis": "封印裂隙泄出的阴煞伤了人，古药炉里那副解药，缺一味已生出微弱灵识的灵植——竹清晏没有替你决定，她把刀柄递到你手里。",
       "lines": [
         {
-          "speaker": "竹清晏",
-          "text": "丹可以重炼，灵识一毁便没有回头路。"
+          "speaker": "zhu_qingyan",
+          "text": "丹可以重炼，灵识一毁，便没有回头路。你是修缮师——你说，拆一条命去补另一条命，算不算修？"
         },
         {
           "speaker": "narrator",
-          "text": "药炉火舌舔上炉壁，试炼倒计时在竹叶间回响。"
+          "text": "药炉火舌舔上炉壁，青竹叶影里，受伤弟子的咳声一声比一声低。"
         },
         {
           "speaker": "system",
-          "text": "速度、原则和胜负不能同时保全。"
+          "text": "盛会阵盘悬在圃门上方，映出一行暗纹：阴煞入体，一炉香尽，药成则生。"
         }
       ],
       "hotspots": [],
       "choices": [
         {
           "id": "protect-herb",
-          "label": "坚持不用伤灵药的捷径",
+          "label": "宁可绕远，也不毁那点刚生的灵识",
           "next": "s10-secret",
           "fateType": "river",
-          "consequence": "你慢了一步，却守住底线，竹清晏将你视作同道。",
+          "consequence": "药迟了半炷香，伤者要多熬一场罪——但灵识保住了，竹清晏自此把你当同道，而非同行。",
           "effect": {
             "globals": {
               "virtue": 12,
               "wisdom": 3,
-              "alliance": 5,
-              "aff_zhuqingyan": 35
+              "alliance": 5
+            },
+            "relationships": {
+              "zhu_qingyan": {
+                "trust": 8
+              }
             },
             "flags": [
               "herb_principle"
             ]
           },
-          "caption": "你慢了一步，却守住底线，竹清晏将你视作同道。"
+          "caption": "药迟了半炷香，伤者要多熬一场罪——但灵识保住了，竹清晏自此把你当同道，而非同行。"
         },
         {
           "id": "steady-furnace",
-          "label": "以传承灵息替他稳炉",
+          "label": "以无名一脉的灵息替她稳住炉温",
           "next": "s10-secret",
           "fateType": "web",
-          "consequence": "你让古老传承第一次为救护而非争夺发光。",
+          "consequence": "炉温稳了，旧药方也来得及——但无名一脉的手法在人前露了形，认得这手法的，不止朋友。",
           "effect": {
             "globals": {
               "wisdom": 8,
-              "insight": 4,
-              "aff_zhuqingyan": 25
+              "insight": 4
+            },
+            "relationships": {
+              "zhu_qingyan": {
+                "trust": 6
+              }
             },
             "flags": [
               "steady_furnace"
             ]
           },
-          "caption": "你让古老传承第一次为救护而非争夺发光。"
+          "caption": "炉温稳了，旧药方也来得及——但无名一脉的手法在人前露了形，认得这手法的，不止朋友。"
         },
         {
           "id": "force-pill",
-          "label": "抢炼丹药先过关",
+          "label": "碾了灵植，抢时辰成药",
           "next": "s10-secret",
           "fateType": "river",
-          "consequence": "你赢下速度，却让竹清晏看见你也可能伤及无辜。",
+          "consequence": "药最快成了，人也救下了——但那点灵识灭在你手心，竹清晏收回了递给你的信任，只剩戒备。",
           "effect": {
             "globals": {
               "strength": 8,
-              "corruption": 8,
-              "aff_zhuqingyan": -5
+              "corruption": 8
+            },
+            "relationships": {
+              "zhu_qingyan": {
+                "trust": -6
+              }
             },
             "flags": [
               "forced_pill"
             ]
           },
-          "caption": "你赢下速度，却让竹清晏看见你也可能伤及无辜。"
+          "caption": "药最快成了，人也救下了——但那点灵识灭在你手心，竹清晏收回了递给你的信任，只剩戒备。"
         }
       ]
     },
     "r-zi": {
       "id": "r-zi",
       "chapter": "第二章",
-      "title": "紫夜澜·禁术暗潮",
+      "title": "紫夜澜·闻声暗潮",
       "location": "幽冥暗潮",
       "panorama": "/panoramas/project-20260620-002835-r-zi.jpg",
       "entryView": {
@@ -1255,76 +1285,106 @@
         "via": "#45235f",
         "to": "#b36b8f"
       },
-      "synopsis": "暗潮吞没道路，紫夜澜用禁术救你，也暴露了幽冥殿少主的真实身份。",
+      "synopsis": "暗潮吞路，一道陌生的声音替你指出生路；禁术反噬回卷时，你反手三针缝住裂口，救了这位始终不肯露面的幽冥殿少主。",
       "lines": [
         {
-          "speaker": "紫夜澜",
-          "text": "现在知道我是谁了。还敢站这么近吗？"
+          "speaker": "narrator",
+          "text": "暗潮无声漫过来时，四下不见人影，只有一道嗓音自黑雾深处落下——"
+        },
+        {
+          "speaker": "zi_yelan",
+          "text": "左边第三块浮石。别回头，走。"
         },
         {
           "speaker": "narrator",
-          "text": "他的影子像活物一样缠住裂隙，替你挡下一次致命反噬。"
+          "text": "你依言落足，身后裂隙轰然合拢。黑雾凝成一道人形轮廓，替你截下最后一记反噬——那反噬顺着禁术倒卷回去，反咬向他自己。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "你没有多想，反手以无名一脉的缝隙针法落下三针，把暴走的裂口钉死。黑雾一滞，轮廓深处传出一声极轻的、像是没料到的笑。"
+        },
+        {
+          "speaker": "zi_yelan",
+          "text": "现在知道我是谁了。还救？"
         },
         {
           "speaker": "system",
-          "text": "接纳危险，质疑危险，或借用危险，都会留下不同代价。"
+          "text": "阵盘残讯断续作响：暗潮属幽冥旧脉……不在盛会名录……诸传人切勿靠近。"
         }
       ],
       "hotspots": [],
       "choices": [
         {
           "id": "accept-shadow",
-          "label": "感谢他并表示不在意身份",
+          "label": "谢他相救，也把界线说在前头",
           "next": "s10-secret",
           "fateType": "web",
-          "consequence": "你接纳他的黑暗面，紫夜澜第一次没有用笑意遮掩动摇。",
+          "consequence": "你救他也谢他，还把话说明：不问来路，但下回出手之前，先出声问你。他头一次没用笑意遮掩动摇——可与幽冥殿扯上牵连，盛会里盯着你的眼睛只会更多。",
           "effect": {
             "globals": {
               "virtue": 6,
               "charm": 4,
-              "alliance": 4,
-              "aff_ziyelan": 35
+              "alliance": 4
+            },
+            "relationships": {
+              "zi_yelan": {
+                "spark": 12,
+                "trust": 6,
+                "boundary": 6
+              }
             },
             "flags": [
-              "accepted_shadow"
+              "accepted_shadow",
+              "path_zi"
             ]
           },
-          "caption": "你接纳他的黑暗面，紫夜澜第一次没有用笑意遮掩动摇。"
+          "caption": "你救他也谢他，还把话说明：不问来路，但下回出手之前，先出声问你。他头一次没用笑意遮掩动摇——可与幽冥殿扯上牵连，盛会里盯着你的眼睛只会更多。"
         },
         {
           "id": "question-zi",
-          "label": "质疑他救你的动机",
+          "label": "追问他为何救你、又为何一直跟着你",
           "next": "s10-secret",
           "fateType": "river",
-          "consequence": "你保持清醒，却让他把心门重新关上。",
+          "consequence": "你问得直接，为自己守住了这道防线；他答得含糊，把心门重新掩上——黑雾散去时，救与被救，你们两不相欠。",
           "effect": {
             "globals": {
-              "insight": 8,
-              "aff_ziyelan": -5
+              "insight": 8
+            },
+            "relationships": {
+              "zi_yelan": {
+                "trust": -2,
+                "boundary": 4
+              }
             },
             "flags": [
               "doubted_zi"
             ]
           },
-          "caption": "你保持清醒，却让他把心门重新关上。"
+          "caption": "你问得直接，为自己守住了这道防线；他答得含糊，把心门重新掩上——黑雾散去时，救与被救，你们两不相欠。"
         },
         {
           "id": "borrow-forbidden",
-          "label": "借禁术反制暗潮",
+          "label": "顺势借他的禁术反制暗潮",
           "next": "s10-secret",
           "fateType": "web",
-          "consequence": "你学会使用暗面，也让暗面在你经脉里留下回声。",
+          "consequence": "你借来的暗力压下了暗潮，学得快得吓人——但那股力在你经脉里留下回声，而黑雾深处看你的目光，也多了一分不该有的笃定，像认定你迟早会再来借。",
           "effect": {
             "globals": {
               "strength": 8,
-              "corruption": 10,
-              "aff_ziyelan": 20
+              "corruption": 10
+            },
+            "relationships": {
+              "zi_yelan": {
+                "spark": 6,
+                "boundary": -4
+              }
             },
             "flags": [
+              "path_zi",
               "used_forbidden_art"
             ]
           },
-          "caption": "你学会使用暗面，也让暗面在你经脉里留下回声。"
+          "caption": "你借来的暗力压下了暗潮，学得快得吓人——但那股力在你经脉里留下回声，而黑雾深处看你的目光，也多了一分不该有的笃定，像认定你迟早会再来借。"
         }
       ]
     },
@@ -1344,19 +1404,19 @@
         "via": "#55748c",
         "to": "#f4fbff"
       },
-      "synopsis": "梅寒霜以三剑试你，冰镜会放大每一次退缩。",
+      "synopsis": "梅寒霜拦在冰镜前，以三剑相试。她不收徒，不结派，只想亲手验一验：这个查裂隙的散修，值不值得她并肩。",
       "lines": [
         {
-          "speaker": "梅寒霜",
-          "text": "我不问你出身，只问你敢不敢接剑。"
+          "speaker": "mei_hanshuang",
+          "text": "我不问你出身，也不问你师承。冰镜之前只有一句——敢不敢接剑。"
         },
         {
           "speaker": "narrator",
-          "text": "冰镜映出十几个你，每一个都在等你先后退。"
+          "text": "冰镜映出十几个你，每一个都攥着刻纹刀，每一个都在等你先退半步。"
         },
         {
           "speaker": "system",
-          "text": "强者风范不等于不怕，而是在怕的时候仍然站稳。"
+          "text": "司仪的声音隔着冰雾传来：剑试点到即止，退出镜面，试即作罢。"
         }
       ],
       "hotspots": [],
@@ -1366,53 +1426,67 @@
           "label": "正面接下三剑",
           "next": "s10-secret",
           "fateType": "river",
-          "consequence": "你以伤换来她的承认，寒霜剑意开始与你同频。",
+          "consequence": "三剑接完，她收剑抱拳——但伤是真的，今夜你的右手握不稳刻纹刀，修缮的活计得缓上一晚。",
           "effect": {
             "globals": {
               "strength": 12,
-              "virtue": 4,
-              "aff_meihanshuang": 35
+              "virtue": 4
+            },
+            "relationships": {
+              "mei_hanshuang": {
+                "trust": 8
+              }
             },
             "flags": [
+              "ally_mei",
               "honored_mei"
             ]
           },
-          "caption": "你以伤换来她的承认，寒霜剑意开始与你同频。"
+          "caption": "三剑接完，她收剑抱拳——但伤是真的，今夜你的右手握不稳刻纹刀，修缮的活计得缓上一晚。"
         },
         {
           "id": "admit-weakness",
           "label": "承认不足但绝不后退",
           "next": "s10-secret",
           "fateType": "web",
-          "consequence": "你没有伪装强大，却让梅寒霜看见更硬的骨头。",
+          "consequence": "你说\"第三剑我接不下\"，脚下却没挪半寸，她反而笑了——只是这句认短的话，围观的十家弟子也都听了去。",
           "effect": {
             "globals": {
               "virtue": 10,
-              "strength": 5,
-              "aff_meihanshuang": 30
+              "strength": 5
+            },
+            "relationships": {
+              "mei_hanshuang": {
+                "trust": 6
+              }
             },
             "flags": [
+              "ally_mei",
               "stood_before_mei"
             ]
           },
-          "caption": "你没有伪装强大，却让梅寒霜看见更硬的骨头。"
+          "caption": "你说\"第三剑我接不下\"，脚下却没挪半寸，她反而笑了——只是这句认短的话，围观的十家弟子也都听了去。"
         },
         {
           "id": "talk-around-duel",
-          "label": "用话术回避剑试",
+          "label": "用话术绕开剑试",
           "next": "s10-secret",
           "fateType": "river",
-          "consequence": "你暂避锋芒，也错过她最重视的回应方式。",
+          "consequence": "你全身而退，一片衣角未损——但她最看重的回应你没给，冰镜里从此少了一个与你并立的影子。",
           "effect": {
             "globals": {
-              "charm": 6,
-              "aff_meihanshuang": -5
+              "charm": 6
+            },
+            "relationships": {
+              "mei_hanshuang": {
+                "trust": -4
+              }
             },
             "flags": [
               "avoided_mei_duel"
             ]
           },
-          "caption": "你暂避锋芒，也错过她最重视的回应方式。"
+          "caption": "你全身而退，一片衣角未损——但她最看重的回应你没给，冰镜里从此少了一个与你并立的影子。"
         }
       ]
     },
@@ -1432,19 +1506,19 @@
         "via": "#526b3a",
         "to": "#e7c77c"
       },
-      "synopsis": "灵泉被封印裂隙污染，兰灵听见无数灵植同时求救。",
+      "synopsis": "灵泉被封印裂隙渗出的浊气所染，兰灵听见满谷灵植同时在哭。她不拦你赶路——只想看你打算怎么过这片泉。",
       "lines": [
         {
-          "speaker": "兰灵",
-          "text": "它们不会说人话，可疼痛不是只有人才懂。"
+          "speaker": "lan_ling",
+          "text": "它们不会说人话。可疼，不是只有人才懂。"
         },
         {
           "speaker": "narrator",
-          "text": "幽兰花瓣贴上你的腕骨，像在确认你是否真有善意。"
+          "text": "幽兰花瓣贴上你的腕骨，凉凉的，像在确认这双手修过什么、又毁过什么。"
         },
         {
           "speaker": "system",
-          "text": "自然路线会记住你如何对待不会反驳你的生命。"
+          "text": "阵盘的水纹在泉面铺开一行提示：此泉之毒非天生，源头在封印裂隙深处。"
         }
       ],
       "hotspots": [],
@@ -1454,54 +1528,53 @@
           "label": "先救受损灵植",
           "next": "s10-secret",
           "fateType": "river",
-          "consequence": "你让胜负让位于生命，兰灵把你的名字告诉了万灵。",
+          "consequence": "灵植稳住了，裂隙的渗漏也随之止了一线——但半日灵力耗尽，追查师父踪迹的脚程，又慢了一程。",
           "effect": {
             "globals": {
               "virtue": 12,
               "alliance": 5,
-              "aff_lanling": 35
+              "seal_stability": 2
             },
             "flags": [
               "protected_spirits"
             ]
           },
-          "caption": "你让胜负让位于生命，兰灵把你的名字告诉了万灵。"
+          "caption": "灵植稳住了，裂隙的渗漏也随之止了一线——但半日灵力耗尽，追查师父踪迹的脚程，又慢了一程。"
         },
         {
           "id": "ask-spirits",
           "label": "请求万灵指路",
           "next": "s10-secret",
           "fateType": "web",
-          "consequence": "你不是命令自然，而是请求它帮助你。",
+          "consequence": "万灵为你分开花叶，指给你浊气的来处——但求助有偿，你允了替这片泉记住此劫，从此多一桩不能失信的约。",
           "effect": {
             "globals": {
               "insight": 8,
               "virtue": 4,
-              "aff_lanling": 25
+              "hidden_clues": 2
             },
             "flags": [
               "asked_spirits"
             ]
           },
-          "caption": "你不是命令自然，而是请求它帮助你。"
+          "caption": "万灵为你分开花叶，指给你浊气的来处——但求助有偿，你允了替这片泉记住此劫，从此多一桩不能失信的约。"
         },
         {
           "id": "pluck-rare-orchid",
           "label": "采下灵植强行破局",
           "next": "s10-secret",
           "fateType": "river",
-          "consequence": "你破了局，也让兰灵眼中的清光冷了下去。",
+          "consequence": "你破局最快，一步不停——但哀鸣断在你掌心，兰灵眼底的清光冷了下去，满谷万灵自此对你闭口。",
           "effect": {
             "globals": {
               "strength": 8,
-              "corruption": 8,
-              "aff_lanling": -15
+              "corruption": 8
             },
             "flags": [
               "hurt_orchid"
             ]
           },
-          "caption": "你破了局，也让兰灵眼中的清光冷了下去。"
+          "caption": "你破局最快，一步不停——但哀鸣断在你掌心，兰灵眼底的清光冷了下去，满谷万灵自此对你闭口。"
         }
       ],
       "reusedPanoramaFrom": "s04-bamboo-orchid"
@@ -1509,7 +1582,7 @@
     "r-ju": {
       "id": "r-ju",
       "chapter": "第二章",
-      "title": "菊傲秋·金甲孤芳",
+      "title": "菊傲秋·金甲孤城",
       "location": "金菊防阵",
       "panorama": "/panoramas/project-20260620-002835-r-ju.jpg",
       "entryView": {
@@ -1522,74 +1595,99 @@
         "via": "#526b3a",
         "to": "#e7c77c"
       },
-      "synopsis": "金菊防阵坚不可摧，却也将所有人困在原地。",
+      "synopsis": "金菊防阵坚不可摧，却也把救援的路一并封死。菊傲秋守着这座百年孤城，等一个比奉承更好的答案。",
       "lines": [
         {
-          "speaker": "菊傲秋",
+          "speaker": "narrator",
+          "text": "金色花瓣层层合拢，像一座不肯低头的城。城里安稳，城外的钟声却隐约传来——有人在阵外求援。"
+        },
+        {
+          "speaker": "ju_aoqiu",
           "text": "只会攻击的人很多，懂防守之美的人太少。"
         },
         {
           "speaker": "narrator",
-          "text": "金色花瓣层层合拢，像一座不肯低头的城。"
+          "text": "他说这话时没有看你，指尖却停在阵眼上，停了很久。防阵不开，谁也出不去；可开阵一瞬，百年布置尽毁。"
+        },
+        {
+          "speaker": "ju_aoqiu",
+          "text": "你若有更好的答案，说来。我听。"
         },
         {
           "speaker": "system",
-          "text": "她等待的不是奉承，而是能打破常规的答案。"
+          "text": "司仪唱名声隔阵传入：金菊阵内诸传人暂避剑潮余波，静候阵讯，勿自行破阵。"
         }
       ],
       "hotspots": [],
       "choices": [
         {
           "id": "new-metal-array",
-          "label": "提出金阵新解",
+          "label": "以修缮师手法改一处阵眼，让金阵可开可合",
           "next": "s10-secret",
           "fateType": "river",
-          "consequence": "你没有否定防御，而是让防御变成推进，菊傲秋为你开阵。",
+          "consequence": "你没有否定防御，而是让防御学会呼吸，他亲手为你启阵——但改动出自你手，此阵日后若有闪失，这笔账也记在你头上。",
           "effect": {
             "globals": {
               "wisdom": 10,
-              "insight": 3,
-              "aff_juaoqiu": 35
+              "insight": 3
+            },
+            "relationships": {
+              "ju_aoqiu": {
+                "spark": 11,
+                "trust": 7,
+                "boundary": 2
+              }
             },
             "flags": [
-              "impressed_ju"
+              "impressed_ju",
+              "path_ju"
             ]
           },
-          "caption": "你没有否定防御，而是让防御变成推进，菊傲秋为你开阵。"
+          "caption": "你没有否定防御，而是让防御学会呼吸，他亲手为你启阵——但改动出自你手，此阵日后若有闪失，这笔账也记在你头上。"
         },
         {
           "id": "praise-solitude",
-          "label": "称赞她的孤傲",
+          "label": "赞他守阵百年的孤心",
           "next": "s10-secret",
           "fateType": "web",
-          "consequence": "你说中了她想听的话，却还没有证明你配得上她的高看。",
+          "consequence": "你说中了他等了多年的那句话，他神色微动——但欣赏归欣赏，阵，仍旧一寸未开，阵外的钟声还在响。",
           "effect": {
             "globals": {
-              "charm": 8,
-              "aff_juaoqiu": 20
+              "charm": 8
+            },
+            "relationships": {
+              "ju_aoqiu": {
+                "spark": 5,
+                "trust": 2
+              }
             },
             "flags": [
+              "path_ju",
               "praised_ju"
             ]
           },
-          "caption": "你说中了她想听的话，却还没有证明你配得上她的高看。"
+          "caption": "你说中了他等了多年的那句话，他神色微动——但欣赏归欣赏，阵，仍旧一寸未开，阵外的钟声还在响。"
         },
         {
           "id": "mock-defense",
-          "label": "质疑她只会防守",
+          "label": "直言此阵困人甚于护人",
           "next": "s10-secret",
           "fateType": "river",
-          "consequence": "你激怒了她，也让金阵变得更难靠近。",
+          "consequence": "你的话戳在他最痛处，金阵应声收得更紧——他记住了你，只是以最坏的方式。",
           "effect": {
             "globals": {
-              "strength": 5,
-              "aff_juaoqiu": -5
+              "strength": 5
+            },
+            "relationships": {
+              "ju_aoqiu": {
+                "trust": -4
+              }
             },
             "flags": [
               "mocked_ju"
             ]
           },
-          "caption": "你激怒了她，也让金阵变得更难靠近。"
+          "caption": "你的话戳在他最痛处，金阵应声收得更紧——他记住了你，只是以最坏的方式。"
         }
       ]
     },
@@ -1609,19 +1707,19 @@
         "via": "#526b3a",
         "to": "#e7c77c"
       },
-      "synopsis": "试炼忽然分裂成十个小局，牡丹仙等待有人把混乱重新组织成秩序。",
+      "synopsis": "修缮仪程忽然裂成十个小局，十家各自为战。牡丹仙立在花影里不动——她在等，看有没有人能把这场乱局重新收成一盘棋。",
       "lines": [
         {
-          "speaker": "牡丹仙",
-          "text": "强者能赢一局，掌局者要让所有人都有活路。"
+          "speaker": "mudan",
+          "text": "强者赢一局。掌局的人，得让所有人都有活路——包括她自己的。"
         },
         {
           "speaker": "narrator",
-          "text": "百花浮庭上，十家弟子争执不休，仙府入口却在一点点关闭。"
+          "text": "百花浮庭上，十家弟子各执一词，仙府入口的光门正一寸一寸收拢。"
         },
         {
           "speaker": "system",
-          "text": "这是领导力试炼，也是野心试炼。"
+          "text": "司仪的急报穿过花海：入口每合一寸，今岁的封印修缮便难上一分。"
         }
       ],
       "hotspots": [],
@@ -1631,62 +1729,75 @@
           "label": "主动统筹十家分工",
           "next": "s10-secret",
           "fateType": "river",
-          "consequence": "你让混乱变成协作，牡丹仙第一次向你平等点头。",
+          "consequence": "十家听你调度，光门重新撑住——但你站进了灯下，往后牡丹仙的每一步棋，都会把你算进去。",
           "effect": {
             "globals": {
               "charm": 10,
-              "alliance": 12,
-              "aff_mudanxian": 35
+              "alliance": 12
+            },
+            "relationships": {
+              "mudan": {
+                "trust": 8
+              }
             },
             "flags": [
-              "led_council"
+              "led_council",
+              "pact_mudan"
             ]
           },
-          "caption": "你让混乱变成协作，牡丹仙第一次向你平等点头。"
+          "caption": "十家听你调度，光门重新撑住——但你站进了灯下，往后牡丹仙的每一步棋，都会把你算进去。"
         },
         {
           "id": "question-ambition",
-          "label": "质疑百花宗的野心",
+          "label": "当面点破百花宗的野心",
           "next": "s10-secret",
           "fateType": "web",
-          "consequence": "你看穿权力的影子，却还未让她相信你能承担权力。",
+          "consequence": "你点破她棋盘上的影子，她不恼，反倒记住了你——但看得穿权力的人，也会被权力盯上。",
           "effect": {
             "globals": {
-              "insight": 8,
-              "aff_mudanxian": 10
+              "insight": 8
+            },
+            "relationships": {
+              "mudan": {
+                "trust": 3
+              }
             },
             "flags": [
               "questioned_mudan"
             ]
           },
-          "caption": "你看穿权力的影子，却还未让她相信你能承担权力。"
+          "caption": "你点破她棋盘上的影子，她不恼，反倒记住了你——但看得穿权力的人，也会被权力盯上。"
         },
         {
           "id": "seek-protection",
-          "label": "请求她暂时庇护",
+          "label": "开口请她暂时照拂",
           "next": "s10-secret",
           "fateType": "river",
-          "consequence": "你得到庇护，却把主动权交给了百花宗。",
+          "consequence": "花影替你遮了一时风雨——但庇护有价，这一局的主动权，从你手里滑进了百花议庭。",
           "effect": {
             "globals": {
               "alliance": 5,
-              "charm": 3,
-              "aff_mudanxian": 15
+              "charm": 3
+            },
+            "relationships": {
+              "mudan": {
+                "trust": 4
+              }
             },
             "flags": [
               "sought_mudan_protection"
             ]
           },
-          "caption": "你得到庇护，却把主动权交给了百花宗。"
+          "caption": "花影替你遮了一时风雨——但庇护有价，这一局的主动权，从你手里滑进了百花议庭。"
         }
       ]
     },
     "r-manzhu": {
       "id": "r-manzhu",
       "chapter": "第二章",
-      "title": "曼珠仙姬·彼岸问花",
+      "title": "曼珠·彼岸问花",
       "location": "彼岸花海",
-      "panorama": "/panoramas/project-20260620-002835-r-manzhu.jpg",
+      "panorama": "/panoramas/project-20260620-002835-e09-manzhu.jpg",
       "entryView": {
         "yaw": 0,
         "pitch": 0,
@@ -1697,67 +1808,68 @@
         "via": "#45235f",
         "to": "#b36b8f"
       },
-      "synopsis": "曼珠仙姬以花语试探你，她的媚笑背后藏着一段前世执念。",
+      "synopsis": "曼珠拦在彼岸花海，以一句花语相试。她记得所有被遗忘的人——而这一次，她在替一个人，寻另一个人。",
       "lines": [
         {
-          "speaker": "曼珠仙姬",
-          "text": "小家伙，你知道彼岸花的花语吗？"
+          "speaker": "manzhu",
+          "text": "你知道彼岸花的花语么？不是生死相隔——是被人忘了。"
         },
         {
           "speaker": "narrator",
-          "text": "红花铺满云海，花下却没有影子。"
+          "text": "红花铺满云海，花下却没有影子。她立在花间，安静得像随时会被这世间忘掉的一个。"
         },
         {
           "speaker": "system",
-          "text": "她习惯别人被外表迷惑。直接看见她的目的，会改变这条路线。"
+          "text": "盛会阵盘行至花海便失了声，仿佛这里的一切，从不曾登记在册。"
         }
       ],
       "hotspots": [],
       "choices": [
         {
           "id": "direct-manzhu",
-          "label": "直接问她真正想说什么",
+          "label": "开门见山，问她真正要寻的是谁",
           "next": "s10-secret",
           "fateType": "web",
-          "consequence": "你越过魅术抵达真意，曼珠仙姬收起了笑。",
+          "consequence": "她收起试探，第一次正眼看你——但你从此翻开了十家不愿示人的那页旧账，做了知情人，便没有回头路。",
           "effect": {
             "globals": {
               "insight": 10,
               "charm": 4,
-              "aff_manzhuxianji": 35
+              "hidden_clues": 2
             },
             "flags": [
+              "manzhu_truth",
               "saw_manzhu_truth"
             ],
             "memories": [
-              "曼珠仙姬寻找前世恋人"
+              "发现线索：曼珠在寻一位被十家名册整页裁去的传人——她唤那人作\"第十一位\"。"
             ]
           },
-          "caption": "你越过魅术抵达真意，曼珠仙姬收起了笑。"
+          "caption": "她收起试探，第一次正眼看你——但你从此翻开了十家不愿示人的那页旧账，做了知情人，便没有回头路。"
         },
         {
           "id": "praise-manzhu",
-          "label": "大胆称赞她很美",
+          "label": "看穿她在替谁寻人",
           "next": "s10-secret",
           "fateType": "river",
-          "consequence": "你足够大胆，却仍停在她最熟悉的表面。",
+          "consequence": "你一句\"你不是在试我，你是在寻人\"，让整片花海静了一瞬——但看破不等于被托付，她合上话头，那个名字仍要你自己去查。",
           "effect": {
             "globals": {
-              "charm": 10,
-              "aff_manzhuxianji": 15
+              "insight": 6,
+              "charm": 4
             },
             "flags": [
               "praised_manzhu"
             ]
           },
-          "caption": "你足够大胆，却仍停在她最熟悉的表面。"
+          "caption": "你一句\"你不是在试我，你是在寻人\"，让整片花海静了一瞬——但看破不等于被托付，她合上话头，那个名字仍要你自己去查。"
         },
         {
           "id": "avoid-beyond",
-          "label": "回避彼岸教身份",
+          "label": "避开她的来历，不接这句花语",
           "next": "s10-secret",
           "fateType": "river",
-          "consequence": "你没有冒犯她，也没有真正靠近她。",
+          "consequence": "你谨慎地绕开了她的来历，不结怨，也不结缘——但花海随之合拢，那条只对肯发问的人敞开的路，今日不为你开。",
           "effect": {
             "globals": {
               "virtue": 2
@@ -1766,16 +1878,16 @@
               "avoided_manzhu_identity"
             ]
           },
-          "caption": "你没有冒犯她，也没有真正靠近她。"
+          "caption": "你谨慎地绕开了她的来历，不结怨，也不结缘——但花海随之合拢，那条只对肯发问的人敞开的路，今日不为你开。"
         }
       ]
     },
     "r-linghua": {
       "id": "r-linghua",
       "chapter": "第二章",
-      "title": "灵花仙子·天灵回响",
+      "title": "灵花·天灵回响",
       "location": "天灵观星台",
-      "panorama": "/panoramas/project-20260620-002835-r-linghua.jpg",
+      "panorama": "/panoramas/project-20260620-002835-s12-mansion.jpg",
       "entryView": {
         "yaw": 0,
         "pitch": 0,
@@ -1786,82 +1898,83 @@
         "via": "#38506a",
         "to": "#d8c08c"
       },
-      "synopsis": "灵花仙子听见你体内传承的回音，她认为那不是力量，而是一道问题。",
+      "synopsis": "观星台上不见人影，只有一道光与一个声音。灵花听见你体内传承的回音——她说那不是力量，是一道还没有人答对过的问题。",
       "lines": [
         {
-          "speaker": "灵花仙子",
-          "text": "传承在问你：若无人见证，你还会选择正确的路吗？"
+          "speaker": "ling_hua",
+          "text": "传承在问你：若无人见证，你还会选那条正确的路么？"
         },
         {
           "speaker": "narrator",
-          "text": "观星台没有风，星光却像水一样流进你的掌心。"
+          "text": "观星台没有风，星光却像水，顺着掌纹流进你这双刻过无数阵痕的手。"
         },
         {
           "speaker": "system",
-          "text": "追求真理需要纯净心灵，也需要承认自己并不全知。"
+          "text": "观星台的阵盘只映星轨，轻轻一鸣：此地问答自愿，去留随心。"
         }
       ],
       "hotspots": [],
       "choices": [
         {
           "id": "pursue-truth",
-          "label": "随她追问传承真理",
+          "label": "随那道光追问传承的来处",
           "next": "s10-secret",
           "fateType": "web",
-          "consequence": "你没有把传承当作私产，灵花仙子与你发生灵力共鸣。",
+          "consequence": "你随她把传承拆成一道道问题，星光里浮出旧年的答痕——但问到深处没有回头路，你不得不承认，无名一脉的旧法也有错处。",
           "effect": {
             "globals": {
               "insight": 12,
-              "wisdom": 4,
-              "aff_linghuaxianzi": 35
+              "wisdom": 4
             },
             "flags": [
+              "master_trace",
               "pursued_truth"
+            ],
+            "memories": [
+              "发现线索：回音深处混着另一人的灵息——上一代修缮师，也曾在此答过这道题。"
             ]
           },
-          "caption": "你没有把传承当作私产，灵花仙子与你发生灵力共鸣。"
+          "caption": "你随她把传承拆成一道道问题，星光里浮出旧年的答痕——但问到深处没有回头路，你不得不承认，无名一脉的旧法也有错处。"
         },
         {
           "id": "keep-pure-heart",
-          "label": "保持心念澄明",
+          "label": "守住心念澄明，不急作答",
           "next": "s10-secret",
           "fateType": "river",
-          "consequence": "你守住本心，天灵之力不再排斥你。",
+          "consequence": "你守住澄明，天灵之力不再排斥你——但最锋利的那一问被你轻轻放过，它会在更险的地方，再问你一次。",
           "effect": {
             "globals": {
               "virtue": 10,
-              "insight": 5,
-              "aff_linghuaxianzi": 30
+              "insight": 5
             },
             "flags": [
               "kept_pure_heart"
             ]
           },
-          "caption": "你守住本心，天灵之力不再排斥你。"
+          "caption": "你守住澄明，天灵之力不再排斥你——但最锋利的那一问被你轻轻放过，它会在更险的地方，再问你一次。"
         },
         {
           "id": "use-sensing",
-          "label": "利用她的感知避险",
+          "label": "只借她的感知避开险路",
           "next": "s10-secret",
           "fateType": "river",
-          "consequence": "你得到安全路线，却让真理追问暂时沉默。",
+          "consequence": "你借她的感知避开险路，走得最稳——但把问话当工具的人，光会记得；下次再开口，它未必应你。",
           "effect": {
             "globals": {
-              "wisdom": 6,
-              "aff_linghuaxianzi": 15
+              "wisdom": 6
             },
             "flags": [
               "used_linghua_sense"
             ]
           },
-          "caption": "你得到安全路线，却让真理追问暂时沉默。"
+          "caption": "你借她的感知避开险路，走得最稳——但把问话当工具的人，光会记得；下次再开口，它未必应你。"
         }
       ]
     },
     "s10-secret": {
       "id": "s10-secret",
       "chapter": "第三章",
-      "title": "秘密浮现",
+      "title": "无名之纹",
       "location": "上古仙府入口",
       "panorama": "/panoramas/project-20260620-002835-s10-secret.jpg",
       "entryView": {
@@ -1874,30 +1987,30 @@
         "via": "#38506a",
         "to": "#d8c08c"
       },
-      "synopsis": "试炼结束，你体内的古老传承与仙府大门共鸣，所有人都意识到你就是钥匙。",
+      "synopsis": "试炼方歇，你掌心的修缮纹与仙府门环隔空共鸣。满场目光落在这个持旧凭证入场的散修身上——无名一脉，竟然还有传人。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "你的掌心传承纹自行亮起，仙府门环回应般转动。"
+          "text": "你掌心的旧纹自行发烫，仙府门环像认出了故人，缓缓转了半圈。"
         },
         {
-          "speaker": "云墨轩",
-          "text": "退后。现在盯着你的人，不只想保护你。"
+          "speaker": "yun_moxuan",
+          "text": "沈姑娘，退后半步——不是命令，是提醒。此刻盯着你的人里，不全是想护你的。"
         },
         {
-          "speaker": "牡丹仙",
-          "text": "钥匙若只属于一人，修仙界会因此大乱。"
+          "speaker": "mudan",
+          "text": "钥匙若只握在一人手里，十家百年的默契，今夜就会碎。"
         },
         {
           "speaker": "system",
-          "text": "友善、中立与野心同时落在你身上。你必须决定如何处理传承秘密。"
+          "text": "司仪的钟声压下满场议论：'仪程暂停。请这位修缮师留步，云巅之上，还请自陈来历。'"
         }
       ],
       "hotspots": [
         {
           "id": "ancient-lock",
           "label": "仙府门环",
-          "description": "门环内侧刻着十家祖纹，却缺少第十一道无名纹。",
+          "description": "门环内侧刻着十家祖纹，环环相扣，却独独空着第十一道——那个位置的凿法，与你师父传你的手艺一模一样。",
           "yaw": 4,
           "pitch": -6,
           "effect": {
@@ -1909,14 +2022,14 @@
               "insight": 5
             },
             "memories": [
-              "仙府需要第十一道无名纹"
+              "门环上空着第十一道无名纹，凿法与师门手艺同源"
             ]
           }
         },
         {
           "id": "cracked-seal",
           "label": "封印裂痕",
-          "description": "门缝中渗出黑金裂光，与大殿断香的气息相同。",
+          "description": "门缝里渗出黑金裂光，气息与大殿那炷无端断掉的香一模一样。这不是年久失修，是有人动过手脚。",
           "yaw": -36,
           "pitch": 3,
           "effect": {
@@ -1926,17 +2039,20 @@
             "globals": {
               "insight": 4,
               "seal_stability": -5
-            }
+            },
+            "memories": [
+              "门缝黑金裂光与大殿断香同源"
+            ]
           }
         }
       ],
       "choices": [
         {
           "id": "public-inheritance",
-          "label": "公开传承秘密寻求合作",
+          "label": "当众承认无名一脉的身份",
           "next": "s11-reactions",
           "fateType": "river",
-          "consequence": "你把自己置于众目之下，也让十家有了共同承担的理由。",
+          "consequence": "十家从此有了共同承担的理由——但你查师父下落的每一步，都要走在众目之下。",
           "effect": {
             "globals": {
               "alliance": 20,
@@ -1947,14 +2063,14 @@
             ],
             "route": "team"
           },
-          "caption": "你把自己置于众目之下，也让十家有了共同承担的理由。"
+          "caption": "十家从此有了共同承担的理由——但你查师父下落的每一步，都要走在众目之下。"
         },
         {
           "id": "hide-inheritance",
-          "label": "隐瞒真相独自探索",
+          "label": "隐去师门，只称散修修缮师",
           "next": "s11-reactions",
           "fateType": "web",
-          "consequence": "你保住主动权，却让后续误解与背叛的风险升高。",
+          "consequence": "你保住了查案的主动权——但这个谎一旦被拆穿，最先寒心的会是那些信过你的人。",
           "effect": {
             "globals": {
               "insight": 10,
@@ -1965,14 +2081,14 @@
             ],
             "route": "solo"
           },
-          "caption": "你保住主动权，却让后续误解与背叛的风险升高。"
+          "caption": "你保住了查案的主动权——但这个谎一旦被拆穿，最先寒心的会是那些信过你的人。"
         },
         {
           "id": "trust-partner",
-          "label": "选择信任试炼伙伴",
+          "label": "只把秘密交给一个信得过的人",
           "next": "s11-reactions",
           "fateType": "river",
-          "consequence": "你把秘密交给一个人，这份信任会在终局被放大。",
+          "consequence": "一个人的信任比十家的盟约更重，终局时它会被放大——但对方也从此替你担着知情的风险。",
           "effect": {
             "globals": {
               "charm": 5,
@@ -1983,16 +2099,16 @@
               "trusted_partner"
             ]
           },
-          "caption": "你把秘密交给一个人，这份信任会在终局被放大。"
+          "caption": "一个人的信任比十家的盟约更重，终局时它会被放大——但对方也从此替你担着知情的风险。"
         }
       ]
     },
     "s11-reactions": {
       "id": "s11-reactions",
       "chapter": "第三章",
-      "title": "十家的态度",
+      "title": "云桥立场",
       "location": "仙府门前云桥",
-      "panorama": "/panoramas/project-20260620-002835-s11-reactions.jpg",
+      "panorama": "/panoramas/project-20260620-002835-s16-final-core.jpg",
       "entryView": {
         "yaw": 0,
         "pitch": 0,
@@ -2003,29 +2119,29 @@
         "via": "#38506a",
         "to": "#d8c08c"
       },
-      "synopsis": "传承暴露后，各方立场分化：保护、观望、索取在云桥上正面碰撞。",
+      "synopsis": "无名之纹现世，云桥上各方立场当面摊牌：有人要护她，有人要用她，有人只想看她值不值这个价。",
       "lines": [
         {
-          "speaker": "兰灵",
-          "text": "若他只是钥匙，你们与魔神有什么不同？"
+          "speaker": "lan_ling",
+          "text": "若她在你们眼里只是一把钥匙，那你们与门后那东西，有什么分别？"
         },
         {
-          "speaker": "菊傲秋",
-          "text": "我只看结果。若他能证明价值，我便守他一程。"
+          "speaker": "ju_aoqiu",
+          "text": "我只看方案。她的推演若立得住，不必谁下令，我自守她一程。"
         },
         {
-          "speaker": "紫夜澜",
-          "text": "别把野心说得太难听。活到最后的人，才有资格谈道义。"
+          "speaker": "zi_yelan",
+          "text": "（黑雾深处只有声音）别把野心说得太难听。封印底下那位可不讲道义——活到最后的人，才有资格谈。"
         }
       ],
       "hotspots": [],
       "choices": [
         {
           "id": "accept-friendly",
-          "label": "接受友善派暂时守护",
+          "label": "借友善世家之力查师父下落",
           "next": "s12-mansion",
           "fateType": "river",
-          "consequence": "你得到保护，也必须承担被正派期待约束的代价。",
+          "consequence": "有人替你挡明枪，师门旧案多了帮手——但正派的期待也会替你划线：该查什么、不该查到哪。",
           "effect": {
             "globals": {
               "alliance": 15,
@@ -2035,14 +2151,14 @@
               "accepted_friendly_guard"
             ]
           },
-          "caption": "你得到保护，也必须承担被正派期待约束的代价。"
+          "caption": "有人替你挡明枪，师门旧案多了帮手——但正派的期待也会替你划线：该查什么、不该查到哪。"
         },
         {
           "id": "bargain-ambition",
-          "label": "与野心派交换条件",
+          "label": "与野心一派交换师门旧档",
           "next": "s12-mansion",
           "fateType": "web",
-          "consequence": "你借野心派开路，未来他们也会向你索取更高回报。",
+          "consequence": "你换来别人不肯给的百年旧档——但他们记账，日后会连本带利地来讨。",
           "effect": {
             "globals": {
               "corruption": 15,
@@ -2052,14 +2168,14 @@
               "bargained_with_ambition"
             ]
           },
-          "caption": "你借野心派开路，未来他们也会向你索取更高回报。"
+          "caption": "你换来别人不肯给的百年旧档——但他们记账，日后会连本带利地来讨。"
         },
         {
           "id": "neutral-oath",
-          "label": "立下中立誓约保持自主",
+          "label": "立中立誓，只凭手艺立足",
           "next": "s12-mansion",
           "fateType": "river",
-          "consequence": "你不把命运交给任何派系，但也少了一层庇护。",
+          "consequence": "你不把命运押给任何派系，走得干净——但夜里再遇暗手时，没有人有义务为你出剑。",
           "effect": {
             "globals": {
               "wisdom": 8,
@@ -2069,14 +2185,14 @@
               "neutral_oath"
             ]
           },
-          "caption": "你不把命运交给任何派系，但也少了一层庇护。"
+          "caption": "你不把命运押给任何派系，走得干净——但夜里再遇暗手时，没有人有义务为你出剑。"
         }
       ]
     },
     "s12-mansion": {
       "id": "s12-mansion",
       "chapter": "第四章",
-      "title": "仙府探秘",
+      "title": "内殿真形",
       "location": "上古仙府内殿",
       "panorama": "/panoramas/project-20260620-002835-s12-mansion.jpg",
       "entryView": {
@@ -2089,26 +2205,30 @@
         "via": "#45235f",
         "to": "#b36b8f"
       },
-      "synopsis": "仙府并非藏宝地，而是十家祖先共同修建的封印核心。",
+      "synopsis": "仙府从来不是藏宝之地。壁画层层亮起，你以修缮师的眼看清了它的真形——十家祖先合力筑成的封印核心。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "内殿壁画一层层亮起，十位祖先把剑、阵、丹、花、影全部压向同一道黑门。"
+          "text": "内殿壁画一层层亮起，十位祖先把剑、阵、丹、花、影，全部压向同一道黑门。"
         },
         {
-          "speaker": "月清寒",
-          "text": "这不是传承试炼，是封印维护仪式。"
+          "speaker": "yue_qinghan",
+          "text": "这不是传承试炼。是封印维护仪式——百年一度，从未间断——可封印等不了百年，裂了，就得有人进去补。"
         },
         {
-          "speaker": "灵花仙子",
-          "text": "它快醒了。我们来得太晚，又或许正好。"
+          "speaker": "ling_hua",
+          "text": "（一团温光里传来苍老的声音）它快醒了。你们来得太晚——又或许，正好。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "你伸手抚过壁画接缝，指尖一顿：这里有一道晚于所有壁画的补痕，运笔收锋，全是师父的习惯。他来过。"
         }
       ],
       "hotspots": [
         {
           "id": "time-mural",
           "label": "时空壁画",
-          "description": "壁画边缘刻着可逆转一次选择的星轨，但缺少启动记忆。",
+          "description": "壁画边缘刻着一圈可令光阴倒流一次的星轨，星轨尽头空着一个位置，像在等某段尚未发生的记忆。",
           "yaw": 54,
           "pitch": 2,
           "effect": {
@@ -2127,7 +2247,7 @@
         {
           "id": "ancestor-tablet",
           "label": "祖先碑铭",
-          "description": "碑铭提到第十一位无名传承者，却被后人刻意磨去姓名。",
+          "description": "碑铭记着第十一位无名传承者，姓名却被后人磨去。磨痕边缘有一道远比磨痕新的补刻——下刀的手法，是师父的。",
           "yaw": -18,
           "pitch": -8,
           "effect": {
@@ -2137,34 +2257,38 @@
             "globals": {
               "hidden_clues": 1,
               "wisdom": 4
-            }
+            },
+            "memories": [
+              "祖先碑的磨痕边缘，有一道晚于磨痕的补刻——师父的手法"
+            ]
           }
         }
       ],
       "choices": [
         {
           "id": "trace-ancestor-truth",
-          "label": "追查祖先封印真相",
+          "label": "循师父的补痕追查封印真相",
           "next": "s13-illusion",
           "fateType": "web",
-          "consequence": "你把仙府当成真相现场，而不是战利品仓库。",
+          "consequence": "你把仙府当作现场逐寸勘验，离师父失踪的真相更近——但你耽搁的每一刻，裂隙都在往深处走。",
           "effect": {
             "globals": {
               "insight": 12,
               "wisdom": 8
             },
             "flags": [
-              "found_ancestor_truth"
+              "found_ancestor_truth",
+              "master_trace"
             ]
           },
-          "caption": "你把仙府当成真相现场，而不是战利品仓库。"
+          "caption": "你把仙府当作现场逐寸勘验，离师父失踪的真相更近——但你耽搁的每一刻，裂隙都在往深处走。"
         },
         {
           "id": "collect-manuals",
-          "label": "优先收集功法残卷",
+          "label": "先收殿中功法残卷傍身",
           "next": "s13-illusion",
           "fateType": "river",
-          "consequence": "你获得更强手段，但残卷也唤醒了封印深处的觊觎。",
+          "consequence": "残卷让你的阵手更利——但翻动它们的灵息，也惊动了封印深处那道一直在等的觊觎。",
           "effect": {
             "globals": {
               "strength": 8,
@@ -2174,14 +2298,14 @@
               "collected_manuals"
             ]
           },
-          "caption": "你获得更强手段，但残卷也唤醒了封印深处的觊觎。"
+          "caption": "残卷让你的阵手更利——但翻动它们的灵息，也惊动了封印深处那道一直在等的觊觎。"
         },
         {
           "id": "share-methods",
-          "label": "整合十人所长开路",
+          "label": "把十家所长排成互补的阵序",
           "next": "s13-illusion",
           "fateType": "river",
-          "consequence": "你让十位传人第一次真正互补，而不是各自为战。",
+          "consequence": "十家第一次真正互补，而不是各自为战——但执排阵序的人若算错一步，十家一起赔进去，这副担子在你肩上。",
           "effect": {
             "globals": {
               "alliance": 15,
@@ -2191,14 +2315,14 @@
               "shared_methods"
             ]
           },
-          "caption": "你让十位传人第一次真正互补，而不是各自为战。"
+          "caption": "十家第一次真正互补，而不是各自为战——但执排阵序的人若算错一步，十家一起赔进去，这副担子在你肩上。"
         }
       ]
     },
     "s13-illusion": {
       "id": "s13-illusion",
       "chapter": "第四章",
-      "title": "心性幻境",
+      "title": "无名之惑",
       "location": "内心幻境",
       "panorama": "/panoramas/project-20260620-002835-s12-mansion.jpg",
       "entryView": {
@@ -2211,26 +2335,26 @@
         "via": "#45235f",
         "to": "#b36b8f"
       },
-      "synopsis": "魔神以你最深的孤独与渴望诱导你：只要夺取传承，就不必再被任何世家审判。",
+      "synopsis": "魔神不诱人以财，不诱人以力，只诱人以心结。它给沈青梧看的，是她修了半生封印、却无一处刻着她名字的那道旧伤。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "幻境里，你看见自己站在仙阁最高处，十家都向你低头。"
+          "text": "幻境里，祖先碑最上方多出一行金字——沈青梧。十家长老起身，齐齐向你俯首。你修过的每一道封印都亮着，每一道都写着你的名。"
         },
         {
           "speaker": "system",
-          "text": "它知道你曾经被轻视，也知道你渴望被选择。"
+          "text": "袖中阵盘烫得像一块烙铁，急促示警：入幻者，认路，认人，认己。"
         },
         {
-          "speaker": "魔神低语",
-          "text": "拿走我的力量，他们就再也不能决定你的命运。"
+          "speaker": "mo_shen",
+          "text": "你修了一辈子别人的封印，谁记得你的名字？收下我的力量——往后，是他们排着队求你记得他们。"
         }
       ],
       "hotspots": [
         {
           "id": "memory-fragment",
           "label": "记忆碎片",
-          "description": "碎片里第十一位无名传承者并未背叛十家，而是被十家遗忘。",
+          "description": "碎片深处映出百年前的真相：第十一位无名传承者从未背叛十家——她只是被十家忘了。和你师父一样，和你一样。",
           "yaw": 0,
           "pitch": -12,
           "effect": {
@@ -2243,7 +2367,7 @@
               "virtue": 3
             },
             "memories": [
-              "无名传承者被十家遗忘"
+              "无名传承者未曾背叛，只是被十家遗忘"
             ]
           }
         }
@@ -2251,10 +2375,10 @@
       "choices": [
         {
           "id": "admit-loneliness",
-          "label": "承认自己也渴望被选择",
+          "label": "承认自己也想被人记住",
           "next": "s14-seal-truth",
           "fateType": "wheel",
-          "consequence": "你没有否认欲望，因此没有被欲望暗中操控。",
+          "consequence": "你不否认这份渴望，它便再也拿捏不住你——但承认之后，那份无人见证的孤独，你要看得更清楚地带着走。",
           "effect": {
             "globals": {
               "charm": 8,
@@ -2267,14 +2391,14 @@
               "心性幻境中承认孤独"
             ]
           },
-          "caption": "你没有否认欲望，因此没有被欲望暗中操控。"
+          "caption": "你不否认这份渴望，它便再也拿捏不住你——但承认之后，那份无人见证的孤独，你要看得更清楚地带着走。"
         },
         {
           "id": "cut-temptation",
-          "label": "斩断诱惑专注封印",
+          "label": "斩断幻境，只认手上的活",
           "next": "s14-seal-truth",
           "fateType": "river",
-          "consequence": "你以意志抗住诱惑，但幻境没有告诉你全部真相。",
+          "consequence": "你凭一口硬气破幻而出——但幻境没说完的那半句真相，也被你一并斩断在了里面。",
           "effect": {
             "globals": {
               "strength": 8,
@@ -2284,14 +2408,14 @@
               "cut_temptation"
             ]
           },
-          "caption": "你以意志抗住诱惑，但幻境没有告诉你全部真相。"
+          "caption": "你凭一口硬气破幻而出——但幻境没说完的那半句真相，也被你一并斩断在了里面。"
         },
         {
           "id": "question-illusion",
-          "label": "追问幻境为何知道你",
+          "label": "反问它为何知道你的心结",
           "next": "s14-seal-truth",
           "fateType": "web",
-          "consequence": "你反过来审问幻境，发现魔神一直在等待第十一位传承者。",
+          "consequence": "你反客为主审问幻境，问出魔神百年来等的正是无名一脉——但这份知情从此压在你一个人心口。",
           "effect": {
             "globals": {
               "insight": 12
@@ -2300,7 +2424,7 @@
               "traced_illusion"
             ]
           },
-          "caption": "你反过来审问幻境，发现魔神一直在等待第十一位传承者。"
+          "caption": "你反客为主审问幻境，问出魔神百年来等的正是无名一脉——但这份知情从此压在你一个人心口。"
         }
       ],
       "reusedPanoramaFrom": "s12-mansion"
@@ -2310,7 +2434,7 @@
       "chapter": "第四章",
       "title": "封印真相",
       "location": "封印外环",
-      "panorama": "/panoramas/project-20260620-002835-s14-seal-truth.jpg",
+      "panorama": "/panoramas/project-20260620-002835-g-romance-b.jpg",
       "entryView": {
         "yaw": 0,
         "pitch": 0,
@@ -2321,30 +2445,34 @@
         "via": "#45235f",
         "to": "#b36b8f"
       },
-      "synopsis": "真相揭开：十大世家祖先曾联手封印魔神，而封印即将破碎，需要十位传人与第十一道传承共同加固。",
+      "synopsis": "真相摊开：仙府是十家祖先联手筑成的封印，如今将碎。祖先留下的旧法只有一条——折一人修为填阵。而你是修缮师，修缮师不认'只有一条'。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "封印核心像一颗倒悬的黑日，十道祖纹围绕你掌心的第十一纹旋转。"
+          "text": "封印核心像一颗倒悬的黑日，十道祖纹绕着你掌心的第十一纹缓缓旋转，像十扇等人推开的门。"
         },
         {
-          "speaker": "牡丹仙",
-          "text": "若必须牺牲一人修为，修仙界会记住他。"
+          "speaker": "mudan",
+          "text": "若非折一人修为不可，议庭会为此人立碑。修仙界会记住她。"
         },
         {
-          "speaker": "竹清晏",
-          "text": "记住，不该成为逼人赴死的理由。"
+          "speaker": "zhu_qingyan",
+          "text": "立碑不是理由。'记住'两个字，从来不该拿来逼人赴死。"
         },
         {
-          "speaker": "紫夜澜",
-          "text": "也可能有人不需要被说服，只需要被推上去。"
+          "speaker": "zi_yelan",
+          "text": "（裂隙边只闻其声）也未必要说服谁。有些人啊——只需要被推上去。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "祖纹旧档的末页，夹着一根用旧的墨线——师父的。上一任不肯让人赴死的修缮师，十年前把自己的修为填进了裂隙，只来得及做三件事：把病灶标成三处错纹，在穹顶刻下一枚逆走的时之符，再在碑上补一刀。旧法撑到今夜，是他撑的。"
         }
       ],
       "hotspots": [
         {
           "id": "tenfold-resonance",
           "label": "十纹共鸣",
-          "description": "十道祖纹并不完整；它们需要被第十一纹重新排序，而非单纯献祭。",
+          "description": "以修缮师的眼看去，十道祖纹并不完整——它们缺的不是祭品，而是一道把它们重新排序的第十一纹。祖先当年缺的那块料，如今就刻在你的掌心。",
           "yaw": 26,
           "pitch": 4,
           "effect": {
@@ -2355,17 +2483,20 @@
               "alliance": 5,
               "insight": 5,
               "wisdom": 5
-            }
+            },
+            "memories": [
+              "十纹缺的是排序，不是祭品"
+            ]
           }
         }
       ],
       "choices": [
         {
           "id": "volunteer-sacrifice",
-          "label": "自愿牺牲修为",
+          "label": "自愿以修为填阵",
           "next": "s15-moral-choice",
           "fateType": "river",
-          "consequence": "你把自己放上祭台，所有人都必须重新评价你的心性。",
+          "consequence": "你把自己放上祭台，所有人都不得不重估你的心性——但你一旦倒下，师父失踪的真相，可能从此无人再追。",
           "effect": {
             "globals": {
               "virtue": 15,
@@ -2375,14 +2506,14 @@
               "self_sacrifice_ready"
             ]
           },
-          "caption": "你把自己放上祭台，所有人都必须重新评价你的心性。"
+          "caption": "你把自己放上祭台，所有人都不得不重估你的心性——但你一旦倒下，师父失踪的真相，可能从此无人再追。"
         },
         {
           "id": "seek-no-sacrifice",
-          "label": "寻找不牺牲任何人的方法",
+          "label": "推翻祭台，推导不折一人的新方案",
           "next": "s15-moral-choice",
           "fateType": "web",
-          "consequence": "你拒绝接受祖先留下的唯一答案，完美方案路线开启。",
+          "consequence": "你当众拒绝祖先留下的唯一答案——但从这一刻起，成与不成，全看你自己推演出的方案立不立得住。",
           "effect": {
             "globals": {
               "wisdom": 12,
@@ -2392,14 +2523,14 @@
               "seeking_no_sacrifice"
             ]
           },
-          "caption": "你拒绝接受祖先留下的唯一答案，完美方案路线开启。"
+          "caption": "你当众拒绝祖先留下的唯一答案——但从这一刻起，成与不成，全看你自己推演出的方案立不立得住。"
         },
         {
           "id": "push-other",
-          "label": "说服某位角色承担代价",
+          "label": "劝某个人替众人承担",
           "next": "s15-moral-choice",
           "fateType": "web",
-          "consequence": "你开始把别人也当作封印材料，魔神在裂隙深处笑了。",
+          "consequence": "你开始把活人当封印材料——魔神在裂隙深处笑了，这笔账，迟早会算回你自己身上。",
           "effect": {
             "globals": {
               "corruption": 25,
@@ -2409,14 +2540,14 @@
               "dark_bargain"
             ]
           },
-          "caption": "你开始把别人也当作封印材料，魔神在裂隙深处笑了。"
+          "caption": "你开始把活人当封印材料——魔神在裂隙深处笑了，这笔账，迟早会算回你自己身上。"
         }
       ]
     },
     "s15-moral-choice": {
       "id": "s15-moral-choice",
       "chapter": "第五章",
-      "title": "牺牲的代价",
+      "title": "祭台之问",
       "location": "封印阵眼前",
       "panorama": "/panoramas/project-20260620-002835-s15-moral-choice.jpg",
       "entryView": {
@@ -2429,29 +2560,29 @@
         "via": "#5c4c90",
         "to": "#f0dca0"
       },
-      "synopsis": "封印阵眼开启，真正的道德抉择到来：牺牲、替代、分担，或背叛。",
+      "synopsis": "封印阵眼开启，真正的问题摆到台面上：牺牲、分担、独担，还是偷换。每条路都有价，没有一条免费。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "阵眼像一口无底井，吞吐着所有人最不愿承认的念头。"
+          "text": "阵眼像一口无底的井，吞吐着在场每个人最不愿承认的念头。"
         },
         {
-          "speaker": "云墨轩",
-          "text": "若你要跳，我会拉住你。若你要战，我会拔剑。"
+          "speaker": "yun_moxuan",
+          "text": "你若开口要我拔剑，我剑不离手。你若不开口——我便只站在你身侧，一步不越。"
         },
         {
-          "speaker": "曼珠仙姬",
-          "text": "生死不是代价，遗忘才是。你想让谁被遗忘？"
+          "speaker": "manzhu",
+          "text": "生死不是最重的代价，遗忘才是。想清楚再落子：你要让谁，被忘掉？"
         }
       ],
       "hotspots": [],
       "choices": [
         {
           "id": "perfect-scheme",
-          "label": "以十家灵纹推导新封印",
+          "label": "以十家灵纹推演新封印",
           "next": "s16-final-core",
           "fateType": "web",
-          "consequence": "你找到不以牺牲为核心的新封印思路，但需要足够同盟执行。",
+          "consequence": "你推出了不以牺牲为基的新阵——但十家肯不肯把祖传灵纹交到你手上，要看你一路攒下的信义够不够。",
           "effect": {
             "globals": {
               "alliance": 15,
@@ -2469,15 +2600,15 @@
               "seeking_no_sacrifice"
             ]
           },
-          "lockedHint": "此前需要看见十纹共鸣，并拒绝把牺牲当作唯一答案。",
-          "caption": "你找到不以牺牲为核心的新封印思路，但需要足够同盟执行。"
+          "lockedHint": "要走这条路，你须先亲眼看过十纹如何共鸣，且从未把牺牲当作唯一的答案。",
+          "caption": "你推出了不以牺牲为基的新阵——但十家肯不肯把祖传灵纹交到你手上，要看你一路攒下的信义够不够。"
         },
         {
           "id": "shared-burden",
-          "label": "与最信任的人分担代价",
+          "label": "与最信任的那个人分担阵眼",
           "next": "s16-final-core",
           "fateType": "river",
-          "consequence": "你把终局交给最深羁绊，角色路线结局开始收束。",
+          "consequence": "你把终局托付给一段立得住的关系——但两个人的代价，往后也要两个人一起偿。",
           "effect": {
             "globals": {
               "charm": 5,
@@ -2487,14 +2618,14 @@
               "shared_burden"
             ]
           },
-          "caption": "你把终局交给最深羁绊，角色路线结局开始收束。"
+          "caption": "你把终局托付给一段立得住的关系——但两个人的代价，往后也要两个人一起偿。"
         },
         {
           "id": "solo-sacrifice",
           "label": "独自走向阵眼",
           "next": "s16-final-core",
           "fateType": "river",
-          "consequence": "你选择让所有关系退后，把命运压在自己身上。",
+          "consequence": "你让所有关系退到身后，把命运压在自己一个人身上——但独自压上去的人，也要独自受没有退路的后果。",
           "effect": {
             "globals": {
               "virtue": 10,
@@ -2505,14 +2636,14 @@
             ],
             "route": "solo"
           },
-          "caption": "你选择让所有关系退后，把命运压在自己身上。"
+          "caption": "你让所有关系退到身后，把命运压在自己一个人身上——但独自压上去的人，也要独自受没有退路的后果。"
         },
         {
           "id": "betray-at-core",
-          "label": "偷换阵眼让他人承受",
+          "label": "偷换阵眼，让别人去受",
           "next": "s16-final-core",
           "fateType": "web",
-          "consequence": "你保住自己，却把封印推向最脆弱的方向。",
+          "consequence": "你保住了自己——但封印被推向最脆弱的方向，而那道裂缝，从此记得你的名字。",
           "effect": {
             "globals": {
               "corruption": 35,
@@ -2527,8 +2658,8 @@
               "dark_bargain"
             ]
           },
-          "lockedHint": "此前需要先产生把别人推上祭台的念头。",
-          "caption": "你保住自己，却把封印推向最脆弱的方向。"
+          "lockedHint": "唯有心里早已动过把别人推上祭台的念头，才走得进这条路。",
+          "caption": "你保住了自己——但封印被推向最脆弱的方向，而那道裂缝，从此记得你的名字。"
         }
       ]
     },
@@ -2548,29 +2679,29 @@
         "via": "#5c4c90",
         "to": "#f0dca0"
       },
-      "synopsis": "所有路线在封印核心交汇。你的好感、属性、隐藏线索与道德选择共同决定终局。",
+      "synopsis": "所有道路在封印核心交汇。你一路走来落下的每一子，此刻都在阵纹里发出自己的声音。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "黑日裂开，十位传人的灵光在你周围明灭。"
+          "text": "黑日裂开一线，十家传人的灵光在你周围明灭，像十盏等风的灯。"
         },
         {
           "speaker": "system",
-          "text": "命运不是最后一个选择，而是之前所有选择在此刻一起发声。"
+          "text": "阵盘古音回荡，一字一顿：'命数非一念可决。尔来路上每一步，皆在此处作证。'"
         },
         {
-          "speaker": "魔神低语",
-          "text": "来吧，第十一人。证明他们值得你拯救。"
+          "speaker": "mo_shen",
+          "text": "来吧，无名的第十一人。证明给我看——他们，值得你救。"
         }
       ],
       "hotspots": [],
       "choices": [
         {
           "id": "tenfold-ending",
-          "label": "召集十位传人重铸封印",
+          "label": "召十家共鸣，重织封印",
           "next": "e11-reunion",
           "fateType": "wheel",
-          "consequence": "十位传人与第十一纹合流，牺牲法则被改写。",
+          "consequence": "十家灵纹与第十一纹合流，牺牲的旧法就此改写——但十道灵纹一旦起唱，便再没有中途收手的余地。",
           "effect": {
             "globals": {
               "seal_stability": 30
@@ -2602,41 +2733,41 @@
               }
             ]
           },
-          "lockedHint": "此前需要完美方案、足够同盟、智慧、悟性与心性。",
-          "caption": "十位传人与第十一纹合流，牺牲法则被改写。"
+          "lockedHint": "此路要你手中已有不折一人的方案，身后有十家愿随，且眼明、心正、思虑周全。",
+          "caption": "十家灵纹与第十一纹合流，牺牲的旧法就此改写——但十道灵纹一旦起唱，便再没有中途收手的余地。"
         },
         {
           "id": "deepest-bond",
-          "label": "按最深羁绊并肩封印",
+          "label": "步入回应之环",
           "next": "g-romance-a",
           "fateType": "river",
-          "consequence": "你不再寻找所有人的答案，而是选择一段最深的同行。",
+          "consequence": "环纹转动，立得住的关系会主动向你出声——但选定一人并肩，其余的声音便都要退成远景。",
           "effect": {
             "flags": [
               "entered_bond_gate"
             ]
           },
-          "caption": "你不再寻找所有人的答案，而是选择一段最深的同行。"
+          "caption": "环纹转动，立得住的关系会主动向你出声——但选定一人并肩，其余的声音便都要退成远景。"
         },
         {
           "id": "handle-cost",
-          "label": "处理封印代价与裂隙",
+          "label": "转身走向封印背面",
           "next": "g-hidden",
           "fateType": "web",
-          "consequence": "你转向更孤独、更危险或更隐秘的终局。",
+          "consequence": "你去面对无人愿看的代价与裂隙——但封印背面没有观众，也没有人接应。",
           "effect": {
             "flags": [
               "entered_hidden_gate"
             ]
           },
-          "caption": "你转向更孤独、更危险或更隐秘的终局。"
+          "caption": "你去面对无人愿看的代价与裂隙——但封印背面没有观众，也没有人接应。"
         },
         {
           "id": "true-immortal",
           "label": "以全部轮回证道真仙",
           "next": "e15-immortal",
           "fateType": "wheel",
-          "consequence": "所有结局记忆合一，真正的仙人之路被打开。",
+          "consequence": "你走过的所有命途在此合而为一——但踏出这一步，云巅之上再无你熟识的旧路。",
           "effect": {
             "globals": {
               "seal_stability": 50
@@ -2646,32 +2777,30 @@
             ]
           },
           "condition": {
-            "memories": [
-              "云墨轩·剑心相印",
-              "月清寒·星月同辉",
-              "竹清晏·竹林隐士",
-              "紫夜澜·幽冥双生",
-              "梅寒霜·寒梅傲雪",
-              "兰灵·幽谷仙缘",
-              "菊傲秋·金菊盛放",
-              "牡丹仙·百花朝宗",
-              "曼珠仙姬·彼岸花开",
-              "灵花仙子·天灵合一",
-              "十全十美·大团圆",
-              "孤独求败·独行者",
-              "魔神降世·黑暗结局",
-              "时空逆转·重生"
+            "flags": [
+              "perfect_scheme",
+              "memory_fragment_found"
+            ],
+            "minGlobal": [
+              {
+                "key": "hidden_clues",
+                "value": 3
+              },
+              {
+                "key": "virtue",
+                "value": 55
+              }
             ]
           },
-          "lockedHint": "此前需要完成其他十四个结局，并在新周目保留全部命运记忆。",
-          "caption": "所有结局记忆合一，真正的仙人之路被打开。"
+          "lockedHint": "完美方案、记忆碎片与三条隐线俱全，才能走完真正的修缮之路。",
+          "caption": "你走过的所有命途在此合而为一——但踏出这一步，云巅之上再无你熟识的旧路。"
         }
       ]
     },
     "g-romance-a": {
       "id": "g-romance-a",
-      "chapter": "终局分歧",
-      "title": "剑月竹之约",
+      "chapter": "回应之环",
+      "title": "环东·剑月竹",
       "location": "封印核心东侧",
       "panorama": "/panoramas/project-20260620-002835-g-romance-a.jpg",
       "entryView": {
@@ -2684,112 +2813,166 @@
         "via": "#5c4c90",
         "to": "#f0dca0"
       },
-      "synopsis": "云剑、星月与青竹三条羁绊在东侧阵纹中同时亮起。",
+      "synopsis": "回应之环转向东面。剑鸣、星轨与药香各自应声——立得住的关系不必你去寻，它们自己会开口。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "你听见剑鸣、月潮与竹叶声，它们都在等待你的回应。"
+          "text": "环纹缓缓转动。不是你在巡视谁——是剑鸣、月潮与竹叶声，先一步唤了你的名字。"
         },
         {
           "speaker": "system",
-          "text": "只有足够深的好感与相应属性，才能点亮专属结局。"
+          "text": "阵盘低鸣，古音如叮嘱：'环上之声，应者自应。无声之处，勿强求。'"
         }
       ],
       "hotspots": [],
       "choices": [
         {
           "id": "yun-ending",
-          "label": "与云墨轩双剑合璧",
+          "label": "回应云墨轩的剑鸣",
           "next": "e01-yun",
           "fateType": "river",
-          "consequence": "你把封印终局交给云墨轩双剑合璧。",
+          "consequence": "你与他双剑合璧共守阵眼——但从此他的每一场生死，也都与你共担，谁都不许替谁挡。",
           "effect": {
             "memories": [
               "选择与云墨轩双剑合璧"
-            ]
+            ],
+            "flags": [
+              "path_yun"
+            ],
+            "relationships": {
+              "yun_moxuan": {
+                "spark": 6,
+                "trust": 4,
+                "boundary": 2
+              }
+            }
           },
           "condition": {
-            "minGlobal": [
+            "minRelationship": [
               {
-                "key": "aff_yunmoxuan",
-                "value": 80
+                "character": "yun_moxuan",
+                "metric": "spark",
+                "value": 20
               },
+              {
+                "character": "yun_moxuan",
+                "metric": "trust",
+                "value": 27
+              },
+              {
+                "character": "yun_moxuan",
+                "metric": "boundary",
+                "value": 55
+              }
+            ],
+            "minGlobal": [
               {
                 "key": "strength",
                 "value": 45
               }
             ]
           },
-          "lockedHint": "此前需要在云海试炼中赢得云墨轩足够信任，并展现强者风范。",
-          "caption": "你把封印终局交给云墨轩双剑合璧。"
+          "lockedHint": "云墨轩只回应真正与他并肩过的人——回想你们何时交过剑、何时交过心。",
+          "caption": "你与他双剑合璧共守阵眼——但从此他的每一场生死，也都与你共担，谁都不许替谁挡。"
         },
         {
           "id": "yue-ending",
-          "label": "与月清寒重排星月阵",
+          "label": "回应月清寒的星轨",
           "next": "e02-yue",
           "fateType": "river",
-          "consequence": "你把封印终局交给月清寒重排星月阵。",
+          "consequence": "你们互换了最后一个秘密，重排星月阵——但知情即是命门，往后你们各握着对方的一半性命。",
           "effect": {
             "memories": [
               "选择与月清寒重排星月阵"
-            ]
+            ],
+            "flags": [
+              "path_yue"
+            ],
+            "relationships": {
+              "yue_qinghan": {
+                "spark": 6,
+                "trust": 4
+              }
+            }
           },
           "condition": {
-            "minGlobal": [
+            "minRelationship": [
               {
-                "key": "aff_yueqinghan",
-                "value": 80
+                "character": "yue_qinghan",
+                "metric": "spark",
+                "value": 20
               },
+              {
+                "character": "yue_qinghan",
+                "metric": "trust",
+                "value": 24
+              },
+              {
+                "character": "yue_qinghan",
+                "metric": "boundary",
+                "value": 55
+              }
+            ],
+            "minGlobal": [
               {
                 "key": "wisdom",
                 "value": 45
               }
             ]
           },
-          "lockedHint": "此前需要守住或破解月清寒的秘密，并具备足够智慧。",
-          "caption": "你把封印终局交给月清寒重排星月阵。"
+          "lockedHint": "月清寒的秘密只对等交换——你得先把自己的秘密交到他手里。",
+          "caption": "你们互换了最后一个秘密，重排星月阵——但知情即是命门，往后你们各握着对方的一半性命。"
         },
         {
           "id": "zhu-ending",
-          "label": "与竹清晏炼制替代灵药",
+          "label": "回应竹清晏的药香",
           "next": "e03-zhu",
           "fateType": "river",
-          "consequence": "你把封印终局交给竹清晏炼制替代灵药。",
+          "consequence": "你与这位挚友同炉炼药、以药代祭——但替代灵药折的是你们两人多年的药基，这笔账，你们心里都清楚。",
           "effect": {
             "memories": [
               "选择与竹清晏炼制替代灵药"
-            ]
+            ],
+            "relationships": {
+              "zhu_qingyan": {
+                "trust": 6,
+                "boundary": 2
+              }
+            }
           },
           "condition": {
-            "minGlobal": [
+            "minRelationship": [
               {
-                "key": "aff_zhuqingyan",
-                "value": 80
-              },
+                "character": "zhu_qingyan",
+                "metric": "trust",
+                "value": 36
+              }
+            ],
+            "minGlobal": [
               {
                 "key": "virtue",
                 "value": 55
               }
             ]
           },
-          "lockedHint": "此前需要坚持原则，让竹清晏确认你不会牺牲无辜。",
-          "caption": "你把封印终局交给竹清晏炼制替代灵药。"
+          "lockedHint": "竹清晏认同道，不认捷径——守住原则再来。",
+          "caption": "你与这位挚友同炉炼药、以药代祭——但替代灵药折的是你们两人多年的药基，这笔账，你们心里都清楚。"
         },
         {
           "id": "next-bond-b",
-          "label": "转向幽谷与暗潮",
+          "label": "侧耳去听环上南面的声音",
           "next": "g-romance-b",
           "fateType": "river",
-          "consequence": "你离开东侧阵纹，去确认另一组羁绊是否回应。",
+          "consequence": "东面的剑鸣与药香渐远——环转向南，幽谷与暗潮那侧，也有回应在等你。",
           "effect": {},
-          "caption": "你离开东侧阵纹，去确认另一组羁绊是否回应。"
+          "caption": "东面的剑鸣与药香渐远——环转向南，幽谷与暗潮那侧，也有回应在等你。"
         }
       ]
     },
     "g-romance-b": {
       "id": "g-romance-b",
-      "chapter": "终局分歧",
-      "title": "幽谷暗潮",
+      "chapter": "回应之环",
+      "title": "环南·幽谷暗潮",
       "location": "封印核心南侧",
       "panorama": "/panoramas/project-20260620-002835-g-romance-b.jpg",
       "entryView": {
@@ -2802,36 +2985,59 @@
         "via": "#45235f",
         "to": "#b36b8f"
       },
-      "synopsis": "自然、幽冥与彼岸的力量在南侧阵纹中缠绕，温柔与危险并存。",
+      "synopsis": "环转向南。草木、幽冥与彼岸的声音在阵纹里缠绕——这一侧的回应温柔，也危险。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "幽兰的清香压住黑雾，彼岸花却在裂隙边缘盛放。"
+          "text": "幽兰的清香压住黑雾，彼岸花偏在裂隙边沿开得正盛。南面的声音不催你，只是一直在。"
         },
         {
           "speaker": "system",
-          "text": "接纳、善意与真诚是这里的钥匙。"
+          "text": "阵盘轻响：'此侧之声不试锋芒，只问真心，与分寸。'"
         }
       ],
       "hotspots": [],
       "choices": [
         {
           "id": "zi-ending",
-          "label": "与紫夜澜共享幽冥代价",
+          "label": "回应黑雾深处的那个声音",
           "next": "e04-zi",
           "fateType": "river",
-          "consequence": "你把封印终局交给紫夜澜共享幽冥代价。",
+          "consequence": "你与紫夜澜共担幽冥代价——但接纳他的暗面不等于没有边界，那条线，要你们往后一寸一寸地守。",
           "effect": {
             "memories": [
               "选择与紫夜澜共享幽冥代价"
-            ]
+            ],
+            "flags": [
+              "path_zi"
+            ],
+            "relationships": {
+              "zi_yelan": {
+                "spark": 6,
+                "trust": 3,
+                "boundary": 3
+              }
+            }
           },
           "condition": {
-            "minGlobal": [
+            "minRelationship": [
               {
-                "key": "aff_ziyelan",
-                "value": 80
+                "character": "zi_yelan",
+                "metric": "spark",
+                "value": 21
               },
+              {
+                "character": "zi_yelan",
+                "metric": "trust",
+                "value": 16
+              },
+              {
+                "character": "zi_yelan",
+                "metric": "boundary",
+                "value": 60
+              }
+            ],
+            "minGlobal": [
               {
                 "key": "corruption",
                 "value": 5
@@ -2841,84 +3047,79 @@
               "accepted_shadow"
             ]
           },
-          "lockedHint": "此前需要接纳紫夜澜的黑暗面，而不是只把他当作危险。",
-          "caption": "你把封印终局交给紫夜澜共享幽冥代价。"
+          "lockedHint": "紫夜澜在影子里等一个不背弃边界的人——你接纳过他的黑暗，也守住过自己吗。",
+          "caption": "你与紫夜澜共担幽冥代价——但接纳他的暗面不等于没有边界，那条线，要你们往后一寸一寸地守。"
         },
         {
           "id": "lan-ending",
-          "label": "与兰灵唤醒万灵根脉",
+          "label": "回应兰灵与万灵的根脉",
           "next": "e06-lan",
           "fateType": "river",
-          "consequence": "你把封印终局交给兰灵唤醒万灵根脉。",
+          "consequence": "你与兰灵唤醒万灵根脉护住封印——但自此你的耳朵再也关不上，万灵的悲喜，都会来找你。",
           "effect": {
             "memories": [
               "选择与兰灵唤醒万灵根脉"
             ]
           },
           "condition": {
+            "flags": [
+              "protected_spirits"
+            ],
             "minGlobal": [
-              {
-                "key": "aff_lanling",
-                "value": 80
-              },
               {
                 "key": "virtue",
                 "value": 55
               }
-            ],
-            "flags": [
-              "protected_spirits"
             ]
           },
-          "lockedHint": "此前需要保护灵植与万灵，让兰灵相信你的善意。",
-          "caption": "你把封印终局交给兰灵唤醒万灵根脉。"
+          "lockedHint": "兰灵只回应护过万灵的人。",
+          "caption": "你与兰灵唤醒万灵根脉护住封印——但自此你的耳朵再也关不上，万灵的悲喜，都会来找你。"
         },
         {
           "id": "manzhu-ending",
-          "label": "与曼珠仙姬重塑生死线",
+          "label": "回应曼珠记了百年的那些名字",
           "next": "e09-manzhu",
           "fateType": "river",
-          "consequence": "你把封印终局交给曼珠仙姬重塑生死线。",
+          "consequence": "你与曼珠重塑生死之线，替被遗忘者一一正名——但记得所有人的代价，是那些名字的重量从此也压在你肩上。",
           "effect": {
             "memories": [
               "选择与曼珠仙姬重塑生死线"
+            ],
+            "flags": [
+              "manzhu_truth"
             ]
           },
           "condition": {
+            "flags": [
+              "saw_manzhu_truth"
+            ],
             "minGlobal": [
-              {
-                "key": "aff_manzhuxianji",
-                "value": 80
-              },
               {
                 "key": "insight",
                 "value": 50
               }
-            ],
-            "flags": [
-              "saw_manzhu_truth"
             ]
           },
-          "lockedHint": "此前需要看穿曼珠仙姬真正想说的话。",
-          "caption": "你把封印终局交给曼珠仙姬重塑生死线。"
+          "lockedHint": "曼珠的彼岸，只向当面问出「你在寻谁」的人敞开——看破而不问，她不认作知情。",
+          "caption": "你与曼珠重塑生死之线，替被遗忘者一一正名——但记得所有人的代价，是那些名字的重量从此也压在你肩上。"
         },
         {
           "id": "next-bond-c",
-          "label": "转向寒梅百花",
+          "label": "循环纹走向西面的锋刃",
           "next": "g-romance-c",
           "fateType": "river",
-          "consequence": "你离开南侧阵纹，寻找傲骨、金甲与权力的回应。",
+          "consequence": "南面的声音轻轻落下——西面寒霜与金菊的回应更冷、更硬，也更直。",
           "effect": {},
-          "caption": "你离开南侧阵纹，寻找傲骨、金甲与权力的回应。"
+          "caption": "南面的声音轻轻落下——西面寒霜与金菊的回应更冷、更硬，也更直。"
         }
       ]
     },
     "g-romance-c": {
       "id": "g-romance-c",
-      "chapter": "终局分歧",
-      "title": "寒梅金华",
+      "chapter": "回应之环",
+      "title": "环西·寒梅金菊",
       "location": "封印核心西侧",
-      "panorama": "/panoramas/project-20260620-002835-s06-blooms-spirit.jpg",
+      "panorama": "/panoramas/project-20260620-002835-g-romance-a.jpg",
       "entryView": {
         "yaw": 0,
         "pitch": 0,
@@ -2929,123 +3130,170 @@
         "via": "#55748c",
         "to": "#f4fbff"
       },
-      "synopsis": "冰剑、金菊和百花议庭在西侧阵纹中构成一道锋利屏障。",
+      "synopsis": "环转向西。冰剑、金菊与百花议庭在阵纹中立成一道锋利的屏障——这一侧的回应，从不说软话。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "寒霜沿封印裂隙蔓延，金菊宫的护壁把黑雾逼成一条狭窄的潮线。"
+          "text": "寒霜沿封印裂隙蔓延，金菊宫的护壁把黑雾逼成一条狭窄的潮线。西面的声音很直，直得像出鞘。"
         },
         {
-          "speaker": "梅寒霜",
-          "text": "若要我与你并肩，就别只会求稳；剑到此处，只能向前。"
+          "speaker": "mei_hanshuang",
+          "text": "要与我并肩，就别只会求稳。剑到此处，只能向前。"
         },
         {
-          "speaker": "菊傲秋",
-          "text": "别急着点头。真正的才华，是在所有人都认定无解时还能给出第三条路。"
+          "speaker": "ju_aoqiu",
+          "text": "别急着应她。真正的才华，是在所有人都断言无解时，还能给出第三条路——你给过。"
         },
         {
-          "speaker": "牡丹仙",
-          "text": "选择谁，不只是情分，也是你愿意把修仙界交给哪一种秩序。"
+          "speaker": "mudan",
+          "text": "选谁并肩，不只是情分。也是你在决定——把修仙界交给哪一种秩序。"
         }
       ],
       "hotspots": [],
       "choices": [
         {
           "id": "mei-ending",
-          "label": "与梅寒霜并肩封剑",
+          "label": "回应梅寒霜的剑锋",
           "next": "e05-mei",
           "fateType": "river",
-          "consequence": "你把封印终局交给梅寒霜并肩封剑。",
+          "consequence": "你与她并肩封剑，三试之交成了过命之交——但剑修的路上她不会为你留情，你也不许为她留手。",
           "effect": {
             "memories": [
               "选择与梅寒霜并肩封剑"
-            ]
+            ],
+            "flags": [
+              "ally_mei"
+            ],
+            "relationships": {
+              "mei_hanshuang": {
+                "trust": 6,
+                "boundary": 3
+              }
+            }
           },
           "condition": {
-            "minGlobal": [
+            "minRelationship": [
               {
-                "key": "aff_meihanshuang",
-                "value": 80
-              },
+                "character": "mei_hanshuang",
+                "metric": "trust",
+                "value": 22
+              }
+            ],
+            "minGlobal": [
               {
                 "key": "strength",
                 "value": 50
               }
             ]
           },
-          "lockedHint": "此前需要正面回应梅寒霜的剑试，并证明你的傲骨。",
-          "caption": "你把封印终局交给梅寒霜并肩封剑。"
+          "lockedHint": "梅寒霜的剑只与实证过的对手并立——先接住她的三剑。",
+          "caption": "你与她并肩封剑，三试之交成了过命之交——但剑修的路上她不会为你留情，你也不许为她留手。"
         },
         {
           "id": "ju-ending",
-          "label": "与菊傲秋创造金菊新封印",
+          "label": "回应菊傲秋的金纹",
           "next": "e07-ju",
           "fateType": "river",
-          "consequence": "你把封印终局交给菊傲秋创造金菊新封印。",
+          "consequence": "你与他共创金菊新阵——但他把毕生防御阵学押在了你的方案上，方案若有失，折的是他一生的道。",
           "effect": {
             "memories": [
               "选择与菊傲秋创造金菊新封印"
-            ]
+            ],
+            "flags": [
+              "path_ju"
+            ],
+            "relationships": {
+              "ju_aoqiu": {
+                "spark": 6,
+                "trust": 4,
+                "boundary": 2
+              }
+            }
           },
           "condition": {
-            "minGlobal": [
+            "minRelationship": [
               {
-                "key": "aff_juaoqiu",
-                "value": 80
+                "character": "ju_aoqiu",
+                "metric": "spark",
+                "value": 18
               },
+              {
+                "character": "ju_aoqiu",
+                "metric": "trust",
+                "value": 20
+              },
+              {
+                "character": "ju_aoqiu",
+                "metric": "boundary",
+                "value": 60
+              }
+            ],
+            "minGlobal": [
               {
                 "key": "wisdom",
                 "value": 50
               }
             ]
           },
-          "lockedHint": "此前需要提出独特见解，让菊傲秋认可你的才华。",
-          "caption": "你把封印终局交给菊傲秋创造金菊新封印。"
+          "lockedHint": "菊傲秋的阵图只翻给谈得来的人——先在术理上让他服气。",
+          "caption": "你与他共创金菊新阵——但他把毕生防御阵学押在了你的方案上，方案若有失，折的是他一生的道。"
         },
         {
           "id": "mudan-ending",
-          "label": "与牡丹仙执掌百花议庭",
+          "label": "回应牡丹仙递来的议席",
           "next": "e08-mudan",
           "fateType": "river",
-          "consequence": "你把封印终局交给牡丹仙执掌百花议庭。",
+          "consequence": "你与她共掌百花议庭——但坐上那把议席，就得学会她的算法：有些棋，赢了也要赔。",
           "effect": {
             "memories": [
               "选择与牡丹仙执掌百花议庭"
-            ]
+            ],
+            "flags": [
+              "pact_mudan"
+            ],
+            "relationships": {
+              "mudan": {
+                "trust": 5,
+                "boundary": 3
+              }
+            }
           },
           "condition": {
-            "minGlobal": [
+            "minRelationship": [
               {
-                "key": "aff_mudanxian",
-                "value": 80
-              },
+                "character": "mudan",
+                "metric": "trust",
+                "value": 25
+              }
+            ],
+            "minGlobal": [
               {
                 "key": "alliance",
                 "value": 45
               }
             ]
           },
-          "lockedHint": "此前需要展现领导力，让牡丹仙相信你能执掌大局。",
-          "caption": "你把封印终局交给牡丹仙执掌百花议庭。"
+          "lockedHint": "牡丹仙只与筹码对等的人共掌一局——先把你的同盟做起来。",
+          "caption": "你与她共掌百花议庭——但坐上那把议席，就得学会她的算法：有些棋，赢了也要赔。"
         },
         {
           "id": "next-bond-d",
-          "label": "转向天灵终路",
+          "label": "沿环纹走向北面的静光",
           "next": "g-romance-d",
           "fateType": "river",
-          "consequence": "你离开西侧阵纹，前往最后的真理回响。",
+          "consequence": "西面的锋刃缓缓归鞘——北面只剩一道光，它不催促你，只是等。",
           "effect": {},
-          "caption": "你离开西侧阵纹，前往最后的真理回响。"
+          "caption": "西面的锋刃缓缓归鞘——北面只剩一道光，它不催促你，只是等。"
         }
       ],
       "reusedPanoramaFrom": "s06-blooms-spirit"
     },
     "g-romance-d": {
       "id": "g-romance-d",
-      "chapter": "终局分歧",
-      "title": "天灵终路",
+      "chapter": "回应之环",
+      "title": "环北·天灵静光",
       "location": "封印核心北侧",
-      "panorama": "/panoramas/project-20260620-002835-r-linghua.jpg",
+      "panorama": "/panoramas/project-20260620-002835-s12-mansion.jpg",
       "entryView": {
         "yaw": 0,
         "pitch": 0,
@@ -3056,29 +3304,29 @@
         "via": "#38506a",
         "to": "#d8c08c"
       },
-      "synopsis": "北侧只剩一道天灵之光，它不炽烈，却照见你的心是否仍然纯净。",
+      "synopsis": "环的北面只剩一道天灵之光。它不炽烈，也不出声，只安静照见你的心还剩几分澄明。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "天灵之光从裂隙深处升起，像一面无声的镜，照出你每一次选择留下的纹路。"
+          "text": "天灵之光从裂隙深处升起，像一面无声的镜，照出你每一次落子留下的纹路。"
         },
         {
-          "speaker": "灵花仙子",
-          "text": "若你仍想知道真理，就不要把真理当作奖赏，也不要把任何人当作答案。"
+          "speaker": "ling_hua",
+          "text": "（光中只有声音）你若仍想求真理，便不要把真理当作奖赏——也不要把任何一个人，当作你的答案。"
         },
         {
           "speaker": "narrator",
-          "text": "她掌心的灵光与你的传承纹完全重合，通向最终结局的门在云海上逐一亮起。"
+          "text": "光落进你的掌心，与那道无名之纹完全重合。云海之上，几扇门次第亮起。"
         }
       ],
       "hotspots": [],
       "choices": [
         {
           "id": "linghua-ending",
-          "label": "与灵花仙子抵达天灵合一",
+          "label": "回应天灵之光",
           "next": "e10-linghua",
           "fateType": "river",
-          "consequence": "你把封印终局交给灵花仙子抵达天灵合一。",
+          "consequence": "你随光而上，抵达天灵合一——但求道之人先要舍下的，是被人间惦念的那一部分自己。",
           "effect": {
             "memories": [
               "选择与灵花仙子抵达天灵合一"
@@ -3086,10 +3334,6 @@
           },
           "condition": {
             "minGlobal": [
-              {
-                "key": "aff_linghuaxianzi",
-                "value": 80
-              },
               {
                 "key": "insight",
                 "value": 55
@@ -3100,24 +3344,24 @@
               }
             ]
           },
-          "lockedHint": "此前需要追求真理并保持心念澄明。",
-          "caption": "你把封印终局交给灵花仙子抵达天灵合一。"
+          "lockedHint": "天灵只应悟性与心性俱足的人。",
+          "caption": "你随光而上，抵达天灵合一——但求道之人先要舍下的，是被人间惦念的那一部分自己。"
         },
         {
           "id": "return-core",
-          "label": "回到封印核心重新抉择",
+          "label": "退回封印核心，再听一遍所有声音",
           "next": "s16-final-core",
           "fateType": "wheel",
-          "consequence": "你暂时放下羁绊结局，回到所有命运交汇处。",
+          "consequence": "你暂且放下环上的回应，回到命运交汇之处——但环不会永远为一个人转下去。",
           "effect": {},
-          "caption": "你暂时放下羁绊结局，回到所有命运交汇处。"
+          "caption": "你暂且放下环上的回应，回到命运交汇之处——但环不会永远为一个人转下去。"
         },
         {
           "id": "fallback-solo",
-          "label": "以独行者之名承担一切",
+          "label": "无人应声，便自己作自己的回应",
           "next": "e12-solo",
           "fateType": "river",
-          "consequence": "当没有专属羁绊被点亮，你仍然可以独自承担。",
+          "consequence": "环上寂静，你仍旧把肩膀递了上去——但独行者担下的一切，往后也只能独自守着。",
           "effect": {
             "globals": {
               "virtue": 8,
@@ -3127,7 +3371,7 @@
               "没有任何羁绊回应时选择独行"
             ]
           },
-          "caption": "当没有专属羁绊被点亮，你仍然可以独自承担。"
+          "caption": "环上寂静，你仍旧把肩膀递了上去——但独行者担下的一切，往后也只能独自守着。"
         }
       ],
       "reusedPanoramaFrom": "r-linghua"
@@ -3148,19 +3392,19 @@
         "via": "#45235f",
         "to": "#b36b8f"
       },
-      "synopsis": "你绕到封印背面，看见独行、黑暗与时空逆转三种隐藏命运。",
+      "synopsis": "你绕到封印背面。这里没有回应之环，只有独担、黑暗与倒流的钟声——三种没人替你说出口的后果。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "封印背面没有观众，只有阵眼里回响的因果和你曾亲手触碰过的线索。"
+          "text": "封印背面没有观众，只有阵眼里回响的因果，和你亲手触碰过的每一道痕迹。"
         },
         {
           "speaker": "system",
-          "text": "若你背负了太多暗蚀，黑暗会给出代价；若你收齐时空痕迹，钟声会倒流。"
+          "text": "阵盘背面的古刻缓缓亮起，只有八个字：'因果至此，皆须还清。'"
         },
         {
           "speaker": "narrator",
-          "text": "这里不是奖赏路线，而是所有未说出口的后果。"
+          "text": "这里不是奖赏之地。这里是所有未说出口的后果，排队等你认领。"
         }
       ],
       "hotspots": [],
@@ -3170,7 +3414,7 @@
           "label": "独自承担封印代价",
           "next": "e12-solo",
           "fateType": "river",
-          "consequence": "你让所有人退后，成为失去修为却被铭记的人。",
+          "consequence": "你让所有人退后，独自填了阵眼，云巅从此记得你——但失去修为的漫长岁月里，铭记替代不了任何一个黄昏。",
           "effect": {
             "globals": {
               "virtue": 12,
@@ -3180,14 +3424,14 @@
               "独自承担封印代价"
             ]
           },
-          "caption": "你让所有人退后，成为失去修为却被铭记的人。"
+          "caption": "你让所有人退后，独自填了阵眼，云巅从此记得你——但失去修为的漫长岁月里，铭记替代不了任何一个黄昏。"
         },
         {
           "id": "dark-ending",
           "label": "放任裂隙吞噬野心",
           "next": "e13-dark",
           "fateType": "web",
-          "consequence": "此前的背叛在此刻回响，魔神终于找到了裂口。",
+          "consequence": "此前的偷换在此刻回响，魔神终于寻到裂口——你得到了力量，代价是身后再没有一扇门肯为你关上。",
           "effect": {
             "globals": {
               "corruption": 20,
@@ -3208,15 +3452,15 @@
               }
             ]
           },
-          "lockedHint": "此前需要在封印阵眼偷换代价，并累积足够暗蚀。",
-          "caption": "此前的背叛在此刻回响，魔神终于找到了裂口。"
+          "lockedHint": "唯有在阵眼偷换过代价、又任暗蚀爬满心口的人，才推得开这扇门。",
+          "caption": "此前的偷换在此刻回响，魔神终于寻到裂口——你得到了力量，代价是身后再没有一扇门肯为你关上。"
         },
         {
           "id": "rebirth-ending",
           "label": "启动时空逆转法阵",
           "next": "e14-rebirth",
           "fateType": "wheel",
-          "consequence": "所有隐藏线索连成星轨，时间为你倒流一次。",
+          "consequence": "星轨连成回环，时间为你倒流一次——但重来的人记得一切，也要独自记得一切。",
           "effect": {
             "memories": [
               "启动时空逆转法阵"
@@ -3238,8 +3482,8 @@
               }
             ]
           },
-          "lockedHint": "此前需要收集时空壁画、记忆碎片与足够隐藏线索。",
-          "caption": "所有隐藏线索连成星轨，时间为你倒流一次。"
+          "lockedHint": "须寻齐时空壁画的星轨与幻境深处的记忆碎片，且眼力通透，方能听见钟声倒流。",
+          "caption": "星轨连成回环，时间为你倒流一次——但重来的人记得一切，也要独自记得一切。"
         }
       ],
       "reusedPanoramaFrom": "s16-final-core"
@@ -3260,136 +3504,30 @@
         "via": "#5c4c90",
         "to": "#f0dca0"
       },
-      "synopsis": "双剑合璧加固封印，你成为云渊世家的座上宾。",
+      "synopsis": "双剑分担剑压替代牺牲阵眼，你与云墨轩各付一半代价，同守云渊。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "云渊双剑台上，黑日裂隙被两道剑光钉住，云海第一次安静得像一面镜。"
+          "text": "云渊双剑台上，两道剑光把黑日裂隙钉回原位。云海静得出奇，静得能听见剑刃上细小的裂纹在生长。"
         },
         {
-          "speaker": "云墨轩",
-          "text": "我曾以为责任只能一个人背。现在我知道，剑也可以有归处。"
+          "speaker": "yun_moxuan",
+          "text": "我的佩剑替新阵承了三成剑压，从今往后出不了云渊。这是我自己选的，你不必觉得亏欠。"
         },
         {
           "speaker": "narrator",
-          "text": "你们以双剑合璧替代牺牲阵眼，云渊世家在盛会后向散修打开山门。"
+          "text": "你把无名一脉的行脚改成一年一归——封印要人回炉，人也要。云渊山门自此为散修开了一道侧门。"
         },
         {
-          "speaker": "云墨轩",
-          "text": "若你想看外面的世界，我陪你；若你要守这里，我也陪你。"
-        },
-        {
-          "speaker": "system",
-          "text": "结局达成：云墨轩·剑心相印。"
+          "speaker": "yun_moxuan",
+          "text": "云渊的门，我不替你留。你回来，是因为你想回来。"
         }
       ],
       "hotspots": [],
-      "choices": [
-        {
-          "id": "post-archive",
-          "label": "归档剑心结局，回到封印核心",
-          "caption": "结局归档后，回到命运抉择处查看其他可解锁分支。",
-          "next": "s16-final-core",
-          "fateType": "wheel",
-          "major": true,
-          "consequence": "「云墨轩·剑心相印」被写入命运册，真仙路线累计一段已完成命运。",
-          "effect": {
-            "flags": [
-              "archived_e01_yun"
-            ],
-            "memories": [
-              "云墨轩·剑心相印",
-              "剑心记忆已写入命运册"
-            ],
-            "globals": {
-              "strength": 3,
-              "seal_stability": 5
-            }
-          }
-        },
-        {
-          "id": "post-hidden-thread",
-          "label": "追查双剑封印留下的裂纹",
-          "caption": "把该结局没有说完的代价转入隐藏线索与裂隙背面。",
-          "next": "g-hidden",
-          "fateType": "web",
-          "consequence": "云剑清光背后仍有黑日残响，你带着云墨轩的信任转入隐藏因果线。",
-          "effect": {
-            "flags": [
-              "afterglow_e01_yun"
-            ],
-            "memories": [
-              "云墨轩·剑心相印的余波"
-            ],
-            "globals": {
-              "hidden_clues": 1,
-              "insight": 2
-            }
-          }
-        },
-        {
-          "id": "post-route-continue",
-          "label": "携剑心记忆继续验证其他羁绊",
-          "caption": "保留当前结局反馈，继续检查同组或相邻角色路线。",
-          "next": "g-romance-a",
-          "fateType": "river",
-          "consequence": "你保留「云墨轩·剑心相印」的反馈，继续补完相邻羁绊或隐藏路线。",
-          "effect": {
-            "flags": [
-              "continue_from_e01_yun"
-            ],
-            "memories": [
-              "剑心记忆已写入命运册"
-            ],
-            "globals": {
-              "insight": 1,
-              "alliance": 1
-            }
-          }
-        },
-        {
-          "id": "post-true-immortal-check",
-          "label": "若十四命运已归档，直上真仙路",
-          "caption": "这是多周目总收束：只有主要与隐藏结局全部归档后才会点亮。",
-          "next": "e15-immortal",
-          "fateType": "wheel",
-          "consequence": "十四段命运记忆合一，真仙之路不再只是隐藏条件，而成为最终分支。",
-          "effect": {
-            "flags": [
-              "attempt_true_immortal_from_ending"
-            ],
-            "memories": [
-              "尝试以归档命运开启真仙路"
-            ],
-            "globals": {
-              "insight": 4,
-              "seal_stability": 4
-            }
-          },
-          "condition": {
-            "memories": [
-              "云墨轩·剑心相印",
-              "月清寒·星月同辉",
-              "竹清晏·竹林隐士",
-              "紫夜澜·幽冥双生",
-              "梅寒霜·寒梅傲雪",
-              "兰灵·幽谷仙缘",
-              "菊傲秋·金菊盛放",
-              "牡丹仙·百花朝宗",
-              "曼珠仙姬·彼岸花开",
-              "灵花仙子·天灵合一",
-              "十全十美·大团圆",
-              "孤独求败·独行者",
-              "魔神降世·黑暗结局",
-              "时空逆转·重生"
-            ]
-          },
-          "lockedHint": "此前需要把十个主要结局与四个隐藏结局都通过“归档结局”写入命运册。"
-        }
-      ],
+      "choices": [],
       "ending": {
         "title": "云墨轩·剑心相印",
-        "subtitle": "双剑合璧加固封印，你成为云渊世家的座上宾。",
+        "subtitle": "双剑同守，谁也不欠谁——云渊的侧门，自此为一个散修常开。",
         "type": "romance"
       },
       "reusedPanoramaFrom": "r-yun"
@@ -3410,137 +3548,30 @@
         "via": "#5c4c90",
         "to": "#f0dca0"
       },
-      "synopsis": "星月大阵改良封印，你与他守在月华宗的阵眼之中。",
+      "synopsis": "血脉纹与师门残稿互为抵物，你与月清寒共守星月阵眼，秘密对半，风险对半。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "星月大阵在仙府穹顶重排，月清寒袖中隐藏的血脉纹终于完整显现。"
+          "text": "星月大阵在穹顶重排，月清寒袖口的血脉纹第一次亮在众目之下——那是他押给新封印的抵物，也是他再收不回的秘密。"
         },
         {
-          "speaker": "月清寒",
-          "text": "秘密不是用来隔开人的。若你愿意，我把阵眼与你共享。"
+          "speaker": "yue_qinghan",
+          "text": "宗里从此知道我是什么人了。奇怪，我以为会怕，此刻却只想看你把最后一笔阵纹落下。"
         },
         {
           "speaker": "narrator",
-          "text": "你成为新封印的守阵者，月华宗从此多了一座只在满月开放的无名小院。"
+          "text": "你把师父的半册残稿并进月华阵档。从今往后，你的底细也握在他手里——你们互为对方的知情之险，也互为退路。"
         },
         {
-          "speaker": "月清寒",
-          "text": "我守阵，你守我。这样算来，倒也公平。"
-        },
-        {
-          "speaker": "system",
-          "text": "结局达成：月清寒·星月同辉。"
+          "speaker": "yue_qinghan",
+          "text": "秘密对半，风险对半。沈青梧，这笔账我认一辈子。"
         }
       ],
       "hotspots": [],
-      "choices": [
-        {
-          "id": "post-archive",
-          "label": "归档星月结局，回到封印核心",
-          "caption": "结局归档后，回到命运抉择处查看其他可解锁分支。",
-          "next": "s16-final-core",
-          "fateType": "wheel",
-          "major": true,
-          "consequence": "「月清寒·星月同辉」被写入命运册，真仙路线累计一段已完成命运。",
-          "effect": {
-            "flags": [
-              "archived_e02_yue"
-            ],
-            "memories": [
-              "月清寒·星月同辉",
-              "星月记忆已写入命运册"
-            ],
-            "globals": {
-              "wisdom": 3,
-              "insight": 2,
-              "seal_stability": 4
-            }
-          }
-        },
-        {
-          "id": "post-hidden-thread",
-          "label": "检查星月阵背面的时轨",
-          "caption": "把该结局没有说完的代价转入隐藏线索与裂隙背面。",
-          "next": "g-hidden",
-          "fateType": "web",
-          "consequence": "星月阵眼映出一段不属于此夜的轨迹，时空逆转线索继续发亮。",
-          "effect": {
-            "flags": [
-              "afterglow_e02_yue"
-            ],
-            "memories": [
-              "月清寒·星月同辉的余波"
-            ],
-            "globals": {
-              "hidden_clues": 1,
-              "insight": 2
-            }
-          }
-        },
-        {
-          "id": "post-route-continue",
-          "label": "携星月记忆继续验证其他羁绊",
-          "caption": "保留当前结局反馈，继续检查同组或相邻角色路线。",
-          "next": "g-romance-a",
-          "fateType": "river",
-          "consequence": "你保留「月清寒·星月同辉」的反馈，继续补完相邻羁绊或隐藏路线。",
-          "effect": {
-            "flags": [
-              "continue_from_e02_yue"
-            ],
-            "memories": [
-              "星月记忆已写入命运册"
-            ],
-            "globals": {
-              "insight": 1,
-              "alliance": 1
-            }
-          }
-        },
-        {
-          "id": "post-true-immortal-check",
-          "label": "若十四命运已归档，直上真仙路",
-          "caption": "这是多周目总收束：只有主要与隐藏结局全部归档后才会点亮。",
-          "next": "e15-immortal",
-          "fateType": "wheel",
-          "consequence": "十四段命运记忆合一，真仙之路不再只是隐藏条件，而成为最终分支。",
-          "effect": {
-            "flags": [
-              "attempt_true_immortal_from_ending"
-            ],
-            "memories": [
-              "尝试以归档命运开启真仙路"
-            ],
-            "globals": {
-              "insight": 4,
-              "seal_stability": 4
-            }
-          },
-          "condition": {
-            "memories": [
-              "云墨轩·剑心相印",
-              "月清寒·星月同辉",
-              "竹清晏·竹林隐士",
-              "紫夜澜·幽冥双生",
-              "梅寒霜·寒梅傲雪",
-              "兰灵·幽谷仙缘",
-              "菊傲秋·金菊盛放",
-              "牡丹仙·百花朝宗",
-              "曼珠仙姬·彼岸花开",
-              "灵花仙子·天灵合一",
-              "十全十美·大团圆",
-              "孤独求败·独行者",
-              "魔神降世·黑暗结局",
-              "时空逆转·重生"
-            ]
-          },
-          "lockedHint": "此前需要把十个主要结局与四个隐藏结局都通过“归档结局”写入命运册。"
-        }
-      ],
+      "choices": [],
       "ending": {
         "title": "月清寒·星月同辉",
-        "subtitle": "星月大阵改良封印，你与他守在月华宗的阵眼之中。",
+        "subtitle": "他亮出血脉，你交出残稿。两个秘密相抵，换一座不吃人的阵。",
         "type": "romance"
       },
       "reusedPanoramaFrom": "r-yue"
@@ -3561,137 +3592,30 @@
         "via": "#5c4c90",
         "to": "#f0dca0"
       },
-      "synopsis": "替代灵药稳住阵眼，你们归隐青竹谷继续清修。",
+      "synopsis": "替代灵药稳住阵眼，你与竹清晏同道不同路：她归谷制药，你留云巅看阵。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "竹清晏把最后一味灵药投入阵眼，苦香穿过裂隙，牺牲法则被温柔改写。"
+          "text": "竹清晏把替代灵药推入阵眼，苦香漫过裂隙——没有任何人的灵识被拿去垫底，这是你们两个一起守住的底线。"
         },
         {
-          "speaker": "竹清晏",
-          "text": "世人总说大义难全，可若一开始就放弃无辜，所谓大义也只是借口。"
+          "speaker": "zhu_qingyan",
+          "text": "灵识一毁没有回头路。幸好这句话，这次不必对任何人说了。"
         },
         {
           "speaker": "narrator",
-          "text": "仙府闭合后，你们带走药炉残火，在青竹谷种下第一畦封印灵竹。"
+          "text": "盛会散后，她回青竹谷续药圃，你留云巅看阵。每年新竹抽节，她都寄来一味新药，附一句『阵眼火候如何』。"
         },
         {
-          "speaker": "竹清晏",
-          "text": "谷中清苦，但不必违心。若你愿意，我们回去。"
-        },
-        {
-          "speaker": "system",
-          "text": "结局达成：竹清晏·竹林隐士。"
+          "speaker": "zhu_qingyan",
+          "text": "同道不必同路。你修你的阵，我制我的药，缺一味时，记得写信。"
         }
       ],
       "hotspots": [],
-      "choices": [
-        {
-          "id": "post-archive",
-          "label": "归档竹林结局，回到封印核心",
-          "caption": "结局归档后，回到命运抉择处查看其他可解锁分支。",
-          "next": "s16-final-core",
-          "fateType": "wheel",
-          "major": true,
-          "consequence": "「竹清晏·竹林隐士」被写入命运册，真仙路线累计一段已完成命运。",
-          "effect": {
-            "flags": [
-              "archived_e03_zhu"
-            ],
-            "memories": [
-              "竹清晏·竹林隐士",
-              "竹林记忆已写入命运册"
-            ],
-            "globals": {
-              "virtue": 3,
-              "wisdom": 2,
-              "seal_stability": 4
-            }
-          }
-        },
-        {
-          "id": "post-hidden-thread",
-          "label": "追问替代灵药的余香",
-          "caption": "把该结局没有说完的代价转入隐藏线索与裂隙背面。",
-          "next": "g-hidden",
-          "fateType": "web",
-          "consequence": "替代灵药稳住阵眼，也暴露祖先封印从未考虑过的温和解法。",
-          "effect": {
-            "flags": [
-              "afterglow_e03_zhu"
-            ],
-            "memories": [
-              "竹清晏·竹林隐士的余波"
-            ],
-            "globals": {
-              "hidden_clues": 1,
-              "insight": 2
-            }
-          }
-        },
-        {
-          "id": "post-route-continue",
-          "label": "携竹林记忆继续验证其他羁绊",
-          "caption": "保留当前结局反馈，继续检查同组或相邻角色路线。",
-          "next": "g-romance-a",
-          "fateType": "river",
-          "consequence": "你保留「竹清晏·竹林隐士」的反馈，继续补完相邻羁绊或隐藏路线。",
-          "effect": {
-            "flags": [
-              "continue_from_e03_zhu"
-            ],
-            "memories": [
-              "竹林记忆已写入命运册"
-            ],
-            "globals": {
-              "insight": 1,
-              "alliance": 1
-            }
-          }
-        },
-        {
-          "id": "post-true-immortal-check",
-          "label": "若十四命运已归档，直上真仙路",
-          "caption": "这是多周目总收束：只有主要与隐藏结局全部归档后才会点亮。",
-          "next": "e15-immortal",
-          "fateType": "wheel",
-          "consequence": "十四段命运记忆合一，真仙之路不再只是隐藏条件，而成为最终分支。",
-          "effect": {
-            "flags": [
-              "attempt_true_immortal_from_ending"
-            ],
-            "memories": [
-              "尝试以归档命运开启真仙路"
-            ],
-            "globals": {
-              "insight": 4,
-              "seal_stability": 4
-            }
-          },
-          "condition": {
-            "memories": [
-              "云墨轩·剑心相印",
-              "月清寒·星月同辉",
-              "竹清晏·竹林隐士",
-              "紫夜澜·幽冥双生",
-              "梅寒霜·寒梅傲雪",
-              "兰灵·幽谷仙缘",
-              "菊傲秋·金菊盛放",
-              "牡丹仙·百花朝宗",
-              "曼珠仙姬·彼岸花开",
-              "灵花仙子·天灵合一",
-              "十全十美·大团圆",
-              "孤独求败·独行者",
-              "魔神降世·黑暗结局",
-              "时空逆转·重生"
-            ]
-          },
-          "lockedHint": "此前需要把十个主要结局与四个隐藏结局都通过“归档结局”写入命运册。"
-        }
-      ],
+      "choices": [],
       "ending": {
         "title": "竹清晏·竹林隐士",
-        "subtitle": "替代灵药稳住阵眼，你们归隐青竹谷继续清修。",
+        "subtitle": "药稳阵眼，人各归位。挚友同道，一年一信。",
         "type": "romance"
       },
       "reusedPanoramaFrom": "r-zhu"
@@ -3712,137 +3636,30 @@
         "via": "#5c4c90",
         "to": "#f0dca0"
       },
-      "synopsis": "禁术共享生命，你们成为幽冥殿双主。",
+      "synopsis": "契纹分掌黑雾，你成为幽冥守约人。接纳他的黑暗，也握着收回它的权柄。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "幽冥禁纹在紫夜澜心口亮起，黑雾被分成两半，一半入他身，一半归你掌。"
+          "text": "幽冥殿里不设灯火。你只看得见一道影子立在双主座前，黑雾被新刻的契纹拦成两半，一半随他，一半听你。"
         },
         {
-          "speaker": "紫夜澜",
-          "text": "我不求你把黑暗说成光。我只问你，敢不敢与我一起承担它。"
+          "speaker": "zi_yelan",
+          "text": "契约写明：我若越界，你有权收走这一半黑雾——哪怕那会要我半条命。签吧，这一条，是我自己加的。"
         },
         {
           "speaker": "narrator",
-          "text": "双生契约稳住封印，也让幽冥殿第一次有了两位可以相互制衡的主人。"
+          "text": "你以守约人的身份留名幽冥。每逢朔月你要独自下殿查契，风雨无阻——那是这段关系向你收的常年租金。"
         },
         {
-          "speaker": "紫夜澜",
-          "text": "站在我身边，看我别坠得太深。"
-        },
-        {
-          "speaker": "system",
-          "text": "结局达成：紫夜澜·幽冥双生。"
+          "speaker": "zi_yelan",
+          "text": "别把我说成光。你只需在我坠下去之前，按住契纹，喊我的名字。"
         }
       ],
       "hotspots": [],
-      "choices": [
-        {
-          "id": "post-archive",
-          "label": "归档幽冥结局，回到封印核心",
-          "caption": "结局归档后，回到命运抉择处查看其他可解锁分支。",
-          "next": "s16-final-core",
-          "fateType": "wheel",
-          "major": true,
-          "consequence": "「紫夜澜·幽冥双生」被写入命运册，真仙路线累计一段已完成命运。",
-          "effect": {
-            "flags": [
-              "archived_e04_zi"
-            ],
-            "memories": [
-              "紫夜澜·幽冥双生",
-              "幽冥记忆已写入命运册"
-            ],
-            "globals": {
-              "corruption": 4,
-              "insight": 2,
-              "seal_stability": 3
-            }
-          }
-        },
-        {
-          "id": "post-hidden-thread",
-          "label": "追查双生禁术的黑色回声",
-          "caption": "把该结局没有说完的代价转入隐藏线索与裂隙背面。",
-          "next": "g-hidden",
-          "fateType": "web",
-          "consequence": "双生契约压住魔神，却也让幽冥残响成为通往黑暗结局的钥匙。",
-          "effect": {
-            "flags": [
-              "afterglow_e04_zi"
-            ],
-            "memories": [
-              "紫夜澜·幽冥双生的余波"
-            ],
-            "globals": {
-              "hidden_clues": 1,
-              "insight": 2
-            }
-          }
-        },
-        {
-          "id": "post-route-continue",
-          "label": "携幽冥记忆转向幽谷暗潮",
-          "caption": "保留当前结局反馈，继续检查同组或相邻角色路线。",
-          "next": "g-romance-b",
-          "fateType": "river",
-          "consequence": "你保留「紫夜澜·幽冥双生」的反馈，继续补完相邻羁绊或隐藏路线。",
-          "effect": {
-            "flags": [
-              "continue_from_e04_zi"
-            ],
-            "memories": [
-              "幽冥记忆已写入命运册"
-            ],
-            "globals": {
-              "insight": 1,
-              "alliance": 1
-            }
-          }
-        },
-        {
-          "id": "post-true-immortal-check",
-          "label": "若十四命运已归档，直上真仙路",
-          "caption": "这是多周目总收束：只有主要与隐藏结局全部归档后才会点亮。",
-          "next": "e15-immortal",
-          "fateType": "wheel",
-          "consequence": "十四段命运记忆合一，真仙之路不再只是隐藏条件，而成为最终分支。",
-          "effect": {
-            "flags": [
-              "attempt_true_immortal_from_ending"
-            ],
-            "memories": [
-              "尝试以归档命运开启真仙路"
-            ],
-            "globals": {
-              "insight": 4,
-              "seal_stability": 4
-            }
-          },
-          "condition": {
-            "memories": [
-              "云墨轩·剑心相印",
-              "月清寒·星月同辉",
-              "竹清晏·竹林隐士",
-              "紫夜澜·幽冥双生",
-              "梅寒霜·寒梅傲雪",
-              "兰灵·幽谷仙缘",
-              "菊傲秋·金菊盛放",
-              "牡丹仙·百花朝宗",
-              "曼珠仙姬·彼岸花开",
-              "灵花仙子·天灵合一",
-              "十全十美·大团圆",
-              "孤独求败·独行者",
-              "魔神降世·黑暗结局",
-              "时空逆转·重生"
-            ]
-          },
-          "lockedHint": "此前需要把十个主要结局与四个隐藏结局都通过“归档结局”写入命运册。"
-        }
-      ],
+      "choices": [],
       "ending": {
         "title": "紫夜澜·幽冥双生",
-        "subtitle": "禁术共享生命，你们成为幽冥殿双主。",
+        "subtitle": "朔月下殿，契纹在手。幽冥殿百年来第一次，有了敢按住它的人。",
         "type": "romance"
       },
       "reusedPanoramaFrom": "r-zi"
@@ -3863,137 +3680,30 @@
         "via": "#5c4c90",
         "to": "#f0dca0"
       },
-      "synopsis": "冰剑封住裂隙，你们成为寒梅山庄的双剑。",
+      "synopsis": "冰剑封住裂隙，你与梅寒霜并肩立下『剑席不问出身』的新规。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "寒梅剑舞冻结黑日边缘，梅寒霜踏碎冰镜，把最后一道反噬引向自己。"
+          "text": "寒梅剑气冻住黑日边缘。梅寒霜引开最后一道反噬，你的剑恰好补进她让出的那半寸——不早，不晚。"
         },
         {
-          "speaker": "梅寒霜",
-          "text": "你若退，我会看不起你；你若进，我便与你同进。"
+          "speaker": "mei_hanshuang",
+          "text": "三次试剑，我没赢过你，也没输过你。这世上配与我并肩的剑，原来真的存在。"
         },
         {
           "speaker": "narrator",
-          "text": "你接住她的剑势，双剑在冰光里合拢，寒梅山庄因此多了一条不向世家低头的新规。"
+          "text": "寒梅山庄立下新规：剑席不问出身。她的名字与你的刻在同一行，笔画一样深。"
         },
         {
-          "speaker": "梅寒霜",
-          "text": "以后站到我身侧，别退。"
-        },
-        {
-          "speaker": "system",
-          "text": "结局达成：梅寒霜·寒梅傲雪。"
+          "speaker": "mei_hanshuang",
+          "text": "下一次云巅有难，不必传信。你拔剑的地方，就是我到的地方。"
         }
       ],
       "hotspots": [],
-      "choices": [
-        {
-          "id": "post-archive",
-          "label": "归档寒梅结局，回到封印核心",
-          "caption": "结局归档后，回到命运抉择处查看其他可解锁分支。",
-          "next": "s16-final-core",
-          "fateType": "wheel",
-          "major": true,
-          "consequence": "「梅寒霜·寒梅傲雪」被写入命运册，真仙路线累计一段已完成命运。",
-          "effect": {
-            "flags": [
-              "archived_e05_mei"
-            ],
-            "memories": [
-              "梅寒霜·寒梅傲雪",
-              "寒梅记忆已写入命运册"
-            ],
-            "globals": {
-              "strength": 3,
-              "virtue": 2,
-              "seal_stability": 4
-            }
-          }
-        },
-        {
-          "id": "post-hidden-thread",
-          "label": "查看冰封裂隙的未化之处",
-          "caption": "把该结局没有说完的代价转入隐藏线索与裂隙背面。",
-          "next": "g-hidden",
-          "fateType": "web",
-          "consequence": "寒霜封住正面裂口，冰层深处却仍有一枚暗纹没有融化。",
-          "effect": {
-            "flags": [
-              "afterglow_e05_mei"
-            ],
-            "memories": [
-              "梅寒霜·寒梅傲雪的余波"
-            ],
-            "globals": {
-              "hidden_clues": 1,
-              "insight": 2
-            }
-          }
-        },
-        {
-          "id": "post-route-continue",
-          "label": "携寒梅记忆转向寒梅金华",
-          "caption": "保留当前结局反馈，继续检查同组或相邻角色路线。",
-          "next": "g-romance-c",
-          "fateType": "river",
-          "consequence": "你保留「梅寒霜·寒梅傲雪」的反馈，继续补完相邻羁绊或隐藏路线。",
-          "effect": {
-            "flags": [
-              "continue_from_e05_mei"
-            ],
-            "memories": [
-              "寒梅记忆已写入命运册"
-            ],
-            "globals": {
-              "insight": 1,
-              "alliance": 1
-            }
-          }
-        },
-        {
-          "id": "post-true-immortal-check",
-          "label": "若十四命运已归档，直上真仙路",
-          "caption": "这是多周目总收束：只有主要与隐藏结局全部归档后才会点亮。",
-          "next": "e15-immortal",
-          "fateType": "wheel",
-          "consequence": "十四段命运记忆合一，真仙之路不再只是隐藏条件，而成为最终分支。",
-          "effect": {
-            "flags": [
-              "attempt_true_immortal_from_ending"
-            ],
-            "memories": [
-              "尝试以归档命运开启真仙路"
-            ],
-            "globals": {
-              "insight": 4,
-              "seal_stability": 4
-            }
-          },
-          "condition": {
-            "memories": [
-              "云墨轩·剑心相印",
-              "月清寒·星月同辉",
-              "竹清晏·竹林隐士",
-              "紫夜澜·幽冥双生",
-              "梅寒霜·寒梅傲雪",
-              "兰灵·幽谷仙缘",
-              "菊傲秋·金菊盛放",
-              "牡丹仙·百花朝宗",
-              "曼珠仙姬·彼岸花开",
-              "灵花仙子·天灵合一",
-              "十全十美·大团圆",
-              "孤独求败·独行者",
-              "魔神降世·黑暗结局",
-              "时空逆转·重生"
-            ]
-          },
-          "lockedHint": "此前需要把十个主要结局与四个隐藏结局都通过“归档结局”写入命运册。"
-        }
-      ],
+      "choices": [],
       "ending": {
         "title": "梅寒霜·寒梅傲雪",
-        "subtitle": "冰剑封住裂隙，你们成为寒梅山庄的双剑。",
+        "subtitle": "从三剑互试到双剑同行，一行剑名，笔画一样深。",
         "type": "romance"
       },
       "reusedPanoramaFrom": "r-mei"
@@ -4014,137 +3724,30 @@
         "via": "#5c4c90",
         "to": "#f0dca0"
       },
-      "synopsis": "万灵回应你的善意，幽兰谷成为新封印的根脉。",
+      "synopsis": "万灵根脉接住封印，幽兰谷成为新阵活根，风过谷口皆是问安。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "兰灵跪在裂隙前聆听万灵，幽兰根脉从云海深处一寸寸攀上封印。"
+          "text": "兰灵伏在裂隙前听了整夜。幽兰根脉应声而来，一寸寸缠上新阵，把最后的黑雾含进土里。"
         },
         {
-          "speaker": "兰灵",
-          "text": "它们记得你的善意，所以愿意把生机借给我们。"
+          "speaker": "lan_ling",
+          "text": "它们说，你修阵的时候，会绕开每一株活物。所以这一次，换它们绕着你的阵生长。"
         },
         {
           "speaker": "narrator",
-          "text": "黑雾被灵植吞入根部，幽兰谷从此成为新封印的活阵眼。"
+          "text": "幽兰谷成了新封印的活根。你留下养护的口诀，谷中万灵替你守着阵脚最柔软的一段。"
         },
         {
-          "speaker": "兰灵",
-          "text": "以后若风吹过谷口，你会知道是它们在向你问安。"
-        },
-        {
-          "speaker": "system",
-          "text": "结局达成：兰灵·幽谷仙缘。"
+          "speaker": "lan_ling",
+          "text": "往后风过谷口，那不是风声，是它们在念你教的口诀。"
         }
       ],
       "hotspots": [],
-      "choices": [
-        {
-          "id": "post-archive",
-          "label": "归档幽谷结局，回到封印核心",
-          "caption": "结局归档后，回到命运抉择处查看其他可解锁分支。",
-          "next": "s16-final-core",
-          "fateType": "wheel",
-          "major": true,
-          "consequence": "「兰灵·幽谷仙缘」被写入命运册，真仙路线累计一段已完成命运。",
-          "effect": {
-            "flags": [
-              "archived_e06_lan"
-            ],
-            "memories": [
-              "兰灵·幽谷仙缘",
-              "幽谷记忆已写入命运册"
-            ],
-            "globals": {
-              "virtue": 4,
-              "hidden_clues": 1,
-              "seal_stability": 3
-            }
-          }
-        },
-        {
-          "id": "post-hidden-thread",
-          "label": "倾听万灵根脉中的低语",
-          "caption": "把该结局没有说完的代价转入隐藏线索与裂隙背面。",
-          "next": "g-hidden",
-          "fateType": "web",
-          "consequence": "万灵根脉吞下黑雾，却把一小段记忆碎片留给了你。",
-          "effect": {
-            "flags": [
-              "afterglow_e06_lan"
-            ],
-            "memories": [
-              "兰灵·幽谷仙缘的余波"
-            ],
-            "globals": {
-              "hidden_clues": 1,
-              "insight": 2
-            }
-          }
-        },
-        {
-          "id": "post-route-continue",
-          "label": "携幽谷记忆转向幽谷暗潮",
-          "caption": "保留当前结局反馈，继续检查同组或相邻角色路线。",
-          "next": "g-romance-b",
-          "fateType": "river",
-          "consequence": "你保留「兰灵·幽谷仙缘」的反馈，继续补完相邻羁绊或隐藏路线。",
-          "effect": {
-            "flags": [
-              "continue_from_e06_lan"
-            ],
-            "memories": [
-              "幽谷记忆已写入命运册"
-            ],
-            "globals": {
-              "insight": 1,
-              "alliance": 1
-            }
-          }
-        },
-        {
-          "id": "post-true-immortal-check",
-          "label": "若十四命运已归档，直上真仙路",
-          "caption": "这是多周目总收束：只有主要与隐藏结局全部归档后才会点亮。",
-          "next": "e15-immortal",
-          "fateType": "wheel",
-          "consequence": "十四段命运记忆合一，真仙之路不再只是隐藏条件，而成为最终分支。",
-          "effect": {
-            "flags": [
-              "attempt_true_immortal_from_ending"
-            ],
-            "memories": [
-              "尝试以归档命运开启真仙路"
-            ],
-            "globals": {
-              "insight": 4,
-              "seal_stability": 4
-            }
-          },
-          "condition": {
-            "memories": [
-              "云墨轩·剑心相印",
-              "月清寒·星月同辉",
-              "竹清晏·竹林隐士",
-              "紫夜澜·幽冥双生",
-              "梅寒霜·寒梅傲雪",
-              "兰灵·幽谷仙缘",
-              "菊傲秋·金菊盛放",
-              "牡丹仙·百花朝宗",
-              "曼珠仙姬·彼岸花开",
-              "灵花仙子·天灵合一",
-              "十全十美·大团圆",
-              "孤独求败·独行者",
-              "魔神降世·黑暗结局",
-              "时空逆转·重生"
-            ]
-          },
-          "lockedHint": "此前需要把十个主要结局与四个隐藏结局都通过“归档结局”写入命运册。"
-        }
-      ],
+      "choices": [],
       "ending": {
         "title": "兰灵·幽谷仙缘",
-        "subtitle": "万灵回应你的善意，幽兰谷成为新封印的根脉。",
+        "subtitle": "你护过的万灵，如今以整座山谷回护你的封印。",
         "type": "romance"
       },
       "reusedPanoramaFrom": "s04-bamboo-orchid"
@@ -4165,137 +3768,30 @@
         "via": "#5c4c90",
         "to": "#f0dca0"
       },
-      "synopsis": "金菊防御术化作新封印，你以独特才华名扬天下。",
+      "synopsis": "金菊阵改章托起新封印。他辞去首席，你暂止行脚，三年校阵之约立于山门。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "菊傲秋把金系防御术反向展开，万片金菊不再守城，而是向裂隙推进。"
+          "text": "万片金菊自守势转攻，稳稳托住新封印。菊傲秋当众划去自己阵稿的最后一章，换上你推演的补法。"
         },
         {
-          "speaker": "菊傲秋",
-          "text": "你的答案不俗，至少没有把我的阵法当成一堵墙。"
+          "speaker": "ju_aoqiu",
+          "text": "我闭关十年写的东西，被你三炷香改对了。承认这一点，比破阵难。但我认。"
         },
         {
           "speaker": "narrator",
-          "text": "新封印由攻守合一的金菊阵托起，你的名字随金色花潮传遍十家。"
+          "text": "他辞了金菊首席，随阵北迁；你应下三年校阵之约，行脚暂止。两个人，都交出了最舍不得的那样东西。"
         },
         {
-          "speaker": "菊傲秋",
-          "text": "以后站到我身侧，别被人群淹没。"
-        },
-        {
-          "speaker": "system",
-          "text": "结局达成：菊傲秋·金菊盛放。"
+          "speaker": "ju_aoqiu",
+          "text": "三年阵成，你要走，我送你到山门。你要留——那就把第四年也算上。"
         }
       ],
       "hotspots": [],
-      "choices": [
-        {
-          "id": "post-archive",
-          "label": "归档金菊结局，回到封印核心",
-          "caption": "结局归档后，回到命运抉择处查看其他可解锁分支。",
-          "next": "s16-final-core",
-          "fateType": "wheel",
-          "major": true,
-          "consequence": "「菊傲秋·金菊盛放」被写入命运册，真仙路线累计一段已完成命运。",
-          "effect": {
-            "flags": [
-              "archived_e07_ju"
-            ],
-            "memories": [
-              "菊傲秋·金菊盛放",
-              "金菊记忆已写入命运册"
-            ],
-            "globals": {
-              "wisdom": 3,
-              "strength": 2,
-              "seal_stability": 4
-            }
-          }
-        },
-        {
-          "id": "post-hidden-thread",
-          "label": "复盘金菊新封印的缺口",
-          "caption": "把该结局没有说完的代价转入隐藏线索与裂隙背面。",
-          "next": "g-hidden",
-          "fateType": "web",
-          "consequence": "金菊阵推进过裂隙边缘，留下可供下一周目利用的阵式缺口。",
-          "effect": {
-            "flags": [
-              "afterglow_e07_ju"
-            ],
-            "memories": [
-              "菊傲秋·金菊盛放的余波"
-            ],
-            "globals": {
-              "hidden_clues": 1,
-              "insight": 2
-            }
-          }
-        },
-        {
-          "id": "post-route-continue",
-          "label": "携金菊记忆转向寒梅金华",
-          "caption": "保留当前结局反馈，继续检查同组或相邻角色路线。",
-          "next": "g-romance-c",
-          "fateType": "river",
-          "consequence": "你保留「菊傲秋·金菊盛放」的反馈，继续补完相邻羁绊或隐藏路线。",
-          "effect": {
-            "flags": [
-              "continue_from_e07_ju"
-            ],
-            "memories": [
-              "金菊记忆已写入命运册"
-            ],
-            "globals": {
-              "insight": 1,
-              "alliance": 1
-            }
-          }
-        },
-        {
-          "id": "post-true-immortal-check",
-          "label": "若十四命运已归档，直上真仙路",
-          "caption": "这是多周目总收束：只有主要与隐藏结局全部归档后才会点亮。",
-          "next": "e15-immortal",
-          "fateType": "wheel",
-          "consequence": "十四段命运记忆合一，真仙之路不再只是隐藏条件，而成为最终分支。",
-          "effect": {
-            "flags": [
-              "attempt_true_immortal_from_ending"
-            ],
-            "memories": [
-              "尝试以归档命运开启真仙路"
-            ],
-            "globals": {
-              "insight": 4,
-              "seal_stability": 4
-            }
-          },
-          "condition": {
-            "memories": [
-              "云墨轩·剑心相印",
-              "月清寒·星月同辉",
-              "竹清晏·竹林隐士",
-              "紫夜澜·幽冥双生",
-              "梅寒霜·寒梅傲雪",
-              "兰灵·幽谷仙缘",
-              "菊傲秋·金菊盛放",
-              "牡丹仙·百花朝宗",
-              "曼珠仙姬·彼岸花开",
-              "灵花仙子·天灵合一",
-              "十全十美·大团圆",
-              "孤独求败·独行者",
-              "魔神降世·黑暗结局",
-              "时空逆转·重生"
-            ]
-          },
-          "lockedHint": "此前需要把十个主要结局与四个隐藏结局都通过“归档结局”写入命运册。"
-        }
-      ],
+      "choices": [],
       "ending": {
         "title": "菊傲秋·金菊盛放",
-        "subtitle": "金菊防御术化作新封印，你以独特才华名扬天下。",
+        "subtitle": "他划掉毕生阵稿的末章，你按下行脚三年。慢热的人，把话说到了第四年。",
         "type": "romance"
       },
       "reusedPanoramaFrom": "r-ju"
@@ -4316,137 +3812,34 @@
         "via": "#5c4c90",
         "to": "#f0dca0"
       },
-      "synopsis": "你与牡丹仙共同执掌百花议庭，推动修仙界改革。",
+      "synopsis": "你与牡丹仙分执百花令，共掌议庭，同担改革立起的风眼。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "牡丹仙以百花令召回十家残部，你接过半枚令牌，听见旧秩序在花声中松动。"
+          "text": "牡丹仙把百花令一分为二，半枚推到你面前。议庭之上，百年的旧秩序在花影里第一次松了口。"
         },
         {
-          "speaker": "牡丹仙",
-          "text": "权力不是花冠，是刀柄。你若握不稳，便会伤到想保护的人。"
+          "speaker": "mudan",
+          "text": "我不是给你荣耀，是给你一把会割手的刀。共掌议庭，意味着往后每一笔错账，都有你的名字。"
         },
         {
           "speaker": "narrator",
-          "text": "你们把仙府真相公布于众，百花宗成为改革议庭，也成为最危险的风眼。"
+          "text": "你们把仙府真相公之于十家。改革立起来了，风眼也立起来了——从今往后，你们互为对方的掣肘，也互为后盾。"
         },
         {
-          "speaker": "牡丹仙",
-          "text": "既然要改规矩，就从今日开始。"
+          "speaker": "mudan",
+          "text": "规矩，今日改。明日谁想改回去，先过你我这两关。"
         },
         {
-          "speaker": "system",
-          "text": "结局达成：牡丹仙·百花朝宗。"
+          "speaker": "narrator",
+          "text": "议庭的第一道新政落在案头：封印修缮列为常项，十家轮值——从此有人常年守着它，不必再等百年一劫。"
         }
       ],
       "hotspots": [],
-      "choices": [
-        {
-          "id": "post-archive",
-          "label": "归档百花结局，回到封印核心",
-          "caption": "结局归档后，回到命运抉择处查看其他可解锁分支。",
-          "next": "s16-final-core",
-          "fateType": "wheel",
-          "major": true,
-          "consequence": "「牡丹仙·百花朝宗」被写入命运册，真仙路线累计一段已完成命运。",
-          "effect": {
-            "flags": [
-              "archived_e08_mudan"
-            ],
-            "memories": [
-              "牡丹仙·百花朝宗",
-              "百花记忆已写入命运册"
-            ],
-            "globals": {
-              "alliance": 4,
-              "charm": 2,
-              "seal_stability": 3
-            }
-          }
-        },
-        {
-          "id": "post-hidden-thread",
-          "label": "审视新议庭的权力暗流",
-          "caption": "把该结局没有说完的代价转入隐藏线索与裂隙背面。",
-          "next": "g-hidden",
-          "fateType": "web",
-          "consequence": "改革打开了新秩序，也让野心派的残余因果浮出水面。",
-          "effect": {
-            "flags": [
-              "afterglow_e08_mudan"
-            ],
-            "memories": [
-              "牡丹仙·百花朝宗的余波"
-            ],
-            "globals": {
-              "hidden_clues": 1,
-              "insight": 2
-            }
-          }
-        },
-        {
-          "id": "post-route-continue",
-          "label": "携百花记忆转向寒梅金华",
-          "caption": "保留当前结局反馈，继续检查同组或相邻角色路线。",
-          "next": "g-romance-c",
-          "fateType": "river",
-          "consequence": "你保留「牡丹仙·百花朝宗」的反馈，继续补完相邻羁绊或隐藏路线。",
-          "effect": {
-            "flags": [
-              "continue_from_e08_mudan"
-            ],
-            "memories": [
-              "百花记忆已写入命运册"
-            ],
-            "globals": {
-              "insight": 1,
-              "alliance": 1
-            }
-          }
-        },
-        {
-          "id": "post-true-immortal-check",
-          "label": "若十四命运已归档，直上真仙路",
-          "caption": "这是多周目总收束：只有主要与隐藏结局全部归档后才会点亮。",
-          "next": "e15-immortal",
-          "fateType": "wheel",
-          "consequence": "十四段命运记忆合一，真仙之路不再只是隐藏条件，而成为最终分支。",
-          "effect": {
-            "flags": [
-              "attempt_true_immortal_from_ending"
-            ],
-            "memories": [
-              "尝试以归档命运开启真仙路"
-            ],
-            "globals": {
-              "insight": 4,
-              "seal_stability": 4
-            }
-          },
-          "condition": {
-            "memories": [
-              "云墨轩·剑心相印",
-              "月清寒·星月同辉",
-              "竹清晏·竹林隐士",
-              "紫夜澜·幽冥双生",
-              "梅寒霜·寒梅傲雪",
-              "兰灵·幽谷仙缘",
-              "菊傲秋·金菊盛放",
-              "牡丹仙·百花朝宗",
-              "曼珠仙姬·彼岸花开",
-              "灵花仙子·天灵合一",
-              "十全十美·大团圆",
-              "孤独求败·独行者",
-              "魔神降世·黑暗结局",
-              "时空逆转·重生"
-            ]
-          },
-          "lockedHint": "此前需要把十个主要结局与四个隐藏结局都通过“归档结局”写入命运册。"
-        }
-      ],
+      "choices": [],
       "ending": {
         "title": "牡丹仙·百花朝宗",
-        "subtitle": "你与牡丹仙共同执掌百花议庭，推动修仙界改革。",
+        "subtitle": "半枚花令是权柄，也是错账上的连名。你与她共掌议庭，同立风眼。",
         "type": "romance"
       },
       "reusedPanoramaFrom": "r-mudan"
@@ -4467,137 +3860,30 @@
         "via": "#5c4c90",
         "to": "#f0dca0"
       },
-      "synopsis": "生死法则重塑封印，你们成为彼岸使者。",
+      "synopsis": "你随曼珠沿生死边界引渡魂火，把被史笔抹去的名字一一记回名录。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "彼岸花沿生死边界盛放，曼珠仙姬把一缕旧日思念缝进封印裂口。"
+          "text": "彼岸花沿生死边界开成一线。曼珠取出一册无字名录，把被十家史笔抹去的名字，一个一个念给封印听。"
         },
         {
-          "speaker": "曼珠仙姬",
-          "text": "世人怕我，是因为他们只看见生死；你看见了思念。"
+          "speaker": "manzhu",
+          "text": "我记了一百年，就等有人肯听。第十一脉不是传说——你师父之前，还有许多人替这道封印无名地活过。"
         },
         {
           "speaker": "narrator",
-          "text": "你们成为往返彼岸的使者，替迷失在封印余波中的魂火寻找归路。"
+          "text": "你随她走了一段边界路，替迷失在封印余波里的魂火引路。每送归一盏，名录上便多一行墨字。"
         },
         {
-          "speaker": "曼珠仙姬",
-          "text": "小家伙，陪我走过这条边界。"
-        },
-        {
-          "speaker": "system",
-          "text": "结局达成：曼珠仙姬·彼岸花开。"
+          "speaker": "manzhu",
+          "text": "世人尽可忘。只要还有一个人在记，被遗忘的人就没有真正死去。"
         }
       ],
       "hotspots": [],
-      "choices": [
-        {
-          "id": "post-archive",
-          "label": "归档彼岸结局，回到封印核心",
-          "caption": "结局归档后，回到命运抉择处查看其他可解锁分支。",
-          "next": "s16-final-core",
-          "fateType": "wheel",
-          "major": true,
-          "consequence": "「曼珠仙姬·彼岸花开」被写入命运册，真仙路线累计一段已完成命运。",
-          "effect": {
-            "flags": [
-              "archived_e09_manzhu"
-            ],
-            "memories": [
-              "曼珠仙姬·彼岸花开",
-              "彼岸记忆已写入命运册"
-            ],
-            "globals": {
-              "insight": 4,
-              "charm": 2,
-              "hidden_clues": 1
-            }
-          }
-        },
-        {
-          "id": "post-hidden-thread",
-          "label": "沿彼岸花路追索前世回声",
-          "caption": "把该结局没有说完的代价转入隐藏线索与裂隙背面。",
-          "next": "g-hidden",
-          "fateType": "web",
-          "consequence": "彼岸花缝合生死线，也把前世恋人的记忆碎片交到你手里。",
-          "effect": {
-            "flags": [
-              "afterglow_e09_manzhu"
-            ],
-            "memories": [
-              "曼珠仙姬·彼岸花开的余波"
-            ],
-            "globals": {
-              "hidden_clues": 1,
-              "insight": 2
-            }
-          }
-        },
-        {
-          "id": "post-route-continue",
-          "label": "携彼岸记忆转向幽谷暗潮",
-          "caption": "保留当前结局反馈，继续检查同组或相邻角色路线。",
-          "next": "g-romance-b",
-          "fateType": "river",
-          "consequence": "你保留「曼珠仙姬·彼岸花开」的反馈，继续补完相邻羁绊或隐藏路线。",
-          "effect": {
-            "flags": [
-              "continue_from_e09_manzhu"
-            ],
-            "memories": [
-              "彼岸记忆已写入命运册"
-            ],
-            "globals": {
-              "insight": 1,
-              "alliance": 1
-            }
-          }
-        },
-        {
-          "id": "post-true-immortal-check",
-          "label": "若十四命运已归档，直上真仙路",
-          "caption": "这是多周目总收束：只有主要与隐藏结局全部归档后才会点亮。",
-          "next": "e15-immortal",
-          "fateType": "wheel",
-          "consequence": "十四段命运记忆合一，真仙之路不再只是隐藏条件，而成为最终分支。",
-          "effect": {
-            "flags": [
-              "attempt_true_immortal_from_ending"
-            ],
-            "memories": [
-              "尝试以归档命运开启真仙路"
-            ],
-            "globals": {
-              "insight": 4,
-              "seal_stability": 4
-            }
-          },
-          "condition": {
-            "memories": [
-              "云墨轩·剑心相印",
-              "月清寒·星月同辉",
-              "竹清晏·竹林隐士",
-              "紫夜澜·幽冥双生",
-              "梅寒霜·寒梅傲雪",
-              "兰灵·幽谷仙缘",
-              "菊傲秋·金菊盛放",
-              "牡丹仙·百花朝宗",
-              "曼珠仙姬·彼岸花开",
-              "灵花仙子·天灵合一",
-              "十全十美·大团圆",
-              "孤独求败·独行者",
-              "魔神降世·黑暗结局",
-              "时空逆转·重生"
-            ]
-          },
-          "lockedHint": "此前需要把十个主要结局与四个隐藏结局都通过“归档结局”写入命运册。"
-        }
-      ],
+      "choices": [],
       "ending": {
         "title": "曼珠仙姬·彼岸花开",
-        "subtitle": "生死法则重塑封印，你们成为彼岸使者。",
+        "subtitle": "一册无字名录，一行一行写回被遗忘的人。",
         "type": "romance"
       }
     },
@@ -4606,7 +3892,7 @@
       "chapter": "结局",
       "title": "灵花仙子·天灵合一",
       "location": "天灵宗观星台",
-      "panorama": "/panoramas/project-20260620-002835-r-linghua.jpg",
+      "panorama": "/panoramas/project-20260620-002835-s12-mansion.jpg",
       "entryView": {
         "yaw": 0,
         "pitch": 0,
@@ -4617,145 +3903,38 @@
         "via": "#5c4c90",
         "to": "#f0dca0"
       },
-      "synopsis": "灵魂共鸣抵达天人合一，你们成为天灵宗双子星。",
+      "synopsis": "你辞去席位留在观星台，与天灵之光长问不休，求道之路自此开始。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "灵花仙子与你灵魂共鸣，天灵之光越过十家名姓，照见更高处的道。"
+          "text": "观星台上没有人影，只有一团温和的光随钟声起伏——天灵以声与光，回应你修完封印后的最后一问。"
         },
         {
-          "speaker": "灵花仙子",
-          "text": "真理不会因身份而偏爱谁，也不会因孤独而放过谁。"
+          "speaker": "ling_hua",
+          "text": "你问道是什么。道不因名姓偏爱谁，也不因无名放过谁——你既已在问里，便已在道上。"
         },
         {
           "speaker": "narrator",
-          "text": "你们成为天灵宗双子星，一个追问天命，一个校准人心。"
+          "text": "你辞了十家递来的席位，留在观星台做记录星轨的人。问题一年比一年深，答案一年比一年少，你却前所未有地安心。"
         },
         {
-          "speaker": "灵花仙子",
-          "text": "不要停在我的身边。和我一起，继续追问。"
-        },
-        {
-          "speaker": "system",
-          "text": "结局达成：灵花仙子·天灵合一。"
+          "speaker": "ling_hua",
+          "text": "不必追上我。往前问，我会在每一个问题里等你。"
         }
       ],
       "hotspots": [],
-      "choices": [
-        {
-          "id": "post-archive",
-          "label": "归档天灵结局，回到封印核心",
-          "caption": "结局归档后，回到命运抉择处查看其他可解锁分支。",
-          "next": "s16-final-core",
-          "fateType": "wheel",
-          "major": true,
-          "consequence": "「灵花仙子·天灵合一」被写入命运册，真仙路线累计一段已完成命运。",
-          "effect": {
-            "flags": [
-              "archived_e10_linghua"
-            ],
-            "memories": [
-              "灵花仙子·天灵合一",
-              "天灵记忆已写入命运册"
-            ],
-            "globals": {
-              "insight": 4,
-              "virtue": 2,
-              "seal_stability": 3
-            }
-          }
-        },
-        {
-          "id": "post-hidden-thread",
-          "label": "追问天灵共鸣后的真相",
-          "caption": "把该结局没有说完的代价转入隐藏线索与裂隙背面。",
-          "next": "g-hidden",
-          "fateType": "web",
-          "consequence": "天灵之光照见传承本质，真仙路线的最后一层门槛开始松动。",
-          "effect": {
-            "flags": [
-              "afterglow_e10_linghua"
-            ],
-            "memories": [
-              "灵花仙子·天灵合一的余波"
-            ],
-            "globals": {
-              "hidden_clues": 1,
-              "insight": 2
-            }
-          }
-        },
-        {
-          "id": "post-route-continue",
-          "label": "携天灵记忆回到终路",
-          "caption": "保留当前结局反馈，继续检查同组或相邻角色路线。",
-          "next": "g-romance-d",
-          "fateType": "river",
-          "consequence": "你保留「灵花仙子·天灵合一」的反馈，继续补完相邻羁绊或隐藏路线。",
-          "effect": {
-            "flags": [
-              "continue_from_e10_linghua"
-            ],
-            "memories": [
-              "天灵记忆已写入命运册"
-            ],
-            "globals": {
-              "insight": 1,
-              "alliance": 1
-            }
-          }
-        },
-        {
-          "id": "post-true-immortal-check",
-          "label": "若十四命运已归档，直上真仙路",
-          "caption": "这是多周目总收束：只有主要与隐藏结局全部归档后才会点亮。",
-          "next": "e15-immortal",
-          "fateType": "wheel",
-          "consequence": "十四段命运记忆合一，真仙之路不再只是隐藏条件，而成为最终分支。",
-          "effect": {
-            "flags": [
-              "attempt_true_immortal_from_ending"
-            ],
-            "memories": [
-              "尝试以归档命运开启真仙路"
-            ],
-            "globals": {
-              "insight": 4,
-              "seal_stability": 4
-            }
-          },
-          "condition": {
-            "memories": [
-              "云墨轩·剑心相印",
-              "月清寒·星月同辉",
-              "竹清晏·竹林隐士",
-              "紫夜澜·幽冥双生",
-              "梅寒霜·寒梅傲雪",
-              "兰灵·幽谷仙缘",
-              "菊傲秋·金菊盛放",
-              "牡丹仙·百花朝宗",
-              "曼珠仙姬·彼岸花开",
-              "灵花仙子·天灵合一",
-              "十全十美·大团圆",
-              "孤独求败·独行者",
-              "魔神降世·黑暗结局",
-              "时空逆转·重生"
-            ]
-          },
-          "lockedHint": "此前需要把十个主要结局与四个隐藏结局都通过“归档结局”写入命运册。"
-        }
-      ],
+      "choices": [],
       "ending": {
         "title": "灵花仙子·天灵合一",
-        "subtitle": "灵魂共鸣抵达天人合一，你们成为天灵宗双子星。",
+        "subtitle": "封印之后，你选了最长的一条路：一直问下去。",
         "type": "romance"
       },
       "reusedPanoramaFrom": "r-linghua"
     },
     "e11-reunion": {
       "id": "e11-reunion",
-      "chapter": "隐藏结局",
-      "title": "十全十美·大团圆",
+      "chapter": "大结局",
+      "title": "十一席同鸣",
       "location": "新生云巅盟庭",
       "panorama": "/panoramas/project-20260620-002835-s16-final-core.jpg",
       "entryView": {
@@ -4768,139 +3947,37 @@
         "via": "#5c4c90",
         "to": "#f0dca0"
       },
-      "synopsis": "十位传人与玩家联手，开创修仙新时代。",
+      "synopsis": "十家祖纹与无名一脉十一席同鸣，你亲手推演的封印落成，祭台空置。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "十位传人同时伸手，十道祖纹在第十一纹周围重新排序，牺牲阵眼被彻底拆解。"
+          "text": "你把推演到最后一笔的阵图铺在封印核心。十家祖纹依次亮起，而第十一道纹——无名一脉的纹，自你掌心升起，补上正中那处空了百年的位置。"
         },
         {
           "speaker": "system",
-          "text": "云剑、星月、青竹、幽冥、寒梅、幽兰、金菊、百花、彼岸与天灵合成新封印。"
+          "text": "阵盘古音响彻仙府：十一席同鸣，牺牲之位，就此空置。"
         },
         {
           "speaker": "narrator",
-          "text": "你不属于任何一家，却成为十大世家共同承认的盟友。"
+          "text": "封印重织的那一刻没有雷光，只有一声极轻的合拢，像一件修了百年的旧器终于严丝合缝。祭台空着——所有人都站在自己的位置上，活着。"
         },
         {
-          "speaker": "system",
-          "text": "隐藏结局达成：十全十美·大团圆。"
+          "speaker": "narrator",
+          "text": "散会时你路过祖先碑，碑脚不知何时多了一行小字：第十一脉，亦在此列。你看了一眼，笑了笑，继续往前走。"
         }
       ],
       "hotspots": [],
-      "choices": [
-        {
-          "id": "post-archive",
-          "label": "归档大团圆结局，回到封印核心",
-          "caption": "结局归档后，回到命运抉择处查看其他可解锁分支。",
-          "next": "s16-final-core",
-          "fateType": "wheel",
-          "major": true,
-          "consequence": "「十全十美·大团圆」被写入命运册，真仙路线累计一段已完成命运。",
-          "effect": {
-            "flags": [
-              "archived_e11_reunion"
-            ],
-            "memories": [
-              "十全十美·大团圆",
-              "十全记忆已写入命运册"
-            ],
-            "globals": {
-              "alliance": 5,
-              "seal_stability": 6
-            }
-          }
-        },
-        {
-          "id": "post-hidden-thread",
-          "label": "检查十纹新封印的背面",
-          "caption": "把该结局没有说完的代价转入隐藏线索与裂隙背面。",
-          "next": "g-hidden",
-          "fateType": "web",
-          "consequence": "大团圆并非没有代价，十纹背面仍记录着你尚未完成的命运。",
-          "effect": {
-            "flags": [
-              "afterglow_e11_reunion"
-            ],
-            "memories": [
-              "十全十美·大团圆的余波"
-            ],
-            "globals": {
-              "hidden_clues": 1,
-              "insight": 2
-            }
-          }
-        },
-        {
-          "id": "post-route-continue",
-          "label": "以十全记忆重排终局",
-          "caption": "保留当前结局反馈，继续检查同组或相邻角色路线。",
-          "next": "s16-final-core",
-          "fateType": "river",
-          "consequence": "你保留「十全十美·大团圆」的反馈，继续补完相邻羁绊或隐藏路线。",
-          "effect": {
-            "flags": [
-              "continue_from_e11_reunion"
-            ],
-            "memories": [
-              "十全记忆已写入命运册"
-            ],
-            "globals": {
-              "insight": 1,
-              "alliance": 1
-            }
-          }
-        },
-        {
-          "id": "post-true-immortal-check",
-          "label": "若十四命运已归档，直上真仙路",
-          "caption": "这是多周目总收束：只有主要与隐藏结局全部归档后才会点亮。",
-          "next": "e15-immortal",
-          "fateType": "wheel",
-          "consequence": "十四段命运记忆合一，真仙之路不再只是隐藏条件，而成为最终分支。",
-          "effect": {
-            "flags": [
-              "attempt_true_immortal_from_ending"
-            ],
-            "memories": [
-              "尝试以归档命运开启真仙路"
-            ],
-            "globals": {
-              "insight": 4,
-              "seal_stability": 4
-            }
-          },
-          "condition": {
-            "memories": [
-              "云墨轩·剑心相印",
-              "月清寒·星月同辉",
-              "竹清晏·竹林隐士",
-              "紫夜澜·幽冥双生",
-              "梅寒霜·寒梅傲雪",
-              "兰灵·幽谷仙缘",
-              "菊傲秋·金菊盛放",
-              "牡丹仙·百花朝宗",
-              "曼珠仙姬·彼岸花开",
-              "灵花仙子·天灵合一",
-              "十全十美·大团圆",
-              "孤独求败·独行者",
-              "魔神降世·黑暗结局",
-              "时空逆转·重生"
-            ]
-          },
-          "lockedHint": "此前需要把十个主要结局与四个隐藏结局都通过“归档结局”写入命运册。"
-        }
-      ],
+      "choices": [],
       "ending": {
-        "title": "十全十美·大团圆",
-        "subtitle": "十位传人与玩家联手，开创修仙新时代。",
+        "title": "十一席同鸣",
+        "subtitle": "十家与无名一脉共鸣，新封印无人牺牲——方案，出自你手。",
         "type": "team"
       },
       "reusedPanoramaFrom": "s16-final-core"
     },
     "e12-solo": {
       "id": "e12-solo",
-      "chapter": "隐藏结局",
+      "chapter": "结局",
       "title": "孤独求败·独行者",
       "location": "凡人山道",
       "panorama": "/panoramas/project-20260620-002835-s15-moral-choice.jpg",
@@ -4914,133 +3991,30 @@
         "via": "#5c4c90",
         "to": "#f0dca0"
       },
-      "synopsis": "你失去修为，却成为凡人中的传奇。",
+      "synopsis": "你散尽修为垫住阵眼，无名下山，成了凡间修桥补锅的传说。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "你把全部修为投入阵眼，经脉像被雪洗过一样空，云海却终于安静。"
-        },
-        {
-          "speaker": "system",
-          "text": "十家传人赶到时，只看见一个凡人坐在裂隙前，手中仍握着残破传承纹。"
+          "text": "你把全部修为借给阵眼作最后一道垫衬。经脉空得像雪后的山道，云海却终于安静下来。"
         },
         {
           "speaker": "narrator",
-          "text": "多年后，酒馆里有人讲起云巅那一夜，说散修以凡身赢过所有天才。"
+          "text": "十家传人赶到时，只看见一个凡人女子坐在裂隙前，指间还捏着修缮师的旧墨线。"
         },
         {
-          "speaker": "system",
-          "text": "隐藏结局达成：孤独求败·独行者。"
+          "speaker": "narrator",
+          "text": "你没有留名，径自下山，改行做了凡间的补锅匠、修桥人。手艺还在，只是再没有人知道，这双手补过天。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "多年后山道酒肆里有人说起云巅那一夜，说封印是自己好起来的。你坐在角落听完，付了酒钱，笑着走进风里。"
         }
       ],
       "hotspots": [],
-      "choices": [
-        {
-          "id": "post-archive",
-          "label": "归档独行者结局，回到封印核心",
-          "caption": "结局归档后，回到命运抉择处查看其他可解锁分支。",
-          "next": "s16-final-core",
-          "fateType": "wheel",
-          "major": true,
-          "consequence": "「孤独求败·独行者」被写入命运册，真仙路线累计一段已完成命运。",
-          "effect": {
-            "flags": [
-              "archived_e12_solo"
-            ],
-            "memories": [
-              "孤独求败·独行者",
-              "独行记忆已写入命运册"
-            ],
-            "globals": {
-              "virtue": 5,
-              "insight": 2,
-              "seal_stability": 3
-            }
-          }
-        },
-        {
-          "id": "post-hidden-thread",
-          "label": "追踪凡人传说里的残光",
-          "caption": "把该结局没有说完的代价转入隐藏线索与裂隙背面。",
-          "next": "g-hidden",
-          "fateType": "web",
-          "consequence": "失去修为后留下的传说，会在下一次选择里变成更锋利的心性。",
-          "effect": {
-            "flags": [
-              "afterglow_e12_solo"
-            ],
-            "memories": [
-              "孤独求败·独行者的余波"
-            ],
-            "globals": {
-              "hidden_clues": 1,
-              "insight": 2
-            }
-          }
-        },
-        {
-          "id": "post-route-continue",
-          "label": "以独行记忆重排终局",
-          "caption": "保留当前结局反馈，继续检查同组或相邻角色路线。",
-          "next": "g-hidden",
-          "fateType": "river",
-          "consequence": "你保留「孤独求败·独行者」的反馈，继续补完相邻羁绊或隐藏路线。",
-          "effect": {
-            "flags": [
-              "continue_from_e12_solo"
-            ],
-            "memories": [
-              "独行记忆已写入命运册"
-            ],
-            "globals": {
-              "insight": 1,
-              "alliance": 1
-            }
-          }
-        },
-        {
-          "id": "post-true-immortal-check",
-          "label": "若十四命运已归档，直上真仙路",
-          "caption": "这是多周目总收束：只有主要与隐藏结局全部归档后才会点亮。",
-          "next": "e15-immortal",
-          "fateType": "wheel",
-          "consequence": "十四段命运记忆合一，真仙之路不再只是隐藏条件，而成为最终分支。",
-          "effect": {
-            "flags": [
-              "attempt_true_immortal_from_ending"
-            ],
-            "memories": [
-              "尝试以归档命运开启真仙路"
-            ],
-            "globals": {
-              "insight": 4,
-              "seal_stability": 4
-            }
-          },
-          "condition": {
-            "memories": [
-              "云墨轩·剑心相印",
-              "月清寒·星月同辉",
-              "竹清晏·竹林隐士",
-              "紫夜澜·幽冥双生",
-              "梅寒霜·寒梅傲雪",
-              "兰灵·幽谷仙缘",
-              "菊傲秋·金菊盛放",
-              "牡丹仙·百花朝宗",
-              "曼珠仙姬·彼岸花开",
-              "灵花仙子·天灵合一",
-              "十全十美·大团圆",
-              "孤独求败·独行者",
-              "魔神降世·黑暗结局",
-              "时空逆转·重生"
-            ]
-          },
-          "lockedHint": "此前需要把十个主要结局与四个隐藏结局都通过“归档结局”写入命运册。"
-        }
-      ],
+      "choices": [],
       "ending": {
         "title": "孤独求败·独行者",
-        "subtitle": "你失去修为，却成为凡人中的传奇。",
+        "subtitle": "修为换了云海安静。补过天的手，如今在凡间修桥补锅。",
         "type": "growth"
       },
       "reusedPanoramaFrom": "s15-moral-choice"
@@ -5050,7 +4024,7 @@
       "chapter": "隐藏结局",
       "title": "魔神降世·黑暗结局",
       "location": "破碎封印深渊",
-      "panorama": "/panoramas/project-20260620-002835-s05-shadow-beyond.jpg",
+      "panorama": "/panoramas/project-20260620-002835-g-romance-b.jpg",
       "entryView": {
         "yaw": 0,
         "pitch": 0,
@@ -5061,133 +4035,30 @@
         "via": "#5c4c90",
         "to": "#f0dca0"
       },
-      "synopsis": "封印破碎，修仙界进入混乱时代。",
+      "synopsis": "阵眼被偷换而碎，魔神出世。你背着洗不清的名字走进乱世，却没有认输。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "被偷换的阵眼碎裂，魔神从黑日中睁开眼睛，第一声笑便震断云巅玉阶。"
+          "text": "被偷换的阵眼在你面前碎开。魔神自黑日中睁眼，第一声笑，便震断了云巅的玉阶。"
         },
         {
-          "speaker": "system",
-          "text": "十家互相指责，幽冥与百花先后撤阵，修仙界的秩序在黎明前坍塌。"
+          "speaker": "mo_shen",
+          "text": "你修了一辈子别人的封印——如今好了。再没有封印，也再没有人记得，该怪谁。"
         },
         {
           "speaker": "narrator",
-          "text": "你活了下来，却再也无法证明自己不是灾厄的一部分。"
+          "text": "十家互相指认，幽冥与百花先后撤阵。你活了下来，背着一个洗不清的名字，独自走进乱世。"
         },
         {
-          "speaker": "system",
-          "text": "隐藏结局达成：魔神降世·黑暗结局。"
+          "speaker": "narrator",
+          "text": "你把那一夜每一步错处，刻在墨线匣的底上。只要匣子还在，你就还没有认输。"
         }
       ],
       "hotspots": [],
-      "choices": [
-        {
-          "id": "post-archive",
-          "label": "归档黑暗结局，回到封印核心",
-          "caption": "结局归档后，回到命运抉择处查看其他可解锁分支。",
-          "next": "s16-final-core",
-          "fateType": "wheel",
-          "major": true,
-          "consequence": "「魔神降世·黑暗结局」被写入命运册，真仙路线累计一段已完成命运。",
-          "effect": {
-            "flags": [
-              "archived_e13_dark"
-            ],
-            "memories": [
-              "魔神降世·黑暗结局",
-              "黑暗记忆已写入命运册"
-            ],
-            "globals": {
-              "corruption": -8,
-              "insight": 4,
-              "hidden_clues": 1
-            }
-          }
-        },
-        {
-          "id": "post-hidden-thread",
-          "label": "追溯魔神降世的第一处裂口",
-          "caption": "把该结局没有说完的代价转入隐藏线索与裂隙背面。",
-          "next": "g-hidden",
-          "fateType": "web",
-          "consequence": "黑暗结局不是失败存档，而是一份告诉你哪些选择会撕裂封印的证据。",
-          "effect": {
-            "flags": [
-              "afterglow_e13_dark"
-            ],
-            "memories": [
-              "魔神降世·黑暗结局的余波"
-            ],
-            "globals": {
-              "hidden_clues": 1,
-              "insight": 2
-            }
-          }
-        },
-        {
-          "id": "post-route-continue",
-          "label": "带着悔意寻找时空逆转",
-          "caption": "保留当前结局反馈，继续检查同组或相邻角色路线。",
-          "next": "g-hidden",
-          "fateType": "river",
-          "consequence": "你保留「魔神降世·黑暗结局」的反馈，继续补完相邻羁绊或隐藏路线。",
-          "effect": {
-            "flags": [
-              "continue_from_e13_dark"
-            ],
-            "memories": [
-              "黑暗记忆已写入命运册"
-            ],
-            "globals": {
-              "insight": 1,
-              "alliance": 1
-            }
-          }
-        },
-        {
-          "id": "post-true-immortal-check",
-          "label": "若十四命运已归档，直上真仙路",
-          "caption": "这是多周目总收束：只有主要与隐藏结局全部归档后才会点亮。",
-          "next": "e15-immortal",
-          "fateType": "wheel",
-          "consequence": "十四段命运记忆合一，真仙之路不再只是隐藏条件，而成为最终分支。",
-          "effect": {
-            "flags": [
-              "attempt_true_immortal_from_ending"
-            ],
-            "memories": [
-              "尝试以归档命运开启真仙路"
-            ],
-            "globals": {
-              "insight": 4,
-              "seal_stability": 4
-            }
-          },
-          "condition": {
-            "memories": [
-              "云墨轩·剑心相印",
-              "月清寒·星月同辉",
-              "竹清晏·竹林隐士",
-              "紫夜澜·幽冥双生",
-              "梅寒霜·寒梅傲雪",
-              "兰灵·幽谷仙缘",
-              "菊傲秋·金菊盛放",
-              "牡丹仙·百花朝宗",
-              "曼珠仙姬·彼岸花开",
-              "灵花仙子·天灵合一",
-              "十全十美·大团圆",
-              "孤独求败·独行者",
-              "魔神降世·黑暗结局",
-              "时空逆转·重生"
-            ]
-          },
-          "lockedHint": "此前需要把十个主要结局与四个隐藏结局都通过“归档结局”写入命运册。"
-        }
-      ],
+      "choices": [],
       "ending": {
         "title": "魔神降世·黑暗结局",
-        "subtitle": "封印破碎，修仙界进入混乱时代。",
+        "subtitle": "封印碎了，名声毁了。可墨线匣还在你手里。",
         "type": "regret"
       },
       "reusedPanoramaFrom": "s05-shadow-beyond"
@@ -5208,133 +4079,30 @@
         "via": "#5c4c90",
         "to": "#f0dca0"
       },
-      "synopsis": "时空法阵启动，下一周目保留关键记忆。",
+      "synopsis": "星轨倒卷，钟声回到开幕之夜。你带着几枚不肯熄灭的碎光，重来一次。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "时空壁画的星轨完整亮起，第一声仙阁钟响从未来倒卷回开幕之夜。"
+          "text": "时空壁画的星轨完整亮起，仙阁第一声钟响，从未来倒卷回开幕之夜。"
         },
         {
           "speaker": "system",
-          "text": "你看见每一次选择化作碎光，有几枚碎片没有被时间抹去。"
+          "text": "阵盘低鸣：此环既启，诸般抉择化作碎光四散——仍有几枚不肯熄灭，随你逆流而上。"
         },
         {
           "speaker": "narrator",
-          "text": "当你重新踏入云巅仙阁，十位传人仍在抬头望向你。"
+          "text": "你再次站在云巅山门外，袖中旧凭证崭新如初，掌心却还留着上一世阵纹的温度。"
         },
         {
-          "speaker": "system",
-          "text": "隐藏结局达成：时空逆转·重生。"
+          "speaker": "narrator",
+          "text": "这一次，你知道该先看哪一道裂缝，先寻哪一个人。"
         }
       ],
       "hotspots": [],
-      "choices": [
-        {
-          "id": "post-archive",
-          "label": "归档重生结局，回到封印核心",
-          "caption": "结局归档后，回到命运抉择处查看其他可解锁分支。",
-          "next": "s16-final-core",
-          "fateType": "wheel",
-          "major": true,
-          "consequence": "「时空逆转·重生」被写入命运册，真仙路线累计一段已完成命运。",
-          "effect": {
-            "flags": [
-              "archived_e14_rebirth"
-            ],
-            "memories": [
-              "时空逆转·重生",
-              "重生记忆已写入命运册"
-            ],
-            "globals": {
-              "insight": 5,
-              "hidden_clues": 1,
-              "seal_stability": 2
-            }
-          }
-        },
-        {
-          "id": "post-hidden-thread",
-          "label": "整理新周目保留的记忆碎片",
-          "caption": "把该结局没有说完的代价转入隐藏线索与裂隙背面。",
-          "next": "g-hidden",
-          "fateType": "web",
-          "consequence": "倒流的钟声留下少量记忆，你知道下一次该优先寻找哪些人和线索。",
-          "effect": {
-            "flags": [
-              "afterglow_e14_rebirth"
-            ],
-            "memories": [
-              "时空逆转·重生的余波"
-            ],
-            "globals": {
-              "hidden_clues": 1,
-              "insight": 2
-            }
-          }
-        },
-        {
-          "id": "post-route-continue",
-          "label": "带着重生记忆回到云巅初会",
-          "caption": "保留当前结局反馈，继续检查同组或相邻角色路线。",
-          "next": "s00-arrival",
-          "fateType": "river",
-          "consequence": "你保留「时空逆转·重生」的反馈，继续补完相邻羁绊或隐藏路线。",
-          "effect": {
-            "flags": [
-              "continue_from_e14_rebirth"
-            ],
-            "memories": [
-              "重生记忆已写入命运册"
-            ],
-            "globals": {
-              "insight": 1,
-              "alliance": 1
-            }
-          }
-        },
-        {
-          "id": "post-true-immortal-check",
-          "label": "若十四命运已归档，直上真仙路",
-          "caption": "这是多周目总收束：只有主要与隐藏结局全部归档后才会点亮。",
-          "next": "e15-immortal",
-          "fateType": "wheel",
-          "consequence": "十四段命运记忆合一，真仙之路不再只是隐藏条件，而成为最终分支。",
-          "effect": {
-            "flags": [
-              "attempt_true_immortal_from_ending"
-            ],
-            "memories": [
-              "尝试以归档命运开启真仙路"
-            ],
-            "globals": {
-              "insight": 4,
-              "seal_stability": 4
-            }
-          },
-          "condition": {
-            "memories": [
-              "云墨轩·剑心相印",
-              "月清寒·星月同辉",
-              "竹清晏·竹林隐士",
-              "紫夜澜·幽冥双生",
-              "梅寒霜·寒梅傲雪",
-              "兰灵·幽谷仙缘",
-              "菊傲秋·金菊盛放",
-              "牡丹仙·百花朝宗",
-              "曼珠仙姬·彼岸花开",
-              "灵花仙子·天灵合一",
-              "十全十美·大团圆",
-              "孤独求败·独行者",
-              "魔神降世·黑暗结局",
-              "时空逆转·重生"
-            ]
-          },
-          "lockedHint": "此前需要把十个主要结局与四个隐藏结局都通过“归档结局”写入命运册。"
-        }
-      ],
+      "choices": [],
       "ending": {
         "title": "时空逆转·重生",
-        "subtitle": "时空法阵启动，下一周目保留关键记忆。",
+        "subtitle": "钟声倒卷，碎光未熄。你回到起点，却不再是空手而来。",
         "type": "loop"
       },
       "reusedPanoramaFrom": "s00-arrival"
@@ -5342,8 +4110,8 @@
     "e15-immortal": {
       "id": "e15-immortal",
       "chapter": "隐藏结局",
-      "title": "真·仙人之路",
-      "location": "九天仙门之外",
+      "title": "真·修缮师",
+      "location": "重织后的封印核心",
       "panorama": "/panoramas/project-20260620-002835-s16-final-core.jpg",
       "entryView": {
         "yaw": 0,
@@ -5355,96 +4123,240 @@
         "via": "#5c4c90",
         "to": "#f0dca0"
       },
-      "synopsis": "所有传承合一，你超越十大世家飞升。",
+      "synopsis": "你写成《修缮录》，封印从此凭手艺维系，不再以人命作价。",
       "lines": [
         {
           "speaker": "narrator",
-          "text": "十四种命运在识海中同时展开，爱、悔、牺牲与黑暗都成为道的一部分。"
+          "text": "十四段命运在识海里一一合拢，爱与悔、黑暗与牺牲，最后都摊平成同一张阵图——你终于看懂了封印的全貌，也看懂了它每一处会疼的地方。"
         },
         {
-          "speaker": "system",
-          "text": "你终于明白，传承不是钥匙，而是前人留给后来者的一次提问。"
+          "speaker": "shifu",
+          "text": "记忆深处，师父批阵稿的声音落下最后一句：修缮师修的不是阵，是『不必有人去死』这五个字。徒儿，你比我走得远。"
         },
         {
           "speaker": "narrator",
-          "text": "云巅仙阁在脚下缩成一点星火，十大世家的名姓也随风远去。"
+          "text": "你把毕生推演写成《修缮录》，不藏一手。散修与世家弟子同卷同读，从此云巅换阵，不再赌命，只凭手艺。"
         },
         {
-          "speaker": "system",
-          "text": "隐藏结局达成：真·仙人之路。"
+          "speaker": "narrator",
+          "text": "后来人提起你，不称仙，不称祖，只唤一声『修缮师』。你听见了，觉得这三个字，比飞升好听。"
         }
       ],
       "hotspots": [],
-      "choices": [
-        {
-          "id": "post-archive",
-          "label": "封存真仙结局，回到云巅初会",
-          "caption": "结局归档后，回到命运抉择处查看其他可解锁分支。",
-          "next": "s00-arrival",
-          "fateType": "wheel",
-          "major": true,
-          "consequence": "「真·仙人之路」被写入命运册，真仙路线累计一段已完成命运。",
-          "effect": {
-            "flags": [
-              "archived_e15_immortal"
-            ],
-            "memories": [
-              "真·仙人之路",
-              "真仙记忆已写入命运册"
-            ],
-            "globals": {
-              "insight": 8,
-              "seal_stability": 8,
-              "alliance": 4
-            }
-          }
-        },
-        {
-          "id": "post-hidden-thread",
-          "label": "以仙人视角复看封印背面",
-          "caption": "把该结局没有说完的代价转入隐藏线索与裂隙背面。",
-          "next": "g-hidden",
-          "fateType": "web",
-          "consequence": "真仙之路已经越过十家，但你仍能回看每条命运如何塑成此刻。",
-          "effect": {
-            "flags": [
-              "afterglow_e15_immortal"
-            ],
-            "memories": [
-              "真·仙人之路的余波"
-            ],
-            "globals": {
-              "hidden_clues": 1,
-              "insight": 2
-            }
-          }
-        },
-        {
-          "id": "post-review-core",
-          "label": "回到封印核心检查未完成分支",
-          "caption": "终极结局后回到核心，用来检查还有哪些创作分支未补完。",
-          "next": "s16-final-core",
-          "fateType": "wheel",
-          "consequence": "你以真仙视角回看封印核心，未完成的选择会被重新照亮。",
-          "effect": {
-            "flags": [
-              "reviewing_after_true_immortal"
-            ],
-            "memories": [
-              "真仙记忆已写入命运册"
-            ],
-            "globals": {
-              "insight": 3
-            }
-          }
-        }
-      ],
+      "choices": [],
       "ending": {
-        "title": "真·仙人之路",
-        "subtitle": "所有传承合一，你超越十大世家飞升。",
+        "title": "真·修缮师",
+        "subtitle": "封印从此凭手艺维系，不以人命作价。这门手艺，自你而立。",
         "type": "transcendence"
       },
       "reusedPanoramaFrom": "s16-final-core"
     }
+  },
+  "subtitle": "会记住你亲手推导的方案",
+  "cast": {
+    "protagonist": {
+      "id": "you",
+      "name": "沈青梧",
+      "role": "无名一脉封印修缮师",
+      "pronouns": "她",
+      "color": "#d9c2a6",
+      "accent": "#4a3a2c"
+    },
+    "characters": [
+      {
+        "id": "yun_moxuan",
+        "name": "云墨轩",
+        "shortName": "云墨轩",
+        "role": "云渊世家剑修",
+        "theme": "能力与边界感",
+        "color": "#8fb6e0",
+        "accent": "#22314a",
+        "romanceable": true,
+        "relationship": {
+          "enabled": true,
+          "initial": {
+            "spark": 8,
+            "trust": 18,
+            "boundary": 62
+          }
+        },
+        "portrait": "/portraits/project-20260620-002835/yun-moxuan.jpg"
+      },
+      {
+        "id": "yue_qinghan",
+        "name": "月清寒",
+        "shortName": "月清寒",
+        "role": "月华宗阵法师",
+        "theme": "秘密与信任的对等",
+        "color": "#cfd8e3",
+        "accent": "#2e3a4a",
+        "romanceable": true,
+        "relationship": {
+          "enabled": true,
+          "initial": {
+            "spark": 8,
+            "trust": 15,
+            "boundary": 65
+          }
+        },
+        "portrait": "/portraits/project-20260620-002835/yue-qinghan.jpg"
+      },
+      {
+        "id": "ju_aoqiu",
+        "name": "菊傲秋",
+        "shortName": "菊傲秋",
+        "role": "金菊世家防御阵法家",
+        "theme": "守护而非征服",
+        "color": "#d6b477",
+        "accent": "#4a3a22",
+        "romanceable": true,
+        "relationship": {
+          "enabled": true,
+          "initial": {
+            "spark": 6,
+            "trust": 12,
+            "boundary": 70
+          }
+        },
+        "portrait": "/portraits/project-20260620-002835/ju-aoqiu.jpg"
+      },
+      {
+        "id": "zi_yelan",
+        "name": "紫夜澜",
+        "shortName": "紫夜澜",
+        "role": "幽冥殿少主",
+        "theme": "黑暗面与边界",
+        "color": "#a99bd6",
+        "accent": "#35304d",
+        "romanceable": true,
+        "relationship": {
+          "enabled": true,
+          "initial": {
+            "spark": 8,
+            "trust": 10,
+            "boundary": 75
+          }
+        }
+      },
+      {
+        "id": "zhu_qingyan",
+        "name": "竹清晏",
+        "shortName": "竹清晏",
+        "role": "灵植药师",
+        "theme": "原则与同道",
+        "color": "#9db8a4",
+        "accent": "#2f4036",
+        "romanceable": false,
+        "relationship": {
+          "enabled": true,
+          "initial": {
+            "spark": 0,
+            "trust": 25,
+            "boundary": 60
+          }
+        }
+      },
+      {
+        "id": "mei_hanshuang",
+        "name": "梅寒霜",
+        "shortName": "梅寒霜",
+        "role": "独立女剑修",
+        "theme": "对手到战友",
+        "color": "#d9c2c9",
+        "accent": "#4a3038",
+        "romanceable": false,
+        "relationship": {
+          "enabled": true,
+          "initial": {
+            "spark": 0,
+            "trust": 12,
+            "boundary": 65
+          }
+        }
+      },
+      {
+        "id": "mudan",
+        "name": "牡丹仙",
+        "shortName": "牡丹仙",
+        "role": "百花议庭掌局者",
+        "theme": "清醒的权力博弈",
+        "color": "#d98c8c",
+        "accent": "#4a2f33",
+        "romanceable": false,
+        "relationship": {
+          "enabled": true,
+          "initial": {
+            "spark": 0,
+            "trust": 15,
+            "boundary": 60
+          }
+        }
+      },
+      {
+        "id": "manzhu",
+        "name": "曼珠",
+        "shortName": "曼珠",
+        "role": "彼岸引路人",
+        "theme": "记得所有被遗忘的人",
+        "color": "#c98a7a",
+        "accent": "#452b24",
+        "romanceable": false,
+        "relationship": {
+          "enabled": false
+        }
+      },
+      {
+        "id": "lan_ling",
+        "name": "兰灵",
+        "shortName": "兰灵",
+        "role": "万灵倾听者",
+        "theme": "自然与共生",
+        "color": "#a4c4b0",
+        "accent": "#274035",
+        "romanceable": false,
+        "relationship": {
+          "enabled": false
+        }
+      },
+      {
+        "id": "ling_hua",
+        "name": "灵花",
+        "shortName": "灵花",
+        "role": "天灵化身",
+        "theme": "光与声音的长者",
+        "color": "#e3ddc9",
+        "accent": "#4a4433",
+        "romanceable": false,
+        "relationship": {
+          "enabled": false
+        }
+      },
+      {
+        "id": "shifu",
+        "name": "师父",
+        "shortName": "师父",
+        "role": "上一代封印修缮师",
+        "theme": "失踪的悬案",
+        "color": "#b8ad8f",
+        "accent": "#3d3a28",
+        "romanceable": false,
+        "relationship": {
+          "enabled": false
+        }
+      },
+      {
+        "id": "mo_shen",
+        "name": "魔神",
+        "shortName": "魔神",
+        "role": "封印之下的低语",
+        "theme": "心结与诱惑",
+        "color": "#7a6a8f",
+        "accent": "#241d30",
+        "romanceable": false,
+        "relationship": {
+          "enabled": false
+        }
+      }
+    ]
   }
 }

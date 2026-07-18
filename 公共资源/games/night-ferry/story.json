@@ -1,0 +1,2148 @@
+{
+  "title": "夜航电台",
+  "subtitle": "全城都在听，只有一个人听得懂",
+  "startNodeId": "n00-mail-room",
+  "cast": {
+    "protagonist": {
+      "id": "you",
+      "name": "程晚星",
+      "role": "《夜航船》深夜档主播·来信编辑",
+      "pronouns": "她",
+      "color": "#d8cfc2",
+      "accent": "#3a332c"
+    },
+    "characters": [
+      {
+        "id": "xin_writer",
+        "name": "未署名的她",
+        "shortName": "写信人",
+        "role": "第四十七封信的主人",
+        "theme": "匿名的正当性",
+        "color": "#cfd8e3",
+        "accent": "#2e3a4a",
+        "romanceable": false,
+        "relationship": {
+          "enabled": true,
+          "initial": {
+            "spark": 0,
+            "trust": 10,
+            "boundary": 80
+          }
+        }
+      },
+      {
+        "id": "a_yue",
+        "name": "阿岳",
+        "shortName": "阿岳",
+        "role": "电台修机师·磁带档案管理员",
+        "theme": "底噪里的真话",
+        "color": "#9db8a4",
+        "accent": "#2f4036",
+        "romanceable": false,
+        "relationship": {
+          "enabled": true,
+          "initial": {
+            "spark": 8,
+            "trust": 20,
+            "boundary": 60
+          }
+        }
+      },
+      {
+        "id": "shen_xu",
+        "name": "沈叙",
+        "shortName": "沈叙",
+        "role": "档案科民警",
+        "theme": "程序与例外",
+        "color": "#8fb6e0",
+        "accent": "#22314a",
+        "romanceable": false,
+        "relationship": {
+          "enabled": true,
+          "initial": {
+            "spark": 8,
+            "trust": 15,
+            "boundary": 70
+          }
+        }
+      },
+      {
+        "id": "zhou_yi",
+        "name": "周姨",
+        "shortName": "周姨",
+        "role": "《夜航船》栏目台长",
+        "theme": "保栏目还是保来信人",
+        "color": "#d9c2c9",
+        "accent": "#4a3038",
+        "romanceable": false,
+        "relationship": {
+          "enabled": false
+        }
+      }
+    ]
+  },
+  "mechanics": {
+    "mode": "scores",
+    "scores": [
+      {
+        "id": "public_heat",
+        "label": "满城风声",
+        "initial": 0,
+        "min": 0,
+        "max": 100,
+        "visibility": "public",
+        "tone": "pressure"
+      }
+    ]
+  },
+  "nodes": {
+    "n00-mail-room": {
+      "id": "n00-mail-room",
+      "chapter": "序幕",
+      "title": "第四十七封信",
+      "location": "电台三楼·磁带资料室",
+      "panorama": "/panoramas/s10-secret-archive.png",
+      "palette": {
+        "from": "#14100c",
+        "via": "#4a3a26",
+        "to": "#d8b877"
+      },
+      "synopsis": "开播前四十分钟，一封没有署名的来信躺在信堆最上面：它精准写出了三天后的一场失踪。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 96
+      },
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "资料室的灯泡接触不良，阿岳踩着凳子修灯，修到一半停下来——因为你把三号信箱里那封没署名的信，念给了他听。"
+        },
+        {
+          "speaker": "xin_writer",
+          "text": "「晚星姐：下周三，纺织厂的灯会少一盏。别找我。要找，去找洗印店的底片。——听你节目的人」"
+        },
+        {
+          "speaker": "a_yue",
+          "text": "信纸底下垫过磁带盒，压痕还在。写信的人一边听你的节目，一边写……晚星，她不是在投稿，她是在求救。"
+        },
+        {
+          "speaker": "you",
+          "text": "她没留名字。那我就不能替她把名字喊出来——但话筒在我手里，我总有办法只回给她一个人听。"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "postmark",
+          "label": "邮戳",
+          "description": "邮戳是城西支局的，信封里却夹着一张城东报亭的票根——她寄信前，绕了半座城。",
+          "yaw": 40,
+          "pitch": -12,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "postmark_seen"
+            ],
+            "memories": [
+              "发现线索：城西的邮戳，城东的票根——她在绕路防跟踪"
+            ]
+          }
+        },
+        {
+          "id": "paper-crease",
+          "label": "信纸压痕",
+          "description": "信纸上有一圈圆形压痕，大小正是磁带盒——她写信时垫着的，是一盘随时准备寄出的录音。",
+          "yaw": -35,
+          "pitch": -8,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "paper_crease_seen"
+            ],
+            "memories": [
+              "发现线索：信纸压痕来自磁带盒——她手里有一盘录音"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c00-onair",
+          "label": "把第四十七封信带进今晚的直播",
+          "next": "n01-first-reply",
+          "fateType": "river",
+          "consequence": "在空中回信——全城作证是最好的保护，也是最大的暴露。你选择让所有人都听见，再赌只有她听懂。",
+          "effect": {
+            "flags": [
+              "took_letter_onair"
+            ],
+            "memories": [
+              "她把第四十七封信放进了直播稿夹"
+            ]
+          }
+        },
+        {
+          "id": "c00-archive",
+          "label": "先托阿岳把信纸和票根封档，再进直播间",
+          "next": "n01-first-reply",
+          "fateType": "web",
+          "consequence": "证据链先落袋，哪天要对质就有实物——但离开播只剩十分钟，你来不及斟酌，只带着一句话的措辞上了楼。",
+          "effect": {
+            "flags": [
+              "archived_first"
+            ],
+            "relationships": {
+              "a_yue": {
+                "trust": 4
+              }
+            },
+            "memories": [
+              "信纸与票根封进了阿岳的档案柜"
+            ]
+          }
+        }
+      ]
+    },
+    "n01-first-reply": {
+      "id": "n01-first-reply",
+      "chapter": "序幕",
+      "title": "空中回信",
+      "location": "直播间·零点档",
+      "panorama": "/panoramas/s07-broadcast-countdown.jpg",
+      "palette": {
+        "from": "#0c1220",
+        "via": "#27405f",
+        "to": "#b9d1e8"
+      },
+      "synopsis": "红灯亮起。你要在直播里回这封信——用全城都能听、只有她能懂的话。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": -22,
+        "fov": 92
+      },
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "导播台的红灯亮起来。玻璃外是电视台共用的晚会大厅，深夜空无一人——台上立着一排彩排用的服装模特，水晶灯只剩值夜的亮着。整座城市此刻只剩你的声音。"
+        },
+        {
+          "speaker": "you",
+          "text": "「这里是《夜航船》，我是晚星。今晚的第一封信……我想念给一位没留名字的朋友。」"
+        },
+        {
+          "speaker": "narrator",
+          "text": "你把信纸压平。接下来的每一个字都是公开的——你要说一句她听得懂、别人听不破的话。"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "on-air-lamp",
+          "label": "红灯",
+          "description": "「ON AIR」的红灯罩上落了灰，灯却亮得很稳——从这一秒起，你说的每个字都有一万个证人。",
+          "yaw": 15,
+          "pitch": 8,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "on_air_seen"
+            ],
+            "memories": [
+              "红灯亮起——每个字都有一万个证人"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c01-soft",
+          "label": "「入冬了。炉子上的水开了，就先把火关小，人别守在炉边。」",
+          "next": "n02-off-air",
+          "fateType": "river",
+          "consequence": "听众只当是入冬的问候，热线安安静静——而她会听懂：先撤离，别回头。只是这样一来，「查下去」的担子，就全落在你一个人肩上。",
+          "effect": {
+            "globals": {
+              "public_heat": 6
+            },
+            "relationships": {
+              "xin_writer": {
+                "trust": 8
+              }
+            },
+            "flags": [
+              "reply_soft"
+            ],
+            "memories": [
+              "空中回信：让她先离开炉边"
+            ]
+          }
+        },
+        {
+          "id": "c01-bold",
+          "label": "「有位朋友问我怕不怕黑。我说，黑的地方，灯才看得清。」",
+          "next": "n02-off-air",
+          "fateType": "wheel",
+          "consequence": "这句话明天会被晚报摘去当标题，收听率直往上蹿——可话说得太亮，听懂的，恐怕就不止她一个人。",
+          "effect": {
+            "globals": {
+              "public_heat": 10
+            },
+            "relationships": {
+              "xin_writer": {
+                "trust": 4
+              }
+            },
+            "flags": [
+              "reply_bold",
+              "leak_seed"
+            ],
+            "memories": [
+              "空中回信：黑的地方，灯才看得清"
+            ]
+          }
+        },
+        {
+          "id": "c01-schedule",
+          "label": "「点一首《漫长的告别》，送给三号信箱的朋友——下周，同一时间。」",
+          "next": "n02-off-air",
+          "fateType": "web",
+          "consequence": "你们有了下一次联络的窗口——但一个固定的时间，对守着收音机的人是约定，对盯着你的人，是可以埋伏的坐标。",
+          "effect": {
+            "globals": {
+              "public_heat": 3
+            },
+            "relationships": {
+              "xin_writer": {
+                "trust": 6
+              }
+            },
+            "flags": [
+              "reply_scheduled"
+            ],
+            "memories": [
+              "空中回信：下周，同一时间"
+            ]
+          }
+        }
+      ]
+    },
+    "n02-off-air": {
+      "id": "n02-off-air",
+      "chapter": "序幕",
+      "title": "收播之后",
+      "location": "电台天台·凌晨两点",
+      "panorama": "/panoramas/s11-rooftop-confrontation.png",
+      "palette": {
+        "from": "#10151f",
+        "via": "#31404f",
+        "to": "#c78356"
+      },
+      "synopsis": "节目收播。天台的风里，阿岳带来了一件不该出现的东西。",
+      "entryView": {
+        "yaw": 165,
+        "pitch": 2,
+        "fov": 96
+      },
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "凌晨两点，天台的风把耳机线吹得贴着栏杆响。城市在脚下亮着零星的灯——不知道哪一盏，是她在听。"
+        },
+        {
+          "speaker": "a_yue",
+          "text": "热线最后一通电话，没人说话，只有十九秒的电流声。我把它录下来了——底噪里有纺车的声音，晚星。她是在纺织厂里给你打的。"
+        },
+        {
+          "speaker": "you",
+          "text": "那就从纺织厂查起。她可以一直不说名字——但她说的每一句话，都得有人当真。"
+        }
+      ],
+      "hotspots": [],
+      "choices": [
+        {
+          "id": "c02-dawn",
+          "label": "把十九秒电流声收进包里，等天亮",
+          "next": "n10-day-desk",
+          "fateType": "river",
+          "consequence": "你决定白天亲自去查——主播的脸在白天太好认，每一步都可能被人记下。",
+          "effect": {
+            "flags": [
+              "kept_static_tape"
+            ],
+            "memories": [
+              "她带走了那盘十九秒的电流声"
+            ]
+          }
+        }
+      ]
+    },
+    "n10-day-desk": {
+      "id": "n10-day-desk",
+      "chapter": "第一章",
+      "title": "白天的电台",
+      "location": "电台二楼·编辑部",
+      "panorama": "/panoramas/s09-wanqing-office.png",
+      "palette": {
+        "from": "#14100c",
+        "via": "#4a3a26",
+        "to": "#d8b877"
+      },
+      "synopsis": "晨会散了，周姨把昨晚的节目单拍在桌上。你有一个白天的时间，三条线索，只够先走一条。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 96
+      },
+      "lines": [
+        {
+          "speaker": "zhou_yi",
+          "text": "台里问昨晚那封信是什么来头。我替你挡了——但晚星，我只能挡到月底改版会。你要查，就查出个能摆上桌面的东西。今天周五——你只有五天。"
+        },
+        {
+          "speaker": "you",
+          "text": "邮戳、底片、纺车声。三条线，一个白天。她给我的时间，比台里给的少得多。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "窗外的梧桐把阳光筛成碎点。白天的电台安静得不像话——所有真正的事，都发生在看不见的频率里。"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "duty-roster",
+          "label": "值班表",
+          "description": "资料室的值班表上，阿岳把这周的夜班全换给了自己——从你收到第四十七封信那天起。",
+          "yaw": 30,
+          "pitch": -8,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "ayue_nightshift_seen"
+            ],
+            "memories": [
+              "发现线索：阿岳把这周夜班全换给了自己"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c10-kiosk",
+          "label": "去城东报亭：票根是她留下的唯一实物",
+          "next": "n11-kiosk",
+          "fateType": "river",
+          "consequence": "实物最可靠——但报亭在闹市，白天人多眼杂，你的脸会被更多人记住。",
+          "effect": {
+            "flags": [
+              "route_kiosk"
+            ],
+            "memories": [
+              "白日查访：城东报亭"
+            ]
+          }
+        },
+        {
+          "id": "c10-mill",
+          "label": "和阿岳去纺织厂：循十九秒底噪里的纺车声",
+          "next": "n12-mill",
+          "fateType": "web",
+          "consequence": "声音是她留给你们的坐标——但厂区不欢迎生人，你们得编一个进门的理由，谎言从这里开始记账。",
+          "effect": {
+            "flags": [
+              "route_mill"
+            ],
+            "memories": [
+              "白日查访：纺织厂"
+            ]
+          }
+        },
+        {
+          "id": "c10-lab",
+          "label": "去洗印店：信里唯一的明示——找底片",
+          "next": "n13-photo-lab",
+          "fateType": "wheel",
+          "consequence": "这是她亲手指的路，也可能是别人等你走的路——信要是被人截读过，洗印店就是最好的守株之处。",
+          "effect": {
+            "flags": [
+              "route_lab"
+            ],
+            "memories": [
+              "白日查访：洗印店"
+            ]
+          }
+        }
+      ]
+    },
+    "n11-kiosk": {
+      "id": "n11-kiosk",
+      "chapter": "第一章",
+      "title": "城东报亭",
+      "location": "城东·工人文化宫报亭",
+      "panorama": "/panoramas/s03-market.jpg",
+      "palette": {
+        "from": "#14100c",
+        "via": "#4a3a26",
+        "to": "#d8b877"
+      },
+      "synopsis": "报亭老板娘认得那张票根。她说，有个姑娘每周三来买同一份晚报，顺手寄信——上周三没来。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 96
+      },
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "报亭的玻璃上贴满了过期的电影海报。老板娘扫了你一眼，又扫了一眼，忽然压低声音：「你是电台那个晚星吧？她总说，听你的节目才睡得着。」"
+        },
+        {
+          "speaker": "narrator",
+          "text": "「每周三来，买晚报，寄信，从不多话。上周三——」老板娘顿了顿，「没来。倒是来了两个穿夹克的，问我她住哪儿。我说不认识。」"
+        },
+        {
+          "speaker": "you",
+          "text": "两个穿夹克的，比我先到。她绕了半座城防的人，已经找到这儿了。"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "paper-pile",
+          "label": "晚报堆",
+          "description": "柜台下压着一份留给熟客的晚报，报头夹着一张字条：「替我留到周三。」——她还打算回来。",
+          "yaw": -25,
+          "pitch": -14,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "reserved_paper_seen"
+            ],
+            "memories": [
+              "发现线索：她托报亭留报到周三——她还打算回来"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c11-parcel",
+          "label": "问出她寄存的东西",
+          "next": "n14-second-letter",
+          "fateType": "river",
+          "consequence": "老板娘从米缸底下摸出一个牛皮纸包塞给你——从这一刻起，穿夹克的人要找的东西，在你身上。",
+          "lockedHint": "老板娘还在掂量你。先说出你注意过的细节——比如那张城西的邮戳——她才信你真是替那姑娘来的。",
+          "condition": {
+            "flags": [
+              "postmark_seen"
+            ]
+          },
+          "effect": {
+            "flags": [
+              "kiosk_parcel"
+            ],
+            "relationships": {
+              "xin_writer": {
+                "trust": 5
+              }
+            },
+            "memories": [
+              "报亭米缸底下的牛皮纸包"
+            ]
+          }
+        },
+        {
+          "id": "c11-watch",
+          "label": "不多问，请老板娘替你记下再来打听的人",
+          "next": "n14-second-letter",
+          "fateType": "web",
+          "consequence": "你把自己的传呼机号留给了老板娘——多了一双帮你盯梢的眼睛，也多了一个可能被撬开的嘴。",
+          "effect": {
+            "flags": [
+              "kiosk_watcher"
+            ],
+            "memories": [
+              "报亭老板娘应下：再有人打听就传呼你"
+            ]
+          }
+        }
+      ]
+    },
+    "n12-mill": {
+      "id": "n12-mill",
+      "chapter": "第一章",
+      "title": "纺车与底噪",
+      "location": "国营第三纺织厂·细纱车间",
+      "panorama": "/panoramas/s07-rehearsal-hall.png",
+      "palette": {
+        "from": "#14100c",
+        "via": "#4a3a26",
+        "to": "#d8b877"
+      },
+      "synopsis": "阿岳带着盘带机，你们以「工人文艺采风」的名义进了车间。十九秒底噪里的纺车声，就在这排机器中间。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 96
+      },
+      "lines": [
+        {
+          "speaker": "a_yue",
+          "text": "就是这排细纱机。你听，第四台的皮带打滑，每三秒咔一下——十九秒里咔了六下。她打电话的地方，离这台机器不出十米。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "十米之内，是车间角落的工具间，门上挂着锁，锁是新的。带你们进来的女工班长顺着你的目光看过去，声音低下来：「小满辞工了。厂里说她回老家了——可她的搪瓷缸还在柜上。」"
+        },
+        {
+          "speaker": "you",
+          "text": "辞工的人不会留下缸子。她不是回老家了，她是没能走出这道门。她信里写，下周三，灯会少一盏——小满是已经灭掉的那一盏。她说的，是下一盏。"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "enamel-mug",
+          "label": "搪瓷缸",
+          "description": "缸身印着厂庆字样，缸底压着一张折成四方的电台节目单——《夜航船》那一栏，用铅笔描了三遍。",
+          "yaw": 45,
+          "pitch": -10,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "mug_schedule_seen"
+            ],
+            "memories": [
+              "发现线索：小满的搪瓷缸底压着描了三遍的《夜航船》节目单"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c12-lock",
+          "label": "让阿岳想办法开那把新锁",
+          "next": "n14-second-letter",
+          "fateType": "wheel",
+          "consequence": "工具间里没有小满，只有半墙的纸箱和一台不该出现在纺织厂的裁纸机——你们看见了不该看见的东西，进出的每一秒都在冒险。",
+          "effect": {
+            "flags": [
+              "toolroom_seen",
+              "mill_witness"
+            ],
+            "relationships": {
+              "a_yue": {
+                "trust": 5
+              }
+            },
+            "memories": [
+              "工具间里的裁纸机——纺织厂里不该有的东西"
+            ]
+          }
+        },
+        {
+          "id": "c12-retreat",
+          "label": "记下位置就走，不惊动任何人",
+          "next": "n14-second-letter",
+          "fateType": "river",
+          "consequence": "你们按原路退出，厂门口的登记簿上留下了两个假名字——稳妥，但工具间里的答案，要等下一次才能揭开。",
+          "effect": {
+            "flags": [
+              "mill_witness"
+            ],
+            "relationships": {
+              "a_yue": {
+                "trust": 3,
+                "boundary": 3
+              }
+            },
+            "memories": [
+              "纺织厂工具间的位置已记下"
+            ]
+          }
+        }
+      ]
+    },
+    "n13-photo-lab": {
+      "id": "n13-photo-lab",
+      "chapter": "第一章",
+      "title": "半张底片",
+      "location": "文化宫西侧·红光洗印店",
+      "panorama": "/panoramas/s06-reading-room-huarongli.png",
+      "palette": {
+        "from": "#14100c",
+        "via": "#4a3a26",
+        "to": "#d8b877"
+      },
+      "synopsis": "洗印店老板一听「取底片」三个字，手就抖了。柜台另一头，一个穿制服的年轻民警回过头来。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 96
+      },
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "暗房的红灯从门帘缝里漏出来。老板搓着手：「底片……前天被人取走了，凭条是真的，我、我总不能不给。」"
+        },
+        {
+          "speaker": "shen_xu",
+          "text": "取件凭条是真的，取件的人是假的——我核过存根，笔迹不对。档案科，沈叙。你也是为那批底片来的？"
+        },
+        {
+          "speaker": "narrator",
+          "text": "他把工作证放在柜台上推过来，动作停在一半：「你可以不说你的消息来源。我查我的案，你查你的信——对得上的部分，我们交换。」"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "red-lamp",
+          "label": "暗房红灯",
+          "description": "暗房晾片绳上还夹着一张没人来取的样片：夜里的厂区大门，闪光灯照亮了半辆卡车的车牌。",
+          "yaw": -40,
+          "pitch": -5,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "sample_photo_seen"
+            ],
+            "memories": [
+              "发现线索：晾片绳上的样片——夜里厂门口的半个车牌"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c13-deal",
+          "label": "接受交换：案对案，不交信源",
+          "next": "n14-second-letter",
+          "fateType": "river",
+          "consequence": "他把「假凭条」的笔迹拓样给了你，你把纺织厂三个字给了他——各留了底牌，也各欠了一句实话。",
+          "effect": {
+            "flags": [
+              "negative_half",
+              "shenxu_deal"
+            ],
+            "relationships": {
+              "shen_xu": {
+                "trust": 5,
+                "boundary": 3
+              }
+            },
+            "memories": [
+              "与沈叙立下案对案的交换"
+            ]
+          }
+        },
+        {
+          "id": "c13-alone",
+          "label": "婉拒：这封信只能我一个人查",
+          "next": "n14-second-letter",
+          "fateType": "web",
+          "consequence": "你把警察挡在了信箱之外——她的匿名多了一层保险，你的白天少了一半人手。",
+          "effect": {
+            "flags": [
+              "negative_half",
+              "declined_police"
+            ],
+            "relationships": {
+              "shen_xu": {
+                "trust": 2,
+                "boundary": 4
+              },
+              "xin_writer": {
+                "trust": 4
+              }
+            },
+            "memories": [
+              "她把警察挡在了信箱之外"
+            ]
+          }
+        }
+      ]
+    },
+    "n14-second-letter": {
+      "id": "n14-second-letter",
+      "chapter": "第一章",
+      "title": "第四十八封信",
+      "location": "电台三楼·磁带资料室",
+      "panorama": "/panoramas/s10-secret-archive.png",
+      "palette": {
+        "from": "#14100c",
+        "via": "#4a3a26",
+        "to": "#d8b877"
+      },
+      "synopsis": "天黑前你赶回电台。信箱里躺着第四十八封信——她听到了昨晚的回信，也听懂了。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 96
+      },
+      "lines": [
+        {
+          "speaker": "xin_writer",
+          "text": "「晚星姐：我听到了。原来真的有人会用一整座城市，只跟一个人说话。周三之前，我会把最后一样东西送到你能找到的地方。别担心我走不走——周三之前，我哪儿也不能去。别替我报警——他们里头，有穿制服的。——还在听的人」"
+        },
+        {
+          "speaker": "a_yue",
+          "text": "「有穿制服的」……晚星，今晚的节目你还照常回信吗？现在每多说一个字，听懂的人就可能多一个。"
+        },
+        {
+          "speaker": "you",
+          "text": "照常。她在数着我的声音过日子——我停了，她就真的一个人了。"
+        }
+      ],
+      "hotspots": [],
+      "choices": [
+        {
+          "id": "c14-onair",
+          "label": "进直播间，准备今晚的回信",
+          "next": "n15-second-reply",
+          "fateType": "river",
+          "consequence": "红灯会准时亮起。你带着白天查到的一切坐进直播间——今晚说的每个字，都是双刃的。",
+          "effect": {
+            "memories": [
+              "第四十八封信进了直播稿夹"
+            ]
+          }
+        }
+      ]
+    },
+    "n15-second-reply": {
+      "id": "n15-second-reply",
+      "chapter": "第一章",
+      "title": "第二次空中回信",
+      "location": "直播间·零点档",
+      "panorama": "/panoramas/s07-broadcast-countdown.jpg",
+      "palette": {
+        "from": "#14100c",
+        "via": "#4a3a26",
+        "to": "#d8b877"
+      },
+      "synopsis": "第二夜。她在听，穿夹克的在听，也许穿制服的也在听。你的三个措辞，各有各的价钱。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": -24,
+        "fov": 90
+      },
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "导播台红灯亮起。热线的灯闪了两下又灭——像有人拿起了电话，又放下了。"
+        },
+        {
+          "speaker": "you",
+          "text": "「这里是《夜航船》。今晚风大，先给守夜的朋友们提个醒——」"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "hotline-lamp",
+          "label": "热线灯",
+          "description": "热线的灯又闪了一下。十九秒的人，此刻就在线路那头呼吸。",
+          "yaw": 20,
+          "pitch": 5,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "hotline_breath_seen"
+            ],
+            "memories": [
+              "热线灯闪动——她就在线路那头"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c15-quiet",
+          "label": "「接下来，是十九秒的安静。给知道它是什么的人。」",
+          "next": "n16-chapter-end",
+          "fateType": "wheel",
+          "consequence": "一万台收音机同时沉默了十九秒，台里的电话立刻炸了——热度跌了，可她会知道：她的十九秒，被人一秒不落地收着。——而只要有人调得出那晚的热线记录，这十九秒，就是一枚指向她的图钉。",
+          "effect": {
+            "globals": {
+              "public_heat": -4
+            },
+            "relationships": {
+              "xin_writer": {
+                "trust": 10
+              }
+            },
+            "flags": [
+              "reply_silence",
+              "phone_log_risk"
+            ],
+            "memories": [
+              "空中回信：十九秒的安静"
+            ]
+          }
+        },
+        {
+          "id": "c15-trace",
+          "label": "「有位读者来信问路。我说：城西的邮票，贴不上城东的心事。」",
+          "next": "n16-chapter-end",
+          "fateType": "river",
+          "consequence": "她会听懂：你去过报亭，你摸到了她的路线——但这句话同时向所有听着的人证实了：主播真的在查。",
+          "effect": {
+            "globals": {
+              "public_heat": 7
+            },
+            "relationships": {
+              "xin_writer": {
+                "trust": 6
+              }
+            },
+            "flags": [
+              "reply_trace"
+            ],
+            "memories": [
+              "空中回信：城西的邮票，城东的心事"
+            ]
+          },
+          "condition": {
+            "flags": [
+              "postmark_seen"
+            ]
+          },
+          "lockedHint": "你还没有留意过那枚邮戳——这句暗语，你自己都说不出口。"
+        },
+        {
+          "id": "c15-guard",
+          "label": "「有人问写信人的地址。《夜航船》的信箱没有地址，只有航向。」",
+          "next": "n16-chapter-end",
+          "fateType": "web",
+          "consequence": "这是说给打听的人听的立场，全城都会记住这句话——立场保护了她，也把你自己推到了灯下最亮处。",
+          "effect": {
+            "globals": {
+              "public_heat": 8
+            },
+            "relationships": {
+              "xin_writer": {
+                "trust": 7
+              }
+            },
+            "flags": [
+              "reply_guard",
+              "press_war_seed"
+            ],
+            "memories": [
+              "空中回信：信箱没有地址，只有航向"
+            ]
+          }
+        }
+      ]
+    },
+    "n16-chapter-end": {
+      "id": "n16-chapter-end",
+      "chapter": "第一章",
+      "title": "收播·第二夜",
+      "location": "电台天台·凌晨两点",
+      "panorama": "/panoramas/s11-rooftop-confrontation.png",
+      "palette": {
+        "from": "#14100c",
+        "via": "#4a3a26",
+        "to": "#d8b877"
+      },
+      "synopsis": "第二夜收播。周三越来越近，她说的「最后一样东西」还没有到。",
+      "entryView": {
+        "yaw": 165,
+        "pitch": 2,
+        "fov": 96
+      },
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "天台的风比昨夜更硬。楼下的传达室亮着灯——有人给你留了话：明早九点，台长办公室。"
+        },
+        {
+          "speaker": "zhou_yi",
+          "text": "「不管明早他们说什么，」周姨在楼梯口拦住你，只说了一句，「节目是你的，信箱是他们的——想清楚哪个不能丢。」"
+        },
+        {
+          "speaker": "you",
+          "text": "周三之前，我两个都不丢。"
+        }
+      ],
+      "hotspots": [],
+      "choices": [
+        {
+          "id": "c16-morning",
+          "label": "回去睡三个小时，九点准时赴约",
+          "next": "n20-station-office",
+          "fateType": "river",
+          "consequence": "台长办公室从不为深夜档开门——它一开门，多半不是好事。",
+          "effect": {
+            "memories": [
+              "明早九点，台长办公室"
+            ]
+          }
+        }
+      ]
+    },
+    "n20-station-office": {
+      "id": "n20-station-office",
+      "chapter": "第二章",
+      "title": "九点的约谈",
+      "location": "电台二楼·台长办公室",
+      "panorama": "/panoramas/s09-wanqing-office.png",
+      "palette": {
+        "from": "#14100c",
+        "via": "#4a3a26",
+        "to": "#d8b877"
+      },
+      "synopsis": "台长办公室里坐着三个人：台长、周姨，和一位来\"协调工作\"的民警——沈叙。他们想要那晚的热线记录。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 96
+      },
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "九点整。台长的茶杯口朝下扣着——周姨说过，这是他准备说难听话的习惯。靠窗的椅子上，沈叙穿着制服，帽子端正地放在膝上。"
+        },
+        {
+          "speaker": "shen_xu",
+          "text": "协查通知，要调本月的热线记录。程序上，台里应当配合。——程序上，台里也有权查验这份通知的编号。"
+        },
+        {
+          "speaker": "you",
+          "text": "她说过，他们里头有穿制服的。现在，制服就坐在台长旁边。"
+        },
+        {
+          "speaker": "zhou_yi",
+          "text": "晚星，台长的意思是配合。我的意思是——《夜航船》开播七年，听众的电话没有交出去过一页。今天交了，明天信箱就死了。"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "upside-cup",
+          "label": "倒扣的茶杯",
+          "description": "台长的茶杯底压着一张便签，露出半行铅笔字：「……宣传口的同志十点还要来电」——催台里的，不止一路人。",
+          "yaw": 35,
+          "pitch": -12,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "cup_note_seen"
+            ],
+            "memories": [
+              "发现线索：催台里交记录的，不止一路人"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c20-refuse",
+          "label": "援引栏目保密惯例：信不交，记录也不交",
+          "next": "n21-parcel",
+          "fateType": "river",
+          "consequence": "周姨立刻接住了你的话，台长的茶杯翻了过来——信箱保住了，但台里给你记了一笔，改版会提前到了下周。",
+          "effect": {
+            "relationships": {
+              "xin_writer": {
+                "trust": 6
+              }
+            },
+            "flags": [
+              "refused_log"
+            ],
+            "memories": [
+              "她当面拒交热线记录"
+            ]
+          }
+        },
+        {
+          "id": "c20-stall",
+          "label": "答应\"三天后走正式手续\"——把时间拖过周三",
+          "next": "n21-parcel",
+          "fateType": "web",
+          "consequence": "台长满意了，周姨松了口气——只有沈叙抬起眼看了你一秒：他听得出来，你在拖。",
+          "effect": {
+            "flags": [
+              "stalled_log"
+            ],
+            "relationships": {
+              "shen_xu": {
+                "trust": -2
+              }
+            },
+            "memories": [
+              "她把交记录拖过了周三"
+            ]
+          }
+        },
+        {
+          "id": "c20-ask",
+          "label": "按交换的规矩，当面问沈叙：这份通知从哪个口子来",
+          "next": "n21-parcel",
+          "fateType": "wheel",
+          "consequence": "他在台长面前答了实话：「查过了——不是档案科的编号。」他替你挡下了这一页记录，也把自己推到了递通知的人对面。",
+          "lockedHint": "你们没有立过\"案对案\"的规矩——他没有理由在台长面前替你回答这个问题。",
+          "condition": {
+            "flags": [
+              "shenxu_deal"
+            ]
+          },
+          "effect": {
+            "flags": [
+              "order_irregular"
+            ],
+            "relationships": {
+              "shen_xu": {
+                "trust": 5,
+                "boundary": 3
+              }
+            },
+            "memories": [
+              "沈叙当众承认：通知没走档案科的编号"
+            ]
+          }
+        }
+      ]
+    },
+    "n21-parcel": {
+      "id": "n21-parcel",
+      "chapter": "第二章",
+      "title": "第四十九封信",
+      "location": "电台三楼·磁带资料室",
+      "panorama": "/panoramas/s10-secret-archive.png",
+      "palette": {
+        "from": "#14100c",
+        "via": "#4a3a26",
+        "to": "#d8b877"
+      },
+      "synopsis": "中午的信箱里躺着第四十九封信。信封的封口，比她前两封的手法潦草——像是被人拆开又粘回去过。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 96
+      },
+      "lines": [
+        {
+          "speaker": "xin_writer",
+          "text": "「晚星姐：周三亥时，老码头三号仓，我把最后一样东西交给你。只你一个人来。——快见面的人」"
+        },
+        {
+          "speaker": "a_yue",
+          "text": "封口的浆糊是新的，压痕却是旧的——这封信被人拆过，重新粘上，再放回你的信箱。晚星，看信的不止你了。"
+        },
+        {
+          "speaker": "you",
+          "text": "信箱失守了。她以为只说给我听的话，已经有人抄了一份——那老码头等着她的，就不只是我。"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "glue-line",
+          "label": "封口浆糊",
+          "description": "新浆糊压着旧折痕，拆信的人很熟练——熟练得像做过很多次。你想起档案袋的封条，也是这种手法。",
+          "yaw": -30,
+          "pitch": -10,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "resealed_seen"
+            ],
+            "memories": [
+              "发现线索：拆信的手法像拆档案封条的人"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c21-open-parcel",
+          "label": "拆开报亭那只牛皮纸包",
+          "next": "n22-tape-truth",
+          "fateType": "wheel",
+          "consequence": "纸包里是一盘微型磁带，标签上是小满的字：「如果我来不及。」——你手里有了她们的证词，也有了别人非抢不可的理由。",
+          "lockedHint": "你手上没有可拆的东西——那条线，你白天没有走。",
+          "condition": {
+            "flags": [
+              "kiosk_parcel"
+            ]
+          },
+          "effect": {
+            "flags": [
+              "satin_tape"
+            ],
+            "relationships": {
+              "xin_writer": {
+                "trust": 5
+              }
+            },
+            "memories": [
+              "小满的磁带：「如果我来不及」"
+            ]
+          }
+        },
+        {
+          "id": "c21-plan",
+          "label": "把信摊在桌上，和阿岳把周三重新排一遍",
+          "next": "n22-tape-truth",
+          "fateType": "river",
+          "consequence": "你们把亥时、码头、三号仓一格一格排开——计划清楚了，可它清楚的前提是：读信的另一拨人，拿到的是同一份计划。",
+          "effect": {
+            "memories": [
+              "周三的计划，被两拨人同时读到"
+            ]
+          }
+        }
+      ]
+    },
+    "n22-tape-truth": {
+      "id": "n22-tape-truth",
+      "chapter": "第二章",
+      "title": "洗掉的磁带",
+      "location": "直播间机房·下午",
+      "panorama": "/panoramas/s07-broadcast-countdown.jpg",
+      "palette": {
+        "from": "#14100c",
+        "via": "#4a3a26",
+        "to": "#d8b877"
+      },
+      "synopsis": "阿岳把盘带机的门拉开，里面是空的。那晚的热线磁带，他早就洗了。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": -24,
+        "fov": 90
+      },
+      "lines": [
+        {
+          "speaker": "a_yue",
+          "text": "你先别谢我，也先别骂我。那晚的热线带，收播当夜我就洗了——十九秒里有纺车，有滚筒，也有她的呼吸。这种东西留在架子上，就是替别人存的证据。台里的带子我能洗。电话局的单子——我够不着。"
+        },
+        {
+          "speaker": "a_yue",
+          "text": "我听得出这些，是因为我家里有一台不该存在的机器。我父亲留下的。他当年就是干这个的——后来也是栽在这个上。我恨偷听，晚星，可我只有这一双耳朵。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "盘带机的空仓在下午的光里张着口。他说完就去卷线，背对着你——像把一盘从来不放给人听的带子，倒了一半突然停住。"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "empty-reel",
+          "label": "空盘仓",
+          "description": "洗带机的计数器停在一个不小的数字上——他洗掉的，不止那一晚的带子。",
+          "yaw": 25,
+          "pitch": -18,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "counter_seen"
+            ],
+            "memories": [
+              "发现线索：洗带机的计数器——他洗掉的不止一盘"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c22-ask",
+          "label": "问下去：你父亲当年，替谁听、栽在谁手里",
+          "next": "n23-stakeout",
+          "fateType": "wheel",
+          "consequence": "他把那段家史讲完了——名字、年份、经手的科室。你多了一条通向\"穿制服的\"的旧线，也接下了替他保守这段话的责任。",
+          "effect": {
+            "flags": [
+              "ayue_secret_known"
+            ],
+            "relationships": {
+              "a_yue": {
+                "trust": 6
+              }
+            },
+            "memories": [
+              "阿岳的家史：一台不该存在的机器"
+            ]
+          }
+        },
+        {
+          "id": "c22-respect",
+          "label": "不问。「每个人都可以有一盘不放给别人的带子。」",
+          "next": "n23-stakeout",
+          "fateType": "river",
+          "consequence": "他卷线的手停了停，没有回头——有些信任不走近路。你少了一条线索，守住了一道他没打开的门。",
+          "effect": {
+            "flags": [
+              "ayue_secret_kept"
+            ],
+            "relationships": {
+              "a_yue": {
+                "trust": 3,
+                "boundary": 5
+              }
+            },
+            "memories": [
+              "她没有问那台机器的来历"
+            ]
+          }
+        }
+      ]
+    },
+    "n23-stakeout": {
+      "id": "n23-stakeout",
+      "chapter": "第二章",
+      "title": "先到的人",
+      "location": "电台天台·黄昏",
+      "panorama": "/panoramas/s11-rooftop-confrontation.png",
+      "palette": {
+        "from": "#14100c",
+        "via": "#4a3a26",
+        "to": "#d8b877"
+      },
+      "synopsis": "阿岳下午骑车去老码头踩了点。天台上，他把洗出来的照片一张张压在砖头底下。",
+      "entryView": {
+        "yaw": 165,
+        "pitch": 2,
+        "fov": 96
+      },
+      "lines": [
+        {
+          "speaker": "a_yue",
+          "text": "三号仓对面的顶楼，窗子里架着东西——反光有两次，间隔太规律，不是晾衣镜。还有这张：码头登记棚里坐着的人，皮鞋太干净了。"
+        },
+        {
+          "speaker": "you",
+          "text": "亥时还没到，人已经就位。信是饵，码头是网——她要是按信里的时间去，就是自己走进去。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "黄昏把天台的影子拉得很长。距离周三，还有不到两天；而你唯一能确定安全的传话方式，只剩下那盏红灯。"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "photo-plate",
+          "label": "压着的照片",
+          "description": "照片角落拍到半辆卡车——这半个车牌，阿岳下午顺路去洗印店对过晾片绳上的样片：同一辆。",
+          "yaw": 40,
+          "pitch": -8,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "truck_match_seen"
+            ],
+            "memories": [
+              "发现线索：阿岳核对过——码头卡车与厂门样片是同一辆"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c23-onair",
+          "label": "今晚开播，用只有她懂的话改掉约定",
+          "next": "n24-third-reply",
+          "fateType": "river",
+          "consequence": "电波是唯一没被拆过封的信——但你说出口的每个字，布控的人也会一字不落地记下来。",
+          "effect": {
+            "memories": [
+              "她决定用电波改约"
+            ]
+          }
+        }
+      ]
+    },
+    "n24-third-reply": {
+      "id": "n24-third-reply",
+      "chapter": "第二章",
+      "title": "第三次空中回信",
+      "location": "直播间·零点档",
+      "panorama": "/panoramas/s07-broadcast-countdown.jpg",
+      "palette": {
+        "from": "#14100c",
+        "via": "#4a3a26",
+        "to": "#d8b877"
+      },
+      "synopsis": "红灯亮起。你要在所有人的耳朵里，把一个约定悄悄挪走。",
+      "entryView": {
+        "yaw": 0,
+        "pitch": -24,
+        "fov": 90
+      },
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "导播台红灯亮起。你把稿纸推到一边——今晚的话，不能有稿。"
+        },
+        {
+          "speaker": "you",
+          "text": "「这里是《夜航船》。先回一位老朋友的信——」"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "red-lamp-2",
+          "label": "红灯",
+          "description": "红灯稳稳亮着。楼下的传达室、对面的楼顶、城里某个亮灯的窗——今晚，你数不清有多少副耳机对着你。",
+          "yaw": 15,
+          "pitch": 6,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "audience_unknown_seen"
+            ],
+            "memories": [
+              "今晚不知道有多少副耳机对着她"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c24-song",
+          "label": "「今晚把点播单撕了，只放一首《平湖秋月》——给同一位朋友。」",
+          "next": "n25-chapter-end",
+          "fateType": "river",
+          "consequence": "听了七年《夜航船》的人，读得懂换歌的意思：地方换了，换到有水有月亮的地方——文化宫人工湖。可布控的人也会想：为什么突然换歌？",
+          "effect": {
+            "globals": {
+              "public_heat": 4
+            },
+            "relationships": {
+              "xin_writer": {
+                "trust": 8
+              }
+            },
+            "flags": [
+              "moved_rendezvous"
+            ],
+            "memories": [
+              "空中回信：换一首《平湖秋月》"
+            ]
+          }
+        },
+        {
+          "id": "c24-weather",
+          "label": "「这周风大。晒在外面的东西，记得提前一天收。」",
+          "next": "n25-chapter-end",
+          "fateType": "web",
+          "consequence": "她会听懂：提前一天。计划抢在了布控前面——可你的人手来不及换班，而听懂「提前」二字的，也未必只有她。",
+          "effect": {
+            "globals": {
+              "public_heat": 6
+            },
+            "relationships": {
+              "xin_writer": {
+                "trust": 7
+              }
+            },
+            "flags": [
+              "moved_day"
+            ],
+            "memories": [
+              "空中回信：提前一天收"
+            ]
+          }
+        },
+        {
+          "id": "c24-lamp",
+          "label": "「有位老朋友要远行。《夜航船》的规矩：不送行，只留灯。」",
+          "next": "n25-chapter-end",
+          "fateType": "wheel",
+          "consequence": "取消见面——她会按她自己的方式，把东西送到你能找到的地方。最安全，也最贵：你放弃了见她，放弃了当面接过证词的机会。",
+          "effect": {
+            "globals": {
+              "public_heat": 5
+            },
+            "relationships": {
+              "xin_writer": {
+                "trust": 5,
+                "boundary": 4
+              }
+            },
+            "flags": [
+              "canceled_meet"
+            ],
+            "memories": [
+              "空中回信：不送行，只留灯"
+            ]
+          }
+        }
+      ]
+    },
+    "n25-chapter-end": {
+      "id": "n25-chapter-end",
+      "chapter": "第二章",
+      "title": "收播·第三夜",
+      "location": "电台天台·凌晨",
+      "panorama": "/panoramas/s11-rooftop-confrontation.png",
+      "palette": {
+        "from": "#14100c",
+        "via": "#4a3a26",
+        "to": "#d8b877"
+      },
+      "synopsis": "第三夜收播。传达室又留了话：晚报的记者明天来，说要做一期《深夜电台，到底在对谁说话》。",
+      "entryView": {
+        "yaw": 165,
+        "pitch": 2,
+        "fov": 96
+      },
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "凌晨的天台，风把云吹得很快。楼下传达室的窗口贴着一张留言：晚报专题部，明天上午，指名找你。"
+        },
+        {
+          "speaker": "zhou_yi",
+          "text": "「标题他们都想好了——《深夜电台，到底在对谁说话》。」周姨把留言纸折起来，「晚星，从明天起，看你的就不只是听众了。」"
+        },
+        {
+          "speaker": "you",
+          "text": "想知道我在对谁说话的人越来越多了。那正好——周三之前，我会让他们听见该听见的。"
+        }
+      ],
+      "hotspots": [],
+      "choices": [
+        {
+          "id": "c25-next",
+          "label": "答应专访——记者要来，就让她当着你的面来",
+          "next": "n30-press-visit",
+          "fateType": "river",
+          "consequence": "你选择正面接下风暴——躲是躲不掉的，不如让它在你的主场刮。",
+          "effect": {
+            "memories": [
+              "她答应了晚报专访"
+            ]
+          }
+        }
+      ]
+    },
+    "n30-press-visit": {
+      "id": "n30-press-visit",
+      "chapter": "第三章",
+      "title": "风暴上门",
+      "location": "电台二楼·编辑部",
+      "panorama": "/panoramas/s09-wanqing-office.png",
+      "palette": {
+        "from": "#14100c",
+        "via": "#4a3a26",
+        "to": "#d8b877"
+      },
+      "synopsis": "晚报的专题记者带着一台小录音机坐到你对面。她的问题一条比一条近——近到像有人替她划过重点。",
+      "entryView": {
+        "yaw": 165,
+        "pitch": 2,
+        "fov": 96
+      },
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "记者把录音机摆在桌子正中，笑得很客气：「程主播，读者想知道，《夜航船》深夜里那些没头没尾的话，到底在对谁说？」"
+        },
+        {
+          "speaker": "zhou_yi",
+          "text": "「对谁说？对睡不着的人说。」周姨把茶放下，「姑娘，我们台开播七年，节目单都在墙上挂着，你随便抄。」"
+        },
+        {
+          "speaker": "you",
+          "text": "她的问题太准了。哪一晚、哪一句、什么顺序——这不是听出来的，是有人把重点递到她手里的。"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "reporter-notes",
+          "label": "记者的采访本",
+          "description": "采访本边缘露出一页复写纸的蓝印——她的问题清单，是别人用复写纸誊给她的。",
+          "yaw": 20,
+          "pitch": -14,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "carbon_copy_seen"
+            ],
+            "memories": [
+              "发现线索：记者的问题清单是复写纸誊来的"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c30-frame",
+          "label": "把问题接过来：谈深夜电台为什么保护来信人",
+          "next": "n31-rendezvous-hour",
+          "fateType": "river",
+          "consequence": "你把专访变成了一堂公开课——明天的报纸会印你的立场，也会把你钉在\"保护什么人\"的追问正中央。",
+          "effect": {
+            "globals": {
+              "public_heat": 8
+            },
+            "relationships": {
+              "xin_writer": {
+                "trust": 5
+              }
+            },
+            "flags": [
+              "press_lecture"
+            ],
+            "memories": [
+              "专访里她公开谈了保护来信人"
+            ]
+          }
+        },
+        {
+          "id": "c30-counter",
+          "label": "反问一句：你的问题清单，是谁用复写纸誊的",
+          "next": "n31-rendezvous-hour",
+          "fateType": "wheel",
+          "consequence": "记者的笑僵了一秒——你惊动了递清单的人，他们知道你看穿了，接下来只会来得更快。",
+          "lockedHint": "你没有看清她的采访本——空口反问，只会像失态。",
+          "condition": {
+            "flags": [
+              "carbon_copy_seen"
+            ]
+          },
+          "effect": {
+            "flags": [
+              "press_countered"
+            ],
+            "memories": [
+              "她当面点破了复写纸的问题清单"
+            ]
+          }
+        },
+        {
+          "id": "c30-mute",
+          "label": "按台里口径，只谈栏目历史，别的一概不接",
+          "next": "n31-rendezvous-hour",
+          "fateType": "web",
+          "consequence": "专访平淡收场，台长满意——但版面已经排好了，你不给故事，他们就自己写一个。",
+          "effect": {
+            "flags": [
+              "press_deflected"
+            ],
+            "memories": [
+              "专访被她按在了栏目历史上"
+            ]
+          }
+        }
+      ]
+    },
+    "n31-rendezvous-hour": {
+      "id": "n31-rendezvous-hour",
+      "chapter": "第三章",
+      "title": "亥时",
+      "location": "直播间机房·夜",
+      "panorama": "/panoramas/s07-broadcast-countdown.jpg",
+      "palette": {
+        "from": "#14100c",
+        "via": "#4a3a26",
+        "to": "#d8b877"
+      },
+      "synopsis": "约定的时刻到了。你被风暴钉在台里走不开——今晚的会面，只能交给电波和你信的人。",
+      "entryView": {
+        "yaw": 165,
+        "pitch": 2,
+        "fov": 96
+      },
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "从专访到今夜，你把每一档节目都播得像什么都没发生。机房的钟走到亥时，桌上的公用电话是你和现场唯一的线。"
+        },
+        {
+          "speaker": "a_yue",
+          "text": "（电话里）到位了。她来过，放下东西就走——中间有两双眼睛晃过去，被我引开了。晚星，她还没走远——要不要我远远跟一段，看她安全到家？"
+        }
+      ],
+      "hotspots": [],
+      "choices": [
+        {
+          "id": "c31-follow",
+          "label": "「跟一段。远远的，别让她发现。」",
+          "next": "n32-eve",
+          "fateType": "web",
+          "consequence": "他跟了三条街，收住了脚——她安全到了家，也永远不会知道这段护送。只是你破了自己立的规矩：她的路，让她自己走。",
+          "effect": {
+            "flags": [
+              "followed_her"
+            ],
+            "relationships": {
+              "a_yue": {
+                "trust": 3
+              },
+              "xin_writer": {
+                "boundary": -3
+              }
+            },
+            "memories": [
+              "那晚有一段她不知道的护送"
+            ]
+          }
+        },
+        {
+          "id": "c31-letgo",
+          "label": "「不跟。她的路，让她自己走。」",
+          "next": "n32-eve",
+          "fateType": "river",
+          "consequence": "你守住了对她的承诺——只是那晚剩下的每一分钟，你都在数机房的钟。",
+          "effect": {
+            "flags": [
+              "let_her_walk"
+            ],
+            "relationships": {
+              "xin_writer": {
+                "trust": 6,
+                "boundary": 4
+              }
+            },
+            "memories": [
+              "她的路，她自己走完了"
+            ]
+          }
+        }
+      ]
+    },
+    "n32-eve": {
+      "id": "n32-eve",
+      "chapter": "第三章",
+      "title": "风暴前夜",
+      "location": "电台三楼·磁带资料室",
+      "panorama": "/panoramas/s10-secret-archive.png",
+      "palette": {
+        "from": "#14100c",
+        "via": "#4a3a26",
+        "to": "#d8b877"
+      },
+      "synopsis": "证词、车牌、笔迹、凭条——所有线头在桌上汇拢，指向同一个人：厂保卫科长。而沈叙带来一个最难的条件。",
+      "entryView": {
+        "yaw": 165,
+        "pitch": 2,
+        "fov": 96
+      },
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "清晨，东西送到了你桌上：一盘磁带，标签上只有一行小字。你关起门听了一整个白天——厂广播站播音员的声音，把裁纸机吃进去什么、吐出来什么，一句句说得清清楚楚。"
+        },
+        {
+          "speaker": "shen_xu",
+          "text": "够不够立案，你自己看——我把我查到的，都放在这张桌上了。卡车是保卫科名下的，协查通知走的是科长借的旧关系，凭条笔迹对得上保卫科的登记簿。还有你们楼里顶班的收发临时工——凭条笔迹的第二个匹配。信，是他拆的。科长的旧关系，一路借到了你们楼里。"
+        },
+        {
+          "speaker": "shen_xu",
+          "text": "但程序上，立案要有具名证人。晚星，要么她实名，要么这案子在文书上立不住。"
+        },
+        {
+          "speaker": "a_yue",
+          "text": "那晚的热线带我洗了，她从前打来的每一盘，我也都洗了——我能让磁带消失，可我变不出一个敢署名的人。台里的带子我能洗，程序的空格，我填不上。"
+        },
+        {
+          "speaker": "you",
+          "text": "她把「放不放」交给了我，没把名字交给任何人。程序要一个名字——那就用该进去的名字去填：作恶的人的。"
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "tape-label",
+          "label": "磁带标签",
+          "description": "标签上只有一行小字：「给夜航船：如果你觉得该放，就放。」——她把最后的决定权交到了你手里。这不是求救，是授权。",
+          "yaw": -30,
+          "pitch": -16,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "consent_seen"
+            ],
+            "memories": [
+              "她的授权：如果你觉得该放，就放"
+            ]
+          }
+        },
+        {
+          "id": "evidence-web",
+          "label": "桌上的线头",
+          "description": "你把线头逐一摆开：磁带、车牌照片、笔迹拓样、复写纸蓝印——每一条都不带她的名字，每一条都咬住保卫科长。",
+          "yaw": 35,
+          "pitch": -12,
+          "effect": {
+            "globals": {
+              "integrity": 3
+            },
+            "flags": [
+              "evidence_laid"
+            ],
+            "memories": [
+              "证据在桌上摆成一张网，网眼里没有她的名字"
+            ]
+          }
+        }
+      ],
+      "choices": [
+        {
+          "id": "c32-satin",
+          "label": "把小满的磁带一并交给沈叙归档，再进直播间",
+          "next": "n33-final-reply",
+          "fateType": "wheel",
+          "consequence": "两盘磁带在案卷里互为印证——证据链又厚了一层，而小满的声音从此有了官方的档案号。",
+          "lockedHint": "你手上只有一盘磁带——另一盘，压在别人的米缸底下，你没有取回。",
+          "condition": {
+            "flags": [
+              "satin_tape"
+            ]
+          },
+          "effect": {
+            "flags": [
+              "final_tape",
+              "satin_archived"
+            ],
+            "relationships": {
+              "shen_xu": {
+                "trust": 5
+              },
+              "xin_writer": {
+                "trust": 10
+              }
+            },
+            "memories": [
+              "小满的磁带进了案卷"
+            ]
+          }
+        },
+        {
+          "id": "c32-onair",
+          "label": "今晚开播。红灯之下，做最后的决定",
+          "next": "n33-final-reply",
+          "fateType": "river",
+          "consequence": "第四次，也可能是最后一次——今晚过后，《夜航船》和它的信箱，都将不再是原来的样子。",
+          "effect": {
+            "flags": [
+              "final_tape"
+            ],
+            "relationships": {
+              "xin_writer": {
+                "trust": 10
+              }
+            },
+            "memories": [
+              "风暴之夜，她走向直播间"
+            ]
+          }
+        }
+      ]
+    },
+    "n33-final-reply": {
+      "id": "n33-final-reply",
+      "chapter": "终章",
+      "title": "第四次空中回信",
+      "location": "直播间·风暴之夜",
+      "panorama": "/panoramas/s07-broadcast-countdown.jpg",
+      "palette": {
+        "from": "#14100c",
+        "via": "#4a3a26",
+        "to": "#d8b877"
+      },
+      "synopsis": "红灯亮起。台长在玻璃外，周姨在门口，晚报的版面等着，穿夹克的守在楼下——全城的耳朵，都对着你。",
+      "entryView": {
+        "yaw": 165,
+        "pitch": 2,
+        "fov": 96
+      },
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "红灯亮起的一瞬，整层楼都静了。玻璃外站着台长，门口靠着周姨——她朝你点了点头，像七年前你第一次开播那晚一样。"
+        },
+        {
+          "speaker": "you",
+          "text": "「这里是《夜航船》，我是晚星。今晚，我想先回一封信——回给所有在深夜里写过信的人。」"
+        },
+        {
+          "speaker": "narrator",
+          "text": "你的手边放着两样东西：她授权的磁带，和一页写满名字的证据清单——清单上唯一不存在的，是她的名字。"
+        }
+      ],
+      "hotspots": [],
+      "choices": [
+        {
+          "id": "c33-broadcast",
+          "label": "放她的磁带，念证据清单——把名字留给作恶的人",
+          "next": "e01-lights-on",
+          "fateType": "wheel",
+          "consequence": "她的声音将响遍全城，但署名栏永远空着；清单上的每个名字都有主——都是该进去的人。这一夜之后，要么信箱活着，要么你和它一起赔进去。",
+          "lockedHint": "你还没有她的授权，或者还没有听完她的证词——别替她决定她的声音怎么用。",
+          "condition": {
+            "flags": [
+              "final_tape",
+              "consent_seen"
+            ],
+            "minRelationship": [
+              {
+                "character": "xin_writer",
+                "metric": "trust",
+                "value": 45
+              }
+            ]
+          },
+          "effect": {
+            "globals": {
+              "public_heat": 12
+            },
+            "flags": [
+              "broadcast_truth"
+            ],
+            "memories": [
+              "风暴之夜：她的声音响遍全城，署名栏空着"
+            ]
+          }
+        },
+        {
+          "id": "c33-name",
+          "label": "连她的身份一起公布——让全城的目光保护她",
+          "next": "e02-named",
+          "fateType": "river",
+          "consequence": "把她推到灯下，坏人就不敢动她——这话对了一半：目光是保护，也是终身的看守。你将替她做她从没求过你做的决定。",
+          "effect": {
+            "globals": {
+              "public_heat": 12
+            },
+            "flags": [
+              "named_writer"
+            ],
+            "memories": [
+              "风暴之夜：她的名字被念了出来"
+            ]
+          }
+        },
+        {
+          "id": "c33-trade",
+          "label": "按台里的方案：信箱移交备案，节目照播",
+          "next": "e03-dead-mailbox",
+          "fateType": "web",
+          "consequence": "栏目保住了，你保住了话筒——而信箱从今晚起归档案管理。想写信的人以后要先想一想：这封信，会被谁先读。",
+          "effect": {
+            "flags": [
+              "mailbox_traded"
+            ],
+            "memories": [
+              "风暴之夜：信箱被移交备案"
+            ]
+          }
+        },
+        {
+          "id": "c33-hand",
+          "label": "今晚停播。把全部证据交给沈叙，走完整程序",
+          "next": "e04-long-way",
+          "fateType": "river",
+          "consequence": "红灯第一次在零点前熄灭。程序会慢，会绕，会磨掉锋利的部分——但沈叙说过：走完的程序，才拆不掉。",
+          "effect": {
+            "flags": [
+              "procedure_route"
+            ],
+            "relationships": {
+              "shen_xu": {
+                "trust": 8
+              }
+            },
+            "memories": [
+              "风暴之夜：红灯熄灭，证据走进程序"
+            ]
+          }
+        }
+      ]
+    },
+    "e01-lights-on": {
+      "id": "e01-lights-on",
+      "chapter": "结局",
+      "title": "灯都亮着",
+      "location": "电台天台·黎明",
+      "panorama": "/panoramas/s11-rooftop-confrontation.png",
+      "palette": {
+        "from": "#14100c",
+        "via": "#4a3a26",
+        "to": "#d8b877"
+      },
+      "synopsis": "磁带播完的第三天，保卫科长被带走。信箱活着，无人被命名——她的下一封信，落款处画了一盏小灯。",
+      "entryView": {
+        "yaw": 165,
+        "pitch": 2,
+        "fov": 96
+      },
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "磁带播完的第三天，纺织厂保卫科长被带走，晚报的头版换成了裁纸机与假票证。全城都听过她的声音，全城都不知道她是谁——通话记录一夜之间成了没人敢调的东西。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "阿岳把那盘磁带郑重洗掉，洗带机的计数器又跳了一格：「这一盘，是她托我洗的。」沈叙送来结案的抄件，在台里登记簿上签了名——这一次，编号是档案科的。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "周姨把那期的节目单裱了起来，挂上「开播七年」那面墙——挂歪了一点，她不许任何人扶正。"
+        },
+        {
+          "speaker": "xin_writer",
+          "text": "「晚星姐：厂广播站下周复播，第一档转播《夜航船》。不用找我——每晚零点，你说话，我就在。——落款：一盏亮着的灯」"
+        }
+      ],
+      "hotspots": [],
+      "choices": [],
+      "ending": {
+        "title": "灯都亮着",
+        "subtitle": "作恶者具名伏法，信箱活着，她始终匿名——深夜电台最好的结局，是每一盏灯都亮着，且没有一盏被点名。"
+      }
+    },
+    "e02-named": {
+      "id": "e02-named",
+      "chapter": "结局",
+      "title": "被念出的名字",
+      "location": "电台二楼·编辑部",
+      "panorama": "/panoramas/s09-wanqing-office.png",
+      "palette": {
+        "from": "#14100c",
+        "via": "#4a3a26",
+        "to": "#d8b877"
+      },
+      "synopsis": "你替她做了她没求过的决定。案子赢了，她赢了官司、输了小城——最后一封信只有一句话。",
+      "entryView": {
+        "yaw": 165,
+        "pitch": 2,
+        "fov": 96
+      },
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "名字念出去的第二天，全城都认识了她。保卫科长进去了，慰问的人踏平了厂广播站的门槛——三个月后，她调去了邻省，走之前没来过电台。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "阿岳把她所有的磁带装进一只木箱交给你，没多说话；沈叙的结案抄件里夹了一张便签：「案子赢了。程序上，我们都没输——程序之外的，你自己算。」"
+        },
+        {
+          "speaker": "narrator",
+          "text": "改版会上周姨没有发言。散会后，她把三号信箱的钥匙放回了你桌上，什么也没说。"
+        },
+        {
+          "speaker": "xin_writer",
+          "text": "「晚星姐：谢谢你为我做的一切。只是往后写信的人，会先想起我的名字，再想起你的信箱。——最后一封」"
+        }
+      ],
+      "hotspots": [],
+      "choices": [],
+      "ending": {
+        "title": "被念出的名字",
+        "subtitle": "真相大白，她却永远失去了匿名——你赢下了案子，输掉了信箱存在的理由。"
+      }
+    },
+    "e03-dead-mailbox": {
+      "id": "e03-dead-mailbox",
+      "chapter": "结局",
+      "title": "哑了的信箱",
+      "location": "电台三楼·磁带资料室",
+      "panorama": "/panoramas/s10-secret-archive.png",
+      "palette": {
+        "from": "#14100c",
+        "via": "#4a3a26",
+        "to": "#d8b877"
+      },
+      "synopsis": "节目还在播，收听率还在涨。只是三号信箱再也没有来过一封需要暗语的信。",
+      "entryView": {
+        "yaw": 165,
+        "pitch": 2,
+        "fov": 96
+      },
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "移交备案后的《夜航船》风平浪静：台长升了职，晚报做了正面报道，你的时段加了广告。保卫科长的案子拖了半年，以\"内部处理\"收尾——磁带你一直没敢放。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "阿岳调去了市台，走前把洗带机留给了你：「有些东西你迟早用得上。」沈叙还会来，隔着值班室的窗递一杯热水，什么都不问——他知道你交出去的不是信箱，是舵。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "移交那天，周姨投了唯一的反对票，然后照常上班。而第四十九封之后，再没有来信——你至今不知道，那个周三，那盏灯最后灭了没有。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "三号信箱如今每天准时清空，登记，编号。只是再没有一封信，需要你在深夜里换一首歌了。"
+        }
+      ],
+      "hotspots": [],
+      "choices": [],
+      "ending": {
+        "title": "哑了的信箱",
+        "subtitle": "栏目活了下来，信箱死了——从此夜航船照常出航，只是不再有人往海里投灯。"
+      }
+    },
+    "e04-long-way": {
+      "id": "e04-long-way",
+      "chapter": "结局",
+      "title": "走完的程序",
+      "location": "城隍庙市场·白天",
+      "panorama": "/panoramas/s03-market.jpg",
+      "palette": {
+        "from": "#14100c",
+        "via": "#4a3a26",
+        "to": "#d8b877"
+      },
+      "synopsis": "程序走了七个月。慢，绕，磨——但走完了。复播那晚，第一封信来自一个熟悉的笔迹。",
+      "entryView": {
+        "yaw": 165,
+        "pitch": 2,
+        "fov": 96
+      },
+      "lines": [
+        {
+          "speaker": "narrator",
+          "text": "停播审查、证据移交、三次补充侦查——七个月后，保卫科长数罪并罚，判决书上没有任何证人具名，全部实物证据链成立。沈叙在结案那天来电台还你磁带，制服笔挺：「程序慢，但它走完了，就没人能把它走回去。通话单我调过——只看了日期，没看号码。」"
+        },
+        {
+          "speaker": "narrator",
+          "text": "《夜航船》复播那晚，阿岳把修了七个月的老盘带机搬回机房，红灯亮起的一瞬他冲你比了个手势——收音机的销量，那个月是全年最高。"
+        },
+        {
+          "speaker": "narrator",
+          "text": "复播的申请，是周姨揣着跑了七个月跑下来的。批文下来那天，她把它跟七年前的开播批文钉在了一起。"
+        },
+        {
+          "speaker": "xin_writer",
+          "text": "「晚星姐：等你复播这七个月，我把你从前的节目翻录了一遍，在厂广播站放给白班听。原来白天也有人需要夜航船。——老听众」"
+        }
+      ],
+      "hotspots": [],
+      "choices": [],
+      "ending": {
+        "title": "走完的程序",
+        "subtitle": "你把锋利让给了时间——七个月后，判决无人可拆，信箱原样归来，红灯重新亮起。"
+      }
+    }
+  }
+}
