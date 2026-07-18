@@ -261,8 +261,8 @@
           "qing_li"
         ],
         "nodeIds": [],
-        "sourcePath": "/portraits/project-20260620-185116/qing-li.jpg",
-        "notes": "白衣守契者；眉目须与狐仙神像同源，冷银灯色与九尾意象点到即止，先立规矩后见柔软。",
+        "sourcePath": "/portraits/project-20260620-185116/qing-li.webp",
+        "notes": "白衣守契者；眉目须与狐仙神像同源，冷银灯色与九尾意象点到即止，先立规矩后见柔软。 2026-07-19 升级为正式生成立绘（古庙烛光坐像）。",
         "reviewed": true
       },
       {
@@ -328,6 +328,45 @@
         ],
         "sourcePath": "/panoramas/e03-eternal.jpg",
         "notes": "破晓祭坛，手稿与半契拼合、两册浮现同一句话；隐藏结局的暖色顶点，与 s04-confront 的雷云形成明暗对照。",
+        "reviewed": true
+      },
+      {
+        "id": "portrait-xuan_qi",
+        "kind": "portrait-reference",
+        "title": "玄岐基准立绘",
+        "status": "approved",
+        "characterIds": [
+          "xuan_qi"
+        ],
+        "nodeIds": [],
+        "sourcePath": "/portraits/project-20260620-185116/xuan-qi.webp",
+        "notes": "执雷官全身像：紫雷横掩双眼保留「只闻其声」的神秘，五官轮廓完整；执戟银甲，威仪而非凶相。",
+        "reviewed": true
+      },
+      {
+        "id": "portrait-luo_yan",
+        "kind": "portrait-reference",
+        "title": "洛砚基准立绘",
+        "status": "approved",
+        "characterIds": [
+          "luo_yan"
+        ],
+        "nodeIds": [],
+        "sourcePath": "/portraits/project-20260620-185116/luo-yan.webp",
+        "notes": "村塾窗棂暖光下提灯抱契书的塾师像；温和笑意，书卷气与诚恳并存。",
+        "reviewed": true
+      },
+      {
+        "id": "portrait-you",
+        "kind": "portrait-reference",
+        "title": "沈栖梧基准立绘",
+        "status": "approved",
+        "characterIds": [
+          "you"
+        ],
+        "nodeIds": [],
+        "sourcePath": "/portraits/project-20260620-185116/shen-qiwu.webp",
+        "notes": "书阁卷册架前执笔抱书匣的编修像；沉静聪慧，职业感优先于装饰感。",
         "reviewed": true
       }
     ]

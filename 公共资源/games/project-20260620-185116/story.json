@@ -1066,7 +1066,8 @@
       "role": "书阁典籍编修",
       "pronouns": "她",
       "color": "#d9c2a6",
-      "accent": "#4a3a2c"
+      "accent": "#4a3a2c",
+      "portrait": "/portraits/project-20260620-185116/shen-qiwu.webp"
     },
     "characters": [
       {
@@ -1086,7 +1087,7 @@
             "boundary": 70
           }
         },
-        "portrait": "/portraits/project-20260620-185116/qing-li.jpg"
+        "portrait": "/portraits/project-20260620-185116/qing-li.webp"
       },
       {
         "id": "xuan_qi",
@@ -1104,7 +1105,8 @@
             "trust": 15,
             "boundary": 65
           }
-        }
+        },
+        "portrait": "/portraits/project-20260620-185116/xuan-qi.webp"
       },
       {
         "id": "luo_yan",
@@ -1122,7 +1124,8 @@
             "trust": 25,
             "boundary": 55
           }
-        }
+        },
+        "portrait": "/portraits/project-20260620-185116/luo-yan.webp"
       },
       {
         "id": "elder_gu",
