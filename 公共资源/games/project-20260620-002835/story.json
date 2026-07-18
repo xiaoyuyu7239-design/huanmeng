@@ -4254,7 +4254,8 @@
             "trust": 25,
             "boundary": 60
           }
-        }
+        },
+        "portrait": "/portraits/project-20260620-002835/zhu-qingyan.jpg"
       },
       {
         "id": "mei_hanshuang",
@@ -4272,7 +4273,8 @@
             "trust": 12,
             "boundary": 65
           }
-        }
+        },
+        "portrait": "/portraits/project-20260620-002835/mei-hanshuang.jpg"
       },
       {
         "id": "mudan",
@@ -4290,7 +4292,8 @@
             "trust": 15,
             "boundary": 60
           }
-        }
+        },
+        "portrait": "/portraits/project-20260620-002835/mudan.jpg"
       },
       {
         "id": "manzhu",
