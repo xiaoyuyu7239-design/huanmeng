@@ -1205,7 +1205,8 @@
       "role": "织女星宿第七位·云锦织机操机人",
       "pronouns": "她",
       "color": "#d8cfe8",
-      "accent": "#3a3350"
+      "accent": "#3a3350",
+      "portrait": "/portraits/project-20260620-201739/yun-zhi.webp"
     },
     "characters": [
       {
@@ -1224,7 +1225,8 @@
             "trust": 25,
             "boundary": 50
           }
-        }
+        },
+        "portrait": "/portraits/project-20260620-201739/yun-jiang.webp"
       },
       {
         "id": "dong-yong",

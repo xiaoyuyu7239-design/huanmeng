@@ -337,6 +337,32 @@
         "sourcePath": "/panoramas/e01-together.jpg",
         "notes": "终幕封面图：姐妹在云海相拥，落款写两个人的名字——署名权主题的最终视觉落点。",
         "reviewed": true
+      },
+      {
+        "id": "portrait-you",
+        "kind": "portrait-reference",
+        "title": "云织基准立绘",
+        "status": "approved",
+        "characterIds": [
+          "you"
+        ],
+        "nodeIds": [],
+        "sourcePath": "/portraits/project-20260620-201739/yun-zhi.webp",
+        "notes": "掌心升起的光织如正在织成的丝帛，背景垂落银线似织机垂丝；灰风衣+深蓝高领着装完整，神情坚定明亮。",
+        "reviewed": true
+      },
+      {
+        "id": "portrait-yun_jiang",
+        "kind": "portrait-reference",
+        "title": "云绛基准立绘",
+        "status": "approved",
+        "characterIds": [
+          "yun_jiang"
+        ],
+        "nodeIds": [],
+        "sourcePath": "/portraits/project-20260620-201739/yun-jiang.webp",
+        "notes": "半实体化数据流形态：右侧身躯碎解为数据方块、发丝与银线织成一体；流光长裙完整不透不露，神情疲惫而清醒。原版性感形象已废弃。",
+        "reviewed": true
       }
     ]
   }
