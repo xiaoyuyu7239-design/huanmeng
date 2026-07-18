@@ -1,4 +1,4 @@
-// 衍境·心界 Beta 的同源边缘入口。Sites 负责 HTTPS 与静态文件，Worker 只做：
+// 幻梦 Beta 的同源边缘入口。Sites 负责 HTTPS 与静态文件，Worker 只做：
 // 1) SPA 精确路由；2) 健康探针；3) 作者备用关系回应；4) 安全头与无正文访问日志。
 // 本文件不会读取或调用任何模型密钥，Level 9 的 aiMode 固定为 fallback。
 

@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.9.0-beta.1",
   "type": "module",
-  "description": "衍境 · 互动影游智能体创作系统（本地复刻版）",
+  "description": "幻梦 · 互动影游智能体创作系统（本地版）",
   "engines": {
     "node": ">=22.13.0 <23",
     "npm": ">=10.9.0 <11"

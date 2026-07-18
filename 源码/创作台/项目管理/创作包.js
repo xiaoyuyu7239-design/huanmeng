@@ -200,7 +200,7 @@ function 检查创作包对象(原始包) {
   if (原始包.product !== 创作包产品) {
     throw 创作包错误(
       'wrong-product',
-      `这不是「衍境」创作包（product 应为 ${创作包产品}）。`,
+      `这不是「幻梦」创作包（product 应为 ${创作包产品}）。`,
       { expected: 创作包产品, actual: 原始包.product },
     );
   }
@@ -443,7 +443,7 @@ function 文件时间段(时间 = new Date()) {
 }
 
 export function 创作包文件名({ 备份 = false, 时间 = new Date() } = {}) {
-  return `衍境创作包-${备份 ? '导入前备份-' : ''}${文件时间段(时间)}.json`;
+  return `幻梦创作包-${备份 ? '导入前备份-' : ''}${文件时间段(时间)}.json`;
 }
 
 // 浏览器本地下载：Blob → Object URL → 临时链接；不调用 fetch，也不会上传文件内容。
