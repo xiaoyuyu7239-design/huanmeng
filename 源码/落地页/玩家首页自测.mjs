@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { createServer } from 'vite';
-import { 合并首页精选, 构建玩家首页模型, 清洗精选数据, 核对本机精选覆盖, 读取首页存档 } from './玩家首页模型.js';
+import { 合并首页精选, 构建体验舞台, 构建玩家首页模型, 清洗精选数据, 核对本机精选覆盖, 读取首页存档 } from './玩家首页模型.js';
 import { 构建选择展示文案 } from '../公共工具/选择文案.js';
 
 const 当前目录 = dirname(fileURLToPath(import.meta.url));
@@ -50,7 +50,33 @@ const 正式私聊角色 = [...new Set(
   首页.routes.find((路线) => 路线.id === 'private')?.characterIds.join('|') === 正式私聊角色.join('|'),
   '首页私人路线角色与剧情实际 route 不一致',
 );
-console.log('  ✓ 首页模型：旗舰、开场、完整 cast 与无剧透初始状态');
+断言(
+  首页.worlds.length === 精选.featured.length && 首页.worlds[0].slug === 精选.default,
+  '首页可玩世界清单没有完整跟随正式精选（旗舰应在首位）',
+);
+断言(
+  首页.preview.panorama === 剧情.nodes[剧情.startNodeId].panorama,
+  '开场预览没有携带正式剧情的全景现场',
+);
+断言(
+  首页.preview.hotspotCount === 剧情.nodes[剧情.startNodeId].hotspots.length,
+  '开场预览线索数量与正式剧情不一致',
+);
+
+// 核心体验舞台：展示数据必须来自正式作品的真实节点与真实视频。
+const 体验剧情 = JSON.parse(
+  await readFile(resolve(项目根, '公共资源/games/project-20260620-231058/story.json'), 'utf8'),
+);
+const 体验 = 构建体验舞台(体验剧情, 'project-20260620-231058', 's03-old-library-wishbox');
+断言(!!体验 && 体验.video.endsWith('.mp4'), '体验舞台没有从正式作品取到真实视频');
+断言(
+  体验.hotspotCount === 体验剧情.nodes['s03-old-library-wishbox'].hotspots.length,
+  '体验舞台线索数量与正式剧情不一致',
+);
+断言(体验.line?.name === '花容离', '体验舞台对白说话人没有使用正式 cast 姓名');
+断言(体验.playHref === '/play?game=project-20260620-231058', '体验舞台入口没有指向真实作品');
+断言(构建体验舞台(体验剧情, '../bad-slug') === null, '体验舞台没有拒绝非法作品 slug');
+console.log('  ✓ 首页模型：旗舰、开场、完整 cast、体验舞台与无剧透初始状态');
 
 const 第一条合法记忆 = 剧情.nodes[剧情.startNodeId].hotspots[0].effect.memories[0];
 const 隐藏结局 = Object.values(剧情.nodes).find((节点) => 节点.ending?.tier === 'secret');
@@ -251,12 +277,38 @@ try {
   for (const 旧首页内容 of ['EvoMap', 'Flux.1 Dev', '智能体写剧本', '/landing/char-', 'experience-showcase.mp4']) {
     断言(!html.includes(旧首页内容), `玩家首页仍渲染旧创作者内容：${旧首页内容}`);
   }
-  for (const 旧作品 of 精选.featured.filter((条目) => 条目.slug !== 精选.default)) {
-    断言(!html.includes(旧作品.title), `玩家首页直接渲染了历史作品标题：${旧作品.title}`);
-    断言(!html.includes(旧作品.tagline), `玩家首页直接渲染了历史作品梗概：${旧作品.title}`);
+  // 平台形态契约：全部正式作品都要出现在首页可玩世界网格，旗舰带徽章、翻新口径要诚实。
+  for (const 世界 of 精选.featured) {
+    断言(html.includes(世界.title), `首页可玩世界网格缺少作品：${世界.title}`);
+    断言(html.includes(`/play?game=${世界.slug}`), `首页世界卡缺少试玩入口：${世界.slug}`);
+  }
+  断言(html.includes('翻新为女性向版本'), '首页世界网格没有说明旧作品的女性向翻新口径');
+  断言(html.includes('hx-portrait--main'), '首页主视觉缺少浮动立绘拼贴');
+  断言(html.includes('marquee-track'), '首页缺少角色跑马灯');
+  断言(html.includes('hx-stage-pano'), '首页缺少第一视角全景舞台');
+  断言(html.includes('现场线索'), '舞台 HUD 缺少真实线索计数');
+  断言(html.includes('没有好感度条'), '首页缺少三维关系机制区');
+  断言(html.includes('hx-story-stage--video') && html.includes('<video'), '首页缺少核心体验视频舞台');
+  断言(html.includes('把镜头交给你'), '首页缺少核心体验区文案');
+  断言((html.match(/hx-mood-img/g) ?? []).length === 6, '角色卡情绪差分立绘应恰为 6 张');
+  断言(html.includes('--meter-scale'), '关系刻度缺少填充比例变量');
+  断言(html.includes('hx-ambient'), '首页缺少环境光漂移层');
+
+  // 动效性能预算：落地页 keyframes 只允许 opacity / transform / background-position。
+  const 样式源码 = await readFile(new URL('../样式/落地页-心界.css', import.meta.url), 'utf8');
+  const 帧块们 = 样式源码.match(/@keyframes[^{]+\{(?:[^{}]*\{[^{}]*\})+\s*\}/g) ?? [];
+  断言(帧块们.length >= 8, '落地页 keyframes 数量异常，检查样式是否被误删');
+  for (const 帧块 of 帧块们) {
+    const 属性们 = [...帧块.matchAll(/([a-z-]+)\s*:/g)].map((m) => m[1]);
+    for (const 属性 of 属性们) {
+      断言(
+        ['opacity', 'transform', 'background-position', 'background-position-x', 'background-position-y'].includes(属性),
+        `keyframes 使用了预算外属性：${属性}`,
+      );
+    }
   }
   断言(!html.includes(隐藏结局.ending.title), 'SSR 提前渲染隐藏结局标题');
-  console.log('  ✓ 无浏览器 SSR：首页语义、旗舰 CTA、七名角色与玩家路径同步可见');
+  console.log('  ✓ 无浏览器 SSR：首页语义、旗舰 CTA、七名角色、世界网格与玩家路径同步可见');
 
   const {
     玩家主视觉,

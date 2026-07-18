@@ -2,10 +2,10 @@ import React from 'react';
 
 function 品牌标识() {
   return (
-    <a className="hx-brand" href="#top" aria-label="衍境·心界，返回页首">
+    <a className="hx-brand" href="#top" aria-label="幻梦，返回页首">
       <span className="hx-brand-mark" aria-hidden="true"><i /></span>
       <span>
-        <b>衍境·心界</b>
+        <b>幻梦</b>
         <small>会记住选择的互动故事</small>
       </span>
     </a>
@@ -45,7 +45,7 @@ export function 页脚({ playAction }) {
               <a href="#worlds">更多实验世界</a>
             </div>
             <div>
-              <h2>了解心界</h2>
+              <h2>关于幻梦</h2>
               <a href="#memories">故事记忆</a>
               <a href="#characters">现场人物</a>
               <a href="#endings">阶段结果</a>
@@ -58,7 +58,7 @@ export function 页脚({ playAction }) {
           </div>
         </div>
         <div className="hx-footer-bottom">
-          <span>© 2026 衍境·心界</span>
+          <span>© 2026 幻梦</span>
           <span>当前版本提供作者分支、结构化记忆与受约束关系回应；AI 未接入时明确使用作者预设回应。</span>
         </div>
       </div>

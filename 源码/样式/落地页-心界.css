@@ -297,6 +297,22 @@ body:has(.lp-heartscape) {
     radial-gradient(circle at 38% 36%, rgba(214, 180, 119, 0.14), transparent 22%),
     radial-gradient(circle, rgba(154, 144, 189, 0.12), transparent 66%);
   filter: blur(1px);
+  animation: hx-aurora-breathe 14s ease-in-out infinite;
+}
+
+/* 呼吸层动效只允许 opacity / transform，保证合成层渲染；
+   0% 帧与静态外观一致，reduced-motion 冻结后页面不变样。 */
+@keyframes hx-aurora-breathe {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.72;
+    transform: scale(1.045);
+  }
 }
 
 .hx-hero-grid {
@@ -530,6 +546,43 @@ body:has(.lp-heartscape) {
   font-weight: 650;
 }
 
+.hx-status-dot {
+  position: relative;
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: var(--hx-champagne);
+  vertical-align: 1px;
+}
+
+.hx-art-status--veto .hx-status-dot {
+  background: var(--hx-celadon);
+}
+
+.hx-status-dot::after {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: inherit;
+  content: "";
+  animation: hx-dot-pulse 2.4s ease-out infinite;
+}
+
+@keyframes hx-dot-pulse {
+  0% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(2.6);
+  }
+}
+
 .hx-art-status--time {
   top: 11%;
   left: -48px;
@@ -564,17 +617,40 @@ body:has(.lp-heartscape) {
 
 .hx-scroll-cue {
   position: absolute;
-  bottom: 22px;
+  bottom: 18px;
   left: 50%;
   z-index: 2;
   display: inline-flex;
   min-height: 44px;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   color: var(--hx-paper-faint) !important;
   font-size: 11px;
   letter-spacing: 0.08em;
   transform: translateX(-50%);
+}
+
+.hx-cue-line {
+  display: block;
+  width: 1px;
+  height: 34px;
+  background: linear-gradient(var(--hx-champagne), transparent);
+  transform-origin: top;
+  animation: hx-cue-breathe 2.4s ease-in-out infinite;
+}
+
+@keyframes hx-cue-breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scaleY(0.65);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: scaleY(1);
+  }
 }
 
 .hx-hero--fallback {
@@ -653,6 +729,7 @@ body:has(.lp-heartscape) {
 }
 
 .hx-story-stage > img,
+.hx-story-stage > video,
 .hx-stage-shade {
   position: absolute;
   inset: 0;
@@ -660,7 +737,8 @@ body:has(.lp-heartscape) {
   height: 100%;
 }
 
-.hx-story-stage > img {
+.hx-story-stage > img,
+.hx-story-stage > video {
   object-fit: cover;
   object-position: center 36%;
 }
@@ -952,9 +1030,24 @@ body:has(.lp-heartscape) {
   );
 }
 
+/* 关系刻度示意：进入视口后按 --meter-scale 从左向右生长（仅 transform，合成层）。 */
 .hx-journal-metrics i::after {
-  display: none;
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(214, 180, 119, 0.75), rgba(214, 180, 119, 0.15));
   content: "";
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.lp-heartscape.is-motion-ready .hx-journal.in .hx-journal-metrics i::after {
+  transform: scaleX(var(--meter-scale, 0));
+  transition: transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) 0.25s;
+}
+
+.lp-heartscape:not(.is-motion-ready) .hx-journal-metrics i::after {
+  transform: scaleX(var(--meter-scale, 0));
 }
 
 .hx-journal-metrics small {
@@ -2021,6 +2114,956 @@ body:has(.lp-heartscape) {
   .lp-heartscape.is-motion-ready .reveal:not(.in) {
     opacity: 1 !important;
     transform: none !important;
+  }
+}
+
+/* ============================================================
+   原版形态魔改层：星点视差背景、浮动立绘拼贴、平台指标、
+   角色跑马灯与可玩世界网格（表现形式参考原版衍境，内容女性向）。
+   动画只允许 opacity / transform，reduced-motion 由上方通配规则降级。
+   ============================================================ */
+
+.hx-stars {
+  position: absolute;
+  inset: -60px;
+  z-index: -1;
+  background:
+    radial-gradient(2px 2px at 20% 30%, rgba(238, 231, 220, 0.5), transparent),
+    radial-gradient(1.5px 1.5px at 70% 22%, rgba(238, 231, 220, 0.38), transparent),
+    radial-gradient(1.5px 1.5px at 42% 16%, rgba(238, 231, 220, 0.33), transparent),
+    radial-gradient(2px 2px at 85% 40%, rgba(214, 180, 119, 0.48), transparent),
+    radial-gradient(1.5px 1.5px at 12% 52%, rgba(238, 231, 220, 0.3), transparent),
+    radial-gradient(1.5px 1.5px at 60% 46%, rgba(238, 231, 220, 0.28), transparent),
+    radial-gradient(1.8px 1.8px at 33% 72%, rgba(189, 143, 159, 0.4), transparent),
+    radial-gradient(1.5px 1.5px at 78% 68%, rgba(238, 231, 220, 0.26), transparent);
+  background-repeat: repeat;
+  background-size:
+    460px 460px,
+    520px 520px,
+    480px 480px,
+    560px 560px,
+    500px 500px,
+    540px 540px,
+    470px 470px,
+    530px 530px;
+  opacity: 0.85;
+}
+
+.hx-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 42px;
+  margin-top: 44px;
+}
+
+.hx-hero-meta div span {
+  display: block;
+  color: var(--hx-paper);
+  font-family: "Songti SC", "Noto Serif CJK SC", serif;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.hx-hero-meta div small {
+  color: var(--hx-paper-faint);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+
+.hx-hero-stage {
+  position: relative;
+  z-index: 1;
+  height: clamp(460px, 42vw, 600px);
+}
+
+.hx-hero-badge {
+  position: absolute;
+  top: -10px;
+  left: -6px;
+  z-index: 6;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 13px;
+  border: 1px solid rgba(214, 180, 119, 0.35);
+  border-radius: 999px;
+  background: rgba(17, 16, 21, 0.72);
+  color: var(--hx-champagne);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.hx-portrait {
+  position: absolute;
+  z-index: 2;
+}
+
+.hx-portrait--main {
+  top: 0;
+  left: 6%;
+  z-index: 3;
+  width: min(54%, 300px);
+}
+
+.hx-portrait--back {
+  top: 9%;
+  right: 0;
+  z-index: 2;
+  width: min(38%, 210px);
+  opacity: 0.92;
+}
+
+.hx-portrait--front {
+  right: 10%;
+  bottom: 2%;
+  z-index: 4;
+  width: min(34%, 186px);
+}
+
+.hx-portrait-card {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  border: 1px solid var(--hx-line-strong);
+  border-radius: 16px;
+  aspect-ratio: 5 / 7;
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.55);
+  animation: hx-float-y 7s ease-in-out infinite;
+}
+
+.hx-portrait--front .hx-portrait-card {
+  animation-duration: 6s;
+  animation-delay: 0.4s;
+}
+
+.hx-portrait--back .hx-portrait-card {
+  animation-delay: 0.8s;
+}
+
+.hx-portrait-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hx-portrait-card::after {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, transparent 42%, rgba(17, 16, 21, 0.58)),
+    radial-gradient(120% 80% at 50% 0%, rgba(214, 180, 119, 0.13), transparent 60%);
+  content: "";
+}
+
+@keyframes hx-float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.hx-portrait-label {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 2;
+  padding: 4px 10px;
+  border: 1px solid var(--hx-line-strong);
+  border-radius: 8px;
+  background: rgba(17, 16, 21, 0.62);
+  color: var(--hx-paper);
+  font-size: 12px;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.hx-portrait-label b {
+  color: var(--hx-champagne);
+  font-weight: 600;
+}
+
+/* 角色跑马灯：类名沿用 .marquee 以继承可访问性 CSS 的聚焦暂停规则。 */
+.lp-heartscape .marquee {
+  position: relative;
+  overflow: hidden;
+  margin-top: 52px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.lp-heartscape .marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 14px;
+  animation: hx-scroll-x 36s linear infinite;
+}
+
+.lp-heartscape .marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes hx-scroll-x {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.hx-m-card {
+  position: relative;
+  flex: none;
+  overflow: hidden;
+  width: 156px;
+  margin: 0;
+  border: 1px solid var(--hx-line);
+  border-radius: 12px;
+}
+
+.hx-m-card img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+
+.hx-m-card:hover img {
+  transform: scale(1.08);
+}
+
+.hx-m-card::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(17, 16, 21, 0.72));
+  content: "";
+}
+
+.hx-m-card figcaption {
+  position: absolute;
+  bottom: 8px;
+  left: 10px;
+  z-index: 2;
+  color: var(--hx-paper);
+  font-size: 12px;
+}
+
+/* 可玩世界网格（游戏平台形态） */
+.hx-demos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 54px;
+}
+
+.hx-demo {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  border: 1px solid var(--hx-line);
+  border-radius: 18px;
+  background: var(--hx-panel-solid);
+  color: inherit !important;
+  transition:
+    transform 0.3s,
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+
+.hx-demo:hover,
+.hx-demo:focus-visible {
+  border-color: rgba(214, 180, 119, 0.42);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
+  transform: translateY(-6px);
+}
+
+.hx-demo-cover {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+}
+
+.hx-demo-cover img,
+.hx-demo-cover .hx-image-placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.hx-demo:hover .hx-demo-cover img {
+  transform: scale(1.07);
+}
+
+.hx-demo-cover::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 38%, rgba(17, 16, 21, 0.94));
+  content: "";
+}
+
+.hx-demo-play {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 3;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(214, 180, 119, 0.35);
+  border-radius: 50%;
+  background: rgba(17, 16, 21, 0.55);
+  color: var(--hx-champagne);
+  place-items: center;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  transition:
+    background 0.3s,
+    color 0.3s,
+    transform 0.3s;
+}
+
+.hx-demo:hover .hx-demo-play {
+  background: var(--hx-champagne);
+  color: #221a10;
+  transform: scale(1.08);
+}
+
+.hx-demo-default {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 3;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--hx-champagne);
+  color: #221a10;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.hx-demo-body {
+  position: absolute;
+  right: 16px;
+  bottom: 14px;
+  left: 16px;
+  z-index: 2;
+}
+
+.hx-demo-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 9px;
+}
+
+.hx-demo-tags span {
+  padding: 3px 9px;
+  border: 1px solid rgba(214, 180, 119, 0.26);
+  border-radius: 999px;
+  background: rgba(214, 180, 119, 0.14);
+  color: var(--hx-champagne);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.hx-demo-body h3 {
+  margin: 0;
+  font-family: "Songti SC", "Noto Serif CJK SC", serif;
+  font-size: 21px;
+  font-weight: 600;
+}
+
+.hx-demo-body small {
+  display: block;
+  margin-top: 3px;
+  color: var(--hx-paper-faint);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+
+.hx-demo-body p {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 9px 0 0;
+  -webkit-box-orient: vertical;
+  color: var(--hx-paper-muted);
+  font-size: 13px;
+  -webkit-line-clamp: 2;
+  line-height: 1.5;
+}
+
+.hx-demo-foot {
+  margin-top: 26px;
+  text-align: right;
+}
+
+.hx-demo-foot a {
+  color: var(--hx-paper-muted) !important;
+  font-size: 14px;
+}
+
+.hx-demo-foot a:hover {
+  color: var(--hx-paper) !important;
+}
+
+@media (max-width: 1000px) {
+  .hx-demos {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 780px) {
+  .hx-hero-stage {
+    width: min(88vw, 420px);
+    height: auto;
+    justify-self: center;
+  }
+
+  .hx-portrait--back,
+  .hx-portrait--front {
+    display: none;
+  }
+
+  .hx-portrait--main {
+    position: relative;
+    inset: auto;
+    width: min(64vw, 300px);
+    margin: 18px auto 0;
+  }
+
+  .hx-hero-meta {
+    gap: 14px 30px;
+  }
+
+  .hx-hero-meta div span {
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 560px) {
+  .hx-demos {
+    grid-template-columns: 1fr;
+  }
+
+  .hx-m-card {
+    width: 132px;
+  }
+}
+
+/* ============================================================
+   情绪差分换装、解锁高光、环境光漂移与移动 CTA 滑入（优化方案第4-6步）。
+   动画仍只用 opacity / transform / background-position。
+   ============================================================ */
+
+.hx-mood-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  opacity: 0;
+  transition: opacity 0.55s ease;
+}
+
+.hx-character-card:hover .hx-mood-img,
+.hx-character-card:focus-within .hx-mood-img {
+  opacity: 1;
+}
+
+.hx-mood-tag {
+  position: absolute;
+  bottom: 12px;
+  left: 13px;
+  z-index: 2;
+  padding: 4px 11px;
+  border: 1px solid rgba(214, 180, 119, 0.4);
+  border-radius: 999px;
+  background: rgba(17, 16, 21, 0.66);
+  color: var(--hx-champagne);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.4s ease 0.12s, transform 0.4s ease 0.12s;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.hx-character-card:hover .hx-mood-tag,
+.hx-character-card:focus-within .hx-mood-tag {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hx-character-image img {
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.hx-character-card:hover .hx-character-image img {
+  transform: scale(1.04);
+}
+
+/* 触屏无悬停：不做换装，避免卡在情绪态。 */
+@media (hover: none) {
+  .hx-mood-img,
+  .hx-mood-tag {
+    display: none;
+  }
+}
+
+/* 已解锁结局卡：进入视口时一次性香槟金高光斜扫（background-position，播一次不循环）。 */
+.hx-ending-card.is-unlocked {
+  background:
+    linear-gradient(
+      115deg,
+      transparent 42%,
+      rgba(214, 180, 119, 0.22) 50%,
+      transparent 58%
+    ),
+    linear-gradient(145deg, rgba(238, 231, 220, 0.045), transparent 50%),
+    #18161c;
+  background-position: -160% 0, 0 0, 0 0;
+  background-repeat: no-repeat;
+  background-size: 250% 100%, auto, auto;
+}
+
+.lp-heartscape.is-motion-ready .hx-ending-card.is-unlocked.in {
+  animation: hx-unlock-shimmer 2.4s ease-out 0.35s 1 forwards;
+}
+
+@keyframes hx-unlock-shimmer {
+  0% {
+    background-position: -160% 0, 0 0, 0 0;
+  }
+
+  100% {
+    background-position: 220% 0, 0 0, 0 0;
+  }
+}
+
+/* 已解锁记忆卡 hover（锁定卡保持静穆，不响应） */
+.hx-memory-card.is-unlocked {
+  transition: transform 0.25s, border-color 0.25s;
+}
+
+.hx-memory-card.is-unlocked:hover {
+  border-color: rgba(214, 180, 119, 0.35);
+  transform: translateY(-3px);
+}
+
+/* 全局环境光漂移：两团色光以互质周期极慢移动（“系统在运转”的女性向替身）。 */
+.hx-ambient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hx-ambient::before,
+.hx-ambient::after {
+  position: absolute;
+  width: 58vw;
+  height: 58vw;
+  border-radius: 50%;
+  content: "";
+  filter: blur(8px);
+  opacity: 0.6;
+}
+
+.hx-ambient::before {
+  top: -22vw;
+  left: -14vw;
+  background: radial-gradient(circle, rgba(154, 144, 189, 0.075), transparent 62%);
+  animation: hx-ambient-drift-a 46s ease-in-out infinite alternate;
+}
+
+.hx-ambient::after {
+  right: -18vw;
+  bottom: -24vw;
+  background: radial-gradient(circle, rgba(136, 167, 159, 0.06), transparent 62%);
+  animation: hx-ambient-drift-b 61s ease-in-out infinite alternate;
+}
+
+@keyframes hx-ambient-drift-a {
+  0% {
+    opacity: 0.5;
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    opacity: 0.68;
+    transform: translate3d(4vw, 3vw, 0);
+  }
+}
+
+@keyframes hx-ambient-drift-b {
+  0% {
+    opacity: 0.48;
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    opacity: 0.66;
+    transform: translate3d(-4vw, -3vw, 0);
+  }
+}
+
+/* 移动端固定 CTA：滚过首屏三分之二后滑入。 */
+@media (max-width: 780px) {
+  .lp-heartscape .hx-mobile-cta {
+    transform: translateY(140%);
+    transition: transform 0.32s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .lp-heartscape.is-cta-ready .hx-mobile-cta {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-heartscape .hx-mobile-cta {
+    transform: none !important;
+  }
+}
+
+/* ============================================================
+   第一视角体验舞台（对标原版核心体验区）：360° 环视、HUD 信息片、
+   脉冲热点、对白卡、玩法四步；以及关系三机制 bento 与结尾 Ken Burns。
+   ============================================================ */
+
+.hx-stage-pano {
+  position: absolute;
+  inset: 0;
+  background-position: 0% 42%;
+  background-repeat: no-repeat;
+  background-size: auto 122%;
+  animation: hx-pano-drift 55s ease-in-out infinite alternate;
+}
+
+@keyframes hx-pano-drift {
+  0% {
+    background-position-x: 0%;
+  }
+
+  100% {
+    background-position-x: 100%;
+  }
+}
+
+.hx-stage-hud {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  left: 20px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hx-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 13px;
+  border: 1px solid var(--hx-line-strong);
+  border-radius: 10px;
+  background: rgba(12, 11, 15, 0.62);
+  color: var(--hx-paper-muted);
+  font-size: 12px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.hx-chip b {
+  color: var(--hx-paper);
+  font-weight: 600;
+}
+
+.hx-chip--loose {
+  margin-right: auto;
+}
+
+.hx-stage-hotspot {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(214, 180, 119, 0.4);
+  border-radius: 50%;
+  place-items: center;
+}
+
+.hx-stage-hotspot::before {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--hx-champagne);
+  box-shadow: 0 0 18px rgba(214, 180, 119, 0.7);
+  content: "";
+}
+
+.hx-stage-hotspot::after {
+  position: absolute;
+  inset: 9px;
+  border-radius: 50%;
+  background: rgba(214, 180, 119, 0.5);
+  content: "";
+  animation: hx-dot-pulse 2.4s ease-out infinite;
+}
+
+.hx-stage-dialogue-card {
+  position: relative;
+  z-index: 2;
+  width: min(600px, calc(100% - 56px));
+  margin: 0 0 28px 28px;
+  padding: 18px 22px;
+  border: 1px solid var(--hx-line-strong);
+  border-radius: 14px;
+  background: linear-gradient(90deg, rgba(13, 12, 17, 0.92), rgba(23, 21, 28, 0.74));
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+.hx-dialogue-who {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--hx-champagne);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.hx-dialogue-who i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--hx-lavender);
+  box-shadow: 0 0 12px var(--hx-lavender);
+}
+
+.hx-stage-dialogue-card p {
+  margin: 10px 0 0;
+  color: rgba(238, 231, 220, 0.92);
+  font-family: "Songti SC", "Noto Serif CJK SC", serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.hx-stage-badge {
+  position: absolute;
+  right: 20px;
+  bottom: 24px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 13px;
+  border: 1px solid rgba(214, 180, 119, 0.35);
+  border-radius: 999px;
+  background: rgba(12, 11, 15, 0.66);
+  color: var(--hx-champagne) !important;
+  font-size: 12px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition: border-color 0.25s, background 0.25s;
+}
+
+.hx-stage-badge:hover,
+.hx-stage-badge:focus-visible {
+  border-color: var(--hx-champagne);
+  background: rgba(214, 180, 119, 0.16);
+}
+
+.hx-loop-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 40px;
+}
+
+.hx-loop-step {
+  flex: 1;
+  min-width: 200px;
+  padding: 22px;
+  border: 1px solid var(--hx-line);
+  border-radius: 14px;
+  background: var(--hx-panel-solid);
+  transition: transform 0.3s, border-color 0.3s;
+}
+
+.hx-loop-step:hover {
+  border-color: rgba(214, 180, 119, 0.3);
+  transform: translateY(-4px);
+}
+
+.hx-loop-step span {
+  color: var(--hx-champagne);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+}
+
+.hx-loop-step h3 {
+  margin: 12px 0 8px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.hx-loop-step p {
+  margin: 0;
+  color: var(--hx-paper-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* 关系三机制 bento（角光配色：灰玫瑰 / 青瓷 / 雾薰衣草） */
+.hx-bento {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 54px;
+}
+
+.hx-fate {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  min-height: 280px;
+  flex-direction: column;
+  padding: 30px;
+  border: 1px solid var(--hx-line);
+  border-radius: 20px;
+  background: var(--hx-panel-solid);
+  transition: transform 0.3s, border-color 0.3s;
+}
+
+.hx-fate:hover {
+  border-color: var(--hx-line-strong);
+  transform: translateY(-5px);
+}
+
+.hx-fate--spark {
+  background:
+    radial-gradient(120% 100% at 100% 0%, rgba(189, 143, 159, 0.2), transparent 55%),
+    var(--hx-panel-solid);
+}
+
+.hx-fate--trust {
+  background:
+    radial-gradient(120% 100% at 0% 100%, rgba(136, 167, 159, 0.18), transparent 55%),
+    var(--hx-panel-solid);
+}
+
+.hx-fate--boundary {
+  background:
+    radial-gradient(120% 100% at 100% 100%, rgba(154, 144, 189, 0.2), transparent 55%),
+    var(--hx-panel-solid);
+}
+
+.hx-fate-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  margin-bottom: auto;
+  border: 1px solid var(--hx-line-strong);
+  border-radius: 12px;
+  color: var(--hx-champagne);
+  place-items: center;
+}
+
+.hx-fate--spark .hx-fate-icon {
+  color: var(--hx-rose);
+}
+
+.hx-fate--trust .hx-fate-icon {
+  color: var(--hx-celadon);
+}
+
+.hx-fate--boundary .hx-fate-icon {
+  color: var(--hx-lavender);
+}
+
+.hx-fate h3 {
+  margin: 26px 0 4px;
+  font-family: "Songti SC", "Noto Serif CJK SC", serif;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.hx-fate strong {
+  color: var(--hx-paper-muted);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.hx-fate p {
+  margin: 12px 0 0;
+  color: var(--hx-paper-muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* 结尾满幅背景缓推（Ken Burns），透视“影院熄灯前最后一幕”。 */
+.hx-kenburns {
+  animation: hx-kenburns-zoom 34s ease-in-out infinite alternate;
+}
+
+@keyframes hx-kenburns-zoom {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.07);
+  }
+}
+
+@media (max-width: 980px) {
+  .hx-bento {
+    grid-template-columns: 1fr;
+  }
+
+  .hx-fate {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 780px) {
+  .hx-stage-hud {
+    flex-wrap: wrap;
+  }
+
+  .hx-chip--loose {
+    order: 3;
+    margin-right: 0;
+  }
+
+  .hx-stage-dialogue-card {
+    width: calc(100% - 32px);
+    margin: 0 0 70px 16px;
+  }
+
+  .hx-stage-badge {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .hx-stage-pano {
+    background-size: auto 112%;
   }
 }
 

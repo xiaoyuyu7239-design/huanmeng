@@ -7,14 +7,17 @@ import { 导航栏, 页脚 } from './导航与页脚.jsx';
 import { 精选Demo区 } from './精选Demo区.jsx';
 import {
   创作者次入口,
+  核心体验区,
   真实选择区,
   玩家主视觉,
   玩家结尾CTA,
   多结局区,
   角色群像区,
   同行方式区,
+  关系机制区,
   故事记忆区,
 } from './心界玩家区块.jsx';
+import { 体验舞台 } from './首页体验展示.js';
 import {
   构建玩家首页模型,
   合并首页精选,
@@ -74,7 +77,11 @@ export default function 落地页应用() {
 
   React.useEffect(() => {
     const 根 = 根ref.current;
-    const 滚动处理 = () => 导航ref.current?.classList.toggle('is-scrolled', window.scrollY > 36);
+    const 滚动处理 = () => {
+      导航ref.current?.classList.toggle('is-scrolled', window.scrollY > 36);
+      // 移动端固定 CTA：滚过首屏三分之二后滑入，避免首屏遮挡主视觉。
+      根?.classList.toggle('is-cta-ready', window.scrollY > window.innerHeight * 0.66);
+    };
     window.addEventListener('scroll', 滚动处理, { passive: true });
     滚动处理();
 
@@ -107,22 +114,59 @@ export default function 落地页应用() {
     };
   }, [首页.moreWorlds.length]);
 
+  // 鼠标视差引擎（移植自原版落地页）：[data-par] 元素随指针分层平移。
+  // rAF 合帧只写 transform；窄屏与减少动效下完全不启用。
+  React.useEffect(() => {
+    const 根 = 根ref.current;
+    if (!根 || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return undefined;
+    const 元素们 = [...根.querySelectorAll('[data-par]')];
+    if (元素们.length === 0) return undefined;
+    let 帧 = 0;
+    const 清除位移 = () => 元素们.forEach((元素) => {
+      元素.style.transform = '';
+    });
+    const 处理 = (事件) => {
+      if (window.innerWidth <= 980) {
+        清除位移();
+        return;
+      }
+      const x = (事件.clientX / window.innerWidth - 0.5) * 2;
+      const y = (事件.clientY / window.innerHeight - 0.5) * 2;
+      cancelAnimationFrame(帧);
+      帧 = requestAnimationFrame(() => {
+        for (const 元素 of 元素们) {
+          const 系数 = Number(元素.dataset.par) || 0;
+          元素.style.transform = `translate3d(${(x * 系数).toFixed(1)}px, ${(y * 系数).toFixed(1)}px, 0)`;
+        }
+      });
+    };
+    window.addEventListener('mousemove', 处理, { passive: true });
+    return () => {
+      window.removeEventListener('mousemove', 处理);
+      cancelAnimationFrame(帧);
+      清除位移();
+    };
+  }, [首页.storyReady]);
+
   return (
     <div className="lp lp-heartscape" ref={根ref}>
+      <div className="hx-ambient" aria-hidden="true" />
       <a className="hx-skip-link" href="#main-content">跳到主要内容</a>
       <导航栏 navRef={导航ref} playAction={首页.playAction} />
       <main id="main-content" tabIndex={-1}>
         <玩家主视觉 首页={首页} />
+        <核心体验区 舞台={体验舞台} />
+        <精选Demo区 defaultSlug={首页.defaultSlug} worlds={首页.worlds} />
         {首页.storyReady && (
           <>
             <真实选择区 首页={首页} />
             <故事记忆区 首页={首页} />
             <角色群像区 首页={首页} />
             <同行方式区 首页={首页} />
+            <关系机制区 />
             <多结局区 首页={首页} />
           </>
         )}
-        <精选Demo区 featured={首页.moreWorlds} />
         <创作者次入口 />
         <玩家结尾CTA 首页={首页} />
       </main>

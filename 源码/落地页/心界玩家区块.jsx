@@ -48,13 +48,38 @@ function 内容提示({ notes }) {
   );
 }
 
+// 剧情装置：从 23:40:00 走到零点前一秒后循环，只做叙事氛围，不代表任何真实直播。
+// SSR 与 reduced-motion 均停留在初始帧「23:40:00 · 距零点 20:00」。
+const 倒计时总秒数 = 20 * 60;
+const 补零 = (数值) => String(数值).padStart(2, '0');
+
+function 直播倒计时() {
+  const [剩余秒, set剩余秒] = React.useState(倒计时总秒数);
+  React.useEffect(() => {
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return undefined;
+    const 定时器 = window.setInterval(() => {
+      set剩余秒((当前) => (当前 <= 1 ? 倒计时总秒数 : 当前 - 1));
+    }, 1000);
+    return () => window.clearInterval(定时器);
+  }, []);
+
+  const 总秒 = (23 * 60 + 40) * 60 + (倒计时总秒数 - 剩余秒);
+  const 时钟 = `${补零(Math.floor(总秒 / 3600) % 24)}:${补零(Math.floor((总秒 % 3600) / 60))}:${补零(总秒 % 60)}`;
+  const 剩余 = `${补零(Math.floor(剩余秒 / 60))}:${补零(剩余秒 % 60)}`;
+  return (
+    <strong>
+      {时钟} · 距零点 {剩余}
+    </strong>
+  );
+}
+
 export function 玩家主视觉({ 首页 }) {
   if (!首页.storyReady) {
     return (
       <section className="hx-hero hx-hero--fallback" id="top">
         <div className="hx-wrap">
-          <span className="hx-eyebrow">衍境·心界</span>
-          <h1>故事正在准备进入心界。</h1>
+          <span className="hx-eyebrow">幻梦</span>
+          <h1>故事正在准备开启。</h1>
           <p>你仍然可以从世界列表选择一部已发布的互动故事。</p>
           <播放按钮 href={首页.playAction.href}>查看可玩世界</播放按钮>
         </div>
@@ -62,13 +87,20 @@ export function 玩家主视觉({ 首页 }) {
     );
   }
 
-  const { catalogEntry, playAction, protagonist, preview, story } = 首页;
-  const 主角台词 = preview?.lines.find((行) => 行.speaker === protagonist?.id)?.text;
+  const { catalogEntry, playAction, protagonist, story, worlds } = 首页;
+  // 立绘拼贴完全来自正式 cast 数据：女主在最前，两名可发展关系的角色作纵深层。
+  const 可发展角色 = 首页.characters.filter((角色) => 角色.portrait && 角色.romanceable);
+  const 立绘组 = [
+    protagonist?.portrait && { 角色: protagonist, 位置: 'main', par: 5, 优先: true },
+    可发展角色[0] && { 角色: 可发展角色[0], 位置: 'front', par: 8 },
+    可发展角色[1] && { 角色: 可发展角色[1], 位置: 'back', par: 11 },
+  ].filter(Boolean);
   return (
     <section className="hx-hero" id="top">
+      <div className="hx-stars" aria-hidden="true" data-par="-6" />
       <div className="hx-hero-aurora" aria-hidden="true" />
       <div className="hx-wrap hx-hero-grid">
-        <div className="hx-hero-copy">
+        <div className="hx-hero-copy reveal">
           <span className="hx-eyebrow">女性向互动悬疑 · {story.chapter || '第一章已开放'}</span>
           <h1>
             这一次，故事会记住
@@ -80,48 +112,71 @@ export function 玩家主视觉({ 首页 }) {
           </p>
           <div className="hx-actions">
             <播放按钮 href={playAction.href}>{playAction.label}</播放按钮>
-            <a className="hx-text-link" href="#characters">
-              先认识他们 <span aria-hidden="true">↓</span>
+            <a className="hx-text-link" href="#worlds">
+              浏览全部世界 <span aria-hidden="true">↓</span>
             </a>
           </div>
-          <ul className="hx-hero-facts" aria-label="故事信息">
-            {story.estimatedMinutes && <li>{story.estimatedMinutes} 分钟</li>}
-            <li>多重阶段结局</li>
-            <li>恋爱不是通关条件</li>
-          </ul>
+          <div className="hx-hero-meta" role="list" aria-label="平台一览">
+            <div role="listitem">
+              <span>{worlds?.length ?? 1}</span>
+              <small>可玩世界</small>
+            </div>
+            <div role="listitem">
+              <span>360°</span>
+              <small>全景调查现场</small>
+            </div>
+            <div role="listitem">
+              <span>{首页.publicEndingCount}+</span>
+              <small>阶段结局 · 恋爱非通关条件</small>
+            </div>
+          </div>
           <内容提示 notes={story.contentNotes} />
         </div>
 
-        <figure className="hx-hero-art">
-          {catalogEntry.cover ? (
-            <img
-              alt={`${story.title}封面，${protagonist?.name ?? '主角'}在直播主控台前作出决定`}
-              decoding="async"
-              fetchPriority="high"
-              height="1080"
-              src={catalogEntry.cover}
-              width="864"
-            />
-          ) : (
-            <div className="hx-image-placeholder" aria-hidden="true" />
-          )}
-          <figcaption>
-            <span>{protagonist?.name}</span>
-            <strong>{protagonist?.role}</strong>
-          </figcaption>
+        <div className="hx-hero-stage reveal" aria-label={`${story.title}主要人物`} role="group">
+          <span className="hx-hero-badge" data-par="-3">
+            <i className="hx-status-dot" aria-hidden="true" />
+            结构化记忆 · 故事会记住你
+          </span>
+          {立绘组.map(({ 角色, 位置, par, 优先 }) => (
+            <div className={`hx-portrait hx-portrait--${位置}`} data-par={par} key={角色.id}>
+              <figure className="hx-portrait-card">
+                <img
+                  alt={`${角色.name}，${角色.role}`}
+                  decoding="async"
+                  fetchPriority={优先 ? 'high' : undefined}
+                  height="1536"
+                  loading={优先 ? 'eager' : 'lazy'}
+                  src={角色.portrait}
+                  width="1024"
+                />
+                <figcaption className="hx-portrait-label">
+                  <b>{角色.name}</b> · {角色.role}
+                </figcaption>
+              </figure>
+            </div>
+          ))}
           <div className="hx-art-status hx-art-status--time">
-            <small>直播倒计时</small>
-            <strong>23:40 · 距零点二十分钟</strong>
+            <small>
+              <i className="hx-status-dot" aria-hidden="true" />
+              直播倒计时
+            </small>
+            <直播倒计时 />
           </div>
           <div className="hx-art-status hx-art-status--veto">
-            <small>人类否决权</small>
+            <small>
+              <i className="hx-status-dot" aria-hidden="true" />
+              人类否决权
+            </small>
             <strong>等待你恢复</strong>
           </div>
-          {主角台词 && <blockquote>“{主角台词}”</blockquote>}
-        </figure>
+        </div>
       </div>
       <a className="hx-scroll-cue" href="#story">
-        从第一项决定开始 <span aria-hidden="true">↓</span>
+        <i className="hx-cue-line" aria-hidden="true" />
+        <span>
+          从第一项决定开始 <span aria-hidden="true">↓</span>
+        </span>
       </a>
     </section>
   );
@@ -134,40 +189,174 @@ function 说话人名称(首页, id) {
   return 首页.characters.find((角色) => 角色.id === id)?.name ?? '现场人物';
 }
 
+const 玩法四步 = [
+  ['01', '环视现场', '360° 打量每一处细节，找到可以核对的线索。'],
+  ['02', '听完当事人', '对白有立场；谁在解释、谁在回避，你自己判断。'],
+  ['03', '亲自作选择', '每个选择写明可预见的代价，系统不会替你按下确认。'],
+  ['04', '后果被记住', '心动、信任、边界与证据都会写进你的关系手账。'],
+];
+
+// 核心体验区（对标原版视频舞台）：循环播放平台真实作品的实景视频，
+// 叠 HUD 信息片、脉冲热点与对白卡；视口外与减少动效偏好下自动暂停。
+export function 核心体验区({ 舞台 }) {
+  const 视频ref = React.useRef(null);
+  React.useEffect(() => {
+    const 视频 = 视频ref.current;
+    if (!视频) return undefined;
+    const 偏好 = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+    const 同步播放 = () => {
+      if (偏好?.matches) {
+        视频.pause();
+        return;
+      }
+      视频.play().catch(() => {});
+    };
+    偏好?.addEventListener?.('change', 同步播放);
+    const 观察者 = 'IntersectionObserver' in window
+      ? new IntersectionObserver(
+          ([记录]) => {
+            if (偏好?.matches) return;
+            if (记录.isIntersecting) 视频.play().catch(() => {});
+            else 视频.pause();
+          },
+          { threshold: 0.15 },
+        )
+      : null;
+    观察者?.observe(视频);
+    同步播放();
+    return () => {
+      偏好?.removeEventListener?.('change', 同步播放);
+      观察者?.disconnect();
+    };
+  }, []);
+
+  if (!舞台) return null;
+  return (
+    <section className="hx-section hx-experience" id="experience">
+      <div className="hx-wrap">
+        <区块标题
+          description={`以下画面来自平台作品《${舞台.storyTitle}》的实际游戏场景；进入后即是可环视、可调查的第一视角现场。`}
+          eyebrow="核心体验 · 真实游戏画面"
+          title="把镜头交给你：现场正在发生。"
+        />
+        <div className="hx-story-stage hx-story-stage--video reveal">
+          <video
+            aria-hidden="true"
+            autoPlay
+            loop
+            muted
+            playsInline
+            poster={舞台.poster}
+            preload="metadata"
+            ref={视频ref}
+            src={舞台.video}
+            tabIndex={-1}
+          />
+          <div className="hx-stage-shade" aria-hidden="true" />
+          <div className="hx-stage-hud">
+            <span className="hx-chip">
+              <b>{舞台.chapter}</b>
+              {舞台.title}
+            </span>
+            <span className="hx-chip hx-chip--loose">{舞台.location}</span>
+            {舞台.hotspotCount > 0 && (
+              <span className="hx-chip">
+                <i className="hx-status-dot" aria-hidden="true" />
+                现场线索 {舞台.hotspotCount}
+              </span>
+            )}
+          </div>
+          <span className="hx-stage-hotspot" aria-hidden="true" style={{ top: '42%', left: '34%' }} />
+          <span className="hx-stage-hotspot" aria-hidden="true" style={{ top: '60%', left: '70%' }} />
+          {舞台.line && (
+            <div className="hx-stage-dialogue-card">
+              <span className="hx-dialogue-who">
+                <i aria-hidden="true" />
+                {舞台.line.name}
+              </span>
+              <p>“{舞台.line.text}”</p>
+            </div>
+          )}
+          <a className="hx-stage-badge" href={舞台.playHref}>
+            <Eye aria-hidden="true" size={14} />
+            进入《{舞台.storyTitle}》现场
+          </a>
+        </div>
+
+        <div className="hx-loop-row" aria-label="玩法四步">
+          {玩法四步.map(([序号, 标题, 说明]) => (
+            <article className="hx-loop-step reveal" key={序号}>
+              <span>{序号}</span>
+              <h3>{标题}</h3>
+              <p>{说明}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function 真实选择区({ 首页 }) {
   const 预览 = 首页.preview;
   if (!预览) return null;
+  // 第一视角舞台：现场对白取第一句非旁白台词，与原版“红裙来客”式对白卡同构。
+  const 现场台词 = 预览.lines.find((行) => 行.speaker !== 'narrator' && 行.speaker !== 'system')
+    ?? 预览.lines[0];
   return (
     <section className="hx-section hx-story" id="story">
       <div className="hx-wrap">
         <区块标题
-          description="以下是开场会遇到的真实选项；此处只做预览，不会提交选择。进入故事、听完现场后再亲自决定。"
+          description="以下是开场会遇到的真实场景与选项；此处只做预览，不会提交选择。进入故事、听完现场后再亲自决定。"
           eyebrow="开场选择预览"
           title="零点前二十分钟，你将决定什么不能被系统代替。"
         />
-        <div className="hx-story-stage reveal">
-          <img
-            alt=""
-            aria-hidden="true"
-            height="1024"
-            loading="lazy"
-            src={预览.backdrop}
-            width="1536"
-          />
+        <div className="hx-story-stage hx-story-stage--live reveal">
+          {预览.panorama ? (
+            <div
+              aria-hidden="true"
+              className="hx-stage-pano"
+              style={{ backgroundImage: `url("${预览.panorama}")` }}
+            />
+          ) : (
+            <img
+              alt=""
+              aria-hidden="true"
+              height="1024"
+              loading="lazy"
+              src={预览.backdrop}
+              width="1536"
+            />
+          )}
           <div className="hx-stage-shade" aria-hidden="true" />
-          <div className="hx-stage-meta">
-            <span>{预览.chapter}</span>
-            <strong>{预览.title}</strong>
-            <small>{预览.location}</small>
+          <div className="hx-stage-hud">
+            <span className="hx-chip">
+              <b>{预览.chapter}</b>
+              {预览.title}
+            </span>
+            <span className="hx-chip hx-chip--loose">{预览.location}</span>
+            {预览.hotspotCount > 0 && (
+              <span className="hx-chip">
+                <i className="hx-status-dot" aria-hidden="true" />
+                现场线索 {预览.hotspotCount}
+              </span>
+            )}
           </div>
-          <div className="hx-stage-dialogue">
-            {预览.lines.slice(1, 4).map((行, 索引) => (
-              <blockquote key={`${行.speaker}-${索引}`}>
-                <span>{说话人名称(首页, 行.speaker)}</span>
-                <p>“{行.text}”</p>
-              </blockquote>
-            ))}
-          </div>
+          <span className="hx-stage-hotspot" aria-hidden="true" style={{ top: '38%', left: '30%' }} />
+          <span className="hx-stage-hotspot" aria-hidden="true" style={{ top: '58%', left: '66%' }} />
+          {现场台词 && (
+            <div className="hx-stage-dialogue-card">
+              <span className="hx-dialogue-who">
+                <i aria-hidden="true" />
+                {说话人名称(首页, 现场台词.speaker)}
+              </span>
+              <p>“{现场台词.text}”</p>
+            </div>
+          )}
+          <a className="hx-stage-badge" href={首页.playAction.href}>
+            <Eye aria-hidden="true" size={14} />
+            360° 全景现场 · 进入后可自由环视
+          </a>
         </div>
 
         <div className="hx-choice-grid" aria-label="开场选择预览">
@@ -247,7 +436,7 @@ export function 故事记忆区({ 首页 }) {
             {关系维度.map(([名称, 说明], 索引) => (
               <div key={名称}>
                 <span>{名称}</span>
-                <i aria-hidden="true" />
+                <i aria-hidden="true" style={{ '--meter-scale': [0.14, 0.24, 0.62][索引] }} />
                 <small>{说明}</small>
               </div>
             ))}
@@ -321,6 +510,23 @@ export function 角色群像区({ 首页 }) {
                     width="1024"
                   />
                 )}
+                {角色.moodPortrait && (
+                  <img
+                    alt=""
+                    aria-hidden="true"
+                    className="hx-mood-img"
+                    decoding="async"
+                    height="1536"
+                    loading="lazy"
+                    src={角色.moodPortrait}
+                    width="1024"
+                  />
+                )}
+                {角色.moodLabel && (
+                  <span aria-hidden="true" className="hx-mood-tag">
+                    {角色.moodLabel}
+                  </span>
+                )}
               </div>
               <div className="hx-character-copy">
                 <h3>{角色.name}</h3>
@@ -330,8 +536,44 @@ export function 角色群像区({ 首页 }) {
             </article>
           ))}
         </div>
+
+        <角色跑马灯 首页={首页} />
       </div>
     </section>
+  );
+}
+
+// 现场人物剪影传送带：数据完全来自正式 cast；数组复制两份实现无缝循环，
+// 副本对读屏隐藏。悬停与键盘聚焦均可暂停（规则在 落地页可访问性.css）。
+function 角色跑马灯({ 首页 }) {
+  const 剪影 = [首页.protagonist, ...首页.characters].filter((角色) => 角色?.portrait);
+  if (剪影.length < 4) return null;
+  return (
+    <div
+      aria-label="现场人物剪影，自动滚动展示；悬停或聚焦可暂停"
+      className="marquee reveal"
+      role="region"
+      tabIndex={0}
+    >
+      <div className="marquee-track">
+        {[...剪影, ...剪影].map((角色, 索引) => (
+          <figure
+            aria-hidden={索引 >= 剪影.length || undefined}
+            className="hx-m-card"
+            key={`${角色.id}-${索引}`}
+          >
+            <img
+              alt={索引 < 剪影.length ? `${角色.name}，${角色.role}` : ''}
+              height="1536"
+              loading="lazy"
+              src={角色.portrait}
+              width="1024"
+            />
+            <figcaption>{角色.name}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -366,6 +608,61 @@ export function 同行方式区({ 首页 }) {
   );
 }
 
+// 三维关系机制卡：对标原版“命运长河/因果之网/循环之轮”三卡的角光 bento 形态，
+// 内容换成女性向的心动 / 信任 / 边界（与运行时 spark/trust/boundary 一一对应）。
+export function 关系机制区() {
+  const 机制 = [
+    ['心动', '靠近不是默认答案', '它由你们共同做过的事积累，也可以被你亲手停下；高心动永远盖不住低信任。', BookHeart, 'spark'],
+    ['信任', '承诺需要被兑现', '角色记得你是否说到做到；可验证的共同工作，比任何甜言蜜语都更有分量。', ShieldCheck, 'trust'],
+    ['边界', '拒绝始终会被尊重', '你说“不”的时刻会被记录；守住边界不会损失剧情，越界一定有代价。', Fingerprint, 'boundary'],
+  ];
+  return (
+    <section className="hx-section hx-mechanics" id="mechanics">
+      <div className="hx-wrap">
+        <区块标题
+          align="center"
+          description="三个维度独立记录、互不折算；它们共同决定角色如何回应你，也决定哪些结局向你敞开。"
+          eyebrow="三维关系机制"
+          title="没有好感度条，只有心动、信任与边界。"
+        />
+        <div className="hx-bento">
+          {机制.map(([名称, 副题, 详情, Icon, 键]) => (
+            <article className={`hx-fate hx-fate--${键} reveal`} key={名称}>
+              <span className="hx-fate-icon">
+                <Icon aria-hidden="true" size={26} strokeWidth={1.5} />
+              </span>
+              <h3>{名称}</h3>
+              <strong>{副题}</strong>
+              <p>{详情}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// 小数字滚动：进入视口后 600ms 从 0 计到真实值；reduced-motion 与 SSR 直出终值。
+function 滚动数字({ 值 }) {
+  const [显示, set显示] = React.useState(值);
+  React.useEffect(() => {
+    if (值 <= 0 || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+      set显示(值);
+      return undefined;
+    }
+    let 帧 = 0;
+    const 起 = performance.now();
+    const 步 = (时) => {
+      const 比 = Math.min(1, (时 - 起) / 600);
+      set显示(Math.round(值 * 比));
+      if (比 < 1) 帧 = requestAnimationFrame(步);
+    };
+    帧 = requestAnimationFrame(步);
+    return () => cancelAnimationFrame(帧);
+  }, [值]);
+  return <>{显示}</>;
+}
+
 export function 多结局区({ 首页 }) {
   const 已解锁数 = 首页.endings.filter((结局) => 结局.unlocked).length;
   return (
@@ -381,7 +678,15 @@ export function 多结局区({ 首页 }) {
             <Eye aria-hidden="true" size={19} />
             <span>结果会在你亲自抵达后公开</span>
           </div>
-          <strong>{首页.progress.hasSave ? `已解锁 ${已解锁数}` : '尚未开始记录'}</strong>
+          <strong>
+            {首页.progress.hasSave ? (
+              <>
+                已解锁 <滚动数字 值={已解锁数} />
+              </>
+            ) : (
+              '尚未开始记录'
+            )}
+          </strong>
         </div>
         <div className="hx-ending-grid">
           {首页.endings.map((结局, 索引) => (
@@ -431,6 +736,7 @@ export function 玩家结尾CTA({ 首页 }) {
         <img
           alt=""
           aria-hidden="true"
+          className="hx-kenburns"
           height="1024"
           loading="lazy"
           src={首页.preview.backdrop}

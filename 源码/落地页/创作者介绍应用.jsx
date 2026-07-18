@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import '../样式/落地页-心界.css';
 import '../样式/落地页可访问性.css';
+import { 使用滚动显现 } from './使用滚动显现.js';
 
 const 创作能力 = [
   {
@@ -47,21 +48,25 @@ const 经验闭环 = [
 
 function 创作者品牌() {
   return (
-    <a className="hx-brand" href="/" aria-label="返回衍境·心界玩家首页">
+    <a className="hx-brand" href="/" aria-label="返回幻梦玩家首页">
       <span className="hx-brand-mark" aria-hidden="true"><i /></span>
       <span>
-        <b>衍境·心界</b>
+        <b>幻梦</b>
         <small>创作者幕后工作间</small>
       </span>
     </a>
   );
 }
 
+const 滚动显现目标 = ['.hx-creator-hero .hx-wrap > *', 'main > .hx-section .hx-wrap > *', '.hx-creator-final .hx-wrap > *'];
+
 export default function 创作者介绍应用() {
+  const 根ref = React.useRef(null);
+  使用滚动显现(根ref, 滚动显现目标);
   React.useEffect(() => {
     document.body.classList.add('landing-body');
     const 原标题 = document.title;
-    document.title = '创作者工作间｜衍境·心界';
+    document.title = '创作者工作间｜幻梦';
     return () => {
       document.body.classList.remove('landing-body');
       document.title = 原标题;
@@ -69,7 +74,7 @@ export default function 创作者介绍应用() {
   }, []);
 
   return (
-    <div className="lp lp-heartscape hx-creator-page">
+    <div className="lp lp-heartscape hx-creator-page" ref={根ref}>
       <a className="hx-skip-link" href="#creator-main">跳到主要内容</a>
       <nav className="hx-creator-nav" aria-label="创作者导航">
         <div className="hx-wrap hx-creator-nav-inner">

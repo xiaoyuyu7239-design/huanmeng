@@ -4,7 +4,9 @@ import 静态精选清单 from '../../公共资源/showcase.json';
 import '../样式/落地页-心界.css';
 import '../样式/落地页可访问性.css';
 import { 合并首页精选, 清洗精选数据, 核对本机精选覆盖 } from './玩家首页模型.js';
+import { 使用滚动显现 } from './使用滚动显现.js';
 
+const 滚动显现目标 = ['.hx-archive-hero .hx-wrap > *', '#archive-list-title', '.hx-archive-list > a'];
 const 本地精选键 = 'creator:browser-showcase:v1';
 const 本地项目键 = 'creator:browser-projects:v1';
 const 静态精选 = 清洗精选数据(静态精选清单);
@@ -26,12 +28,14 @@ function 归档条目(远端 = 静态精选清单, 本地 = null) {
 }
 
 export default function 世界归档应用() {
+  const 根ref = React.useRef(null);
   const [作品们, set作品们] = React.useState(() => 归档条目());
+  使用滚动显现(根ref, 滚动显现目标);
 
   React.useEffect(() => {
     document.body.classList.add('landing-body');
     const 原标题 = document.title;
-    document.title = '互动实验档案｜衍境·心界';
+    document.title = '互动实验档案｜幻梦';
     const 本地 = 读取本地归档覆盖();
     if (本地) set作品们(归档条目(静态精选清单, 本地));
     let 还在页面 = true;
@@ -49,13 +53,13 @@ export default function 世界归档应用() {
   }, []);
 
   return (
-    <div className="lp lp-heartscape hx-archive-page">
+    <div className="lp lp-heartscape hx-archive-page" ref={根ref}>
       <a className="hx-skip-link" href="#archive-main">跳到主要内容</a>
       <nav className="hx-creator-nav" aria-label="实验档案导航">
         <div className="hx-wrap hx-creator-nav-inner">
-          <a className="hx-brand" href="/" aria-label="返回衍境·心界玩家首页">
+          <a className="hx-brand" href="/" aria-label="返回幻梦玩家首页">
             <span className="hx-brand-mark" aria-hidden="true"><i /></span>
-            <span><b>互动实验档案</b><small>衍境·心界</small></span>
+            <span><b>互动实验档案</b><small>幻梦</small></span>
           </a>
           <div>
             <a href="/"><ArrowLeft aria-hidden="true" size={15} /> 玩家首页</a>

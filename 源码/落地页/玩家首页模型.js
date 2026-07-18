@@ -220,6 +220,9 @@ function 构建角色(角色) {
     role: 非空文本(角色.role, '故事中的关键人物'),
     theme: 非空文本(角色.theme, '尚待了解'),
     portrait: 非空文本(角色.portrait),
+    // 情绪差分：第二情绪立绘与标签由剧情数据声明，首页角色卡悬停换装使用。
+    moodPortrait: 非空文本(角色.moodPortrait),
+    moodLabel: 非空文本(角色.moodLabel),
     color: 非空文本(角色.color, '#bda8b7'),
     accent: 非空文本(角色.accent, '#342b34'),
     romanceable: 角色.romanceable === true,
@@ -272,6 +275,9 @@ function 构建开场预览(剧情) {
     location: 非空文本(节点.location),
     synopsis: 非空文本(节点.synopsis),
     backdrop: 非空文本(节点.backdrop),
+    // 首页第一视角舞台直接展示开场节点的真实全景与线索数量，不另造营销数据。
+    panorama: 非空文本(节点.panorama),
+    hotspotCount: 数组(节点.hotspots).length,
     lines,
     choices,
   };
@@ -325,6 +331,7 @@ export function 构建玩家首页模型(精选数据, 剧情, 原进度 = null)
       storyReady: false,
       playHref,
       playAction: 构建主播放行动(playHref, catalogEntry?.title, false),
+      worlds: showcase.featured,
       moreWorlds: showcase.featured.filter((条目) => 条目.slug !== defaultSlug),
     };
   }
@@ -371,7 +378,54 @@ export function 构建玩家首页模型(精选数据, 剧情, 原进度 = null)
     publicEndingCount: Object.values(节点表).filter(
       (节点) => 是普通对象(节点?.ending) && 节点.ending.tier !== 'secret',
     ).length,
+    // worlds 是首页可玩世界网格的完整清单（旗舰在首位）；moreWorlds 保留给二级归档语义。
+    worlds: showcase.featured,
     moreWorlds: showcase.featured.filter((条目) => 条目.slug !== defaultSlug),
+  };
+}
+
+// 首页“核心体验”舞台：从任一正式作品的真实节点构建视频展示数据。
+// 等各作品翻新完成后，把“画面效果最好”的作品/节点改在 首页体验展示.js 配置即可换展。
+export function 构建体验舞台(剧情, slug, nodeId = '') {
+  const 安全作品 = 安全slug(slug);
+  if (!安全作品 || !是普通对象(剧情)) return null;
+  const 节点表 = 剧情节点表(剧情);
+  const 取视频 = (节点) =>
+    数组(节点?.cinematics).find((段) => 是普通对象(段) && 段.type === 'flat-video' && 非空文本(段.src)) ?? null;
+  const 指定节点 = 节点表[非空文本(nodeId)];
+  const 节点 = 取视频(指定节点)
+    ? 指定节点
+    : Object.values(节点表).find((候选) => 是普通对象(候选) && 取视频(候选));
+  const 视频 = 取视频(节点);
+  if (!节点 || !视频) return null;
+
+  const 名册 = new Map(
+    [剧情.cast?.protagonist, ...数组(剧情.cast?.characters)]
+      .filter(是普通对象)
+      .map((角色) => [非空文本(角色.id), 非空文本(角色.name)])
+      .filter(([id, name]) => id && name),
+  );
+  const 台词 = 数组(节点.lines)
+    .filter((行) => 是普通对象(行) && 非空文本(行.text))
+    .map((行) => ({ speaker: 非空文本(行.speaker, 'narrator'), text: 非空文本(行.text) }));
+  const 现场台词 = 台词.find((行) => 行.speaker !== 'narrator' && 行.speaker !== 'system') ?? 台词[0] ?? null;
+  const 说话人 = (id) => {
+    if (id === 'narrator') return '现场';
+    if (id === 'system') return '系统';
+    return 名册.get(id) ?? '现场人物';
+  };
+
+  return {
+    slug: 安全作品,
+    playHref: `/play?game=${encodeURIComponent(安全作品)}`,
+    storyTitle: 非空文本(剧情.title, 安全作品),
+    chapter: 非空文本(节点.chapter),
+    title: 非空文本(节点.title),
+    location: 非空文本(节点.location),
+    video: 非空文本(视频.src),
+    poster: 非空文本(节点.panorama),
+    hotspotCount: 数组(节点.hotspots).length,
+    line: 现场台词 ? { name: 说话人(现场台词.speaker), text: 现场台词.text } : null,
   };
 }
 
