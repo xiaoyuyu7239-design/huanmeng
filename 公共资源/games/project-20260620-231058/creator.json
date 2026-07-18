@@ -1,0 +1,354 @@
+{
+  "schemaVersion": 1,
+  "storyId": "project-20260620-231058",
+  "storyBible": "校庆前夜多出的第十五封匿名愿望，是一场校园悬疑，更是一次关于话语权的测验。校刊调查员沈知意握着证据而不是话筒——她追查信封、糖纸批次与名单流转，却始终把开口的权利留给当事人本人。可攻略的花容离以坦白换靠近，两位女性伙伴各自拥有署名与担责的独立结局；真结局“不让任何人替另一个人选择”，让愿望箱从此不再替沉默说话。",
+  "authoring": {
+    "schemaVersion": 1,
+    "characterBibles": [
+      {
+        "characterId": "you",
+        "desire": "把第十五封愿望查到可以署名公开的程度——每个结论都对得上实物证据（二次封存的信封、十五号糖纸批次、名单流转空白段），而不是匿名墙式的传闻。",
+        "fear": "自己在破案途中变成另一个“替别人选择”的人：抢走当事人的话筒、先相信纸面而不是人，重演去年那些沉默者与代言者的逻辑。",
+        "boundary": "证据可以拍照留存，但秘密何时说、由谁说必须归当事人本人；她作证、递话筒，不代言、不逼供。",
+        "growth": "从单打独斗的调查员成长为把话筒递回去的召集者——天台上宣布“想说的话自己开口，我来作证”，终章亲手切换投影，署名却属于所有人。",
+        "voice": "提问先于判断，习惯用物证开口（“第十五封。投稿箱明明只收了十四封”）；关键节点收成短句宣言，不用形容词壮胆。",
+        "reviewed": true
+      },
+      {
+        "characterId": "wen_tianmo",
+        "desire": "想让今年校庆不再重演去年天台烧信的结局；想有一次不是被推上台、而是自己走上台把话说完的机会。",
+        "fear": "说出捡信经过会连累她在乎的人一起被拖下水，也怕自己再一次被全校当成笑话围观。",
+        "boundary": "可以被怀疑、被查证，但不接受被代言——“如果要公开，请让我自己说”；替她隐瞒同样越过她的边界。",
+        "growth": "从用糖纸、兔包和撒娇挡住慌张，到在仓库里亲口承认捡到信，再到结局舞台上自己讲完全部经过、不再替任何人背锅。",
+        "voice": "语气软、爱用邀请式问句和分享式亲昵（“伞分你一半！”“要不要尝一颗糖？”）；一旦害怕，句子骤然变短、带恳求。",
+        "reviewed": true
+      },
+      {
+        "characterId": "lin_wanqing",
+        "desire": "把名单从学生会到告白墙后台那段无人签收的空白补完并公开，让流程而不是人情决定谁被暴露。",
+        "fear": "去年删稿的沉默被揭开时，她将像镜子里那样独自承担全部责任，连道歉都轮不到别人分担。",
+        "boundary": "不允许没有证据的话先跑出去；也不再接受用“把流程握在自己手里”的控制来替代公开。",
+        "growth": "从用克制与流程管控一切风险，到亲口说出“控制不是正义，公开才是”，主动认下删稿并支持把全部记录一并公开。",
+        "voice": "短句、指令式，名词精确（名单、流程、时间戳、签收）；情绪只从“去年”这类词后面的停顿里漏出来。",
+        "reviewed": true
+      },
+      {
+        "characterId": "hua_rongli",
+        "desire": "让被删的旧报道等到一个敢打开的人；把独自保管了一年的真相连同公开时机的决定权一起交出去。",
+        "fear": "自己的“保护”其实是傲慢——用开箱、剪辑和隐瞒替别人做了正确选择，最终和幕后操控者共用同一套逻辑。",
+        "boundary": "可以交出钢笔、档案入口和旧报道，但靠近要以坦白为前提；在沈知意查明开箱真相之前，他不推进任何暧昧。",
+        "growth": "从抢在所有人前面挡风的秘密保管者，到承认“替别人做正确选择也是一种傲慢”，最后把话筒递还当事人、把选择还给沈知意。",
+        "voice": "温柔的书面语，惯用意象与条件句（“信封上的水痕比字更诚实”“如果你能承受答案”）；坦白之后语气明显变直、变短。",
+        "reviewed": true
+      }
+    ],
+    "relationshipEdges": [
+      {
+        "id": "you--hua_rongli",
+        "from": "you",
+        "to": "hua_rongli",
+        "type": "potential-romance",
+        "label": "旧书与坦白",
+        "dynamic": "靠近的节奏由坦白驱动：他每交出一层秘密（阅览室谈《百年孤独》边注、档案室承认开箱），两人才靠近一步；她的怀疑与质疑同样被他接住而非回避。",
+        "boundary": "他不得以保护为名替她或任何当事人决定公开与否；暧昧不能替代坦白，她对他的怀疑不会被浪漫化抹平。",
+        "reviewed": true
+      },
+      {
+        "id": "you--wen_tianmo",
+        "from": "you",
+        "to": "wen_tianmo",
+        "type": "ally",
+        "label": "伞下同盟",
+        "dynamic": "甜茉用亲近换安全感，沈知意用采购单和出入表还她清白；信任在“不逼问、不代言”里累积，在“先信纸不信人”时出现裂缝。",
+        "boundary": "不许拿她的慌张当突破口逼供她想保护的人；替她隐瞒不算保护，保护必须以她自己开口为终点。",
+        "reviewed": true
+      },
+      {
+        "id": "you--lin_wanqing",
+        "from": "you",
+        "to": "lin_wanqing",
+        "type": "professional",
+        "label": "流程与真相",
+        "dynamic": "一个守流程、一个查真相的对等协作：晚晴拦下没有证据的结论，沈知意逼她直面删稿；名单流转图与调查笔记互为拼图。",
+        "boundary": "不许用她的愧疚交换信息；她认错不等于替整个链条背锅，公开必须连同流程漏洞与其他责任人一起。",
+        "reviewed": true
+      },
+      {
+        "id": "wen_tianmo--lin_wanqing",
+        "from": "wen_tianmo",
+        "to": "lin_wanqing",
+        "type": "ally",
+        "label": "互相背锅的两个人",
+        "dynamic": "日记压痕“别让她一个人背”与便签“别让她替我道歉”互为镜像——两人都想替对方顶下去年的事，沉默因此叠加成新的伤害。",
+        "boundary": "不许再互相顶罪：各自的错各自署名说完，谁也不许抢走对方道歉的机会。",
+        "reviewed": true
+      }
+    ],
+    "emotionPoints": [
+      {
+        "nodeId": "s00-character-select",
+        "intensity": 45,
+        "agency": 70,
+        "intimacy": 10,
+        "note": "雨夜三人三种招呼，先回应谁的选择立刻写进关系走向，悬疑与主导权同时开场。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s14-new-node",
+        "intensity": 38,
+        "agency": 55,
+        "intimacy": 30,
+        "note": "天台私语揭开去年烧信旧事，主题句“不让任何人替另一个人选择”首次由沈知意亲口说出。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s01-rain-gate",
+        "intensity": 52,
+        "agency": 68,
+        "intimacy": 15,
+        "note": "不该存在的第十五封信现身，拆信取真相还是留证拍照是第一次代价明确的取舍。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s02-orientation-room",
+        "intensity": 48,
+        "agency": 72,
+        "intimacy": 22,
+        "note": "糖纸、名单、旧书三条线索同框，选择接近谁即选定调查路线。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s03-old-library-wishbox",
+        "intensity": 58,
+        "agency": 75,
+        "intimacy": 25,
+        "note": "愿望箱现场像被人布置过，带走哪件证物决定先撬开谁的秘密。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s04-sweets-club",
+        "intensity": 60,
+        "agency": 62,
+        "intimacy": 40,
+        "note": "甜茉“别急着相信也别急着怀疑”的慌张自白，替她隐瞒的选项开始消耗她的边界。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s05-mirror-dressing-room",
+        "intensity": 62,
+        "agency": 65,
+        "intimacy": 35,
+        "note": "半张名单截图与被撕掉的第十四页日记，晚晴的克制第一次露出裂缝。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s06-reading-room-huarongli",
+        "intensity": 68,
+        "agency": 60,
+        "intimacy": 55,
+        "note": "钢笔墨痕对上锁孔，花容离以“能否承受答案”试探——这条线里靠近与坦白同价。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s07-rehearsal-hall",
+        "intensity": 78,
+        "agency": 58,
+        "intimacy": 38,
+        "note": "告白墙投屏失控把所有秘密推到灯下，先护谁的抉择把中段压力推向顶点。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s08-tianmo-storage",
+        "intensity": 72,
+        "agency": 66,
+        "intimacy": 50,
+        "note": "“如果要公开，请让我自己说”——保护她本人与先相信纸面证据在此分岔。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s09-wanqing-office",
+        "intensity": 70,
+        "agency": 70,
+        "intimacy": 45,
+        "note": "晚晴承认去年删稿，“控制不是正义，公开才是”把调查从追凶转向公开。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s10-secret-archive",
+        "intensity": 80,
+        "agency": 74,
+        "intimacy": 60,
+        "note": "被删旧报道揭出前史，“替别人做正确选择也是一种傲慢”点破全局命题。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s11-rooftop-confrontation",
+        "intensity": 90,
+        "agency": 88,
+        "intimacy": 62,
+        "note": "雨停后的天台对质，沈知意宣布“不再有人替别人选择”，三人各自认领开口顺序。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s12-festival-stage-final-choice",
+        "intensity": 95,
+        "agency": 95,
+        "intimacy": 58,
+        "note": "舞台灯最亮处的顶点：四个结局全部经由沈知意在投影控制台亲手切换。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e01-sweet-echo",
+        "intensity": 42,
+        "agency": 55,
+        "intimacy": 70,
+        "note": "甜茉自己站上台讲完捡信经过，可爱从逃避变成重新站起来的方式，张力回落、暖意上扬。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e02-clear-mirror",
+        "intensity": 45,
+        "agency": 58,
+        "intimacy": 60,
+        "note": "晚晴公开流程并认下删稿，镜子终于不再只照见她一个人的责任。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e03-prince-pages",
+        "intensity": 40,
+        "agency": 52,
+        "intimacy": 78,
+        "note": "花容离交出旧报道与选择权，温柔从代劳变成陪伴，银白书签像解除的封印。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e04-fifteenth-wish-true-ending",
+        "intensity": 50,
+        "agency": 80,
+        "intimacy": 72,
+        "note": "三份证据同时公开、匿名墙署名道歉，第十五封愿望被三个人与她共同改写。",
+        "reviewed": true
+      }
+    ],
+    "consistencyRules": [
+      {
+        "id": "player-agency",
+        "label": "主角主体性",
+        "scope": "story",
+        "targetId": "",
+        "rule": "关键决定必须由玩家主角执行或明确授权，他人不得代替她作出结论。",
+        "severity": "error",
+        "enabled": true,
+        "reviewStatus": "passed",
+        "reviewNote": "18 个节点逐一核对：s11-rooftop-confrontation 由沈知意宣布开口顺序并亲自选定；s12-festival-stage-final-choice 四个结局均需她在投影控制台亲手切换，且分别以 route_tianmo / route_wanqing / route_huarongli / evidence_bundle 条件确认授权在先。",
+        "reviewed": true
+      },
+      {
+        "id": "explicit-consent-boundary",
+        "label": "明确同意与边界",
+        "scope": "story",
+        "targetId": "",
+        "rule": "亲密、公开、数据使用与越权行动都必须存在可识别的同意与撤回空间。",
+        "severity": "error",
+        "enabled": true,
+        "reviewStatus": "passed",
+        "reviewNote": "同意被直接写进数值与条件：s04-sweets-club 替甜茉隐瞒使其 boundary -3，s08-tianmo-storage 不逼问反而 boundary +6 并由她亲口说出“请让我自己说”；s12 三条个人结局各以 route_* 旗标锁定，未经当事人授权的自白无法上屏。",
+        "reviewed": true
+      },
+      {
+        "id": "non-romance-equivalence",
+        "label": "非恋爱等价",
+        "scope": "story",
+        "targetId": "",
+        "rule": "非恋爱、女性同盟与独立路线不得在有效信息、行动权、职业成果或结局资格上被降级。",
+        "severity": "error",
+        "enabled": true,
+        "reviewStatus": "passed",
+        "reviewNote": "结局数据核对：可攻略者花容离的 e03-prince-pages 与女性伙伴结局 e01/e02 公开度同为 35，结局资格与信息量无差；真结局 e04 为 team 型，需在 s11 集齐 purchase_record / list_flow / old_report 三线证据，恋爱线并非更优或唯一通路。",
+        "reviewed": true
+      },
+      {
+        "id": "female-alliance-correction",
+        "label": "女性同盟纠错权",
+        "scope": "story",
+        "targetId": "",
+        "rule": "女性同盟角色必须拥有独立目标、署名与对主角判断的平等纠错权，不能只做无条件附和者。",
+        "severity": "warning",
+        "enabled": true,
+        "reviewStatus": "passed",
+        "reviewNote": "林晚晴在 s02-orientation-room 拦下“没有证据的话”、在 s09-wanqing-office 以“控制不是正义，公开才是”纠正查证策略；温甜茉在 s08 拒绝被代言并于 e01 亲自上台署名担责——两人各拥有独立结局 e01/e02，均非附和者。",
+        "reviewed": true
+      }
+    ],
+    "consistencyAssets": [
+      {
+        "id": "voice-hua_rongli",
+        "kind": "voice-reference",
+        "title": "花容离声线基准",
+        "status": "approved",
+        "characterIds": [
+          "hua_rongli"
+        ],
+        "nodeIds": [
+          "s00-character-select"
+        ],
+        "sourcePath": "/voices/project-20260620-231058/s00-character-select/line-002-bf3177d35237.mp3",
+        "notes": "male-qn-jingying 音色定调样本：温柔书面语、意象化台词的读法基准，坦白后台词语速应更直更短。",
+        "reviewed": true
+      },
+      {
+        "id": "loc-s01-rain-gate",
+        "kind": "location-reference",
+        "title": "雨夜校门全景",
+        "status": "approved",
+        "characterIds": [],
+        "nodeIds": [
+          "s01-rain-gate"
+        ],
+        "sourcePath": "/panoramas/s01-rain-gate.png",
+        "notes": "开篇悬疑定场：雨中晕开的校门灯与失物招领箱，第十五封信与银白书签的出现地。",
+        "reviewed": true
+      },
+      {
+        "id": "loc-s03-old-library-wishbox",
+        "kind": "location-reference",
+        "title": "旧图书馆愿望箱",
+        "status": "approved",
+        "characterIds": [],
+        "nodeIds": [
+          "s03-old-library-wishbox"
+        ],
+        "sourcePath": "/panoramas/s03-old-library-wishbox.png",
+        "notes": "核心证物场：愿望箱锁孔墨痕、《百年孤独》与粉色丝带需与后续场景保持同一形制。",
+        "reviewed": true
+      },
+      {
+        "id": "loc-s11-rooftop-confrontation",
+        "kind": "location-reference",
+        "title": "天台对质",
+        "status": "approved",
+        "characterIds": [],
+        "nodeIds": [
+          "s11-rooftop-confrontation",
+          "s14-new-node"
+        ],
+        "sourcePath": "/panoramas/s11-rooftop-confrontation.png",
+        "notes": "高潮场景，与序章 s14 天台夜语构成首尾呼应；雨停光感区别于序章雨夜。",
+        "reviewed": true
+      },
+      {
+        "id": "loc-s12-festival-stage",
+        "kind": "location-reference",
+        "title": "校庆舞台终选",
+        "status": "approved",
+        "characterIds": [],
+        "nodeIds": [
+          "s12-festival-stage-final-choice"
+        ],
+        "sourcePath": "/panoramas/s12-festival-stage-final-choice.png",
+        "notes": "终章与四个结局共用的舞台空间：投影控制台是最终选择的执行点，灯光推到最白。",
+        "reviewed": true
+      }
+    ]
+  }
+}

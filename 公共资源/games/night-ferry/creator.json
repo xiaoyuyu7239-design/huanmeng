@@ -1,0 +1,417 @@
+{
+  "schemaVersion": 1,
+  "storyId": "night-ferry",
+  "storyBible": "90年代深夜电台悬疑：《夜航船》主播程晚星用全城都听得见、只有一个人听得懂的话，回护一封没有署名的求救信。四次空中回信的措辞与四个结局的出口，全部由她亲口念出；写信人在公共记录里永远匿名，最后的授权只写着「如果你觉得该放，就放」。全员非攻略，克制即深情——关系只按实话与边界记账，最好的结局是灯都亮着，而没有一盏被点名。",
+  "authoring": {
+    "schemaVersion": 1,
+    "characterBibles": [
+      {
+        "characterId": "you",
+        "desire": "让匿名的求救被当真：用全城作证、只她听懂的暗语回信，把第四十七封信查到能摆上桌面，同时保住信箱与写信人的匿名两样都不丢。",
+        "fear": "自己的声音反过来变成定位她的坐标——话筒带来的关注，成为拆她信箱、逼她实名的理由。",
+        "boundary": "不替写信人报警、不替她具名、不交热线记录一页；话筒可以赔进去，别人的名字不能替人喊出。",
+        "growth": "从独自扛下三条线索的查访，到接过「放不放」的授权、担起「决定不揭开谁」的责任——风暴之夜的四个出口，每一个都由她亲手念出。",
+        "voice": "播音腔之外句子短而准，先给结论再给理由；直播里惯用炉火、天气、点歌做双层暗语，一句话永远备着两种听法。",
+        "reviewed": true
+      },
+      {
+        "characterId": "xin_writer",
+        "desire": "让下一盏灯不被灭掉：把小满留下的证据送到能被当真的人手里，同时保住自己继续生活下去的匿名。",
+        "fear": "被念出名字——她比怕坏人更怕善意的曝光，怕从证人变成全城观看的展品，从此写信的人先想起她再想起信箱。",
+        "boundary": "只对晚星一人、在电波之外现身；公共记录里永远匿名；「别替我报警」「别找我」，她的路要她自己走。",
+        "growth": "从「别找我」到「如果你觉得该放，就放」：把最后的决定权交给一个只听过声音的人，是她重新对世界开出的信任。",
+        "voice": "只以信件与十九秒电流声出场；书面语克制、指令藏在叮嘱里，落款每封都变——听你节目的人、还在听的人、快见面的人——唯独从不写名字。",
+        "reviewed": true
+      },
+      {
+        "characterId": "a_yue",
+        "desire": "用一双听得出底噪的耳朵守住夜航船的信箱，把父亲那台不该存在的机器欠下的债，一盘一盘往回还。",
+        "fear": "家史重演：听来的东西变成害人的证据，制服再一次敲开家门——所以他宁可洗掉磁带，也不留下能指向她的一秒。",
+        "boundary": "洗得掉台里的带子，绝不碰电话局的单子；护送可以做但不能让她发现，更不能替晚星做任何结论。",
+        "growth": "从把夜班全换给自己的沉默守夜人，到把家史讲完（或被尊重地不问）——学会让秘密以自己选择的方式出口。",
+        "voice": "先报证据再报判断——「每三秒咔一下，十九秒里咔了六下」；感情话说到一半就去卷线，背对着人把话收尾。",
+        "reviewed": true
+      },
+      {
+        "characterId": "shen_xu",
+        "desire": "让案子在文书上立得住：走完一个没人能拆掉的程序，并把借他制服名义递假通知的旧关系连根揪出。",
+        "fear": "程序被人当口子借用，自己成了她信里「他们里头穿制服的」那一个——例外开一次，程序就不再保护任何人。",
+        "boundary": "案对案交换、绝不逼问信源；通话单只看日期不看号码；不得用协查名义碰信箱与写信人身份。",
+        "growth": "从「立案要有具名证人」的程序原教旨，到接受用作恶者的名字去填空格——他弄明白了程序的尊严在于它保护谁。",
+        "voice": "短句，先讲程序再讲例外——「程序上，台里应当配合。——程序上，台里也有权查验编号」；让步永远藏在补充条款里。",
+        "reviewed": true
+      },
+      {
+        "characterId": "zhou_yi",
+        "desire": "保住开播七年的《夜航船》，也保住那条规矩：听众的电话，没有交出去过一页。",
+        "fear": "栏目与信箱只能活一个——她最怕自己在改版会上拼力保下的，是一个再没人往里投信的空壳。",
+        "boundary": "可以替晚星挡台里、挡记者、挡宣传口，但不替她做决定；三号信箱的钥匙，只能回到晚星桌上。",
+        "growth": "从「我只能挡到月底」的斡旋者，到投下唯一反对票、揣着复播申请跑七个月的执旗人——她把提醒变成了行动。",
+        "voice": "官面话与真心话隔一句切换，关键提醒只说一遍——「节目是你的，信箱是他们的，想清楚哪个不能丢」。",
+        "reviewed": true
+      }
+    ],
+    "relationshipEdges": [
+      {
+        "id": "you--xin_writer",
+        "from": "you",
+        "to": "xin_writer",
+        "type": "ally",
+        "label": "电波两端的守护",
+        "dynamic": "她只以信件与暗语靠近，晚星只用全城听得见、仅她听得懂的话回护；信任在四次空中回信里逐封加深，最终以「如果你觉得该放，就放」完成一次完整的授权。",
+        "boundary": "晚星不得替她具名、替她报警、未见授权不得引用她的声音；她的路让她自己走，护送与关注都不能变成看守。",
+        "reviewed": true
+      },
+      {
+        "id": "you--a_yue",
+        "from": "you",
+        "to": "a_yue",
+        "type": "ally",
+        "label": "底噪里的同盟",
+        "dynamic": "他用耳朵和洗带机替她清扫能定位写信人的痕迹，她用不逼问回应他的家史；证据谁经手、秘密问不问，始终摆在台面上商量。",
+        "boundary": "阿岳不得瞒着晚星处置约定之外的证据，护送不得变成监视；晚星不得撬开他那盘不放给别人听的带子。",
+        "reviewed": true
+      },
+      {
+        "id": "you--shen_xu",
+        "from": "you",
+        "to": "shen_xu",
+        "type": "professional",
+        "label": "案对案的交换",
+        "dynamic": "各查各案，对得上的部分交换：他递出笔迹拓样与车牌归属，她给出纺织厂三个字；信任按实话记账，拖延与识破也一笔不漏。",
+        "boundary": "沈叙不得追索信源与写信人身份；晚星不得要求他为她越出程序——弯折程序的代价，只能长在他自己身上。",
+        "reviewed": true
+      },
+      {
+        "id": "you--zhou_yi",
+        "from": "you",
+        "to": "zhou_yi",
+        "type": "mentor",
+        "label": "话筒与舵",
+        "dynamic": "周姨挡在台里与晚星之间，只给判断不给答案；晚星用「周三之前两个都不丢」回应她七年的规矩，两人以行动而非表态互相托底。",
+        "boundary": "周姨不得替晚星向台里让渡信箱或热线记录；晚星的关键抉择她可以反对，不可以代替。",
+        "reviewed": true
+      },
+      {
+        "id": "a_yue--shen_xu",
+        "from": "a_yue",
+        "to": "shen_xu",
+        "type": "professional",
+        "label": "洗带者与查案人",
+        "dynamic": "一个销毁一切能定位她的痕迹，一个需要立得住的证据链，两人隔着晚星各守半边：他洗台里的带子，他补文书的空格，互不拆台。",
+        "boundary": "沈叙不得追查那台不该存在的机器与阿岳的家史；阿岳不得碰任何已进入案卷的证物。",
+        "reviewed": true
+      }
+    ],
+    "emotionPoints": [
+      {
+        "nodeId": "n00-mail-room",
+        "intensity": 55,
+        "agency": 62,
+        "intimacy": 20,
+        "note": "第四十七封信落在信堆顶端，求救与匿名同时摆上桌，晚星当场立下不替她喊名字的底线。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "n01-first-reply",
+        "intensity": 68,
+        "agency": 78,
+        "intimacy": 35,
+        "note": "第一次红灯亮起，三种措辞三种价钱，全城作证与只她听懂的赌注同时押下。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "n02-off-air",
+        "intensity": 50,
+        "agency": 55,
+        "intimacy": 30,
+        "note": "收播后的天台，十九秒电流声把她从一页信纸变成一个真实的呼吸。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "n10-day-desk",
+        "intensity": 46,
+        "agency": 72,
+        "intimacy": 26,
+        "note": "三条线索一个白天，周姨给出的五天期限把从容压成取舍。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "n11-kiosk",
+        "intensity": 58,
+        "agency": 64,
+        "intimacy": 36,
+        "note": "老板娘一句「上周三没来」加上先到的穿夹克的，追查第一次尝到被反追的味道。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "n12-mill",
+        "intensity": 63,
+        "agency": 60,
+        "intimacy": 33,
+        "note": "留下的搪瓷缸宣判了小满的下落，「下一盏灯」让预言变成倒计时。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "n13-photo-lab",
+        "intensity": 60,
+        "agency": 58,
+        "intimacy": 22,
+        "note": "假凭条与真制服同时出现，沈叙的交换条件第一次试探她保护信源的底线。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "n14-second-letter",
+        "intensity": 66,
+        "agency": 56,
+        "intimacy": 48,
+        "note": "「他们里头有穿制服的」把每一步变成雷区，她仍决定照常回信，因为她在数着这个声音过日子。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "n15-second-reply",
+        "intensity": 72,
+        "agency": 80,
+        "intimacy": 52,
+        "note": "第二夜红灯，十九秒的安静或一句立场宣言，每个字都有两拨听众各自记账。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "n16-chapter-end",
+        "intensity": 58,
+        "agency": 50,
+        "intimacy": 42,
+        "note": "九点约谈的留言压上天台的风，周姨提醒她想清楚哪个不能丢。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "n20-station-office",
+        "intensity": 75,
+        "agency": 73,
+        "intimacy": 30,
+        "note": "台长、周姨与制服同坐一室，交不交热线记录成了信箱的生死线。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "n21-parcel",
+        "intensity": 79,
+        "agency": 60,
+        "intimacy": 50,
+        "note": "封口的新浆糊宣告信箱失守，亥时之约从此被两拨人同时读到。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "n22-tape-truth",
+        "intensity": 70,
+        "agency": 56,
+        "intimacy": 46,
+        "note": "空的盘带仓和阿岳的家史，把保护做成一种不能声张的重量，问与不问都是抉择。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "n23-stakeout",
+        "intensity": 77,
+        "agency": 58,
+        "intimacy": 42,
+        "note": "顶楼的反光与太干净的皮鞋证实码头是网，能改约的路只剩那盏红灯。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "n24-third-reply",
+        "intensity": 83,
+        "agency": 84,
+        "intimacy": 58,
+        "note": "第三夜红灯，她要在所有耳朵里把一个约定悄悄挪走——换歌、天气或留灯，措辞即命运。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "n25-chapter-end",
+        "intensity": 68,
+        "agency": 54,
+        "intimacy": 45,
+        "note": "晚报专题的标题已经排好，从明天起看她的不只是听众。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "n30-press-visit",
+        "intensity": 80,
+        "agency": 70,
+        "intimacy": 38,
+        "note": "复写纸蓝印暴露了递问题清单的人，专访成了实名风暴的第一回合正面交锋。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "n31-rendezvous-hour",
+        "intensity": 85,
+        "agency": 66,
+        "intimacy": 62,
+        "note": "亥时钟响，她隔着一部公用电话决定跟或不跟——牵挂与「她的路让她自己走」正面相撞。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "n32-eve",
+        "intensity": 89,
+        "agency": 76,
+        "intimacy": 72,
+        "note": "所有线头咬住保卫科长，磁带标签上那行授权把最终的决定权郑重放进她手里。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "n33-final-reply",
+        "intensity": 96,
+        "agency": 95,
+        "intimacy": 78,
+        "note": "第四次红灯，全城的耳朵都对着她，四个出口全要由她亲口念出——署名栏空着的清单是全作最重的一页纸。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e01-lights-on",
+        "intensity": 38,
+        "agency": 70,
+        "intimacy": 88,
+        "note": "作恶者具名伏法而她始终匿名，落款那盏小灯是最轻也最重的回答。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e02-named",
+        "intensity": 52,
+        "agency": 42,
+        "intimacy": 22,
+        "note": "案子赢了、名字丢了，最后一封信把替人做主的代价写得清清楚楚。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e03-dead-mailbox",
+        "intensity": 44,
+        "agency": 34,
+        "intimacy": 15,
+        "note": "节目活着、信箱哑了，她至今不知道那个周三那盏灯灭了没有。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e04-long-way",
+        "intensity": 36,
+        "agency": 64,
+        "intimacy": 68,
+        "note": "七个月走完的程序没人能走回去，白天也有人需要夜航船——慢，但完整。",
+        "reviewed": true
+      }
+    ],
+    "consistencyRules": [
+      {
+        "id": "player-agency",
+        "label": "主角主体性",
+        "scope": "story",
+        "targetId": "",
+        "rule": "关键决定必须由玩家主角执行或明确授权，他人不得代替她作出结论。",
+        "severity": "error",
+        "enabled": true,
+        "reviewStatus": "passed",
+        "reviewNote": "24 个节点逐一核对：四次空中回信（n01/n15/n24/n33）的措辞均由程晚星亲选，n33 通向四个结局的出口全部由她在红灯下执行；n31 跟不跟、n32 磁带交不交也由她一句话拍板，阿岳与沈叙全程只提供选项，无人代答。",
+        "reviewed": true
+      },
+      {
+        "id": "explicit-consent-boundary",
+        "label": "同意与撤回边界",
+        "scope": "story",
+        "targetId": "",
+        "rule": "亲密、公开、数据使用与越权行动都必须存在可识别的同意与撤回空间。",
+        "severity": "error",
+        "enabled": true,
+        "reviewStatus": "passed",
+        "reviewNote": "n32 热点先行揭示授权原文「如果你觉得该放，就放」，看见授权才配引用她的声音——门槛即主题；n31 的 c31-letgo 保留她自己走路的撤回空间，c31-follow 的越界被写成破了规矩；e02 把未经同意的具名写成终身代价而非被庆祝的高潮。",
+        "reviewed": true
+      },
+      {
+        "id": "non-romance-equivalence",
+        "label": "非恋爱等价",
+        "scope": "story",
+        "targetId": "",
+        "rule": "非恋爱、女性同盟与独立路线不得在有效信息、行动权、职业成果或结局资格上被降级。",
+        "severity": "error",
+        "enabled": true,
+        "reviewStatus": "passed",
+        "reviewNote": "全作零 spark，阿岳/沈叙/写信人均非攻略，关系只走 trust/boundary；独立报亭线收益最重——n11 的 kiosk_parcel 在 n21 解出小满磁带「如果我来不及」，n32 交沈叙后证据链最厚；四个结局的资格只看晚星的判断与信任门槛，拒绝亲近不减任何收益。",
+        "reviewed": true
+      },
+      {
+        "id": "female-alliance-correction",
+        "label": "女性同盟纠错权",
+        "scope": "story",
+        "targetId": "",
+        "rule": "女性同盟角色必须拥有独立目标、署名与对主角判断的平等纠错权，不能只做无条件附和者。",
+        "severity": "warning",
+        "enabled": true,
+        "reviewStatus": "passed",
+        "reviewNote": "周姨全程持独立立场：n16 楼梯口点破「哪个不能丢」、n20 当面顶回台长、e03 投下唯一反对票、e04 揣着复播申请跑了七个月；n11 报亭老板娘自作主张替熟客守口、n12 女工班长主动压低声音递出小满线索——女性同盟无一人是附和者。",
+        "reviewed": true
+      }
+    ],
+    "consistencyAssets": [
+      {
+        "id": "loc-broadcast-booth",
+        "kind": "location-reference",
+        "title": "直播间·零点档基准场景",
+        "status": "approved",
+        "characterIds": [],
+        "nodeIds": [
+          "n01-first-reply",
+          "n15-second-reply",
+          "n24-third-reply",
+          "n33-final-reply"
+        ],
+        "sourcePath": "/panoramas/s07-broadcast-countdown.jpg",
+        "notes": "四次空中回信的主场景；视点俯向调音台，玻璃外晚会大厅已在文案中给出剧情解释。「ON AIR」红灯是全作最高识别物，年代表现禁止出现任何数字设备。",
+        "reviewed": true
+      },
+      {
+        "id": "loc-tape-archive",
+        "kind": "location-reference",
+        "title": "电台三楼·磁带资料室基准场景",
+        "status": "approved",
+        "characterIds": [],
+        "nodeIds": [
+          "n00-mail-room",
+          "n14-second-letter",
+          "n21-parcel",
+          "n32-eve",
+          "e03-dead-mailbox"
+        ],
+        "sourcePath": "/panoramas/s10-secret-archive.png",
+        "notes": "三号信箱与四封来信的收信地，也是 e03 的收束场景；画面基调为暖昏灯下的档案与盘带，画中男性形象顺势立为阿岳。",
+        "reviewed": true
+      },
+      {
+        "id": "loc-rooftop-night",
+        "kind": "location-reference",
+        "title": "电台天台·凌晨基准场景",
+        "status": "approved",
+        "characterIds": [],
+        "nodeIds": [
+          "n02-off-air",
+          "n16-chapter-end",
+          "n23-stakeout",
+          "n25-chapter-end",
+          "e01-lights-on"
+        ],
+        "sourcePath": "/panoramas/s11-rooftop-confrontation.png",
+        "notes": "每章收播的呼吸口与 e01 黎明收束地；构图须避开当代天际线远景，只保留零星灯火，呼应「哪一盏是她在听」。",
+        "reviewed": true
+      },
+      {
+        "id": "loc-east-kiosk",
+        "kind": "location-reference",
+        "title": "城东报亭·市集基准场景",
+        "status": "approved",
+        "characterIds": [],
+        "nodeIds": [
+          "n11-kiosk",
+          "e04-long-way"
+        ],
+        "sourcePath": "/panoramas/s03-market.jpg",
+        "notes": "独立报亭线的起点与 e04 的白日收束地；票根、晚报、米缸底下的牛皮纸包都发生于此，年代标记以过期电影海报与搪瓷器物为准。",
+        "reviewed": true
+      }
+    ]
+  }
+}

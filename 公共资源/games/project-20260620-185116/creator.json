@@ -1,0 +1,335 @@
+{
+  "schemaVersion": 1,
+  "storyId": "project-20260620-185116",
+  "storyBible": "暴雨夜借宿古庙的典籍编修沈栖梧，循着姑祖母被抹去的名字，查一桩人、狐、神三方连坐的百年契案。\n真相不靠神迹靠证据，落笔权始终握在她自己手里；心动生于平级对质与同守文字之间，女性同盟与独立查证同任何一段恋慕在信息、行动与结局上完全等价。",
+  "authoring": {
+    "schemaVersion": 1,
+    "characterBibles": [
+      {
+        "characterId": "you",
+        "desire": "把被凿去、被烧掉、被抹去的名字一字一字写回官册，替姑祖母沈青蘅把那本没写完的《青丘异闻录》续完。",
+        "fear": "与姑祖母同命——写到一半就被人从自己的书里抹掉；更怕落笔失当，让替她作证的人顶了劫。",
+        "boundary": "不写没有证据的字；不许任何人代她落笔、替她决定该写谁的名字；她的署名只由她自己押上。",
+        "growth": "从奉命修订、先取证后表态的稳妥编修，长成敢把自己名字押进劫册的见证人，最终成为让轮回变成门的续录者。",
+        "voice": "编修腔：按时间、地点、证据发问，句子克制少形容；关键处直接引用原文与落款年号，用笔说话多于用情绪表态。",
+        "reviewed": true
+      },
+      {
+        "characterId": "qing_li",
+        "desire": "不要怜悯，要一个敢把百年冤案逐字写清的人——她守的从来不是契，是这句话能被人读到的那一天。",
+        "fear": "再等一个百年仍无人认出她、写回那些名字；把修为托付出去，换来的册子里她还是灾星。",
+        "boundary": "供桌上的东西不给人；作证不可被怜悯替代；她的百年修为不可被默取——灵石收与不收，必须让对方知道代价。",
+        "growth": "从独自守契、准备替空白顶罪，到递出状纸允许他人分担署名与劫责；到 e03 她终于不必再等人认出自己。",
+        "voice": "冷而简短，先立规矩再谈事；说最重的话不抬声，把百年旧事按年份一件件摆出来，像在核对目录。",
+        "reviewed": true
+      },
+      {
+        "characterId": "xuan_qi",
+        "desire": "等一个敢来破规矩而非来求情的人，让他当年私改劫册救族的案子，由人间之笔正名。",
+        "fear": "自己的私心救了狐族，却连坐了签字的凡人；最怕再看一次无辜者站到天雷底下替神受劫。",
+        "boundary": "天庭的册他改得，人间的名他不代笔；不以神威压人裁决，供词只交给自愿执笔、明知名字会被天庭记得的人。",
+        "growth": "从躲在律法与雷云之后自认无错的执雷官，到当众供出原委、与凡人同案画押，把百年规矩亲手交出去被破。",
+        "voice": "雷声中的剪影，只闻其声；句式如宣读律令，先陈代价后给选择，认下的事不辩解，等的人来了才多说半句。",
+        "reviewed": true
+      },
+      {
+        "characterId": "luo_yan",
+        "desire": "替曾祖把借出去的名字体面地收回来，把在洛家藏了一百年的半卷契书，交到能写完它的人手里。",
+        "fear": "洛家再沉默一代，借名之恩烂成永远说不出口的亏欠；也怕自己一辈子只是打听旧事的旁观者。",
+        "boundary": "半契不交给只想毁册了事的人；他行医教书的村人身份不容被当作查案工具；入案要他自己开口请入，不接受被代表。",
+        "growth": "从在村塾里悄悄向村长打听沈青蘅旧事的教书先生，到祭坛上抢话请入案——『把我也算上』，让洛家从注脚走进正文。",
+        "voice": "温声细语的先生腔，带医者的耐心，习惯把话说得留有余地；全篇只抢话一次，说完又自己放缓。",
+        "reviewed": true
+      },
+      {
+        "characterId": "elder_gu",
+        "desire": "用任何代价保全全村，包括让『送人上山』与祖父烧稿的罪一辈一辈烂在家训里，不见天日。",
+        "fear": "说出烧稿之事引来狐仙清算，也怕新修的册子把顾家钉死在罪人一页，让子孙抬不起头。",
+        "boundary": "他的庇护有条件——你的笔要么替村说话，两边都写他两边都容不下；但他不许被写成愚昧刁民的脸谱，罪要罪在可追责的选择上。",
+        "growth": "从守着不敢说出口的家训的守夜人，到亲手交出祠堂钥匙、把祖父的名字放进证词，把判断让渡给白纸黑字的证据。",
+        "voice": "老人腔，慢；开口前先停一停茶碗，用家训、年成与辈分说事，最要紧的话永远只肯说一半。",
+        "reviewed": true
+      }
+    ],
+    "relationshipEdges": [
+      {
+        "id": "you--qing_li",
+        "from": "you",
+        "to": "qing_li",
+        "type": "ally",
+        "label": "执笔与作证",
+        "dynamic": "对等交换建立的同盟：她交出证词、灵石与状纸，沈栖梧交出笔与署名；『你敢写，我就敢作证』是这段关系唯一的契。",
+        "boundary": "不得以怜悯替代作证，不得瞒她烧稿真相，不得默取她折损修为的馈赠；她的规矩与纠错不可被写软、写成柔顺陪衬。",
+        "reviewed": true
+      },
+      {
+        "id": "you--xuan_qi",
+        "from": "you",
+        "to": "xuan_qi",
+        "type": "potential-romance",
+        "label": "破规与正名",
+        "dynamic": "只闻其声、只见剪影的平级对质：他给供词并说明全部代价，她以人间之笔破他守了百年的规矩；吸引力来自他等的是破局者而非求情者。",
+        "boundary": "不得以神职与雷威替她裁决或代笔；她的名字入天庭之册，必须出于她知晓后果后的亲笔选择，绝不以庇护为名先斩后奏。",
+        "reviewed": true
+      },
+      {
+        "id": "you--luo_yan",
+        "from": "you",
+        "to": "luo_yan",
+        "type": "potential-romance",
+        "label": "借名与续笔",
+        "dynamic": "两个记录者的靠近：他交出半契与百年家史，她补全被凿去的名字；默契生于同守文字，而非救与被救。",
+        "boundary": "半契的交付不是感情筹码；他请入案之后，不得反过来以保护为名替她扛下署名——各自的名字各自落。",
+        "reviewed": true
+      },
+      {
+        "id": "you--elder_gu",
+        "from": "you",
+        "to": "elder_gu",
+        "type": "professional",
+        "label": "钥匙换立场",
+        "dynamic": "一场有条件的信息交易：他交出家丑与祠堂钥匙，默认她的笔站在村这边；她要在庇护与诚实之间自己选。",
+        "boundary": "他的庇护不得变成对笔的审查；她反悔表态时他可以收回门内的位置，但不得毁证、不得阻她查志。",
+        "reviewed": true
+      },
+      {
+        "id": "qing_li--xuan_qi",
+        "from": "qing_li",
+        "to": "xuan_qi",
+        "type": "ally",
+        "label": "同案百年",
+        "dynamic": "一个改册救族、一个守契受劫，百年不相见却互为对方案卷里最关键的人证；祭坛相请是清算，也是合作。",
+        "boundary": "他不得再『善意』改册而不告知代价由谁承担；她请神对质是对质，不是求情，双方在案卷面前平级。",
+        "reviewed": true
+      }
+    ],
+    "emotionPoints": [
+      {
+        "nodeId": "s00-meet-temple",
+        "intensity": 55,
+        "agency": 60,
+        "intimacy": 10,
+        "note": "雨夜铺垫：神像与守庙人同一张脸；先环视取证再决定开不开口，把家事押不押上由沈栖梧自己掂量。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s01-follow-fox",
+        "intensity": 62,
+        "agency": 55,
+        "intimacy": 26,
+        "note": "她叫出的名字是姑祖母的；洞口她不催不解释，跟进去还是先问清关系，节奏交回执笔人手里。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s01-escape-village",
+        "intensity": 58,
+        "agency": 74,
+        "intimacy": 6,
+        "note": "独走取证的冷静线：牌坊落款『沈青蘅题』把家史钉进村史，代价是她记得你第一眼把她当成了传说。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s02-fox-cave",
+        "intensity": 68,
+        "agency": 66,
+        "intimacy": 34,
+        "note": "壁画揭出狐、师、见证人三方立契；收不收封稿灵石，是第一次替她的百年修为做有代价的决定。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s02-village-secrets",
+        "intensity": 72,
+        "agency": 62,
+        "intimacy": 12,
+        "note": "顾长庚交出烧稿家丑又当场逼你选边，压力从志怪转向人心；新制镇狐符说明恐惧还活着。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s03-revelation",
+        "intensity": 82,
+        "agency": 70,
+        "intimacy": 52,
+        "note": "九尾展开是亮出弱点，状纸递出是托付案卷；她声明不要怜悯只要执笔人，亲密与张力同时陡升。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s03-hidden-library",
+        "intensity": 76,
+        "agency": 85,
+        "intimacy": 20,
+        "note": "暗格手稿证实姑祖母不是失踪而是被抹去；补契之法在手，是全篇主导感最强的独查暗场。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s04-choice-sacrifice",
+        "intensity": 96,
+        "agency": 92,
+        "intimacy": 62,
+        "note": "月圆顶点：写自己、写回姑祖母、或搁笔空册，三种落笔三种代价；手稳不等于知道该写谁。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s04-confront",
+        "intensity": 92,
+        "agency": 88,
+        "intimacy": 48,
+        "note": "人狐神百年来首次同案对质，洛砚抢话请入案；毁册、画押还是携手稿翻案，笔锋决定案的大小。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e01-together",
+        "intensity": 42,
+        "agency": 84,
+        "intimacy": 74,
+        "note": "天劫化作纸上小雨，刊行落定；张力回落而亲密上扬，卷首见证人一页写明每个名字为何在那里。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e02-devoured",
+        "intensity": 60,
+        "agency": 66,
+        "intimacy": 58,
+        "note": "空册之痛的低回收束：保住了所有人的名字，独失她本人；雨夜晾册像在等谁回来核对。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e03-eternal",
+        "intensity": 38,
+        "agency": 90,
+        "intimacy": 88,
+        "note": "隐藏结局的暖色顶点：两册同句、旧案全翻，轮回由刑罚改写成门——翻开第一页，就算重新见过。",
+        "reviewed": true
+      }
+    ],
+    "consistencyRules": [
+      {
+        "id": "player-agency",
+        "label": "主角主体性",
+        "scope": "story",
+        "targetId": "",
+        "rule": "关键决定必须由玩家主角执行或明确授权，他人不得代替她作出结论。",
+        "severity": "error",
+        "enabled": true,
+        "reviewStatus": "passed",
+        "reviewNote": "12 个节点逐一核对：s04-choice-sacrifice 的三种落笔与 s04-confront 的毁册、画押、翻案均由沈栖梧亲笔执行；s03-revelation 里青梨只递状纸不代笔，玄岐亦言明『人间的名，得由人间的笔写回』。",
+        "reviewed": true
+      },
+      {
+        "id": "explicit-consent-boundary",
+        "label": "明确同意与边界",
+        "scope": "story",
+        "targetId": "",
+        "rule": "亲密、公开、数据使用与越权行动都必须存在可识别的同意与撤回空间。",
+        "severity": "error",
+        "enabled": true,
+        "reviewStatus": "passed",
+        "reviewNote": "同意全程可辨：s00-meet-temple 青梨先立『别碰供桌』之界；s02-fox-cave 灵石可收可拒，拒收即保全她的修为；s03-revelation 她言明『不要可怜我』，作证以『你敢写』为前提；s04-confront 供词只随执笔意愿给出。",
+        "reviewed": true
+      },
+      {
+        "id": "non-romance-equivalence",
+        "label": "非恋爱关系等价",
+        "scope": "story",
+        "targetId": "",
+        "rule": "非恋爱、女性同盟与独立路线不得在有效信息、行动权、职业成果或结局资格上被降级。",
+        "severity": "error",
+        "enabled": true,
+        "reviewStatus": "passed",
+        "reviewNote": "全案核心情报握在非恋爱关系里：案情由女性伙伴青梨在 s03-revelation 陈明；隐藏结局 e03-eternal 只以 s03-hidden-library 的姑祖母手稿与轮回契查证为凭，不与玄岐、洛砚任何一段心动的深浅挂钩。",
+        "reviewed": true
+      },
+      {
+        "id": "female-alliance-correction",
+        "label": "女性同盟保留纠错权",
+        "scope": "story",
+        "targetId": "",
+        "rule": "女性同盟角色必须拥有独立目标、署名与对主角判断的平等纠错权，不能只做无条件附和者。",
+        "severity": "warning",
+        "enabled": true,
+        "reviewStatus": "passed",
+        "reviewNote": "青梨有独立目标（守契百年、等真相刊行）与平等纠错权：s00-meet-temple 先立供桌之规，s04-choice-sacrifice 直言『这一笔没有干净的写法』并逐条陈明代价，e01-together 反向布置任务『把它刊出去』，从不无条件附和。",
+        "reviewed": true
+      }
+    ],
+    "consistencyAssets": [
+      {
+        "id": "portrait-qing_li",
+        "kind": "portrait-reference",
+        "title": "青梨基准立绘",
+        "status": "approved",
+        "characterIds": [
+          "qing_li"
+        ],
+        "nodeIds": [],
+        "sourcePath": "/portraits/project-20260620-185116/qing-li.jpg",
+        "notes": "白衣守契者；眉目须与狐仙神像同源，冷银灯色与九尾意象点到即止，先立规矩后见柔软。",
+        "reviewed": true
+      },
+      {
+        "id": "location-s00-meet-temple",
+        "kind": "location-reference",
+        "title": "古庙初见场景基准",
+        "status": "approved",
+        "characterIds": [
+          "you",
+          "qing_li"
+        ],
+        "nodeIds": [
+          "s00-meet-temple"
+        ],
+        "sourcePath": "/panoramas/s00-meet-temple.jpg",
+        "notes": "暴雨夜烛火、狐仙神像与神像背后九道银痕为全作定调；供桌是不可触碰的边界物。",
+        "reviewed": true
+      },
+      {
+        "id": "location-s04-confront",
+        "kind": "location-reference",
+        "title": "山巅祭坛对质场景基准",
+        "status": "approved",
+        "characterIds": [
+          "xuan_qi",
+          "luo_yan",
+          "qing_li"
+        ],
+        "nodeIds": [
+          "s04-confront"
+        ],
+        "sourcePath": "/panoramas/s04-confront.jpg",
+        "notes": "雷云紫电中的执戟剪影是玄岐唯一的视觉呈现——只闻其声，不见其面；劫册虚影渗金光的一行须可辨。",
+        "reviewed": true
+      },
+      {
+        "id": "location-s04-choice-sacrifice",
+        "kind": "location-reference",
+        "title": "名册三难场景基准",
+        "status": "approved",
+        "characterIds": [
+          "you",
+          "qing_li"
+        ],
+        "nodeIds": [
+          "s04-choice-sacrifice"
+        ],
+        "sourcePath": "/panoramas/project-20260620-002835-s16-final-core.jpg",
+        "notes": "复用图源；名册摊开位置与搁笔处须对应文中『姑祖母当年停笔的位置』，空行边缘留百年指痕。",
+        "reviewed": true
+      },
+      {
+        "id": "location-e03-eternal",
+        "kind": "location-reference",
+        "title": "续录者结局场景基准",
+        "status": "approved",
+        "characterIds": [
+          "you",
+          "qing_li"
+        ],
+        "nodeIds": [
+          "e03-eternal"
+        ],
+        "sourcePath": "/panoramas/e03-eternal.jpg",
+        "notes": "破晓祭坛，手稿与半契拼合、两册浮现同一句话；隐藏结局的暖色顶点，与 s04-confront 的雷云形成明暗对照。",
+        "reviewed": true
+      }
+    ]
+  }
+}

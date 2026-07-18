@@ -1,0 +1,343 @@
+{
+  "schemaVersion": 1,
+  "storyId": "project-20260620-201739",
+  "storyBible": "《第七织女》是一部都市奇幻互动叙事：织女星宿第七位云织为寻回三块梭核下凡，撞见坠落百年的三姐云绛，卷入一场关于署名权与记忆权的姐妹之争。女主的每一步都自己走——引核、解网、呈锦皆亲手执行，连律法给出的两条旧路她也要织出第三条。情感是九十年代式的克制：董野递来的是照片，闻迦递来的是账本，没有人索取。所有关系的终点不是归属，而是让织的人留下名字、下凡的人留住记忆。",
+  "authoring": {
+    "schemaVersion": 1,
+    "characterBibles": [
+      {
+        "characterId": "you",
+        "desire": "把三块梭核带回去修好织机，但更深处是要证明：下凡不必以删忆为代价，织锦的人可以在落款处留下自己的名字。",
+        "fear": "变成天界告示里那句「坠核者，不追」中被放弃的人；也怕自己为了赢回位份，把人间这一年当成可以上缴的耗材。",
+        "boundary": "不许任何人替她下结论——星君给两条路，她要织第三条；也不许任何人未经她同意收走她的记忆，或替她决定原谅姐姐与否。",
+        "growth": "从替天庭收回失物的执行者，长成对律法提出修订的证人：s00 请命下凡是尽责，s09 呈上人间锦是立法。",
+        "voice": "短句，动词在前；对姐姐永远先叫「姐」再讲道理；习惯在否定之后立刻给出替代物——「不。拆了它，剩下的才是你。」",
+        "reviewed": true
+      },
+      {
+        "characterId": "yun_jiang",
+        "desire": "让织锦的人被看见、被记名——三百年七十二匹锦无一署名，她坠落人间就是为了让凡人替她记住。",
+        "fear": "拆掉注意力之网后「这一百年就什么都不剩」；更怕承认形状错了之后，连「想被看见」这个动机也被一并否定。",
+        "boundary": "可以认错——「我知道形状错了」——但不接受把她的诉求归为堕落；也不许后来的妹妹重走她的路，s02 的仙文路标就是为后来者留的。",
+        "growth": "从以收割注意力自证存在，到在雨夜挽起袖子并列署名、在天织频道以正当的方式「被看见」——她终于把网拆了，剩下的是她。",
+        "voice": "温柔、疲惫、理直气壮三层叠在一起说；爱用交换句式（「你要证词，我要流量」）；只对云织用「小七」这个称呼。",
+        "reviewed": true
+      },
+      {
+        "characterId": "dong-yong",
+        "desire": "拍下「正在消失的东西」——从爷爷织机上的光到落脚点的银线残迹，为无名的手艺留一份影像证词。",
+        "fear": "镜头变成占有。他最怕自己的记录变成对被拍者的消耗，所以见面第一句话就是「我拍的是光，不是你」。",
+        "boundary": "记录必须先出示、先获同意——照片主动交给对方；不以帮过忙为筹码索取靠近，替云织干扰直播是自担风险，不换任何回报。",
+        "growth": "从旁观的记录者到自愿入局的同路人：镜头符文闪了三次替她解围，把自己也拍进了这个故事——纪录片最终叫《会发光的手艺》，而不是《仙女》。",
+        "voice": "先解除对方戒备再说来意；用具体的旧物讲感情——爷爷的织机、相机侧面的符文；情话止于递出照片，从不说破。",
+        "reviewed": true
+      },
+      {
+        "characterId": "wen_jia",
+        "desire": "让这条街每一笔账都对得上——包括仙凡之间的账。司契的职责是让越界之物有案可查，不是猎巫。",
+        "fear": "真伪失守：修复师的手过出赝品，或监察的眼放过真正的失衡——比如千万观众被一寸寸抽走「看」的力气那种账。",
+        "boundary": "提醒但不阻拦（「我劝你想清楚再买」），备案但不告发；不利用监察身份窥探云织织纹以外的任何私事。",
+        "growth": "从盯着云织掌心的监察者，到把「正常人会害怕的」玉镯按行价卖给她——承认规矩之内，可以给例外留一扇门。",
+        "voice": "商人式的委婉警告，关键信息藏在「账在这里」「来路干净」这类生意话里；说「正常人」三个字时别有所指。",
+        "reviewed": true
+      },
+      {
+        "characterId": "ji_zhu",
+        "desire": "织机可修、织政可续。他要的是秩序运转而非惩罚本身——律法在他手里是织物与工具，不是信仰。",
+        "fear": "裂缝失控、旧律失效却无新律可依。对他而言，比抗命更可怕的是无凭修法。",
+        "boundary": "只认证物不认眼泪——呈锦一途的锁正是他的规则；给出的选项必须由当事人自己选，他宣律，但不代选。",
+        "growth": "从「按律：归位者删忆返庭」的执行口吻，到亲口说出「律法既是织物，便可拆线重织」——一位被一匹锦说服的执政者。",
+        "voice": "判词式短句，先引律条再给选择；被说服时不辩解，用长到裂缝的风都停了的沉默代替转变。",
+        "reviewed": true
+      }
+    ],
+    "relationshipEdges": [
+      {
+        "id": "you--yun_jiang",
+        "from": "you",
+        "to": "yun_jiang",
+        "type": "family",
+        "label": "两条路的姐妹",
+        "dynamic": "两人要的其实是同一件事——让织者被看见，分歧只在手段：收割注意力，还是呈交证词。每次交锋都先当姐妹、后算对错，天台上那句「不一样，姐」是全剧的分水岭。",
+        "boundary": "云织不得替姐姐认错或代她被原谅——抱住她还是先算账，必须走进她的一百年之后再选；云绛不得把妹妹织进自己的网来自证清白。",
+        "reviewed": true
+      },
+      {
+        "id": "you--dong-yong",
+        "from": "you",
+        "to": "dong-yong",
+        "type": "potential-romance",
+        "label": "镜头外的克制",
+        "dynamic": "靠一沓照片、一枚同源符文和一次自担风险的解围慢慢递进；所有心动都发生在言语之外，是九十年代式的不说破——照片可以给你，别的什么都不要。",
+        "boundary": "不告白、不索取回报；帮忙不兑换靠近——她若谢过就独自走开，也不减损他后来的善意；他的镜头永远拍光，不拍未经同意的她。",
+        "reviewed": true
+      },
+      {
+        "id": "you--wen_jia",
+        "from": "you",
+        "to": "wen_jia",
+        "type": "professional",
+        "label": "账面上的默契",
+        "dynamic": "一个引核出玉，一个全程备案；他的提醒总裹在生意话里，她的领情止于按行价付钱——各守其职，互不点破对方的身份。",
+        "boundary": "监察不越界为窥探，交易不发展为把柄；他不得以司契备案要挟她，她也不得要他销账或放水。",
+        "reviewed": true
+      },
+      {
+        "id": "you--ji_zhu",
+        "from": "you",
+        "to": "ji_zhu",
+        "type": "antagonistic",
+        "label": "证物对旧律",
+        "dynamic": "对立的是律法而非私怨：他执旧律给出两条去处，她当面回敬「织出来的东西，就能拆线重织」，最终以一匹人间锦让他亲手修律。",
+        "boundary": "星君不得代她选、不得以位份利诱她放弃证词；她的抗辩只用证物，不用眼泪，也不用姐妹血缘作情感要挟。",
+        "reviewed": true
+      },
+      {
+        "id": "yun_jiang--ji_zhu",
+        "from": "yun_jiang",
+        "to": "ji_zhu",
+        "type": "antagonistic",
+        "label": "百年署名之讼",
+        "dynamic": "她的坠落始于他执掌的律法把七十二匹锦的落款一一盖掉；新律通过后，直播间转正为天织频道，是这场百年之讼迟到的判决书。",
+        "boundary": "修律不以追罪云绛为交换条件；但她透支凡人注意力的错账，也不因诉求正当而一笔勾销。",
+        "reviewed": true
+      }
+    ],
+    "emotionPoints": [
+      {
+        "nodeId": "s00-opening",
+        "intensity": 72,
+        "agency": 66,
+        "intimacy": 10,
+        "note": "织机崩裂的高压开场；云织主动请命下凡，掌心一烫的「绛」字暗码把姐姐先一步牵进局。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s01-first-choice",
+        "intensity": 50,
+        "agency": 70,
+        "intimacy": 20,
+        "note": "落地后的第一次松弛；董野以「我拍的是光，不是你」解除戒备，照片收不收、路一起走不走，都由她定。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s02-hidden-clue",
+        "intensity": 58,
+        "agency": 64,
+        "intimacy": 26,
+        "note": "生涩的仙文路标与「绛」字落款——姐姐第一次以缺席的方式在场，为后来的妹妹留路。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s03-market",
+        "intensity": 55,
+        "agency": 72,
+        "intimacy": 22,
+        "note": "柜台前的试探与被试探；用织力引核还是按凡人规矩付款，选哪套规矩就是选哪种身份。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s04-temple",
+        "intensity": 66,
+        "agency": 64,
+        "intimacy": 42,
+        "note": "第七尊像被擦得最干净的脸；收下不属于自己的记忆，第一次分得清她的错、也躲不开她的疼。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s05-web-fame",
+        "intensity": 80,
+        "agency": 58,
+        "intimacy": 36,
+        "note": "无人直播间的压迫感顶上来——这是她的主场；一百年没听过的声音，还是会疼。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s06-bottleneck",
+        "intensity": 85,
+        "agency": 72,
+        "intimacy": 50,
+        "note": "百年来第一次面对面；「看见」与「收割」正面对撞，谈或打，由她放不放下这只手决定。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s07-hidden-boss-unlock",
+        "intensity": 88,
+        "agency": 62,
+        "intimacy": 68,
+        "note": "七十二匹无名锦揭底，张力与心疼同时逼顶——先当妹妹抱住她，还是先把错账一条条摆开。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s08-hidden-boss",
+        "intensity": 95,
+        "agency": 78,
+        "intimacy": 76,
+        "note": "全剧最高点：拆网见人。「拆了它，剩下的才是你」——解网、拥抱或撤出，三种代价当场兑现。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s09-final-choice",
+        "intensity": 90,
+        "agency": 94,
+        "intimacy": 62,
+        "note": "主导权的顶点；旧律给两条路，她当着星君的面织出第三条——律法是织出来的，就能拆线重织。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e01-growth",
+        "intensity": 52,
+        "agency": 38,
+        "intimacy": 14,
+        "note": "回落成一片空白：位份俱在，唯独那一年不在；想不起来历的梭形发簪，是全篇最轻也最钝的痛。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e02-regret",
+        "intensity": 45,
+        "agency": 72,
+        "intimacy": 82,
+        "note": "上扬的平凡：织力十不存一，雨夜里姐姐挽起袖子——每一匹出去的锦，落款处两个名字端端正正。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e03-secret",
+        "intensity": 62,
+        "agency": 90,
+        "intimacy": 86,
+        "note": "终幕高光：人间锦成为呈堂证词，织者署名、下凡存忆写进新律；云海重逢的封面落款写着两个人的名字。",
+        "reviewed": true
+      }
+    ],
+    "consistencyRules": [
+      {
+        "id": "player-agency",
+        "label": "主角主体性",
+        "scope": "story",
+        "targetId": "",
+        "rule": "关键决定必须由玩家主角执行或明确授权，他人不得代替她作出结论。",
+        "severity": "error",
+        "enabled": true,
+        "reviewStatus": "passed",
+        "reviewNote": "13 个节点逐一核对：s00 下凡由云织主动请命；s03 引核、s05 解流、s08 解网三处高耗力操作均由她亲手执行并设条件锁；s09 面对星君的两条旧路，e01/e02/e03 三个去向皆由她当面作答——星君只宣律，从不代选。",
+        "reviewed": true
+      },
+      {
+        "id": "explicit-consent-boundary",
+        "label": "同意与撤回",
+        "scope": "story",
+        "targetId": "",
+        "rule": "亲密、公开、数据使用与越权行动都必须存在可识别的同意与撤回空间。",
+        "severity": "error",
+        "enabled": true,
+        "reviewStatus": "passed",
+        "reviewNote": "s01 董野先声明「拍的是光」并主动交出照片；s05 请他冒险须先有 dongye_ally 的交情（一面之缘不欠冒险）；s08 网心拥抱以 forgave_sister 为锁——先走进她的一百年再抱她；e01 则是反向立证：删忆返庭正是同意被制度收走的代价。",
+        "reviewed": true
+      },
+      {
+        "id": "non-romance-equivalence",
+        "label": "非恋爱等价",
+        "scope": "story",
+        "targetId": "",
+        "rule": "非恋爱、女性同盟与独立路线不得在有效信息、行动权、职业成果或结局资格上被降级。",
+        "severity": "error",
+        "enabled": true,
+        "reviewStatus": "passed",
+        "reviewNote": "s01 可独行入 s02 完全绕开董野，三块梭核（s03/s04/s06）与三个结局资格均不依赖任何 spark 数值；e03 修法结局的锁是 understood_sister——姐妹之间的理解，而非恋爱进度；闻迦与星君皆非攻略，却分别握有备案与裁决的关键权。",
+        "reviewed": true
+      },
+      {
+        "id": "female-alliance-correction",
+        "label": "女性同盟纠错权",
+        "scope": "story",
+        "targetId": "",
+        "rule": "女性同盟角色必须拥有独立目标、署名与对主角判断的平等纠错权，不能只做无条件附和者。",
+        "severity": "warning",
+        "enabled": true,
+        "reviewStatus": "passed",
+        "reviewNote": "云绛全程持独立目标（署名权）：s02 为后来者留仙文路标并警告「别把织纹给人看」，s04 有她自陈立场的公开信，s06 正面反驳云织「我们要的都是被看见」；e02 并列署名、e03 主理天织频道第一课——她纠错也被纠错，绝非附和者。",
+        "reviewed": true
+      }
+    ],
+    "consistencyAssets": [
+      {
+        "id": "portrait-dong-yong",
+        "kind": "portrait-reference",
+        "title": "董野基准立绘",
+        "status": "approved",
+        "characterIds": [
+          "dong-yong"
+        ],
+        "nodeIds": [
+          "s01-first-choice"
+        ],
+        "sourcePath": "/portraits/project-20260620-201739/dong-yong.jpg",
+        "notes": "旧相机与侧面符文是身份锚点；构图保持记录者的距离感，镜头永远对着光而非人，不做逼近式取景。",
+        "reviewed": true
+      },
+      {
+        "id": "location-s00-loom-collapse",
+        "kind": "location-reference",
+        "title": "天界织机崩裂夜",
+        "status": "approved",
+        "characterIds": [
+          "you"
+        ],
+        "nodeIds": [
+          "s00-opening"
+        ],
+        "sourcePath": "/panoramas/project-20260620-002835-s00-arrival.jpg",
+        "notes": "开场基调图：断线银光与人间霓虹在云端交界处相接，云织跃下的方向即是全剧的视线方向。",
+        "reviewed": true
+      },
+      {
+        "id": "location-s06-rooftop",
+        "kind": "location-reference",
+        "title": "天台对峙",
+        "status": "approved",
+        "characterIds": [
+          "you",
+          "yun_jiang"
+        ],
+        "nodeIds": [
+          "s06-bottleneck"
+        ],
+        "sourcePath": "/panoramas/s11-rooftop-confrontation.png",
+        "notes": "中段推压的顶点场景：悬空梭核绕成银线旋涡，云绛的身形由数据流一寸寸拼出，霓虹夜风统一冷暖对比。",
+        "reviewed": true
+      },
+      {
+        "id": "location-s08-void-web",
+        "kind": "location-reference",
+        "title": "虚空织网",
+        "status": "approved",
+        "characterIds": [
+          "you",
+          "yun_jiang"
+        ],
+        "nodeIds": [
+          "s08-hidden-boss"
+        ],
+        "sourcePath": "/panoramas/s08-hidden-boss.jpg",
+        "notes": "高潮场景：被抽走的注意力织成发光之网，粉色晶核居中；网心须留出人形轮廓——拆网见人的视觉证词。",
+        "reviewed": true
+      },
+      {
+        "id": "location-e03-reunion",
+        "kind": "location-reference",
+        "title": "云海重逢",
+        "status": "approved",
+        "characterIds": [
+          "you",
+          "yun_jiang"
+        ],
+        "nodeIds": [
+          "e03-secret"
+        ],
+        "sourcePath": "/panoramas/e01-together.jpg",
+        "notes": "终幕封面图：姐妹在云海相拥，落款写两个人的名字——署名权主题的最终视觉落点。",
+        "reviewed": true
+      }
+    ]
+  }
+}

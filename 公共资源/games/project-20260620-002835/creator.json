@@ -1,0 +1,815 @@
+{
+  "schemaVersion": 1,
+  "storyId": "project-20260620-002835",
+  "storyBible": "古风修仙本格叙事：封印修缮师沈青梧持师父旧凭踏入云巅盛会，以手艺而非身世立足十家之间。她不信「折一人填阵」的祖法——每一步查证、结盟与心动都由她亲手落子；回应之环上，立得住的关系自己会开口。爱是并肩分担的对价，不是牺牲的赎金；独行、同盟与求道，与任何一段情缘同格同幅，都是完整的答案。",
+  "authoring": {
+    "schemaVersion": 1,
+    "characterBibles": [
+      {
+        "characterId": "you",
+        "desire": "查明师父十年前失踪的真相，并证明封印可以不折一人修好——把「只有一条路」的祖法改写成她亲手推演的新方案。",
+        "fear": "修了半生封印，却无一处刻着她的名字；怕自己终有一天也接受被抹去，像师父一样成为无人记得的补痕。",
+        "boundary": "不许任何人替她决定牺牲谁——包括劝她自己走上祭台；无名一脉的秘密何时公开、向谁公开，只由她定。",
+        "growth": "从匿名的补阵散修，到当众承认师门、立于十一席之中；从独自看阵，到学会让分担者各担其份而不夺其权。",
+        "voice": "先说阵纹再说人情，错处、走向、时辰一口报准；情绪藏在停顿里，只有对师父说话时才用问句。",
+        "reviewed": true
+      },
+      {
+        "characterId": "yun_moxuan",
+        "desire": "找一个凭本事与他对坐的人——开幕夜他不问来历，只问「你看出了什么」，他要的是同侪，不是仰望。",
+        "fear": "云渊的姓氏比他的剑更响，怕别人应的是世家不是他；也怕护人心切，反而抢走对方自己出剑的机会。",
+        "boundary": "剑可以替她挡，决断不替她下——潮心剑魄压顶时，出手与否仍交回她手；分担代价必须对半，不许他偷偷多担。",
+        "growth": "从横剑在前的护卫姿态，到背靠背各接一面；最终在双剑台与她各付一半代价，以分担替代牺牲。",
+        "voice": "短句，先剑后言，问题都问在刀刃上；不寒暄，认可从不绕弯子。",
+        "reviewed": true
+      },
+      {
+        "characterId": "yue_qinghan",
+        "desire": "守住血脉与上古仙府之间不能说的联系，同时等一个可以等价交换秘密的人——他要的信任是对价，不是施舍。",
+        "fear": "血脉一旦揭开，他就从「人」变成开阵的「钥匙」；怕连最亲近的人靠近他，也是为了那道只认血的阵纹。",
+        "boundary": "不逼问她的师门，也不接受被暗中推演来历；秘密必须以秘密相抵，单方面的坦白与单方面的窥探都不算数。",
+        "growth": "从替宗门独守阵闸的沉默者，到与她互为抵物、共守星月阵眼——秘密对半，风险也对半。",
+        "voice": "礼数周全，话里留三分，「凭证验过，便是客」式的软中带界；关键处只说半句，等人自己听懂。",
+        "reviewed": true
+      },
+      {
+        "characterId": "ju_aoqiu",
+        "desire": "等一个比奉承更好的答案——有人能看出金菊防阵坚不可摧的另一面：它把救援的路也一并封死了。",
+        "fear": "守阵百年守成孤城，阵在人亡无人敢言；怕「守护」二字最后变成他亲手筑的牢。",
+        "boundary": "守护不等于圈禁：她要走，阵门必须开；三年校阵之约到期，去留仍由她自己定。",
+        "growth": "从坚壁百年的首席，到接受修缮师改动阵眼、让金阵可开可合，最终辞去首席，把防线做成一扇留人的门而非困人的墙。",
+        "voice": "语速慢，凡事用阵理打比方；奉承的话入不了耳，直言此阵之弊反而换来他正眼相待。",
+        "reviewed": true
+      },
+      {
+        "characterId": "zi_yelan",
+        "desire": "被一个人在看清面容之前就先立好界线地接住——而不是先被当成幽冥禁术的源头提防、审判。",
+        "fear": "露面即被定罪，所以始终只以声音存在；更怕禁术反噬失控，伤到唯一肯回应他的那个人。",
+        "boundary": "同行可以，试探不许——这是她说在前头的话，也是他守到最后的约；契纹分掌黑雾后，收回的权柄永远在她手中。",
+        "growth": "从暗潮里替人指路的无名声音，到把自己的黑暗交给守约人共掌——被接纳，也甘愿被约束。",
+        "voice": "只有声音没有脸；句子轻，总在别人话音落定后才接，玩笑话里藏着最认真的那句。",
+        "reviewed": true
+      },
+      {
+        "characterId": "zhu_qingyan",
+        "desire": "救人而不毁另一条命——解药缺的那味药已生出微弱灵识，她要找的是同样敬惜这点灵识的同道。",
+        "fear": "怕有一天为了抢时辰，自己也会亲手碾了那株刚会疼的灵植，从此药方还在，守则没了。",
+        "boundary": "药炉前她递刀不代握：决断交到对方手里，但她的守则不因结盟稀释；同道不同路，不因她归谷而降格。",
+        "growth": "从独守老方子的药师，到接受无名一脉的灵息同炉共济；最终归谷制药、留友看阵，把「同道」二字写成长期之约。",
+        "voice": "药方式说话——剂量、时辰、忌口一样样列清；心软不写在脸上，写在她多留的那半剂药里。",
+        "reviewed": true
+      },
+      {
+        "characterId": "mei_hanshuang",
+        "desire": "亲手验一验值得并肩的人——不收徒不结派，只以三剑相试；最终要立的是「剑席不问出身」的新规。",
+        "fear": "独行成癖，错把孤立当独立；怕自己等到了对手，却已经不会做战友。",
+        "boundary": "剑试可以输，不许绕——用话术避剑的人不配同席；战友的名分靠剑挣，不靠讨。",
+        "growth": "从冰镜前拦路的对手，到雪崖上并肩封裂隙的战友；她的敬意从锋刃上让渡，落成一条护住所有散修的新规。",
+        "voice": "剑比话先出鞘，话极省；认可只给一个字，但给了就不收回。",
+        "reviewed": true
+      },
+      {
+        "characterId": "mudan",
+        "desire": "把十家各自为战的乱局收成一盘棋，并找到能与她分执百花令的人——她要的是同权者，不是依附者。",
+        "fear": "改革立起的风眼无人同担，权柄最终只剩独裁一种形状；怕议庭百年后只记得她的令，不记得她的局。",
+        "boundary": "照拂可以谈，依附免谈；当面点破她的野心不会被记恨，背后算计才会——对等纠错是她给盟友的特权。",
+        "growth": "从花影里独自等局的掌局者，到与人共掌议庭的分权者；学会把「掌局」两个字拆一半给信得过的手。",
+        "voice": "棋语与政令混说，笑着说狠话；每句都留一个可进可退的活口，唯独承诺不留。",
+        "reviewed": true
+      },
+      {
+        "characterId": "manzhu",
+        "desire": "替一个人寻另一个人——把被史笔抹去的名字一一记回名录；十年前走过彼岸的那个人，她还在等消息。",
+        "fear": "怕连她也忘了，那些被遗忘的人就真的死了第二次；无名一脉的手法，如今满殿只剩她还认得。",
+        "boundary": "引渡不越生死之界；她记名字、指旧路，但不替失踪者向弟子转达任何「遗命」——故人的话要故人自己说。",
+        "growth": "从独自守着彼岸名录的引路人，到终于有人与她同录同行，把记忆从一个人的执念变成两个人的事业。",
+        "voice": "花语与旧名穿插着说，讲十年前的事像讲昨天；每句问话都是一次相认的试探。",
+        "reviewed": true
+      },
+      {
+        "characterId": "lan_ling",
+        "desire": "让人听见满谷灵植同时在哭——她要找的是肯先俯身救草木、再赶自己路的人。",
+        "fear": "万灵的声音一年比一年轻，怕最后整片云谷只剩她一个听众。",
+        "boundary": "指路可以，强采灵植破局不可；万灵的报信是托付，不是可以征用的资源。",
+        "growth": "从谷底独自倾听的转述者，到让幽兰谷成为新封印的活根——万灵从被牺牲的一方，变成撑起封印的一方。",
+        "voice": "转述草木的话多于说自己的话；语句像风，一阵一阵，停下来的时候是在听。",
+        "reviewed": true
+      },
+      {
+        "characterId": "ling_hua",
+        "desire": "等一个能答「传承是什么」这道旧题的人——她说那不是力量，是一道还没有人答对过的问题。",
+        "fear": "真理问到最后无人再问，观星台的光只照见空台。",
+        "boundary": "只照见，不替人作答；只借她的感知避险而不肯直面问题的人，得不到第二次提问的机会。",
+        "growth": "从观星台上独问千年的光，到与辞席留台之人长问不休——问题没有答案，但从此有了同问的人。",
+        "voice": "无形无面，以光的明暗与声音的远近说话；只问不答，问题本身就是指引。",
+        "reviewed": true
+      },
+      {
+        "characterId": "shifu",
+        "desire": "十年前修好大殿那三处错纹而不惊动十家；留下旧凭证与满路补痕，给弟子备一条他没能走完的路。",
+        "fear": "无名一脉断在自己手里；更怕弟子重蹈「折一人填阵」的旧法，用她自己抵了他没抵完的债。",
+        "boundary": "不让弟子替他还债——线索只留给看得懂阵纹的人，绝不以遗命的形式压在她肩上。",
+        "growth": "他的成长发生在幕外：从独担一切的上代修缮师，到把「新法可成」的信任完整留给下一代。",
+        "voice": "只存在于旧凭证、补痕与旁人的转述里；出场即留白，最重的话都刻在阵纹上没有说。",
+        "reviewed": true
+      },
+      {
+        "characterId": "mo_shen",
+        "desire": "借心结撬开封印——不诱以财、不诱以力，只要修缮师亲口承认：这个从不给她署名的世道，不值得她修。",
+        "fear": "有人不接它开的价——当封印从此凭手艺维系、不再以人命作价，它便再无缝可钻。",
+        "boundary": "它只能放大既有的旧伤，不能凭空造欲；一切诱惑必须可被「只认手上的活」一句斩断——心结的解释权始终在她。",
+        "growth": "没有成长，只有退场的形状：被答对的那一刻，它从贴耳的低语退成封印深处的回声。",
+        "voice": "用你自己的话说给你听；从不威胁，只在最静的时候，复述你心里最疼的那一句。",
+        "reviewed": true
+      }
+    ],
+    "relationshipEdges": [
+      {
+        "id": "you--yun_moxuan",
+        "from": "you",
+        "to": "yun_moxuan",
+        "type": "potential-romance",
+        "label": "背靠背的剑",
+        "dynamic": "始于开幕夜一句「你看出了什么」——他只认眼力不认来历；剑潮里他接侧翼、她定潮眼，吸引力建立在被当作同侪而非被护在身后。",
+        "boundary": "他的剑不许代替她的判断，出手与否的决断始终交回她手；分担代价必须对半，不许他以护人为名偷偷多担。",
+        "reviewed": true
+      },
+      {
+        "id": "you--yue_qinghan",
+        "from": "you",
+        "to": "yue_qinghan",
+        "type": "potential-romance",
+        "label": "秘密的对价",
+        "dynamic": "两人各藏一份不能说的身世——他的血脉、她的师门；靠近的每一步都是等价交换，坦白与守密都要对方同意。",
+        "boundary": "不许单方面揭破对方的秘密，也不许以守密为名替她过滤信息；血脉与旧凭互为抵物，任何一方毁约即两清。",
+        "reviewed": true
+      },
+      {
+        "id": "you--ju_aoqiu",
+        "from": "you",
+        "to": "ju_aoqiu",
+        "type": "potential-romance",
+        "label": "孤城开门",
+        "dynamic": "她以修缮手法证明守护可以留门，他以百年孤心练习放行；这段关系的每一寸推进，都是金阵多开的一道缝。",
+        "boundary": "守护不得变成圈禁：她要走，阵门必须开；三年校阵之约到期，去留由她自定，他不得以阵务相留。",
+        "reviewed": true
+      },
+      {
+        "id": "you--zi_yelan",
+        "from": "you",
+        "to": "zi_yelan",
+        "type": "potential-romance",
+        "label": "先立界线的靠近",
+        "dynamic": "声音先于面容，界线先于心动——她救他不问身份，他守约不越雷池；黑暗被接纳的前提，是收回它的权柄在她手里。",
+        "boundary": "同行可以，尾随试探不许；他不得以「黑暗才能护你」为由越她的界；契纹的收回权柄永远归她。",
+        "reviewed": true
+      },
+      {
+        "id": "you--zhu_qingyan",
+        "from": "you",
+        "to": "zhu_qingyan",
+        "type": "ally",
+        "label": "递刀不代握",
+        "dynamic": "药炉前她把刀柄递到沈青梧手里，不劝不逼；两次共守药炉之后，原则相认的同道之谊落定——同道不同路，各自守各自的阵。",
+        "boundary": "不许替对方作牺牲的决断；竹清晏的药炉守则不因结盟被稀释，她归谷之后这段情谊也不降格。",
+        "reviewed": true
+      },
+      {
+        "id": "you--mei_hanshuang",
+        "from": "you",
+        "to": "mei_hanshuang",
+        "type": "rival",
+        "label": "三剑之约",
+        "dynamic": "由冰镜前三剑相试开始的对手关系：打赢算数，认输不退也算数，唯独绕不算；剑锋上的敬意最终淬成并肩的新规。",
+        "boundary": "不许用人情抵剑试，不许以话术绕开锋刃；战友的名分只在剑上让渡，谁也不能替她们和解。",
+        "reviewed": true
+      },
+      {
+        "id": "you--mudan",
+        "from": "you",
+        "to": "mudan",
+        "type": "professional",
+        "label": "分执百花令",
+        "dynamic": "从浮庭棋盘对坐到共掌议庭的政治同盟；牡丹仙给的从来不是照拂而是席位，沈青梧还的也不是感激而是同担风眼。",
+        "boundary": "合作不许变依附；沈青梧可当面点破百花宗的野心而不损席位，牡丹仙不得以令牌胁迫她的修缮判断。",
+        "reviewed": true
+      },
+      {
+        "id": "yun_moxuan--yue_qinghan",
+        "from": "yun_moxuan",
+        "to": "yue_qinghan",
+        "type": "professional",
+        "label": "剑与阵的同席",
+        "dynamic": "剑开潮路与星阵定裂位是两条互补也互不相服的查法；同席百年，互相挑剔也互相补台。",
+        "boundary": "不得把沈青梧的选择当作两人较劲的筹码；查裂隙的分歧只在术上争，不迁怒于人。",
+        "reviewed": true
+      },
+      {
+        "id": "shifu--manzhu",
+        "from": "shifu",
+        "to": "manzhu",
+        "type": "ally",
+        "label": "彼岸的旧识",
+        "dynamic": "十年前那个人从彼岸走过之后，她仍在替人寻他、替他记名——满殿只剩她还认得无名一脉的手法。",
+        "boundary": "她只引路与记名，不替失踪者向弟子转达任何「遗命」；故人的债，不许压到下一代肩上。",
+        "reviewed": true
+      },
+      {
+        "id": "you--manzhu",
+        "from": "you",
+        "to": "manzhu",
+        "type": "ally",
+        "label": "记名者与执笔人",
+        "dynamic": "曼珠记得所有被遗忘的人，是第十一传人真相的最后活口；沈青梧以查证回应她的记性，两人以「记得」与「写下」互为接力。",
+        "boundary": "曼珠不得以真相作饵操纵她站队；记名簿何时公开、向谁公开，只由曼珠自己决定。",
+        "reviewed": true
+      },
+      {
+        "id": "you--lan_ling",
+        "from": "you",
+        "to": "lan_ling",
+        "type": "ally",
+        "label": "万灵的听与修",
+        "dynamic": "兰灵听见灵植与地脉的痛，沈青梧把这些听闻译成阵纹上的病灶——一个供证词，一个开药方。",
+        "boundary": "修缮不得以牺牲灵物为代价，这是兰灵在场的前提；越线，她即刻退场并公开反对。",
+        "reviewed": true
+      },
+      {
+        "id": "you--ling_hua",
+        "from": "you",
+        "to": "ling_hua",
+        "type": "mentor",
+        "label": "天灵的提问者",
+        "dynamic": "灵花以光与声音抛出「传承是一声求救」的谜面，从不给答案；她逼沈青梧自己推演——是导师，也是考官。",
+        "boundary": "天灵不替凡人做选择、不显形干预；沈青梧亦不得倚赖神谕代替查证。",
+        "reviewed": true
+      },
+      {
+        "id": "you--shifu",
+        "from": "you",
+        "to": "shifu",
+        "type": "mentor",
+        "label": "补痕之师",
+        "dynamic": "师父只存在于补刻、墨线与旧凭里，用十年前留下的三处标记继续教她；她以推成无牺牲方案回应师恩。",
+        "boundary": "追随不等于重演——她不得复制师父以自身修为填隙的牺牲式解法，这正是他标记三处错纹的本意。",
+        "reviewed": true
+      },
+      {
+        "id": "you--mo_shen",
+        "from": "you",
+        "to": "mo_shen",
+        "type": "antagonistic",
+        "label": "心结的低语者",
+        "dynamic": "魔神只在幻境里开口，专挑「无人记得你的名字」下刀；沈青梧每直视一次心结，它的话就轻一分。",
+        "boundary": "它的话可以听、不可以信——任何以名字与被记住为饵的交易，必须当场拒绝。",
+        "reviewed": true
+      }
+    ],
+    "emotionPoints": [
+      {
+        "nodeId": "s00-arrival",
+        "intensity": 58,
+        "agency": 72,
+        "intimacy": 8,
+        "note": "开幕夜的静张力：满殿看星，唯她看阵，三处错纹只她一人识得。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s01-first-impression",
+        "intensity": 63,
+        "agency": 70,
+        "intimacy": 12,
+        "note": "断香揭底——封印不是将漏而是已漏，三响钟声把闲局敲成急局。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s02-partner-cluster",
+        "intensity": 68,
+        "agency": 88,
+        "intimacy": 15,
+        "note": "云海裂出四象，先查哪一处病征由她亲定，主导感首次全开。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s03-sword-moon",
+        "intensity": 66,
+        "agency": 78,
+        "intimacy": 26,
+        "note": "剑与星阵两条查法当面铺开，同席之人初次亮出真本事。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s04-bamboo-orchid",
+        "intensity": 60,
+        "agency": 76,
+        "intimacy": 24,
+        "note": "满谷灵植蜷叶报信，节奏放缓，怜惜与职责在药香里对望。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s05-shadow-beyond",
+        "intensity": 72,
+        "agency": 74,
+        "intimacy": 22,
+        "note": "看不见脸的声音与彼岸红光，危险的靠近以一句先置界线开场。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s06-blooms-spirit",
+        "intensity": 64,
+        "agency": 76,
+        "intimacy": 20,
+        "note": "四方立场花台交锋，她在剑、阵、棋、光之间掂量各家成色。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "r-yun",
+        "intensity": 74,
+        "agency": 80,
+        "intimacy": 40,
+        "note": "潮心剑魄压顶，他横剑在侧却把出手决断交回她手——心动始于被当同侪。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "r-yue",
+        "intensity": 68,
+        "agency": 76,
+        "intimacy": 42,
+        "note": "血脉之秘当面撞上袖中旧凭，以秘密换秘密的试探针尖对麦芒。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "r-zhu",
+        "intensity": 66,
+        "agency": 82,
+        "intimacy": 34,
+        "note": "刀柄递到她手里：救人还是护那点新生的灵识，原则之交由此立。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "r-zi",
+        "intensity": 78,
+        "agency": 78,
+        "intimacy": 44,
+        "note": "禁术反噬里她反手三针缝住裂口——救人者与立界者是同一个人。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "r-mei",
+        "intensity": 72,
+        "agency": 74,
+        "intimacy": 30,
+        "note": "三剑拦路只验成色，不容取巧，锋刃上的敬意比言语更烫。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "r-lan",
+        "intensity": 62,
+        "agency": 78,
+        "intimacy": 28,
+        "note": "满谷同哭的低语里，她怎么渡这片灵泉，万灵都在看。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "r-ju",
+        "intensity": 63,
+        "agency": 80,
+        "intimacy": 32,
+        "note": "百年孤城等来的不是奉承，是一句「此阵困人甚于护人」的真话。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "r-mudan",
+        "intensity": 67,
+        "agency": 78,
+        "intimacy": 26,
+        "note": "十局乱棋摊在浮庭，掌局者按兵不动，只看她敢不敢收盘。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "r-manzhu",
+        "intensity": 65,
+        "agency": 72,
+        "intimacy": 30,
+        "note": "一句花语试出来历，十年前那个名字第一次在彼岸花海被问出口。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "r-linghua",
+        "intensity": 60,
+        "agency": 70,
+        "intimacy": 24,
+        "note": "无人之台只有光与问，传承被说成一道没人答对过的旧题。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s10-secret",
+        "intensity": 84,
+        "agency": 86,
+        "intimacy": 38,
+        "note": "掌心纹与门环共鸣，无名一脉当场现世——公开几分由她说了算。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s11-reactions",
+        "intensity": 80,
+        "agency": 82,
+        "intimacy": 36,
+        "note": "云桥摊牌：护她、用她、掂她价的各方当面站队，倚仗由她自选。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s12-mansion",
+        "intensity": 76,
+        "agency": 80,
+        "intimacy": 34,
+        "note": "壁画层亮，仙府真形是封印核心——修缮师的眼第一次看全全局。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s13-illusion",
+        "intensity": 88,
+        "agency": 76,
+        "intimacy": 42,
+        "note": "魔神不诱以财力，只翻出她无一处署名的旧伤，内心战最疼的一刻。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s14-seal-truth",
+        "intensity": 90,
+        "agency": 84,
+        "intimacy": 40,
+        "note": "「折一人填阵」的祖法摊上台面，而修缮师不认「只有一条」。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s15-moral-choice",
+        "intensity": 94,
+        "agency": 94,
+        "intimacy": 46,
+        "note": "牺牲、分担、独担、偷换四价并陈，每条路都明码标价，无一免费。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "s16-final-core",
+        "intensity": 96,
+        "agency": 96,
+        "intimacy": 52,
+        "note": "全线收束于阵心，她一路落下的每一子此刻齐声作响——全篇顶点。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "g-romance-a",
+        "intensity": 72,
+        "agency": 88,
+        "intimacy": 62,
+        "note": "环转东面，剑鸣、星轨与药香自己开口——立得住的回应不必去寻。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "g-romance-b",
+        "intensity": 70,
+        "agency": 88,
+        "intimacy": 66,
+        "note": "环转南面，温柔与危险缠在一处，幽冥与彼岸的声音最轻也最沉。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "g-romance-c",
+        "intensity": 68,
+        "agency": 88,
+        "intimacy": 64,
+        "note": "环转西面，寒剑与金纹从不说软话——锋利的回应也是回应。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "g-romance-d",
+        "intensity": 64,
+        "agency": 90,
+        "intimacy": 58,
+        "note": "北面只余静光；无人应声，她便自己作自己的回应——独行同样成立。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "g-hidden",
+        "intensity": 88,
+        "agency": 92,
+        "intimacy": 18,
+        "note": "封印背面无环无应，独担、黑暗与倒流钟声三种后果由她一人直面。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e01-yun",
+        "intensity": 58,
+        "agency": 84,
+        "intimacy": 90,
+        "note": "双剑各付一半代价替下祭台，同守云渊——分担落定，尘埃温热。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e02-yue",
+        "intensity": 56,
+        "agency": 82,
+        "intimacy": 88,
+        "note": "秘密对半、风险对半，星月阵眼旁两个守闸人终于都不必再藏。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e03-zhu",
+        "intensity": 50,
+        "agency": 84,
+        "intimacy": 78,
+        "note": "同道不同路：她留云巅看阵，竹清晏归谷制药，淡交长久。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e04-zi",
+        "intensity": 62,
+        "agency": 86,
+        "intimacy": 86,
+        "note": "契纹分掌黑雾，接纳他的黑暗也握着收回的权柄——界线即深情。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e05-mei",
+        "intensity": 54,
+        "agency": 82,
+        "intimacy": 74,
+        "note": "「剑席不问出身」新规立于雪崖——对手一场，战友一世。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e06-lan",
+        "intensity": 46,
+        "agency": 80,
+        "intimacy": 72,
+        "note": "幽兰谷成新阵活根，风过谷口皆是问安，最轻的结局最绵长。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e07-ju",
+        "intensity": 52,
+        "agency": 82,
+        "intimacy": 80,
+        "note": "金阵改章可开可合，孤城百年终于留门，三年之约立于山门。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e08-mudan",
+        "intensity": 55,
+        "agency": 86,
+        "intimacy": 70,
+        "note": "分执百花令共掌议庭，改革的风眼里她与牡丹仙同权同担。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e09-manzhu",
+        "intensity": 48,
+        "agency": 78,
+        "intimacy": 68,
+        "note": "沿生死边界引渡魂火，被史笔抹去的名字被一一记回名录。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e10-linghua",
+        "intensity": 44,
+        "agency": 84,
+        "intimacy": 60,
+        "note": "辞席留台，与天灵之光长问不休——求道自此开始，余韵清远。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e11-reunion",
+        "intensity": 70,
+        "agency": 95,
+        "intimacy": 76,
+        "note": "十一席同鸣，祭台空置：她亲手推演的封印落成，无人被折价。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e12-solo",
+        "intensity": 60,
+        "agency": 90,
+        "intimacy": 16,
+        "note": "散尽修为垫住阵眼，无名下山——她仍是自己的回应，孤而不败。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e13-dark",
+        "intensity": 85,
+        "agency": 58,
+        "intimacy": 12,
+        "note": "阵眼被偷换而碎，魔神出世；背着洗不清的名字走进乱世，未认输。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e14-rebirth",
+        "intensity": 78,
+        "agency": 82,
+        "intimacy": 26,
+        "note": "星轨倒卷回开幕之夜，几枚不肯熄灭的碎光是重来一次的底气。",
+        "reviewed": true
+      },
+      {
+        "nodeId": "e15-immortal",
+        "intensity": 66,
+        "agency": 96,
+        "intimacy": 34,
+        "note": "《修缮录》写成，封印自此凭手艺维系，不再以人命作价——终答。",
+        "reviewed": true
+      }
+    ],
+    "consistencyRules": [
+      {
+        "id": "player-agency",
+        "label": "主角主体性",
+        "scope": "story",
+        "targetId": "",
+        "rule": "关键决定必须由玩家主角执行或明确授权，他人不得代替她作出结论。",
+        "severity": "error",
+        "enabled": true,
+        "reviewStatus": "passed",
+        "reviewNote": "44 个节点逐一核对：s02-partner-cluster 四路查向、s15-moral-choice 四价之择与 s16-final-core 终局四向均由沈青梧亲手落子；r-yun 中云墨轩横剑却把出手决断交回她手，r-zhu 中竹清晏递刀不代握，全篇无一处由他人代她下结论。",
+        "reviewed": true
+      },
+      {
+        "id": "explicit-consent-boundary",
+        "label": "同意与界线",
+        "scope": "story",
+        "targetId": "",
+        "rule": "亲密、公开、数据使用与越权行动都必须存在可识别的同意与撤回空间。",
+        "severity": "error",
+        "enabled": true,
+        "reviewStatus": "passed",
+        "reviewNote": "s05-shadow-beyond 明设「可以同行，不许试探」的先置界线选项，r-zi 首选即「谢他相救，也把界线说在前头」；r-yue 以秘密换秘密确立对等同意，四位可动心者人设界线初始 62-75，e04 契纹的收回权柄始终在她手中，可撤回性成立。",
+        "reviewed": true
+      },
+      {
+        "id": "non-romance-equivalence",
+        "label": "非恋爱等价",
+        "scope": "story",
+        "targetId": "",
+        "rule": "非恋爱、女性同盟与独立路线不得在有效信息、行动权、职业成果或结局资格上被降级。",
+        "severity": "error",
+        "enabled": true,
+        "reviewStatus": "passed",
+        "reviewNote": "g-romance-d 明写「无人应声，便自己作自己的回应」直通 e12-solo 独行者；e11-reunion 与 e15-immortal 两条大成结局均不以情缘为前提；竹清晏、梅寒霜、兰灵的 e03/e05/e06 与情缘结局同格同幅，信息与结局资格无降级。",
+        "reviewed": true
+      },
+      {
+        "id": "female-alliance-correction",
+        "label": "女性同盟纠错权",
+        "scope": "story",
+        "targetId": "",
+        "rule": "女性同盟角色必须拥有独立目标、署名与对主角判断的平等纠错权，不能只做无条件附和者。",
+        "severity": "warning",
+        "enabled": true,
+        "reviewStatus": "passed",
+        "reviewNote": "r-mei 中梅寒霜以三剑亲验而非附和，绕剑的取巧被明确拒斥；r-zhu 中竹清晏递刀却坚守自己的药炉守则；r-mudan 设「当面点破百花宗野心」的对等纠错选项，e08 分执百花令确立同权署名——三位同盟均有独立目标与独立结局。",
+        "reviewed": true
+      }
+    ],
+    "consistencyAssets": [
+      {
+        "id": "portrait-yun_moxuan",
+        "kind": "portrait-reference",
+        "title": "云墨轩基准立绘",
+        "status": "approved",
+        "characterIds": [
+          "yun_moxuan"
+        ],
+        "nodeIds": [],
+        "sourcePath": "/portraits/project-20260620-002835/yun-moxuan.jpg",
+        "notes": "云渊剑修的清峻站姿；重点是「同侪的注视」——他看人的眼神平视而锐利，不俯视任何散修。",
+        "reviewed": true
+      },
+      {
+        "id": "portrait-yue_qinghan",
+        "kind": "portrait-reference",
+        "title": "月清寒基准立绘",
+        "status": "approved",
+        "characterIds": [
+          "yue_qinghan"
+        ],
+        "nodeIds": [],
+        "sourcePath": "/portraits/project-20260620-002835/yue-qinghan.jpg",
+        "notes": "月华宗阵法师的清冷礼度；袖手藏锋，表情留三分——他的秘密感来自克制，不来自阴郁。",
+        "reviewed": true
+      },
+      {
+        "id": "portrait-ju_aoqiu",
+        "kind": "portrait-reference",
+        "title": "菊傲秋基准立绘",
+        "status": "approved",
+        "characterIds": [
+          "ju_aoqiu"
+        ],
+        "nodeIds": [],
+        "sourcePath": "/portraits/project-20260620-002835/ju-aoqiu.jpg",
+        "notes": "金菊世家防御阵法家的沉稳厚重；孤城气质藏在肩线与远视里，忌画成攻击性强者。",
+        "reviewed": true
+      },
+      {
+        "id": "portrait-zhu_qingyan",
+        "kind": "portrait-reference",
+        "title": "竹清晏基准立绘",
+        "status": "approved",
+        "characterIds": [
+          "zhu_qingyan"
+        ],
+        "nodeIds": [],
+        "sourcePath": "/portraits/project-20260620-002835/zhu-qingyan.jpg",
+        "notes": "灵植药师的素净利落；手是重点——常年执药杵与银刀的手，递刀不代握的姿态感。",
+        "reviewed": true
+      },
+      {
+        "id": "portrait-mei_hanshuang",
+        "kind": "portrait-reference",
+        "title": "梅寒霜基准立绘",
+        "status": "approved",
+        "characterIds": [
+          "mei_hanshuang"
+        ],
+        "nodeIds": [],
+        "sourcePath": "/portraits/project-20260620-002835/mei-hanshuang.jpg",
+        "notes": "独立女剑修的凛冽；剑先于人，眼神是「验人」而非「敌视」——对手感与敬意并存。",
+        "reviewed": true
+      },
+      {
+        "id": "portrait-mudan",
+        "kind": "portrait-reference",
+        "title": "牡丹仙基准立绘",
+        "status": "approved",
+        "characterIds": [
+          "mudan"
+        ],
+        "nodeIds": [],
+        "sourcePath": "/portraits/project-20260620-002835/mudan.jpg",
+        "notes": "百花议庭掌局者的雍容与清醒；笑意在唇不在眼，掌局者的从容里要看得出算力。",
+        "reviewed": true
+      },
+      {
+        "id": "loc-s00-arrival",
+        "kind": "location-reference",
+        "title": "云巅仙阁大殿·开幕之夜",
+        "status": "approved",
+        "characterIds": [],
+        "nodeIds": [
+          "s00-arrival",
+          "s01-first-impression",
+          "s02-partner-cluster",
+          "e14-rebirth"
+        ],
+        "sourcePath": "/panoramas/project-20260620-002835-s00-arrival.jpg",
+        "notes": "倒悬星海穹顶与十家席位；三处错纹是全篇第一颗种子，重生结局亦回到此景，首尾同图。",
+        "reviewed": true
+      },
+      {
+        "id": "loc-s12-mansion",
+        "kind": "location-reference",
+        "title": "上古仙府内殿真形",
+        "status": "approved",
+        "characterIds": [],
+        "nodeIds": [
+          "s12-mansion",
+          "s13-illusion",
+          "r-linghua",
+          "e10-linghua"
+        ],
+        "sourcePath": "/panoramas/project-20260620-002835-s12-mansion.jpg",
+        "notes": "层层亮起的壁画揭示仙府即封印核心；也是幻境与天灵线的共用底景，光感需可明可暗。",
+        "reviewed": true
+      },
+      {
+        "id": "loc-s15-moral-choice",
+        "kind": "location-reference",
+        "title": "封印阵眼前·祭台之问",
+        "status": "approved",
+        "characterIds": [],
+        "nodeIds": [
+          "s15-moral-choice",
+          "e12-solo"
+        ],
+        "sourcePath": "/panoramas/project-20260620-002835-s15-moral-choice.jpg",
+        "notes": "四价并陈的道德高点；祭台的压迫感服务于「推翻它」的爽点，独行者结局与此景呼应。",
+        "reviewed": true
+      },
+      {
+        "id": "loc-s16-final-core",
+        "kind": "location-reference",
+        "title": "封印核心·命运抉择",
+        "status": "approved",
+        "characterIds": [],
+        "nodeIds": [
+          "s16-final-core",
+          "g-hidden",
+          "e11-reunion",
+          "e15-immortal"
+        ],
+        "sourcePath": "/panoramas/project-20260620-002835-s16-final-core.jpg",
+        "notes": "全线收束的顶点场景；回应之环由此展开，十一席同鸣与真·修缮师两大结局共用此景。",
+        "reviewed": true
+      }
+    ]
+  }
+}
