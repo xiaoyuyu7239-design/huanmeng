@@ -809,6 +809,19 @@
         "sourcePath": "/panoramas/project-20260620-002835-s16-final-core.jpg",
         "notes": "全线收束的顶点场景；回应之环由此展开，十一席同鸣与真·修缮师两大结局共用此景。",
         "reviewed": true
+      },
+      {
+        "id": "portrait-you",
+        "kind": "portrait-reference",
+        "title": "沈青梧基准立绘",
+        "status": "approved",
+        "characterIds": [
+          "you"
+        ],
+        "nodeIds": [],
+        "sourcePath": "/portraits/project-20260620-002835/shen-qingwu.webp",
+        "notes": "指尖点在金色阵纹核心的\"修阵\"姿态（非观阵）；窄袖劲装+短氅，腰挂阵盘与笔匣，眉目专注锐利的匠人气质。",
+        "reviewed": true
       }
     ]
   }
