@@ -411,6 +411,58 @@
         "sourcePath": "/panoramas/s03-market.jpg",
         "notes": "独立报亭线的起点与 e04 的白日收束地；票根、晚报、米缸底下的牛皮纸包都发生于此，年代标记以过期电影海报与搪瓷器物为准。",
         "reviewed": true
+      },
+      {
+        "id": "portrait-you",
+        "kind": "portrait-reference",
+        "title": "程晚星基准立绘",
+        "status": "approved",
+        "characterIds": [
+          "you"
+        ],
+        "nodeIds": [],
+        "sourcePath": "/portraits/night-ferry/cheng-wanxing.webp",
+        "notes": "监听耳机+调音台前的聆听姿态；开衫衬衫的90年代职业感，专注笃定不摆拍。",
+        "reviewed": true
+      },
+      {
+        "id": "portrait-a_yue",
+        "kind": "portrait-reference",
+        "title": "阿岳基准立绘",
+        "status": "approved",
+        "characterIds": [
+          "a_yue"
+        ],
+        "nodeIds": [],
+        "sourcePath": "/portraits/night-ferry/a-yue.webp",
+        "notes": "眼镜+开衫+盘带与螺丝刀；抬眼直视的温和内敛，延续资料室场景既定形象。",
+        "reviewed": true
+      },
+      {
+        "id": "portrait-shen_xu",
+        "kind": "portrait-reference",
+        "title": "沈叙基准立绘",
+        "status": "approved",
+        "characterIds": [
+          "shen_xu"
+        ],
+        "nodeIds": [],
+        "sourcePath": "/portraits/night-ferry/shen-xu.webp",
+        "notes": "90年代旧式制服，脱帽夹臂就档案袋读文书——「只看日期不看号码」的程序性克制。",
+        "reviewed": true
+      },
+      {
+        "id": "portrait-zhou_yi",
+        "kind": "portrait-reference",
+        "title": "周姨基准立绘",
+        "status": "approved",
+        "characterIds": [
+          "zhou_yi"
+        ],
+        "nodeIds": [],
+        "sourcePath": "/portraits/night-ferry/zhou-yi.webp",
+        "notes": "搪瓷缸在手、另一手按住文件堆的掌舵姿态；干练温厚，眼里有主意。",
+        "reviewed": true
       }
     ]
   }

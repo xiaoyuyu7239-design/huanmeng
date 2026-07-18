@@ -9,7 +9,8 @@
       "role": "《夜航船》深夜档主播·来信编辑",
       "pronouns": "她",
       "color": "#d8cfc2",
-      "accent": "#3a332c"
+      "accent": "#3a332c",
+      "portrait": "/portraits/night-ferry/cheng-wanxing.webp"
     },
     "characters": [
       {
@@ -46,7 +47,8 @@
             "trust": 20,
             "boundary": 60
           }
-        }
+        },
+        "portrait": "/portraits/night-ferry/a-yue.webp"
       },
       {
         "id": "shen_xu",
@@ -64,7 +66,8 @@
             "trust": 15,
             "boundary": 70
           }
-        }
+        },
+        "portrait": "/portraits/night-ferry/shen-xu.webp"
       },
       {
         "id": "zhou_yi",
@@ -77,7 +80,8 @@
         "romanceable": false,
         "relationship": {
           "enabled": false
-        }
+        },
+        "portrait": "/portraits/night-ferry/zhou-yi.webp"
       }
     ]
   },
