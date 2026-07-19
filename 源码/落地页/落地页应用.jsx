@@ -12,6 +12,7 @@ import {
   玩家主视觉,
   玩家结尾CTA,
   多结局区,
+  平台人物廊,
   角色群像区,
   同行方式区,
   关系机制区,
@@ -112,7 +113,9 @@ export default function 落地页应用() {
       观察者?.disconnect();
       根?.classList.remove('is-motion-ready');
     };
-  }, [首页.moreWorlds.length]);
+    // 存档在挂载后异步载入并整体替换记忆卡/结局卡（key 变化重挂 DOM），
+    // 观察器必须随之重新接线，否则新 reveal 节点永远拿不到 .in、停在隐藏态。
+  }, [首页.moreWorlds.length, 玩家存档]);
 
   // 鼠标视差引擎（移植自原版落地页）：[data-par] 元素随指针分层平移。
   // rAF 合帧只写 transform；窄屏与减少动效下完全不启用。
@@ -160,6 +163,7 @@ export default function 落地页应用() {
         {首页.storyReady && (
           <>
             <真实选择区 首页={首页} />
+            <平台人物廊 />
             <故事记忆区 首页={首页} />
             <角色群像区 首页={首页} />
             <同行方式区 首页={首页} />

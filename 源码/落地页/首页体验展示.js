@@ -1,9 +1,7 @@
-// 首页“核心体验”舞台的选展配置。
-// 规则：从平台真实作品里选出画面效果最好的节点做首页第一视角展示；
-// 换展只需要改这里的剧情导入、slug 与 nodeId 三处。
-// 2026-07-17 选展：《云巅修缮录》开场（星穹大殿 CG + 女主开场独白）——四部翻新完成后的画面之最。
-// 备选：《第十五封愿望》s03-old-library-wishbox（旧图书馆愿望箱）。
-import 体验剧情 from '../../公共资源/games/project-20260620-002835/story.json';
-import { 构建体验舞台 } from './玩家首页模型.js';
+// 首页“核心体验”舞台与主视觉选展的数据出口。
+// 舞台数据由 生成首页文摘.mjs 按 首页选展配置 预计算进 homepage-digest.json，
+// 首页包因此不再内联整部剧情 JSON；换展改 首页选展配置.js 后重跑生成器即可。
+import 首页文摘 from '../../公共资源/homepage-digest.json';
 
-export const 体验舞台 = 构建体验舞台(体验剧情, 'project-20260620-002835', 's00-arrival');
+export { 主视觉选展 } from './首页选展配置.js';
+export const 体验舞台 = 首页文摘.stage ?? null;

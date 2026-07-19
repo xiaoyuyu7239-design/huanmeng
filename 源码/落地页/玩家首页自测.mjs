@@ -237,6 +237,54 @@ for (const 禁止硬编码 of ['s00-blue-salon', 'lu_chenzhou', 'zhou_yan', 'he_
   断言(!区块源码.includes(禁止硬编码), `首页展示组件硬编码了剧情结构标识：${禁止硬编码}`);
 }
 
+// 首页文摘契约：产物必须与正式剧情逐字段同步，且每部在架作品都能提供开场预览。
+const { 生成首页文摘 } = await import(new URL('../公共工具/生成首页文摘.mjs', import.meta.url));
+const 文摘剧情表 = {};
+for (const 条目 of 精选.featured) {
+  文摘剧情表[条目.slug] = JSON.parse(
+    await readFile(resolve(项目根, `公共资源/games/${条目.slug}/story.json`), 'utf8'),
+  );
+}
+const 重建文摘 = 生成首页文摘(精选, 文摘剧情表);
+const 落盘文摘 = JSON.parse(
+  await readFile(resolve(项目根, '公共资源/homepage-digest.json'), 'utf8'),
+);
+断言(
+  JSON.stringify(重建文摘) === JSON.stringify(落盘文摘),
+  '首页文摘与正式剧情不同步：请运行 node 源码/公共工具/生成首页文摘.mjs',
+);
+断言(落盘文摘.works.length === 精选.featured.length, '首页文摘缺少在架作品');
+断言(落盘文摘.works.every((作品) => !!作品.opening), '首页文摘存在缺失开场预览的作品');
+断言(
+  落盘文摘.works.every((作品) => (作品.opening.choices ?? []).every((选择) => !('consequence' in 选择))),
+  '首页文摘的开场选择提前携带了后果',
+);
+// 真刀防剧透：caption 不得与源剧情该选择的后果原文相同（键名检查挡不住文本复制）。
+for (const 作品 of 落盘文摘.works) {
+  const 源剧情 = 文摘剧情表[作品.slug];
+  const 源选择们 = (源剧情.nodes[源剧情.startNodeId].choices ?? [])
+    .filter((条) => !!条 && typeof 条.label === 'string' && 条.label.trim())
+    .slice(0, 3);
+  作品.opening.choices.forEach((选择, 序) => {
+    const 源 = 源选择们[序];
+    const 后果 = typeof 源?.consequence === 'string' ? 源.consequence.trim().replace(/\s+/gu, ' ') : '';
+    断言(!后果 || 选择.caption !== 后果, `开场预览 caption 泄露选择后果原文：${作品.slug}`);
+    断言(选择.locked === !!源?.condition, `带前置条件的锁定选择未如实标注：${作品.slug}`);
+  });
+}
+// 选展契约：主视觉三席都必须命中带女主立绘的作品；体验舞台按选展预计算进文摘。
+const { 主视觉选展, 体验选展 } = await import(new URL('./首页选展配置.js', import.meta.url));
+断言(主视觉选展.length === 3, '主视觉选展应配置三席立绘');
+for (const 选展slug of 主视觉选展) {
+  const 选展作品 = 落盘文摘.works.find((条) => 条.slug === 选展slug);
+  断言(!!选展作品?.protagonist?.portrait, `主视觉选展未命中带女主立绘的作品：${选展slug}`);
+}
+断言(
+  落盘文摘.stage?.slug === 体验选展.slug && !!落盘文摘.stage?.video,
+  '体验舞台没有按选展配置预计算进首页文摘',
+);
+console.log('  ✓ 首页文摘：与正式剧情同步，开场可预览、锁定如实标注、caption 不带后果原文');
+
 delete globalThis.window;
 delete globalThis.document;
 delete globalThis.localStorage;
@@ -267,8 +315,18 @@ try {
   for (const 玩家内容 of ['开场选择预览', '故事记住的', '按你的方式同行', '结局不只回答']) {
     断言(html.includes(玩家内容), `SSR 玩家路径缺少：${玩家内容}`);
   }
-  断言((html.match(/class="hx-choice-card reveal"/g) ?? []).length === 3, '开场预览未渲染三张非交互选择卡');
-  断言(!html.includes('<a class="hx-choice-card reveal"'), '开场预览卡仍然是会伪提交选择的链接');
+  断言((html.match(/class="hx-choice-card"/g) ?? []).length === 3, '开场预览未渲染三张非交互选择卡');
+  断言(!html.includes('<a class="hx-choice-card"'), '开场预览卡仍然是会伪提交选择的链接');
+  // 平台形态契约：主视觉与开场预览不再只属于旗舰一部作品。
+  断言(html.includes('个可玩世界'), '主视觉缺少平台级世界计数口径');
+  断言(html.includes('hx-open-tabs'), '开场预览缺少多世界切换标签');
+  断言(
+    (html.match(/class="hx-open-tab(?:"| )/g) ?? []).length
+      === 落盘文摘.works.filter((作品) => 作品.opening).length,
+    '开场预览标签数量与首页文摘不一致',
+  );
+  断言(html.includes('·《'), '首页缺少跨作品署名（人物廊或主视觉立绘标签）');
+  断言(html.includes('全平台人物'), '首页缺少全平台人物廊区块');
   断言((html.match(/进入故事后亲自选择/g) ?? []).length === 1, '开场预览区没有收口为唯一的进入故事 CTA');
   断言(!html.includes('行动意图 ·'), '开场 label 与 intent 相同时仍重复显示意图');
   for (const 选择 of 剧情.nodes[剧情.startNodeId].choices) {

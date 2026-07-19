@@ -1,0 +1,430 @@
+{
+  "totals": {
+    "works": 6,
+    "publicEndings": 32,
+    "castPortraits": 25
+  },
+  "works": [
+    {
+      "slug": "ninth-seat",
+      "title": "第九席",
+      "tags": [
+        "职场悬疑",
+        "关系叙事",
+        "20–30分钟"
+      ],
+      "protagonist": {
+        "name": "许澄",
+        "role": "澜境科技·AI直播总导演",
+        "portrait": "/portraits/ninth-seat/xu-cheng.webp"
+      },
+      "castPortraits": [
+        {
+          "name": "许澄",
+          "role": "澜境科技·AI直播总导演",
+          "portrait": "/portraits/ninth-seat/xu-cheng.webp"
+        },
+        {
+          "name": "陆沉舟",
+          "role": "实时系统架构师",
+          "portrait": "/portraits/ninth-seat/lu-chenzhou.webp"
+        },
+        {
+          "name": "周衍",
+          "role": "独立调查记者·直播事实核查",
+          "portrait": "/portraits/ninth-seat/zhou-yan.webp"
+        },
+        {
+          "name": "贺清野",
+          "role": "品牌主讲人·舞台创作者",
+          "portrait": "/portraits/ninth-seat/he-qingye.webp"
+        },
+        {
+          "name": "沈确",
+          "role": "平台危机律师",
+          "portrait": "/portraits/ninth-seat/shen-que.webp"
+        },
+        {
+          "name": "林渺",
+          "role": "数据审计师·副导演",
+          "portrait": "/portraits/ninth-seat/lin-miao.webp"
+        },
+        {
+          "name": "乔雯",
+          "role": "项目出品人·公司联合创始人",
+          "portrait": "/portraits/ninth-seat/qiao-wen.webp"
+        }
+      ],
+      "publicEndingCount": 3,
+      "opening": {
+        "chapter": "第一章",
+        "title": "第九席亮起",
+        "location": "澜境零点发布会·主控蓝厅",
+        "backdrop": "/scenes/ninth-seat/control-room.png",
+        "panorama": "/panoramas/ninth-seat/control-room-360.jpg",
+        "hotspotCount": 2,
+        "line": {
+          "name": "林渺",
+          "text": "第九路不在今晚的推流表里。它调用了三年前的训练库，还拿到了你的总导演权限。"
+        },
+        "choices": [
+          {
+            "label": "冻结外发信号，保留全部本地记录",
+            "intent": "",
+            "caption": "先守住证据，再承担延迟的代价。",
+            "locked": false
+          },
+          {
+            "label": "维持内网预演，禁止任何人录屏外传",
+            "intent": "",
+            "caption": "让团队继续工作，但不给事故扩散的机会。",
+            "locked": false
+          },
+          {
+            "label": "要求法务立即交出全部同意记录",
+            "intent": "",
+            "caption": "先确认每一张脸、每一句声音是否被授权。",
+            "locked": false
+          }
+        ]
+      }
+    },
+    {
+      "slug": "project-20260620-002835",
+      "title": "云巅修缮录",
+      "tags": [
+        "古风修仙",
+        "女性视角",
+        "已翻新"
+      ],
+      "protagonist": {
+        "name": "沈青梧",
+        "role": "无名一脉封印修缮师",
+        "portrait": "/portraits/project-20260620-002835/shen-qingwu.webp"
+      },
+      "castPortraits": [
+        {
+          "name": "沈青梧",
+          "role": "无名一脉封印修缮师",
+          "portrait": "/portraits/project-20260620-002835/shen-qingwu.webp"
+        },
+        {
+          "name": "云墨轩",
+          "role": "云渊世家剑修",
+          "portrait": "/portraits/project-20260620-002835/yun-moxuan.jpg"
+        },
+        {
+          "name": "月清寒",
+          "role": "月华宗阵法师",
+          "portrait": "/portraits/project-20260620-002835/yue-qinghan.jpg"
+        },
+        {
+          "name": "菊傲秋",
+          "role": "金菊世家防御阵法家",
+          "portrait": "/portraits/project-20260620-002835/ju-aoqiu.jpg"
+        },
+        {
+          "name": "竹清晏",
+          "role": "灵植药师",
+          "portrait": "/portraits/project-20260620-002835/zhu-qingyan.jpg"
+        },
+        {
+          "name": "梅寒霜",
+          "role": "独立女剑修",
+          "portrait": "/portraits/project-20260620-002835/mei-hanshuang.jpg"
+        },
+        {
+          "name": "牡丹仙",
+          "role": "百花议庭掌局者",
+          "portrait": "/portraits/project-20260620-002835/mudan.jpg"
+        }
+      ],
+      "publicEndingCount": 15,
+      "opening": {
+        "chapter": "第一章",
+        "title": "旧凭入阁",
+        "location": "云巅仙阁大殿",
+        "backdrop": "",
+        "panorama": "/panoramas/project-20260620-002835-s00-arrival.jpg",
+        "hotspotCount": 2,
+        "line": {
+          "name": "沈青梧",
+          "text": "师父，上一回站在这里的人是你。你看见的，也是这三处么。"
+        },
+        "choices": [
+          {
+            "label": "逐一辨认十家传人的功法气息",
+            "intent": "",
+            "caption": "",
+            "locked": false
+          },
+          {
+            "label": "以散修之礼从容回应众人",
+            "intent": "",
+            "caption": "",
+            "locked": false
+          },
+          {
+            "label": "沿殿壁巡看封印纹路",
+            "intent": "",
+            "caption": "",
+            "locked": false
+          }
+        ]
+      }
+    },
+    {
+      "slug": "project-20260620-185116",
+      "title": "青丘异闻录",
+      "tags": [
+        "志怪悬疑",
+        "女性视角",
+        "已翻新"
+      ],
+      "protagonist": {
+        "name": "沈栖梧",
+        "role": "书阁典籍编修",
+        "portrait": "/portraits/project-20260620-185116/shen-qiwu.webp"
+      },
+      "castPortraits": [
+        {
+          "name": "沈栖梧",
+          "role": "书阁典籍编修",
+          "portrait": "/portraits/project-20260620-185116/shen-qiwu.webp"
+        },
+        {
+          "name": "青梨",
+          "role": "青丘守契者",
+          "portrait": "/portraits/project-20260620-185116/qing-li.webp"
+        },
+        {
+          "name": "玄岐",
+          "role": "天庭执雷官",
+          "portrait": "/portraits/project-20260620-185116/xuan-qi.webp"
+        },
+        {
+          "name": "洛砚",
+          "role": "村塾师·医者",
+          "portrait": "/portraits/project-20260620-185116/luo-yan.webp"
+        }
+      ],
+      "publicEndingCount": 3,
+      "opening": {
+        "chapter": "第一幕",
+        "title": "古庙借宿",
+        "location": "深山古庙",
+        "backdrop": "",
+        "panorama": "/panoramas/s00-meet-temple.jpg",
+        "hotspotCount": 2,
+        "line": {
+          "name": "青梨",
+          "text": "避雨可以。别碰供桌上的东西——那不是给人的。"
+        },
+        "choices": [
+          {
+            "label": "说出姑祖母的名字，请她带路",
+            "intent": "",
+            "caption": "",
+            "locked": true
+          },
+          {
+            "label": "暂不打草惊蛇，下山查村志",
+            "intent": "",
+            "caption": "",
+            "locked": true
+          }
+        ]
+      }
+    },
+    {
+      "slug": "project-20260620-201739",
+      "title": "第七织女",
+      "tags": [
+        "都市奇幻",
+        "姐妹与成长",
+        "已翻新"
+      ],
+      "protagonist": {
+        "name": "云织",
+        "role": "织女星宿第七位·云锦织机操机人",
+        "portrait": "/portraits/project-20260620-201739/yun-zhi.webp"
+      },
+      "castPortraits": [
+        {
+          "name": "云织",
+          "role": "织女星宿第七位·云锦织机操机人",
+          "portrait": "/portraits/project-20260620-201739/yun-zhi.webp"
+        },
+        {
+          "name": "云绛",
+          "role": "织女星宿第三位·最早坠落者",
+          "portrait": "/portraits/project-20260620-201739/yun-jiang.webp"
+        },
+        {
+          "name": "董野",
+          "role": "纪录片摄影师",
+          "portrait": "/portraits/project-20260620-201739/dong-yong.jpg"
+        }
+      ],
+      "publicEndingCount": 3,
+      "opening": {
+        "chapter": "序幕",
+        "title": "织机崩裂",
+        "location": "天界·云锦织坊上空",
+        "backdrop": "",
+        "panorama": "/panoramas/project-20260620-002835-s00-arrival.jpg",
+        "hotspotCount": 3,
+        "line": {
+          "name": "云织",
+          "text": "三姐坠落那年，你们也是这么写的。这一次，我自己去。"
+        },
+        "choices": [
+          {
+            "label": "往城中心去，先找最近的梭核",
+            "intent": "",
+            "caption": "",
+            "locked": false
+          },
+          {
+            "label": "顺着断线摸清周围再动身",
+            "intent": "",
+            "caption": "",
+            "locked": true
+          },
+          {
+            "label": "用织语回信试探",
+            "intent": "",
+            "caption": "",
+            "locked": false
+          }
+        ]
+      }
+    },
+    {
+      "slug": "project-20260620-231058",
+      "title": "第十五封愿望",
+      "tags": [
+        "校园悬疑",
+        "女性视角",
+        "已翻新"
+      ],
+      "protagonist": {
+        "name": "沈知意",
+        "role": "校刊特约调查员",
+        "portrait": ""
+      },
+      "castPortraits": [],
+      "publicEndingCount": 4,
+      "opening": {
+        "chapter": "序章",
+        "title": "雨夜初见：第十五封愿望",
+        "location": "雨夜校园入口",
+        "backdrop": "",
+        "panorama": "/panoramas/s00-character-select.webp",
+        "hotspotCount": 3,
+        "line": {
+          "name": "温甜茉",
+          "text": "你可算来了——伞分你一半！"
+        },
+        "choices": [
+          {
+            "label": "先回应温甜茉的招呼",
+            "intent": "",
+            "caption": "",
+            "locked": false
+          },
+          {
+            "label": "先接住林晚晴的视线",
+            "intent": "",
+            "caption": "",
+            "locked": false
+          },
+          {
+            "label": "迎上花容离的目光",
+            "intent": "",
+            "caption": "",
+            "locked": false
+          }
+        ]
+      }
+    },
+    {
+      "slug": "night-ferry",
+      "title": "夜航电台",
+      "tags": [
+        "年代悬疑",
+        "声音叙事",
+        "全新原创"
+      ],
+      "protagonist": {
+        "name": "程晚星",
+        "role": "《夜航船》深夜档主播·来信编辑",
+        "portrait": "/portraits/night-ferry/cheng-wanxing.webp"
+      },
+      "castPortraits": [
+        {
+          "name": "程晚星",
+          "role": "《夜航船》深夜档主播·来信编辑",
+          "portrait": "/portraits/night-ferry/cheng-wanxing.webp"
+        },
+        {
+          "name": "阿岳",
+          "role": "电台修机师·磁带档案管理员",
+          "portrait": "/portraits/night-ferry/a-yue.webp"
+        },
+        {
+          "name": "沈叙",
+          "role": "档案科民警",
+          "portrait": "/portraits/night-ferry/shen-xu.webp"
+        },
+        {
+          "name": "周姨",
+          "role": "《夜航船》栏目台长",
+          "portrait": "/portraits/night-ferry/zhou-yi.webp"
+        }
+      ],
+      "publicEndingCount": 4,
+      "opening": {
+        "chapter": "序幕",
+        "title": "第四十七封信",
+        "location": "电台三楼·磁带资料室",
+        "backdrop": "",
+        "panorama": "/panoramas/s10-secret-archive.png",
+        "hotspotCount": 2,
+        "line": {
+          "name": "未署名的她",
+          "text": "「晚星姐：下周三，纺织厂的灯会少一盏。别找我。要找，去找洗印店的底片。——听你节目的人」"
+        },
+        "choices": [
+          {
+            "label": "把第四十七封信带进今晚的直播",
+            "intent": "",
+            "caption": "",
+            "locked": false
+          },
+          {
+            "label": "先托阿岳把信纸和票根封档，再进直播间",
+            "intent": "",
+            "caption": "",
+            "locked": false
+          }
+        ]
+      }
+    }
+  ],
+  "stage": {
+    "slug": "project-20260620-002835",
+    "playHref": "/play?game=project-20260620-002835",
+    "storyTitle": "云巅修缮录",
+    "chapter": "第一章",
+    "title": "旧凭入阁",
+    "location": "云巅仙阁大殿",
+    "video": "/videos/project-20260620-002835/s00-opening-6e4992263f.mp4",
+    "poster": "/panoramas/project-20260620-002835-s00-arrival.jpg",
+    "hotspotCount": 2,
+    "line": {
+      "name": "沈青梧",
+      "text": "师父，上一回站在这里的人是你。你看见的，也是这三处么。"
+    }
+  }
+}

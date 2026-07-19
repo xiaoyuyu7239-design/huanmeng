@@ -2357,6 +2357,68 @@ body:has(.lp-heartscape) {
 }
 
 /* 可玩世界网格（游戏平台形态） */
+/* 多世界开场预览：作品切换标签（按钮组，非链接；焦点样式走 :focus-visible）。 */
+.hx-open-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 40px 0 22px;
+}
+
+.hx-open-tab {
+  padding: 9px 18px;
+  border: 1px solid var(--hx-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--hx-paper-muted);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.hx-open-tab:hover {
+  border-color: rgba(214, 180, 119, 0.42);
+  color: var(--hx-paper);
+  transform: translateY(-1px);
+}
+
+.hx-open-tab:focus-visible {
+  outline: 2px solid var(--hx-champagne);
+  outline-offset: 2px;
+}
+
+.hx-open-tab.is-active {
+  border-color: rgba(214, 180, 119, 0.6);
+  background: rgba(214, 180, 119, 0.1);
+  color: var(--hx-champagne);
+}
+
+/* 仅读屏可感知的状态播报（标签切换）。 */
+.hx-sr-only {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.hx-choice-note--locked {
+  color: rgba(214, 180, 119, 0.8);
+}
+
+.hx-gallery {
+  background: var(--hx-bg);
+}
+
 .hx-demos {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
