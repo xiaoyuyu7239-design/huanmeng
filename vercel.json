@@ -1,0 +1,13 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/play", "destination": "/index.html" },
+    { "source": "/game", "destination": "/index.html" },
+    { "source": "/creator", "destination": "/index.html" },
+    { "source": "/creators", "destination": "/index.html" },
+    { "source": "/worlds", "destination": "/index.html" }
+  ]
+}
